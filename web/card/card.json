@@ -1,0 +1,16 @@
+{
+  "component": "Card",
+  "variants": {
+    "primary": {
+      "default": {
+        "bg-color": "MISSING_FROM_DESIGN",
+        "padding": {
+          "value": "MISSING_FROM_DESIGN",
+          "tailwind": "MISSING_FROM_DESIGN"
+        },
+        "_description": "Figma/디자인 시스템에서 값을 확인해 채워 넣어야 합니다."
+      }
+    }
+  }
+}
+
