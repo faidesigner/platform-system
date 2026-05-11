@@ -1,0 +1,54 @@
+/* 폰트는 항상 최상위에서 import */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+@import '@fontsource-variable/m-plus-2';
+
+/* Web 에서 사용하는 Tailwind Token */
+@import 'tailwindcss';
+@plugin "tailwindcss-animate";
+
+@import './base.css' layer(base);
+@import './color.css' layer(colors);
+@import './dark.css' layer(dark);
+
+@layer base {
+  html {
+    font-family: var(--font-basic);
+    font-size: 16px;
+    user-select: none;
+  }
+
+  html[lang='ko'] {
+    font-family: var(--font-sans-ko);
+  }
+
+  html[lang='jp'] {
+    font-family: var(--font-sans-jp);
+    font-weight: 1 999;
+  }
+
+  button:focus {
+    outline: none;
+  }
+
+  .prevent-select {
+    -webkit-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+  }
+  input:focus {
+    outline: none !important;
+    box-shadow: none !important;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-focus-ring-color: transparent;
+  }
+}
+
+@layer utilities {
+  .rounded-s {
+    border-radius: var(--radius-s);
+  }
+
+  .rounded-l {
+    border-radius: var(--radius-l);
+  }
+}
