@@ -315,10 +315,8 @@ try {
   generateOpacityCSS();
   generateSpacingCSS();
   generateTypographyCSS();
-  generatePlatformTypoCSS('typography-m.json',  'typography-m.css',  'm');
   generatePlatformTypoCSS('typography-w.json',  'typography-w.css',  'w');
-  generatePlatformTypoCSS('typography-k.json',  'typography-k.css',  'k');
-  generatePlatformTypoCSS('typography-vg.json', 'typography-vg.css', 'vg');
+  generatePlatformTypoCSS('typography-vg.json', 'typography-vg.css', 't');
   generateEffectsCSS();
   ensureStylesIndex();
   generateFoundationIndex();

@@ -5,100 +5,85 @@
     },
     "display": {
       "L": {
-        "size": "{font.size.240}",
-        "lineHeight": "{font.lineHeight.240}",
-        "letterSpacing": "{font.letterSpacing.08}"
+        "size": "{font.size.80}",
+        "lineHeight": "{font.lineheight.80}",
+        "letterSpacing": "{font.letterspacing.08}"
       },
       "M": {
-        "size": "{font.size.112}",
-        "lineHeight": "{font.lineHeight.112}",
-        "letterSpacing": "{font.letterSpacing.08}"
+        "size": "{font.size.64}",
+        "lineHeight": "{font.lineheight.64}",
+        "letterSpacing": "{font.letterspacing.08}"
+      },
+      "S": {
+        "size": "{font.size.56}",
+        "lineHeight": "{font.lineheight.56}",
+        "letterSpacing": "{font.letterspacing.08}"
       }
     },
     "title": {
       "XL": {
-        "size": "{font.size.88}",
-        "lineHeight": "{font.lineHeight.88}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      },
-      "L": {
-        "size": "{font.size.80}",
-        "lineHeight": "{font.lineHeight.80}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      },
-      "M": {
-        "size": "{font.size.72}",
-        "lineHeight": "{font.lineHeight.72}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      },
-      "MS": {
-        "size": "{font.size.64}",
-        "lineHeight": "{font.lineHeight.64}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      },
-      "S": {
-        "size": "{font.size.56}",
-        "lineHeight": "{font.lineHeight.56}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      },
-      "XS": {
         "size": "{font.size.48}",
-        "lineHeight": "{font.lineHeight.48}",
-        "letterSpacing": "{font.letterSpacing.06}"
-      }
-    },
-    "text": {
-      "2XL": {
-        "size": "{font.size.40}",
-        "lineHeight": "{font.lineHeight.40}",
-        "letterSpacing": "{font.letterSpacing.02}"
-      },
-      "XL": {
-        "size": "{font.size.36}",
-        "lineHeight": "{font.lineHeight.36}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "lineHeight": "{font.lineheight.48}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "L": {
-        "size": "{font.size.32}",
-        "lineHeight": "{font.lineHeight.32}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "size": "{font.size.36}",
+        "lineHeight": "{font.lineheight.36}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "M": {
         "size": "{font.size.28}",
-        "lineHeight": "{font.lineHeight.28}",
-        "letterSpacing": "{font.letterSpacing.02}"
-      },
-      "MS": {
-        "size": "{font.size.24}",
-        "lineHeight": "{font.lineHeight.24}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "lineHeight": "{font.lineheight.28}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "S": {
-        "size": "{font.size.20}",
-        "lineHeight": "{font.lineHeight.20}",
-        "letterSpacing": "{font.letterSpacing.02}"
-      },
-      "XS": {
-        "size": "{font.size.18}",
-        "lineHeight": "{font.lineHeight.18}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "size": "{font.size.24}",
+        "lineHeight": "{font.lineheight.24}",
+        "letterSpacing": "{font.letterspacing.03}"
       }
     },
-    "caption": {
+    "text": {
+      "XL": {
+        "size": "{font.size.20}",
+        "lineHeight": "{font.lineheight.20}",
+        "letterSpacing": "{font.letterspacing.0}"
+      },
       "L": {
-        "size": "{font.size.16}",
-        "lineHeight": "{font.lineHeight.16}",
-        "letterSpacing": "{font.letterSpacing._01}"
+        "size": "{font.size.18}",
+        "lineHeight": "{font.lineheight.18}",
+        "letterSpacing": "{font.letterspacing.0}"
       },
       "M": {
+        "size": "{font.size.16}",
+        "lineHeight": "{font.lineheight.16}",
+        "letterSpacing": "{font.letterspacing.0}"
+      },
+      "MS": {
         "size": "{font.size.15}",
-        "lineHeight": "{font.lineHeight.15}",
-        "letterSpacing": "{font.letterSpacing._01}"
+        "lineHeight": "{font.lineheight.15}",
+        "letterSpacing": "{font.letterspacing.0}"
       },
       "S": {
         "size": "{font.size.14}",
-        "lineHeight": "{font.lineHeight.14}",
-        "letterSpacing": "{font.letterSpacing._01}"
+        "lineHeight": "{font.lineheight.14}",
+        "letterSpacing": "{font.letterspacing.0}"
+      },
+      "XS": {
+        "size": "{font.size.13}",
+        "lineHeight": "{font.lineheight.13}",
+        "letterSpacing": "{font.letterspacing.0}"
+      }
+    },
+    "caption": {
+      "M": {
+        "size": "{font.size.12}",
+        "lineHeight": "{font.lineheight.12}",
+        "letterSpacing": "{font.letterspacing._01}"
+      },
+      "S": {
+        "size": "{font.size.11}",
+        "lineHeight": "{font.lineheight.11}",
+        "letterSpacing": "{font.letterspacing._01}"
       }
     }
   },
@@ -108,100 +93,85 @@
     },
     "display": {
       "L": {
-        "size": "{font.size.240}",
-        "lineHeight": "{font.lineHeight.240}",
-        "letterSpacing": "{font.letterSpacing.06}"
+        "size": "{font.size.80}",
+        "lineHeight": "{font.lineheight.80}",
+        "letterSpacing": "{font.letterspacing.06}"
       },
       "M": {
-        "size": "{font.size.112}",
-        "lineHeight": "{font.lineHeight.112}",
-        "letterSpacing": "{font.letterSpacing.06}"
+        "size": "{font.size.64}",
+        "lineHeight": "{font.lineheight.64}",
+        "letterSpacing": "{font.letterspacing.06}"
+      },
+      "S": {
+        "size": "{font.size.56}",
+        "lineHeight": "{font.lineheight.56}",
+        "letterSpacing": "{font.letterspacing.06}"
       }
     },
     "title": {
       "XL": {
-        "size": "{font.size.88}",
-        "lineHeight": "{font.lineHeight.88}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "L": {
-        "size": "{font.size.80}",
-        "lineHeight": "{font.lineHeight.80}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "M": {
-        "size": "{font.size.72}",
-        "lineHeight": "{font.lineHeight.72}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "MS": {
-        "size": "{font.size.64}",
-        "lineHeight": "{font.lineHeight.64}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "S": {
-        "size": "{font.size.56}",
-        "lineHeight": "{font.lineHeight.56}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "XS": {
         "size": "{font.size.48}",
-        "lineHeight": "{font.lineHeight.48}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      }
-    },
-    "text": {
-      "2XL": {
-        "size": "{font.size.40}",
-        "lineHeight": "{font.lineHeight.40}",
-        "letterSpacing": "{font.letterSpacing.02}"
-      },
-      "XL": {
-        "size": "{font.size.36}",
-        "lineHeight": "{font.lineHeight.36}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "lineHeight": "{font.lineheight.48}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "L": {
-        "size": "{font.size.32}",
-        "lineHeight": "{font.lineHeight.32}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "size": "{font.size.36}",
+        "lineHeight": "{font.lineheight.36}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "M": {
         "size": "{font.size.28}",
-        "lineHeight": "{font.lineHeight.28}",
-        "letterSpacing": "{font.letterSpacing.02}"
-      },
-      "MS": {
-        "size": "{font.size.24}",
-        "lineHeight": "{font.lineHeight.24}",
-        "letterSpacing": "{font.letterSpacing.02}"
+        "lineHeight": "{font.lineheight.28}",
+        "letterSpacing": "{font.letterspacing.03}"
       },
       "S": {
-        "size": "{font.size.20}",
-        "lineHeight": "{font.lineHeight.20}",
-        "letterSpacing": 0.4000000059604645
-      },
-      "XS": {
-        "size": "{font.size.18}",
-        "lineHeight": "{font.lineHeight.18}",
-        "letterSpacing": 0.4000000059604645
+        "size": "{font.size.24}",
+        "lineHeight": "{font.lineheight.24}",
+        "letterSpacing": "{font.letterspacing.03}"
       }
     },
-    "caption": {
+    "text": {
+      "XL": {
+        "size": "{font.size.20}",
+        "lineHeight": "{font.lineheight.20}",
+        "letterSpacing": "{font.letterspacing.01}"
+      },
       "L": {
-        "size": "{font.size.16}",
-        "lineHeight": "{font.lineHeight.16}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "size": "{font.size.18}",
+        "lineHeight": "{font.lineheight.18}",
+        "letterSpacing": "{font.letterspacing.01}"
       },
       "M": {
+        "size": "{font.size.16}",
+        "lineHeight": "{font.lineheight.16}",
+        "letterSpacing": "{font.letterspacing.01}"
+      },
+      "MS": {
         "size": "{font.size.15}",
-        "lineHeight": "{font.lineHeight.15}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "lineHeight": "{font.lineheight.15}",
+        "letterSpacing": "{font.letterspacing.01}"
       },
       "S": {
         "size": "{font.size.14}",
-        "lineHeight": "{font.lineHeight.14}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "lineHeight": "{font.lineheight.14}",
+        "letterSpacing": "{font.letterspacing.01}"
+      },
+      "XS": {
+        "size": "{font.size.13}",
+        "lineHeight": "{font.lineheight.13}",
+        "letterSpacing": "{font.letterspacing.01}"
+      }
+    },
+    "caption": {
+      "M": {
+        "size": "{font.size.12}",
+        "lineHeight": "{font.lineheight.12}",
+        "letterSpacing": "{font.letterspacing._01}"
+      },
+      "S": {
+        "size": "{font.size.11}",
+        "lineHeight": "{font.lineheight.11}",
+        "letterSpacing": "{font.letterspacing._01}"
       }
     }
   },
@@ -211,100 +181,85 @@
     },
     "display": {
       "L": {
-        "size": "{font.size.240}",
-        "lineHeight": "{font.lineHeight.240}",
-        "letterSpacing": "{font.letterSpacing.12}"
+        "size": "{font.size.80}",
+        "lineHeight": "{font.lineheight.80}",
+        "letterSpacing": "{font.letterspacing.08}"
       },
       "M": {
-        "size": "{font.size.112}",
-        "lineHeight": "{font.lineHeight.112}",
-        "letterSpacing": "{font.letterSpacing.12}"
+        "size": "{font.size.64}",
+        "lineHeight": "{font.lineheight.64}",
+        "letterSpacing": "{font.letterspacing.08}"
+      },
+      "S": {
+        "size": "{font.size.56}",
+        "lineHeight": "{font.lineheight.56}",
+        "letterSpacing": "{font.letterspacing.08}"
       }
     },
     "title": {
       "XL": {
-        "size": "{font.size.88}",
-        "lineHeight": "{font.lineHeight.88}",
-        "letterSpacing": "{font.letterSpacing.08}"
-      },
-      "L": {
-        "size": "{font.size.80}",
-        "lineHeight": "{font.lineHeight.80}",
-        "letterSpacing": "{font.letterSpacing.08}"
-      },
-      "M": {
-        "size": "{font.size.72}",
-        "lineHeight": "{font.lineHeight.72}",
-        "letterSpacing": "{font.letterSpacing.08}"
-      },
-      "MS": {
-        "size": "{font.size.64}",
-        "lineHeight": "{font.lineHeight.64}",
-        "letterSpacing": "{font.letterSpacing.08}"
-      },
-      "S": {
-        "size": "{font.size.56}",
-        "lineHeight": "{font.lineHeight.56}",
-        "letterSpacing": "{font.letterSpacing.08}"
-      },
-      "XS": {
         "size": "{font.size.48}",
-        "lineHeight": "{font.lineHeight.48}",
-        "letterSpacing": 0.800000011920929
-      }
-    },
-    "text": {
-      "2XL": {
-        "size": "{font.size.40}",
-        "lineHeight": "{font.lineHeight.40}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "XL": {
-        "size": "{font.size.36}",
-        "lineHeight": "{font.lineHeight.36}",
-        "letterSpacing": "{font.letterSpacing.04}"
+        "lineHeight": "{font.lineheight.48}",
+        "letterSpacing": "{font.letterspacing.04}"
       },
       "L": {
-        "size": "{font.size.32}",
-        "lineHeight": "{font.lineHeight.32}",
-        "letterSpacing": "{font.letterSpacing.04}"
+        "size": "{font.size.36}",
+        "lineHeight": "{font.lineheight.36}",
+        "letterSpacing": "{font.letterspacing.04}"
       },
       "M": {
         "size": "{font.size.28}",
-        "lineHeight": "{font.lineHeight.28}",
-        "letterSpacing": "{font.letterSpacing.04}"
-      },
-      "MS": {
-        "size": "{font.size.24}",
-        "lineHeight": "{font.lineHeight.24}",
-        "letterSpacing": "{font.letterSpacing.04}"
+        "lineHeight": "{font.lineheight.28}",
+        "letterSpacing": "{font.letterspacing.04}"
       },
       "S": {
-        "size": "{font.size.20}",
-        "lineHeight": "{font.lineHeight.20}",
-        "letterSpacing": 0.800000011920929
-      },
-      "XS": {
-        "size": "{font.size.18}",
-        "lineHeight": "{font.lineHeight.18}",
-        "letterSpacing": 0.800000011920929
+        "size": "{font.size.24}",
+        "lineHeight": "{font.lineheight.24}",
+        "letterSpacing": "{font.letterspacing.04}"
       }
     },
-    "caption": {
+    "text": {
+      "XL": {
+        "size": "{font.size.20}",
+        "lineHeight": "{font.lineheight.20}",
+        "letterSpacing": "{font.letterspacing.02}"
+      },
       "L": {
-        "size": "{font.size.16}",
-        "lineHeight": "{font.lineHeight.16}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "size": "{font.size.18}",
+        "lineHeight": "{font.lineheight.18}",
+        "letterSpacing": "{font.letterspacing.02}"
       },
       "M": {
+        "size": "{font.size.16}",
+        "lineHeight": "{font.lineheight.16}",
+        "letterSpacing": "{font.letterspacing.02}"
+      },
+      "MS": {
         "size": "{font.size.15}",
-        "lineHeight": "{font.lineHeight.15}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "lineHeight": "{font.lineheight.15}",
+        "letterSpacing": "{font.letterspacing.02}"
       },
       "S": {
         "size": "{font.size.14}",
-        "lineHeight": "{font.lineHeight.14}",
-        "letterSpacing": "{font.letterSpacing.0}"
+        "lineHeight": "{font.lineheight.14}",
+        "letterSpacing": "{font.letterspacing.02}"
+      },
+      "XS": {
+        "size": "{font.size.13}",
+        "lineHeight": "{font.lineheight.13}",
+        "letterSpacing": "{font.letterspacing.04}"
+      }
+    },
+    "caption": {
+      "M": {
+        "size": "{font.size.12}",
+        "lineHeight": "{font.lineheight.12}",
+        "letterSpacing": "{font.letterspacing.0}"
+      },
+      "S": {
+        "size": "{font.size.11}",
+        "lineHeight": "{font.lineheight.11}",
+        "letterSpacing": "{font.letterspacing.0}"
       }
     }
   }
