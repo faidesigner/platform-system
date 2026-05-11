@@ -148,7 +148,7 @@ function generateTypographyCSS() {
 }
 
 function generateGridCSS() {
-  const { layout } = readJSON('grid.json');
+  const { layout } = JSON.parse(fs.readFileSync(path.join(WEB_OUT, 'grid.json'), 'utf-8'));
   const bps = layout.breakpoints;
 
   const pxOrRaw = v => typeof v === 'number' ? `${v}px` : v;
@@ -165,12 +165,12 @@ function generateGridCSS() {
   });
 
   const content = HEADER + `@theme {\n${blocks.join('\n\n')}\n}\n`;
-  writeFile(FOUNDATION, 'grid.css', content);
+  writeFile(WEB_OUT, 'grid.css', content);
 }
 
 // ─── foundation/index.css  (공유 토큰 진입점 — 자동 갱신) ──
 function generateFoundationIndex() {
-  const shared = ['color.css', 'opacity.css', 'effects.css', 'typography.css', 'grid.css'];
+  const shared = ['color.css', 'opacity.css', 'effects.css', 'typography.css'];
   const content = [
     HEADER,
     '/* 공유 토큰 진입점 — Tailwind 없이 CSS 변수만 필요할 때 import */',
@@ -237,6 +237,7 @@ function ensureWebIndex() {
 
 /* 웹 플랫폼 토큰 */
 @import './base.css' layer(base);
+@import './grid.css' layer(base);
 
 /* 다크 모드 (조건부) */
 @import '../foundation/dark.css' layer(dark);
@@ -365,11 +366,11 @@ try {
   generateOpacityCSS();
   generateEffectsCSS();
   generateTypographyCSS();
-  generateGridCSS();
   generateFoundationIndex();
 
   console.log('\n[ web/ — 웹 플랫폼 ]');
   generateWebBaseCSS();
+  generateGridCSS();
   ensureWebIndex();
 
   console.log('\n[ vg/ — VGK 플랫폼 ]');

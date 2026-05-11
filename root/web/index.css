@@ -11,6 +11,7 @@
 
 /* 웹 플랫폼 토큰 */
 @import './base.css' layer(base);
+@import './grid.css' layer(base);
 
 /* 다크 모드 (조건부) */
 @import '../foundation/dark.css' layer(dark);
