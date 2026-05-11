@@ -10,7 +10,13 @@
 | --- | --- |
 | color-global.md | 전체 컬러 팔레트 (Primitive) |
 | color-semantic.md | 시맨틱 컬러 (light / dark 모드) |
+| color-brand.md | 클라이언트별 브랜드 컬러 오버라이드 |
+| opacity.md | 불투명도 스케일 |
+| effects.md | 그림자(Shadow) 스케일 |
+| spacing.md | 간격·여백·모서리 (size / mw / vgk) |
 | typography.md | 폰트 원시값 (family, weight, size, lineHeight, letterSpacing) |
+| typography-w.md | Web 플랫폼 타이포그래피 (`w-` 접두사) |
+| typography-vg.md | VG/Kiosk 플랫폼 타이포그래피 (`t-` 접두사) |
 
 ## 규칙
 
