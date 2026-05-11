@@ -1,4 +1,4 @@
-# Flatform Design System
+# Platform Design System
 
 Web 플랫폼 디자인 시스템입니다.
 JSON 토큰을 수정하면 CSS가 자동 생성됩니다.
@@ -9,7 +9,7 @@ JSON 토큰을 수정하면 CSS가 자동 생성됩니다.
 
 ```bash
 git clone <repo-url>
-cd flatform-system
+cd platform-system
 
 # 토큰 → CSS 최초 생성
 npm run sync
@@ -25,7 +25,7 @@ Node.js 18 이상이 필요합니다.
 ## 폴더 구조
 
 ```
-flatform-system/
+platform-system/
 ├── CLAUDE.md                  ← Claude Code 자동 규칙 (클론 후 즉시 적용)
 ├── design-system.md           ← 마스터 가이드 (AI 규칙, 공통 규칙)
 ├── component-template.md      ← 신규 컴포넌트 명세 작성 양식

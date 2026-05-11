@@ -1,7 +1,7 @@
 {
-  "name": "flatform-system",
+  "name": "platform-system",
   "version": "1.0.0",
-  "description": "Flatform Design System Token Pipeline",
+  "description": "Platform Design System Token Pipeline",
   "scripts": {
     "sync": "node scripts/sync-tokens.js",
     "watch": "node scripts/watch-tokens.js"
