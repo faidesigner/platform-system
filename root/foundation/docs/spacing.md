@@ -8,9 +8,8 @@
 ## 규칙
 
 - 간격, 여백, 모서리 값은 정의된 토큰만 사용합니다. 임의 px 값을 사용하지 않습니다.
-- `size-` 토큰은 플랫폼 공통 원시값입니다. UI에 직접 사용하지 않습니다.
-- UI에는 반드시 플랫폼 토큰(`padding-`, `spacing-`, `cornerRadius-`)을 사용합니다.
-- `mw` 토큰은 Web 플랫폼, `vgk` 토큰은 VG/Kiosk 플랫폼 전용입니다. 혼용하지 않습니다.
+- `size-` 토큰은 원시값입니다. UI에 직접 사용하지 않습니다.
+- UI에는 반드시 `mw` 토큰(`padding-`, `spacing-`, `cornerRadius-`)을 사용합니다.
 
 ---
 
@@ -18,12 +17,8 @@
 
 ```
 spacing.json
-├── size          ← 공통 원시값 (모든 플랫폼)
-├── mw            ← Web 플랫폼 전용
-│   ├── padding
-│   ├── spacing
-│   └── cornerRadius
-└── vgk           ← VG/Kiosk 플랫폼 전용
+├── size    ← 원시값
+└── mw      ← Web 플랫폼
     ├── padding
     ├── spacing
     └── cornerRadius
@@ -64,14 +59,10 @@ spacing.json
 컴포넌트 내부의 패딩에 사용합니다.
 
 ```css
-/* Web */
 --padding-{스케일}   /* 예: --padding-S, --padding-M */
-
-/* VGK */
---padding-{스케일}
 ```
 
-스케일 단계: none / 8XS – 8XL (플랫폼별 실제값 상이)
+스케일 단계: none / 8XS – 8XL
 
 ---
 
@@ -83,7 +74,7 @@ spacing.json
 --spacing-{스케일}   /* 예: --spacing-XS, --spacing-L */
 ```
 
-스케일 단계: none / 7XS – 9XL (플랫폼별 실제값 상이)
+스케일 단계: none / 7XS – 9XL
 
 ---
 
