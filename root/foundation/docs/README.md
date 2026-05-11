@@ -1,6 +1,6 @@
 # Foundation Tokens
 
-모든 플랫폼(web, vg)이 공유하는 기본 토큰 정의입니다.
+Web 플랫폼의 기본 토큰 정의입니다.
 
 플랫폼별 토큰을 수정하기 전에 Foundation 토큰을 먼저 확인합니다.
 
@@ -13,10 +13,9 @@
 | color-brand.md | 클라이언트별 브랜드 컬러 오버라이드 |
 | opacity.md | 불투명도 스케일 |
 | effects.md | 그림자(Shadow) 스케일 |
-| spacing.md | 간격·여백·모서리 (size / mw / vgk) |
+| spacing.md | 간격·여백·모서리 (size / mw) |
 | typography.md | 폰트 원시값 (family, weight, size, lineHeight, letterSpacing) |
-| typography-w.md | Web 플랫폼 타이포그래피 (`w-` 접두사) |
-| typography-vg.md | VG/Kiosk 플랫폼 타이포그래피 (`t-` 접두사) |
+| typography-w.md | Web 타이포그래피 (`w-` 접두사) |
 
 ## 규칙
 
