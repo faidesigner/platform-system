@@ -32,7 +32,6 @@
     "none": "0rem",
     "over": "62.438rem"
   },
-
   "padding": {
     "4": "{size.4}",
     "8": "{size.8}",
@@ -58,7 +57,6 @@
     "3xl": "{size.40}",
     "4xl": "{size.56}"
   },
-
   "spacing": {
     "_": "{size.0}",
     "none": "{size.none}",
@@ -75,7 +73,6 @@
     "3xl": "{size.40}",
     "4xl": "{size.56}"
   },
-
   "radius": {
     "none": "{size.none}",
     "2xs": "{size.4}",
@@ -87,7 +84,6 @@
     "xl": "{size.24}",
     "circle": "{size.over}"
   },
-
   "gap": {
     "none": "{spacing.none}",
     "3xs": "{spacing.3xs}",
