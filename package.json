@@ -1,0 +1,12 @@
+{
+  "name": "platform-system",
+  "version": "1.0.0",
+  "description": "Platform Design System Token Pipeline",
+  "scripts": {
+    "sync": "node scripts/sync-tokens.js",
+    "watch": "node scripts/watch-tokens.js"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}
