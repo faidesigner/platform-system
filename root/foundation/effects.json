@@ -1,19 +1,10 @@
 {
   "shadow": {
-    "modal": "0px 25px 50px 0px #00000026",
-    "selectBoxOption": "0px 10px 20px -1px rgba(0, 0, 0, 0.1), 0px 6px 12px 0px rgba(0, 0, 0, 0.12)"
-  },
-
-  "animate": {
-    "footer": "footer 10s linear infinite",
-    "scanHeader": "scanHeader 80s linear infinite",
-    "fadeout": "fade-out 1s forwards",
-    "shake": "shake 1s ease-in-out 2",
-    "toastBottomIn": "toastBottomIn 300ms ease-out",
-    "toastBottomOut": "toastBottomOut 300ms ease-in",
-    "toastCenterIn": "toastCenterIn 0.4s ease-out forwards",
-    "toastCenterOut": "toastCenterOut 0.4s ease-out forwards",
-    "shimmer": "shimmer 1.5s infinite linear",
-    "slideOutLeft": "slideOutLeft 600ms cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards"
+    "XS": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)",
+    "S": "0px 1px 5px 1px rgba(0, 0, 0, 0.05)",
+    "M": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+    "L": "0px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 10px 20px -1px rgba(0, 0, 0, 0.1)",
+    "XL": "0px 5px 17px 0px rgba(0, 0, 0, 0.15)",
+    "XXL": "0px 10px 40px -6px rgba(0, 0, 0, 0.1), 0px 25px 50px 0px rgba(0, 0, 0, 0.15)"
   }
 }

@@ -1,0 +1,110 @@
+{
+  "fainders.ai": {
+    "brand-primary": "{color.green.600}",
+    "brand-secondary": "{color.green.500}",
+    "filled": {
+      "brand-primaryBtn": "{color.gray.800}",
+      "brand-secondaryBtn": "{color.gray.50}",
+      "brand-primary": "{color.green.500}",
+      "brand-secondary": "{color.green.100}",
+      "brand-absoluteBtn": "{color.white}"
+    },
+    "text": {
+      "brand-primary": "{color.green.600}",
+      "brand-secondary": "{color.green.500}",
+      "brand-primaryBtn": "{color.white}",
+      "brand-secondaryBtn": "{color.gray.900}"
+    },
+    "icon": {
+      "brand-primary": "{color.green.600}",
+      "brand-secondary": "{color.green.500}",
+      "brand-primaryBtn": "{color.white}",
+      "brand-secondaryBtn": "{color.white}"
+    },
+    "boder": {
+      "brand-primary": "{color.green.500}",
+      "brand-secondary": "{color.green.300}"
+    }
+  },
+  "px24": {
+    "brand-primary": "{color.green.500}",
+    "brand-secondary": "{color.green.300}",
+    "filled": {
+      "brand-primaryBtn": "#1F2023",
+      "brand-secondaryBtn": "#B7B9BD",
+      "brand-primary": "#1F2023",
+      "brand-secondary": "#B7B9BD",
+      "brand-absoluteBtn": "#FFFFFF"
+    },
+    "text": {
+      "brand-primary": "#1F2023",
+      "brand-secondary": "#B7B9BD",
+      "brand-primaryBtn": "#FFFFFF",
+      "brand-secondaryBtn": "#FFFFFF"
+    },
+    "icon": {
+      "brand-primary": "#1F2023",
+      "brand-secondary": "#B7B9BD",
+      "brand-primaryBtn": "#B7B9BD",
+      "brand-secondaryBtn": "#B7B9BD"
+    },
+    "boder": {
+      "brand-primary": "#1F2023",
+      "brand-secondary": "#B7B9BD"
+    }
+  },
+  "changi-airport": {
+    "brand-primary": "{color.green.500}",
+    "brand-secondary": "{color.green.300}",
+    "filled": {
+      "brand-primaryBtn": "{color.grape.900}",
+      "brand-secondaryBtn": "{color.grape.400}",
+      "brand-primary": "{color.grape.900}",
+      "brand-secondary": "{color.grape.100}",
+      "brand-absoluteBtn": "#FFFFFF"
+    },
+    "text": {
+      "brand-primary": "{color.grape.900}",
+      "brand-secondary": "{color.grape.700}",
+      "brand-primaryBtn": "#FFFFFF",
+      "brand-secondaryBtn": "#FFFFFF"
+    },
+    "icon": {
+      "brand-primary": "{color.grape.900}",
+      "brand-secondary": "{color.grape.700}",
+      "brand-primaryBtn": "{color.grape.700}",
+      "brand-secondaryBtn": "{color.grape.700}"
+    },
+    "boder": {
+      "brand-primary": "{color.grape.400}",
+      "brand-secondary": "{color.grape.100}"
+    }
+  },
+  "sevenelev": {
+    "brand-primary": "{color.green.500}",
+    "brand-secondary": "{color.green.300}",
+    "filled": {
+      "brand-primaryBtn": "#0A5C3A",
+      "brand-secondaryBtn": "#14B873",
+      "brand-primary": "#0A5C3A",
+      "brand-secondary": "#E3FCF1",
+      "brand-absoluteBtn": "#FFFFFF"
+    },
+    "text": {
+      "brand-primary": "#0A5C3A",
+      "brand-secondary": "#14B873",
+      "brand-primaryBtn": "#FFFFFF",
+      "brand-secondaryBtn": "#FFFFFF"
+    },
+    "icon": {
+      "brand-primary": "#0A5C3A",
+      "brand-secondary": "#14B873",
+      "brand-primaryBtn": "#14B873",
+      "brand-secondaryBtn": "#14B873"
+    },
+    "boder": {
+      "brand-primary": "#14B873",
+      "brand-secondary": "#19E690"
+    }
+  }
+}
