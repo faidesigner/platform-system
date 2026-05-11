@@ -147,9 +147,30 @@ function generateTypographyCSS() {
   writeFile(FOUNDATION, 'typography.css', HEADER + `@theme {\n${body}\n}\n`);
 }
 
+function generateGridCSS() {
+  const { layout } = readJSON('grid.json');
+  const bps = layout.breakpoints;
+
+  const pxOrRaw = v => typeof v === 'number' ? `${v}px` : v;
+
+  const blocks = Object.entries(bps).map(([name, bp]) => {
+    const vars = [
+      `  --grid-${name}-width: ${pxOrRaw(bp.width)};`,
+      `  --grid-${name}-columns: ${bp.columns};`,
+      `  --grid-${name}-gutter: ${pxOrRaw(bp.gutter)};`,
+      `  --grid-${name}-container-padding: ${pxOrRaw(bp.containerPadding)};`,
+      `  --grid-${name}-max-content-width: ${pxOrRaw(bp.maxContentWidth)};`,
+    ].join('\n');
+    return `  /* ${name} — ${bp.width}px */\n${vars}`;
+  });
+
+  const content = HEADER + `@theme {\n${blocks.join('\n\n')}\n}\n`;
+  writeFile(FOUNDATION, 'grid.css', content);
+}
+
 // ─── foundation/index.css  (공유 토큰 진입점 — 자동 갱신) ──
 function generateFoundationIndex() {
-  const shared = ['color.css', 'opacity.css', 'effects.css', 'typography.css'];
+  const shared = ['color.css', 'opacity.css', 'effects.css', 'typography.css', 'grid.css'];
   const content = [
     HEADER,
     '/* 공유 토큰 진입점 — Tailwind 없이 CSS 변수만 필요할 때 import */',
@@ -344,6 +365,7 @@ try {
   generateOpacityCSS();
   generateEffectsCSS();
   generateTypographyCSS();
+  generateGridCSS();
   generateFoundationIndex();
 
   console.log('\n[ web/ — 웹 플랫폼 ]');
