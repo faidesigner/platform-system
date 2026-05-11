@@ -2,53 +2,45 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 @import '@fontsource-variable/m-plus-2';
 
-/* Web 에서 사용하는 Tailwind Token */
+/* Tailwind */
 @import 'tailwindcss';
 @plugin "tailwindcss-animate";
 
+/* 공유 토큰 */
+@import '../foundation/index.css' layer(base);
+
+/* 웹 플랫폼 토큰 */
 @import './base.css' layer(base);
-@import './color.css' layer(colors);
-@import './dark.css' layer(dark);
+
+/* 다크 모드 (조건부) */
+@import '../foundation/dark.css' layer(dark);
 
 @layer base {
   html {
-    font-family: var(--font-basic);
+    font-family: var(--font-family-pretendard);
     font-size: 16px;
     user-select: none;
   }
 
   html[lang='ko'] {
-    font-family: var(--font-sans-ko);
+    font-family: var(--font-family-pretendard);
   }
 
   html[lang='jp'] {
-    font-family: var(--font-sans-jp);
+    font-family: var(--font-family-m-plus-2);
     font-weight: 1 999;
   }
 
-  button:focus {
-    outline: none;
-  }
+  button:focus { outline: none; }
 
   .prevent-select {
     -webkit-user-select: none;
     -ms-user-select: none;
     user-select: none;
   }
+
   input:focus {
     outline: none !important;
     box-shadow: none !important;
-    -webkit-tap-highlight-color: transparent;
-    -webkit-focus-ring-color: transparent;
-  }
-}
-
-@layer utilities {
-  .rounded-s {
-    border-radius: var(--radius-s);
-  }
-
-  .rounded-l {
-    border-radius: var(--radius-l);
   }
 }
