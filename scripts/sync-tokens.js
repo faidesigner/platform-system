@@ -9,7 +9,6 @@
  * 출력 구조:
  *   root/foundation/  ← 공유 토큰 CSS (color, opacity, effects, font 원시값)
  *   root/web/         ← 웹 플랫폼 CSS (mw spacing + web typography)
- *   root/vg/          ← VGK 플랫폼 CSS (vgk spacing + tablet typography)
  *
  * 참조 표기법: {path.to.token} → var(--path-to-token)
  */

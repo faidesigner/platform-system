@@ -8,7 +8,7 @@
 ## 규칙
 
 - 이 토큰은 직접 UI에 사용하지 않습니다.
-- UI에는 반드시 플랫폼별 타이포그래피 토큰(`typography-w.json`, `typography-vg.json`)을 사용합니다.
+- UI에는 반드시 `typography-w.json` 토큰을 사용합니다.
 - 폰트 크기는 `rem` 단위로 저장됩니다. (기준: 16px = 1rem)
 - `letterSpacing`은 `px` 단위로 저장됩니다.
 
