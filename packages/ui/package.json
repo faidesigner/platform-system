@@ -1,0 +1,11 @@
+{
+  "name": "@fai/ui",
+  "version": "0.1.0",
+  "description": "Fainders shared UI components",
+  "main": "./index.ts",
+  "types": "./index.ts",
+  "peerDependencies": {
+    "react": ">=18",
+    "next": ">=14"
+  }
+}
