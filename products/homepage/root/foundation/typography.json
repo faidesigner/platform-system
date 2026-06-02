@@ -1,0 +1,113 @@
+{
+  "$schema": "https://design-tokens.org/schemas/draft-9",
+  "$description": "FAI Design System — Typography Tokens. 폰트 패밀리, 사이즈, 줄간격 규격 정의.",
+
+  "fontFamily": {
+    "base": {
+      "$value": "'Pretendard Variable', Pretendard, -apple-system, BlinkMacSystemFont, system-ui, Roboto, sans-serif",
+      "$type": "fontFamily",
+      "$description": "서비스 전체 기본 폰트. CDN: pretendardvariable-dynamic-subset"
+    }
+  },
+
+  "fontSize": {
+    "caption-s": {
+      "$value": "0.688rem",
+      "$description": "11px — 캡션 소형",
+      "$type": "dimension",
+      "lineHeight": "1rem"
+    },
+    "caption-m": {
+      "$value": "0.75rem",
+      "$description": "12px — 캡션 중형",
+      "$type": "dimension",
+      "lineHeight": "1.125rem"
+    },
+    "body-xs": {
+      "$value": "0.813rem",
+      "$description": "13px — 본문 극소",
+      "$type": "dimension",
+      "lineHeight": "1.25"
+    },
+    "body-s": {
+      "$value": "0.875rem",
+      "$description": "14px — 본문 소형",
+      "$type": "dimension",
+      "lineHeight": "1.313rem"
+    },
+    "body-ms": {
+      "$value": "0.938rem",
+      "$description": "15px — 본문 소중형",
+      "$type": "dimension",
+      "lineHeight": "1.375rem"
+    },
+    "body": {
+      "$value": "1rem",
+      "$description": "16px — 본문 기본",
+      "$type": "dimension",
+      "lineHeight": "1.5rem"
+    },
+    "body-l": {
+      "$value": "1.125rem",
+      "$description": "18px — 본문 대형",
+      "$type": "dimension",
+      "lineHeight": "1.688rem"
+    },
+    "body-xl": {
+      "$value": "1.25rem",
+      "$description": "20px — 본문 특대",
+      "$type": "dimension",
+      "lineHeight": "1.875rem"
+    },
+    "title-s": {
+      "$value": "1.5rem",
+      "$description": "24px — 타이틀 소형",
+      "$type": "dimension",
+      "lineHeight": "2.25rem"
+    },
+    "title-m": {
+      "$value": "1.75rem",
+      "$description": "28px — 타이틀 중형",
+      "$type": "dimension",
+      "lineHeight": "2.438rem"
+    },
+    "title-l": {
+      "$value": "2.25rem",
+      "$description": "36px — 타이틀 대형",
+      "$type": "dimension",
+      "lineHeight": "3.375rem"
+    },
+    "title-xl": {
+      "$value": "3rem",
+      "$description": "48px — 타이틀 특대",
+      "$type": "dimension",
+      "lineHeight": "4.188rem"
+    },
+    "display-s": {
+      "$value": "3.5rem",
+      "$description": "56px — 디스플레이 소형",
+      "$type": "dimension",
+      "lineHeight": "4.875rem"
+    },
+    "display-m": {
+      "$value": "4rem",
+      "$description": "64px — 디스플레이 중형",
+      "$type": "dimension",
+      "lineHeight": "5.188rem"
+    },
+    "display-l": {
+      "$value": "5rem",
+      "$description": "80px — 디스플레이 대형",
+      "$type": "dimension",
+      "lineHeight": "6.5rem"
+    }
+  },
+
+  "scale": {
+    "$description": "타입 스케일 계층 매핑 (역할 → 토큰 이름)",
+    "caption":  ["caption-s", "caption-m"],
+    "body":     ["body-xs", "body-s", "body-ms", "body", "body-l", "body-xl"],
+    "title":    ["title-s", "title-m", "title-l", "title-xl"],
+    "display":  ["display-s", "display-m", "display-l"]
+  }
+}

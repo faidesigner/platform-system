@@ -1,5 +1,5 @@
 export { Button } from './components/Button';
-export { NavigationBar } from './components/NavigationBar';
-export { Header } from './components/Header';
-export { Footer } from './components/Footer';
-export { HeroSection } from './components/HeroSection';
+export { default as NavigationBar } from './components/NavigationBar';
+export { default as Header } from './components/Header';
+export { default as Footer } from './components/Footer';
+export { default as HeroSection } from './components/HeroSection';

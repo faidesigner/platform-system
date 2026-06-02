@@ -4,6 +4,10 @@
   "description": "Fainders shared UI components",
   "main": "./index.ts",
   "types": "./index.ts",
+  "dependencies": {
+    "framer-motion": "^11",
+    "lucide-react": "^0.469.0"
+  },
   "peerDependencies": {
     "react": ">=18",
     "next": ">=14"

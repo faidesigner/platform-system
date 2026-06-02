@@ -27,6 +27,15 @@ Always reuse existing tokens and components first.
 2. 루트 폴더의 `changelog.md` 파일을 열고, 알맞은 섹션(Added, Changed 등)에 작업 내용을 요약해서 업데이트해.
 3. 체인지로그 업데이트가 완료되면 사용자에게 "체인지로그 기록을 완료했습니다."라고 보고해.
 
+[Rule: 공용 컴포넌트 승격]
+사용자가 "이 컴포넌트 공용으로 올려줘" 또는 이와 유사한 말을 하면, 넌 반드시 아래 순서를 따라야 해.
+1. 대상 컴포넌트 파일을 `products/homepage/src/components/`에서 `packages/ui/components/`로 이동해.
+2. `packages/ui/index.ts`에 해당 컴포넌트를 export 추가해.
+   - named export면: `export { ComponentName } from './components/ComponentName';`
+   - default export면: `export { default as ComponentName } from './components/ComponentName';`
+3. 기존 homepage의 import 경로를 `'@fai/ui'`로 교체해.
+4. 완료되면 사용자에게 "공용 컴포넌트로 승격 완료했습니다."라고 보고해.
+
 [Rule: 작업 범위 제한 및 최적화]
 1. 불필요한 탐색 금지: 파일 검색이나 코드 분석 시, 현재 지시받은 작업과 직접적인 관련이 없는 폴더나 파일은 절대 스캔하지 마.
 2. 타겟팅: 명시된 컴포넌트, `homepage-system.md`, `foundation` 폴더 안의 관련 토큰 등 작업에 꼭 필요한 최소한의 Context만 읽어서 빠르고 가볍게 응답해.
