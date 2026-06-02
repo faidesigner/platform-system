@@ -30,7 +30,7 @@ AI는 새로운 컴포넌트 파일(.md, .json) 생성 시 아래의 **Kebab-cas
 ---
 
 ## 🧱 JSON Structure Reference
-AI는 `homepage-system.md`의 규칙을 준수하여 아래 구조로 데이터를 생성한다.
+AI는 `design-system.md`의 규칙을 준수하여 아래 구조로 데이터를 생성한다.
 
 ```json
 {
