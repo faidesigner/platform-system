@@ -1,12 +1,14 @@
 {
   "name": "platform-system",
   "version": "1.0.0",
-  "description": "Platform Design System Token Pipeline",
+  "private": true,
+  "description": "Fainders Platform Design System — Monorepo",
   "scripts": {
     "sync": "node scripts/sync-tokens.js",
     "watch": "node scripts/watch-tokens.js"
   },
   "engines": {
-    "node": ">=18"
+    "node": ">=18",
+    "pnpm": ">=8"
   }
 }
