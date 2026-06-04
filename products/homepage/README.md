@@ -20,14 +20,39 @@ pnpm dev
 
 ---
 
+## Claude Code 작업 규칙
+
+### 시작할 때마다
+```
+README.md 읽고 시작해줘
+```
+
+### 공용 컴포넌트로 올릴 때
+```
+이 컴포넌트 공용으로 올려줘
+```
+
+Claude Code가 자동으로 아래 3단계를 수행합니다:
+1. `src/components/` → `packages/ui/components/` 로 이동
+2. `packages/ui/index.ts` 에 export 추가
+3. homepage import 경로를 `@fai/ui` 로 교체
+
+### 작업 완료 시마다
+```
+오늘 작업한 내용 요약해서 CHANGELOG.md에 날짜별로 추가해줘
+```
+
+---
+
 ## 작업 범위
 
 이 프로젝트에서 작업하는 디자이너는 **`products/homepage/` 안에서만** 작업합니다.
 
 | 작업 내용 | 위치 |
-|-----------|------|
+|---|---|
 | 페이지 레이아웃, 화면 구성 | `src/app/` |
-| 사이트 이름, 메뉴, 연락처 등 텍스트 수정 | `src/config/site.ts` |
+| 컴포넌트 | `src/components/` |
+| 사이트 텍스트, 메뉴, 연락처 등 | `src/config/site.ts` |
 | 전역 스타일 | `src/app/globals.css` |
 
 ---
@@ -40,27 +65,24 @@ Button, NavigationBar, Header, Footer, HeroSection은 공용 패키지에서 가
 import { Button, NavigationBar, Footer, HeroSection } from '@fai/ui'
 ```
 
-공용 컴포넌트의 소스는 `packages/ui/components/`에 있습니다.
-**이 파일들은 직접 수정하지 않습니다.** 수정이 필요하면 컴포넌트 담당자에게 요청합니다.
+공용 컴포넌트 소스는 `packages/ui/components/`에 있습니다.
+**직접 수정하지 않습니다.** 수정 필요 시 선연에게 요청합니다.
 
 ---
 
-## 디자인 토큰
-
-색상, 간격, 타이포그래피는 반드시 foundation 토큰을 사용합니다.
+## 디자인 토큰 규칙
 
 - 토큰 위치: `platform-system/root/foundation/`
 - 그리드 토큰: `platform-system/root/web/tokens/grid.json`
-- 임의의 색상, 간격, radius 값은 사용하지 않습니다.
+- **금지**: 임의 색상(`#ffffff`), 임의 픽셀값(`w-[13px]`) 하드코딩
 
 ---
 
-## Claude Code로 작업할 때
+## Git 브랜치 규칙
 
-작업 전에 다음 파일을 먼저 읽도록 지시합니다.
-
-1. `homepage-system.md` — 이 프로젝트의 구조와 컨벤션
-2. `platform-system/root/foundation/` — 디자인 토큰
-
-**지시 예시:**
-> "homepage-system.md와 foundation 토큰을 먼저 읽고, `src/app/` 안에서만 작업해줘."
+| prefix | 용도 | 예시 |
+|---|---|---|
+| `feat/` | 기능 개발 | `feat/hero-section` |
+| `claude-design/` | Claude Design 컴포넌트 | `claude-design/navigation-bar` |
+| `fix/` | 버그 수정 | `fix/button-hover` |
+| `design/` | 스타일 변경 | `design/typography` |
