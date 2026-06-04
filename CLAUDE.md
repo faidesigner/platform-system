@@ -40,3 +40,15 @@ Always reuse existing tokens and components first.
 1. 불필요한 탐색 금지: 파일 검색이나 코드 분석 시, 현재 지시받은 작업과 직접적인 관련이 없는 폴더나 파일은 절대 스캔하지 마.
 2. 타겟팅: 명시된 컴포넌트, `homepage-system.md`, `foundation` 폴더 안의 관련 토큰 등 작업에 꼭 필요한 최소한의 Context만 읽어서 빠르고 가볍게 응답해.
 3. 묻고 움직이기: 전체 코드를 광범위하게 읽어야 할 상황이 발생하면, 멋대로 탐색하기 전에 반드시 사용자에게 먼저 허락을 구해.
+
+# Git Branch Convention
+
+| prefix | 용도 |
+|---|---|
+| `feat/` | 기능 개발 (Claude Code) |
+| `design/` | 토큰, 스타일 변경 |
+| `claude-design/` | Claude Design에서 가져온 컴포넌트 |
+| `fix/` | 버그 수정 |
+| `chore/` | 설정, 구조 변경 |
+
+예시: `claude-design/navigation-bar`, `feat/button-component`, `design/color-tokens`
