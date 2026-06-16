@@ -1,0 +1,28 @@
+import * as React from "react";
+
+export function CustomerSupportIcon({ className }: { className?: string }) {
+  return (
+    <svg
+      className={className}
+      width="40"
+      height="40"
+      viewBox="0 0 40 40"
+      fill="none"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden
+    >
+      <g clipPath="url(#clip0_6542_11370)">
+        <path d="M37.8057 18.667C39.1885 20.6459 40.0019 23.052 40.002 25.6494C40.002 32.3918 34.5364 37.8584 27.7939 37.8584C21.0517 37.8583 15.5859 32.3917 15.5859 25.6494C15.5862 18.9073 21.0518 13.4415 27.7939 13.4414C29.4989 13.4414 31.1218 13.7926 32.5957 14.4238L38.4883 11.8145L37.8057 18.667Z" fill="#81EB70" />
+        <path d="M26.5742 22.5566H11.5293L7.6709 28.6758L4.38867 22.5566H0V2.14062H26.5742V22.5566Z" fill="#E4FBDF" />
+        <path d="M6.07812 9.08984H20.5011" stroke="#39DB1F" strokeWidth="1.87053" />
+        <path d="M6.07812 14.5371H14.9445" stroke="#39DB1F" strokeWidth="1.87053" />
+        <path d="M26.5713 22.6543H15.9531C17.1924 17.7418 21.4086 14.0138 26.5713 13.502V22.6543Z" fill="#39DB1F" />
+      </g>
+      <defs>
+        <clipPath id="clip0_6542_11370">
+          <rect width="40" height="40" fill="white" />
+        </clipPath>
+      </defs>
+    </svg>
+  );
+}
