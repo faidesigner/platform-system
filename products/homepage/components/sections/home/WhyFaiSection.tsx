@@ -54,17 +54,17 @@ const DEFAULT_ITEMS: WhyFaiItem[] = [
   {
     title: '멈춤 없이 매끄러운 결제',
     description: '바코드 스캔 없이 쓱 올려두면 결제가 끝나요\n쾌적한 결제 경험이 우리 매장의 매출을 바꿔요',
-    videoSrc: '/videos/home/home-why-fai-1-loop.mp4',
+    videoSrc: '/videos/home/home-why-fai-loop-1.mp4',
   },
   {
     title: '최소 인력으로 최대 효율을',
     description: '단순 계산 업무는 똑똑한 AI에 맡기고, 사장님은 더 가치 있는 매장 관리에 집중하세요',
-    videoSrc: '/videos/home/home-why-fai-2-loop.mp4',
+    videoSrc: '/videos/home/home-why-fai-loop-2.mp4',
   },
   {
     title: '막힘없는 고객 경험',
     description: '대기 시간이 줄어든 만큼 기분 좋게 매장을 나선 손님들은 이곳을 다시 찾게 될 거예요',
-    videoSrc: '/videos/home/home-why-fai-3-loop.mp4',
+    videoSrc: '/videos/home/home-why-fai-loop-3.mp4',
   },
 ];
 

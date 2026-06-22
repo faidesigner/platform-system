@@ -199,7 +199,7 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
           playsInline
           poster="/videos/case-study-poster.jpg"
         >
-          <source src="/videos/home/home-efficiency-timelapse.mp4" type="video/mp4" />
+          <source src="/videos/home/home-efficiency-timelapse-2.mp4" type="video/mp4" />
         </video>
 
         {/* ── 전체폭 scrim (비디오 위 풀스크린) ── */}
