@@ -1,5 +1,13 @@
+"use client";
+
+import { motion } from "framer-motion";
 import { InViewVideo } from "@fai/ui";
 import BenefitIcon, { type BenefitIconKey } from "@/assets/icon/BenefitIcon";
+
+const scrollFadeInUp = {
+  initial: { opacity: 0, y: 100, filter: "blur(12px)" },
+  animate: { opacity: 1, y: 0, filter: "blur(0px)" },
+};
 
 interface BenefitItem {
   subtitle: string;
@@ -25,126 +33,85 @@ export default function ProductBenefits({ title, benefits }: ProductBenefitsProp
   if (!benefits || benefits.length === 0) return null;
 
   return (
-    <section
-      className="flex flex-col items-start w-full max-w-[1440px] mx-auto py-[80px] px-[150px] gap-[40px]"
-      style={{ background: "var(--color-bg-100, #F4F5F6)" }}
-    >
-      <h2
-        className="w-full"
-        style={{
-          color: "var(--color-text-basic-primary, #1F2023)",
-          fontFamily: "var(--w-font-family, Pretendard)",
-          fontSize: "var(--w-title-L-size, 36px)",
-          fontWeight: 700,
-          lineHeight: "var(--w-title-L-lineHeight, 54px)",
-          letterSpacing: "var(--w-title-L-letterSpacing, 0.3px)",
-        }}
-      >
+    <section className="w-full flex flex-col items-center py-5xl bg-bg-100">
+      <div className="w-full max-w-[1440px] px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-3xl">
+      <h2 className="w-full text-title-m desktop:text-title-l font-bold text-text-basic-primary">
         {title}
       </h2>
 
-      <div className="flex flex-col items-start gap-[var(--size-120)] w-full self-stretch">
-      {benefits.map((benefit, i) => {
-        const isRight = benefit.imagePosition === "right";
+      <div className="flex flex-col items-start gap-7xl w-full self-stretch">
+        {benefits.map((benefit, i) => {
+          const isRight = benefit.imagePosition === "right";
 
-        const mediaBlock = (
-          <div
-            key={`media-${i}`}
-            className={[
-              "flex flex-col items-start w-[520px] h-[600px] shrink-0 rounded-[16px] overflow-hidden sticky top-[120px] z-10",
-              isRight ? "md:order-2" : "",
-            ].join(" ")}
-            style={{ background: "var(--color-filled-basic-tertiary, #E4E6E7)" }}
-          >
-            <InViewVideo
-              src={benefit.video}
-              poster={benefit.poster}
-              className="h-full w-full object-cover"
-            />
-          </div>
-        );
+          const mediaBlock = (
+            <div
+              key={`media-${i}`}
+              className={[
+                "flex flex-col items-start w-[45%] aspect-[520/600] shrink-0 rounded-fai-m overflow-hidden sticky top-7xl z-10 bg-surface-sunken",
+                "desktop:w-[520px] desktop:h-[600px] desktop:aspect-auto",
+                isRight ? "tablet:order-2" : "",
+              ].join(" ")}
+            >
+              <InViewVideo
+                src={benefit.video}
+                poster={benefit.poster}
+                className="h-full w-full object-cover"
+              />
+            </div>
+          );
 
-        const textBlock = (
-          <div
-            key={`text-${i}`}
-            className={[
-              "flex flex-col items-start py-[24px] px-0 gap-[80px] flex-1",
-              isRight ? "md:order-1" : "",
-            ].join(" ")}
-          >
-            <div className="flex flex-col items-start gap-[8px] w-full">
-              <div className="flex items-center gap-[8px]">
-                <BenefitIcon name={benefit.icon} />
-                <span
-                  style={{
-                    color: "var(--color-text-optional-brand-primary, #36CD1E)",
-                    fontFamily: "var(--w-font-family, Pretendard)",
-                    fontSize: "var(--w-title-S-size, 24px)",
-                    fontWeight: 600,
-                    lineHeight: "var(--w-title-S-lineHeight, 36px)",
-                    letterSpacing: "var(--w-title-S-letterSpacing, 0.3px)",
-                  }}
-                >
-                  {benefit.eyebrow}
-                </span>
+          const textBlock = (
+            <div
+              key={`text-${i}`}
+              className={[
+                "flex flex-col items-start py-xl px-0 gap-3xl desktop:gap-5xl flex-1",
+                isRight ? "tablet:order-1" : "",
+              ].join(" ")}
+            >
+              <div className="flex flex-col items-start gap-s w-full">
+                <div className="flex items-center gap-s">
+                  <BenefitIcon name={benefit.icon} />
+                  <span className="text-body-xl desktop:text-title-s font-semibold text-brand-text">
+                    {benefit.eyebrow}
+                  </span>
+                </div>
+
+                <h3 className="self-stretch whitespace-pre-line text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
+                  {benefit.title}
+                </h3>
               </div>
 
-              <h3
-                className="self-stretch whitespace-pre-line"
-                style={{
-                  color: "var(--color-text-basic-primary, #1F2023)",
-                  fontFamily: "var(--w-font-family, Pretendard)",
-                  fontSize: "var(--w-title-XL-size, 48px)",
-                  fontWeight: 700,
-                  lineHeight: "var(--w-title-XL-lineHeight, 67px)",
-                  letterSpacing: "var(--w-title-XL-letterSpacing, 0.3px)",
-                }}
-              >
-                {benefit.title}
-              </h3>
+              <div className="flex flex-col items-start gap-xl desktop:gap-3xl w-full">
+                {benefit.items.map((item, j) => (
+                  <div key={j} className="flex flex-col items-start gap-s">
+                    <h4 className="text-title-s desktop:text-title-m font-bold text-text-basic-primary">
+                      {item.subtitle}
+                    </h4>
+                    <p className="self-stretch whitespace-pre-line text-body-l desktop:text-body-xl font-normal text-text-basic-secondary">
+                      {item.description}
+                    </p>
+                  </div>
+                ))}
+              </div>
             </div>
+          );
 
-            <div className="flex flex-col items-start gap-[40px] w-full">
-              {benefit.items.map((item, j) => (
-                <div key={j} className="flex flex-col items-start gap-[8px]">
-                  <h4
-                    style={{
-                      color: "var(--color-text-basic-primary, #1F2023)",
-                      fontFamily: "var(--w-font-family, Pretendard)",
-                      fontSize: "var(--w-title-M-size, 28px)",
-                      fontWeight: 700,
-                      lineHeight: "var(--w-title-M-lineHeight, 39px)",
-                      letterSpacing: "var(--w-title-M-letterSpacing, 0.3px)",
-                    }}
-                  >
-                    {item.subtitle}
-                  </h4>
-                  <p
-                    className="self-stretch whitespace-pre-line"
-                    style={{
-                      color: "var(--color-text-basic-secondary, #3A3D40)",
-                      fontFamily: "var(--font-family-Pretendard, Pretendard)",
-                      fontSize: "var(--font-size-20, 20px)",
-                      fontWeight: 400,
-                      lineHeight: "var(--font-lineHeight-20, 30px)",
-                      letterSpacing: "var(--font-letterSpacing-0, 0)",
-                    }}
-                  >
-                    {item.description}
-                  </p>
-                </div>
-              ))}
-            </div>
-          </div>
-        );
-
-        return (
-          <div key={i} className="flex flex-row items-start gap-[80px] w-full self-stretch">
-            {mediaBlock}
-            {textBlock}
-          </div>
-        );
-      })}
+          return (
+            <motion.div
+              key={i}
+              className="flex flex-row items-start gap-5xl w-full self-stretch"
+              variants={scrollFadeInUp}
+              initial="initial"
+              whileInView="animate"
+              viewport={{ once: true, margin: "-50px" }}
+              transition={{ type: "spring", stiffness: 80, damping: 20, mass: 1, delay: i * 0.15 }}
+            >
+              {mediaBlock}
+              {textBlock}
+            </motion.div>
+          );
+        })}
+      </div>
       </div>
     </section>
   );

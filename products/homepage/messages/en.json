@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "products": "Products",
+    "about": "About",
+    "media": "Media",
+    "careers": "Careers",
+    "contact": "Contact"
+  },
+  "products": {
+    "visionCheckout": "VISION CHECK-OUT",
+    "unmannedStore": "UNMANNED STORE"
+  }
+}

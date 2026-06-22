@@ -1,0 +1,13 @@
+{
+  "nav": {
+    "products": "제품",
+    "about": "회사소개",
+    "media": "미디어",
+    "careers": "채용",
+    "contact": "문의하기"
+  },
+  "products": {
+    "visionCheckout": "VISION CHECK-OUT",
+    "unmannedStore": "UNMANNED STORE"
+  }
+}

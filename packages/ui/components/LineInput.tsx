@@ -12,64 +12,93 @@ export type LineInputProps = {
   error?: boolean;
   helpText?: string;
   disabled?: boolean;
+  maxLength?: number;
+  onBlur?: () => void;
 };
 
-export function LineInput({
-  label,
-  placeholder,
-  required = false,
-  type = "text",
-  value,
-  onChange,
-  name,
-  error = false,
-  helpText,
-  disabled = false,
-}: LineInputProps) {
-  const borderClass = error
-    ? "border-border-error"
-    : disabled
-      ? "border-border-disabled"
-      : "border-border-faint focus-within:border-border-brand";
+export const LineInput = React.forwardRef<HTMLDivElement, LineInputProps>(
+  function LineInput(
+    {
+      label,
+      placeholder,
+      required = false,
+      type = "text",
+      value,
+      onChange,
+      name,
+      error = false,
+      helpText,
+      disabled = false,
+      maxLength,
+      onBlur,
+    },
+    ref
+  ) {
+    return (
+      <div ref={ref} className="flex flex-col py-[var(--padding-S,8px)] px-[var(--padding-none,0)] self-stretch w-full">
 
-  return (
-    <div className="flex w-full flex-col py-s self-stretch">
-      <div className="flex w-full flex-col gap-[10px] self-stretch">
+        {/* input item */}
+        <div className="flex flex-col items-start gap-[var(--spacing-XS,6px)] self-stretch">
 
-        {/* titleItem */}
-        <div className="flex items-center gap-s">
-          <span className="text-body-l font-medium leading-[1.5] text-secondary">
-            {label}
-          </span>
-          {required && (
-            <span aria-hidden className="size-s shrink-0 rounded-fai-circle bg-brand" />
-          )}
+          {/* titleItem */}
+          <div className="flex items-center gap-[var(--spacing-S,8px)]">
+            <span
+              className="text-[length:var(--font-size-18,18px)] font-medium leading-[1.5] text-[var(--color-text-basic-secondary,#3A3D40)]"
+            >
+              {label}
+            </span>
+            {required && (
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="8"
+                height="8"
+                viewBox="0 0 8 8"
+                fill="none"
+                aria-hidden="true"
+                className="shrink-0"
+              >
+                <circle cx="4" cy="4" r="4" fill="#39DB1F" />
+              </svg>
+            )}
+          </div>
+
+          {/* input field */}
+          <div
+            className={`flex flex-col items-start self-stretch py-[var(--padding-ms,12px)] px-[var(--padding-none,0)] border-b-[1.25px] transition-colors focus-within:border-[var(--color-border-brand,#39DB1F)] ${
+              error
+                ? "border-[var(--color-border-negative,#EA3B2A)]"
+                : disabled
+                  ? "border-border-disabled"
+                  : "border-[var(--color-border-tertiary,#E4E6E7)]"
+            }`}
+          >
+            <input
+              name={name}
+              type={type}
+              value={value}
+              required={required}
+              disabled={disabled}
+              maxLength={maxLength}
+              placeholder={placeholder}
+              aria-invalid={error || undefined}
+              onChange={(e) => onChange(e.target.value)}
+              onBlur={onBlur}
+              className="self-stretch w-full bg-transparent outline-none text-[length:var(--font-size-18,18px)] font-normal leading-[1.5] text-[var(--color-text-basic-primary,#1F2023)] placeholder:text-[var(--color-text-basic-fourth,#A1A5AA)] disabled:text-[var(--color-text-basic-disabled,#A1A5AA)] disabled:placeholder:text-[var(--color-text-basic-disabled,#A1A5AA)]"
+            />
+          </div>
+
         </div>
 
-        {/* input field */}
-        <div className={`flex w-full flex-col items-start py-ms border-b-[1.25px] ${borderClass}`}>
-          <input
-            name={name}
-            type={type}
-            value={value}
-            required={required}
-            disabled={disabled}
-            placeholder={placeholder}
-            aria-invalid={error || undefined}
-            onChange={(e) => onChange(e.target.value)}
-            className="w-full h-[27px] bg-transparent text-body-l font-normal leading-[1.5] text-primary
-              outline-none placeholder:text-quaternary
-              disabled:text-disabled disabled:placeholder:text-disabled"
-          />
-        </div>
-
+        {/* helpText item */}
         {error && helpText && (
-          <p className="px-2.5 text-caption-m font-normal leading-[1.5] text-error">
-            {helpText}
-          </p>
+          <div className="flex h-[18px] items-start self-stretch mt-[var(--spacing-2XS,4px)]">
+            <span className="flex-1 text-[var(--color-text-basic-negative,#EA3B2A)] text-[length:var(--font-size-12,12px)] font-normal leading-[1.5]">
+              {helpText}
+            </span>
+          </div>
         )}
 
       </div>
-    </div>
-  );
-}
+    );
+  }
+);

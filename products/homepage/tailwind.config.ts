@@ -365,12 +365,17 @@ const config: Config = {
         's':   '0.5rem',
         'ms':  '0.75rem',
         'm':   '1rem',
+        'ml':  'var(--fai-space-ml)',  // 18px
         'l':   '1.25rem',
         'xl':  '1.5rem',
         '2xl': '2rem',
         '3xl': '2.5rem',
         '4xl': '3.5rem',
-        '5xl': 'var(--fai-space-5xl)', // 160px
+        '5xl': 'var(--fai-space-5xl)', // 80px
+        '6xl': 'var(--fai-space-6xl)', // 100px
+        '7xl': 'var(--fai-space-7xl)', // 120px
+        '8xl': 'var(--fai-space-8xl)', // 180px
+        '9xl': 'var(--fai-space-9xl)', // 240px
       },
 
       /* -------------------------------------------------------
@@ -386,6 +391,19 @@ const config: Config = {
         'fai-l':      'var(--fai-radius-l)',
         'fai-xl':     'var(--fai-radius-xl)',
         'fai-circle': 'var(--fai-radius-circle)',
+      },
+
+      /* -------------------------------------------------------
+         Box Shadow  (effects.json › shadow.*)
+         사용: shadow-XS / shadow-S / shadow-M / shadow-L / shadow-XL / shadow-XXL
+         ------------------------------------------------------- */
+      boxShadow: {
+        'XS':  'var(--shadow-XS)',
+        'S':   'var(--shadow-S)',
+        'M':   'var(--shadow-M)',
+        'L':   'var(--shadow-L)',
+        'XL':  'var(--shadow-XL)',
+        'XXL': 'var(--shadow-XXL)',
       },
 
       /* -------------------------------------------------------

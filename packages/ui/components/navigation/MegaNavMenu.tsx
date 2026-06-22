@@ -22,11 +22,12 @@
  *   내부 Link 는 next/link 그대로 유지.
  */
 
-import { Fragment } from "react";
+import { Fragment, type ReactNode } from "react";
 import { ChevronDown } from "lucide-react";
 import { usePathname, useParams } from "next/navigation";
 import { Menu, type MenuItem } from "../Menu";
 import { Dropdown, type DropdownGroup } from "../Dropdown";
+import { HoverDropdown } from "../hover-dropdown/HoverDropdown";
 
 /* ──────────────────────────────────────────
    Types
@@ -40,6 +41,11 @@ export interface NavItem {
   external?:      boolean;
   /** 외부 링크 전용 접근성 레이블 (스크린 리더용) */
   ariaLabel?:     string;
+  /**
+   * 커스텀 메가 메뉴 패널.
+   * 지정 시 Dropdown 대신 HoverDropdown + 패널 형태로 렌더링.
+   */
+  megaMenuPanel?: ReactNode;
 }
 
 export interface MegaNavMenuProps {
@@ -126,11 +132,55 @@ export default function MegaNavMenu({ isTransparent, navItems }: MegaNavMenuProp
     >
       {segments.map((seg, idx) => {
 
-        /* ── 드롭다운 세그먼트 → Dropdown XL ── */
+        /* ── 드롭다운 세그먼트 ── */
         if (seg.kind === "dropdown") {
           const { item } = seg;
           const active   = isItemActive(item.href);
 
+          /** 공통 트리거 버튼 */
+          const triggerBtn = (open: boolean) => (
+            <button
+              type="button"
+              className={cn(
+                "h-3xl flex justify-center items-center px-m rounded-fai-s",
+                "transition-colors duration-200 cursor-pointer",
+                hoverBg,
+                hoverText,
+                textColor,
+              )}
+            >
+              <span className={cn("flex items-center gap-s text-body", active ? "font-bold" : "font-semibold")}>
+                {item.label}
+                <ChevronDown
+                  className={cn(
+                    "h-m w-m shrink-0 transition-transform duration-200",
+                    open ? "rotate-180" : "",
+                  )}
+                  aria-hidden
+                />
+              </span>
+            </button>
+          );
+
+          /* ── 메가 메뉴 패널 → HoverDropdown ── */
+          if (item.megaMenuPanel) {
+            return (
+              <HoverDropdown
+                key={item.label}
+                /*
+                 * wrapperClassName 에서 "relative" 제거
+                 * → 패널의 containing block 이 <header>(position:fixed) 로 상승
+                 * → left: 150px = 로고 시작점(desktop nav px-[150px])
+                 */
+                wrapperClassName="flex items-center"
+                panelClassName="absolute top-[calc(100%+var(--spacing-2XS,4px))] left-xl right-xl desktop:left-[var(--padding-8-xl,150px)] desktop:right-[var(--padding-8-xl,150px)] z-50"
+                trigger={triggerBtn}
+                panel={item.megaMenuPanel}
+              />
+            );
+          }
+
+          /* ── 일반 드롭다운 → Dropdown XL ── */
           const groups: DropdownGroup[] = [
             {
               items: (item.dropdownItems ?? []).map((sub) => ({
@@ -145,39 +195,8 @@ export default function MegaNavMenu({ isTransparent, navItems }: MegaNavMenuProp
               key={item.label}
               size="XL"
               trigger="hover"
-              /* flex items-center: nav flex 라인에서 버튼 수직 정렬 보장 */
               className="flex items-center"
-              triggerEl={(open) => (
-                /*
-                 * 트리거 버튼 — 하드코딩 px 없음:
-                 *   h-3xl = 2.5rem = 40px  (spacing 3XL 토큰)
-                 *   px-m  = 1rem   = 16px  (spacing M 토큰)
-                 *   rounded-fai-s = 0.5rem (cornerRadius S 토큰)
-                 *   gap-s = 0.5rem = 8px   (spacing S 토큰)
-                 *   text-body = 1rem/1.5rem (typography text-M 토큰)
-                 */
-                <button
-                  type="button"
-                  className={cn(
-                    "h-3xl flex justify-center items-center px-m rounded-fai-s",
-                    "transition-colors duration-200 cursor-pointer",
-                    hoverBg,
-                    hoverText,
-                    textColor,
-                  )}
-                >
-                  <span className={cn("flex items-center gap-s text-body", active ? "font-bold" : "font-semibold")}>
-                    {item.label}
-                    <ChevronDown
-                      className={cn(
-                        "h-m w-m shrink-0 transition-transform duration-200",
-                        open ? "rotate-180" : "",
-                      )}
-                      aria-hidden
-                    />
-                  </span>
-                </button>
-              )}
+              triggerEl={triggerBtn}
               groups={groups}
             />
           );

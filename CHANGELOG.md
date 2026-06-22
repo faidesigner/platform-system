@@ -2,6 +2,148 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [2.9.0] - 2026-06-22
+
+### ✅ Added
+- `packages/ui/components/navigation/MegaMenuPanel.tsx` — MegaNav 패널 컴포넌트 신규 생성
+- `packages/ui/components/Scrollbar.tsx` — 공통 Scrollbar 컴포넌트 신규 생성
+- `products/homepage/app/[locale]/about/` — About 페이지 신규 생성
+- `products/homepage/app/[locale]/contact/` — Contact 페이지 신규 생성
+- `products/homepage/app/[locale]/media/` — Media 페이지 신규 생성
+- `products/homepage/app/[locale]/playground/` — Playground 페이지 신규 생성
+- `products/homepage/assets/icon/ArrowUpIcon.tsx`, `BenefitIcon.tsx`, `ChevronIcon.tsx`, `EffectIcon.tsx`, `GlobeIcon.tsx`, `IcArrowRight16.tsx`, `IcRequiredDot.tsx`, `SocialIcon.tsx` — 아이콘 컴포넌트 다수 신규 생성
+- `products/homepage/components/sections/products/StoreCaseStudies.tsx`, `StoreEffects.tsx`, `StoreHero.tsx`, `StoreInteractiveContainer.tsx`, `StoreTypes.tsx` — 스토어 섹션 컴포넌트 신규 생성
+- `products/homepage/components/sections/CtaBanner.tsx` — CTA 배너 섹션 신규 생성
+- `products/homepage/config/types.ts` — 공통 타입 정의 신규 추가
+- `products/homepage/i18n/`, `messages/` — 다국어 라우팅 및 메시지 파일 추가
+- `products/homepage/components/ui/` — 공통 UI 컴포넌트 디렉토리 신규 생성
+
+### 🔄 Changed
+- `packages/ui/components/NavigationBar.tsx` — 네비게이션 바 스크롤 인터랙션 및 상태 로직 개선
+- `packages/ui/components/navigation/MegaNavMenu.tsx` — MegaNav 메뉴 구조 및 렌더링 개선
+- `packages/ui/components/LineInput.tsx` — LineInput 컴포넌트 전면 리팩토링
+- `packages/ui/components/HoverDropdown.tsx` — HoverDropdown 인터랙션 개선
+- `packages/ui/components/ui/Drawer.tsx` — Drawer 컴포넌트 개선
+- `packages/ui/components/Header.tsx` — Header 컴포넌트 수정
+- `packages/ui/components/Footer.tsx` — Footer 컴포넌트 수정
+- `packages/ui/index.ts` — 신규 컴포넌트 export 추가
+- `packages/ui/package.json` — 패키지 의존성 업데이트
+- `products/homepage/components/sections/contact/ContactUsSection.tsx` — Contact 폼 대규모 리팩토링 (레이아웃·유효성 검사·UX 전면 개편)
+- `products/homepage/components/sections/products/ProductHero.tsx` — Hero 섹션 레이아웃 및 콘텐츠 개선
+- `products/homepage/components/sections/products/ProductBenefits.tsx` — Benefits 섹션 리팩토링
+- `products/homepage/components/sections/products/ProductFeatures.tsx` — Features 섹션 구조 정리
+- `products/homepage/components/sections/products/ProductIndustries.tsx` — Industries 섹션 개선
+- `products/homepage/components/sections/products/ProductReviews.tsx` — Reviews 섹션 리팩토링
+- `products/homepage/app/[locale]/products/[slug]/page.tsx` — 제품 상세 페이지 섹션 조립 업데이트
+- `products/homepage/assets/icon/ReviewIcon.tsx` — ReviewIcon 컴포넌트 리팩토링
+- `products/homepage/config/site.ts` — 사이트 설정 데이터 업데이트
+- `products/homepage/tailwind.config.ts` — Tailwind 설정 업데이트
+
+---
+
+## [2.8.0] - 2026-06-20
+
+### ✅ Added
+- `products/homepage/components/sections/home/EfficiencySection.tsx` — 홈 Efficiency 섹션 신규 생성 (풀스크린 비디오 배경·scrim·`AnimatedStat` 3단 스탯; 반응형 padding·타이포; `pinDuration` prop)
+
+### 🔄 Changed
+- `products/homepage/app/[locale]/page.tsx` — `EfficiencySection` 조립; `HeroSection`에 `clientLogos` 파트너 로고 전달; `CustomersSection` `linkHref`를 VCO 리뷰 앵커(`/products/vision-check-out#product-reviews`)로 연결
+- `products/homepage/components/layout/NavigationBarBridge.tsx` — `desktopLangSwitcher`·`mobileLangSwitcher` prop으로 homepage `LanguageSwitcher` 데스크톱/모바일 variant 주입
+- `packages/ui/components/NavigationBar.tsx` — 제품 상세(`isProductDetail`) 히어로 구간(100vh) 스크롤 투명 헤더; 미디어(`isMedia`) 페이지 항상 라이트 배경 고정; 초기 `isTransparent`를 `!isHome && !isMedia`로 조정
+- `products/homepage/components/sections/products/StoreCaseStudies.tsx` — `cases` 변경 시 `active` 인덱스 `useEffect`로 리셋
+
+---
+
+## [2.7.0] - 2026-06-19
+
+### ✅ Added
+- `packages/ui/components/navigation/TabletNavigationBar.tsx` — 태블릿(768–960px) 전용 독립 헤더 컴포넌트 전면 재설계 (`logo`, `isDarkMode`, `renderDrawer` props; 내부 open 상태 관리; 햄버거/X 토글; pathname 변경 시 드로어 자동 닫기; 다크/라이트 모드 배경색 분기)
+- `packages/ui/components/navigation/TabletDrawerMenu.tsx` — 태블릿 드로어 메뉴 컴포넌트 신규 생성 (아코디언 드롭다운, 외부 링크, 내부 링크 처리; locale prefix 자동 부착)
+- `packages/ui/components/navigation/LanguageSwitcher.tsx` — 태블릿 언어 전환 컴포넌트 신규 생성 (KR/EN/JP 인라인 버튼; `isDarkMode` 다크/라이트 텍스트 컬러 분기; `next/navigation` + `useLocale` 기반 locale 전환)
+- `packages/ui/package.json` — `next-intl >=4` peerDependency 추가
+
+### 🔄 Changed
+- `packages/ui/components/NavigationBar.tsx` — 태블릿 구간 아키텍처 분리: 메인 `<header>` `tablet:hidden min-[961px]:block` 적용, 독립 `TabletNavigationBar` 사이드카 렌더링, 모바일 `Drawer` 단순화 (`GlobalUtilityMenu` 전용)
+- `packages/ui/components/Header.tsx` — 태블릿 구간 `TabletNavigationBar` 연결 정리 (신규 인터페이스 대응)
+- `packages/ui/index.ts` — `TabletNavigationBar`, `TabletDrawerMenu`, `LanguageSwitcher` export 추가; 구 `TabletNavItem` 타입 제거
+- `products/homepage/components/sections/products/StoreEffects.tsx` — `EffectIcon name` prop `as EffectIconKey` 타입 캐스팅으로 빌드 에러 수정
+- 드로어(태블릿/모바일) 내부 언어 전환 영역(`langRow`) 제거 — `TabletDrawerMenu`, `GlobalUtilityMenu` 에 `langRow` 미전달
+
+---
+
+## [2.6.0] - 2026-06-19
+### ✅ Added
+- `packages/ui/components/Scrollbar.tsx` — 스크롤 영역 래퍼 원자 컴포넌트 (`forwardRef`, padding·overflow-auto 토큰 명세)
+- `products/homepage/assets/icon/EffectIcon.tsx` — StoreEffects 효과 카드 아이콘 팩토리 (인건비 절감·결제 무인화·원격 운영 가능)
+- `products/homepage/assets/icon/GlobeIcon.tsx` — LanguageSwitcher 글로벌 아이콘
+- `products/homepage/assets/icon/SocialIcon.tsx` — ShowcaseSection LinkedIn·Instagram 아이콘 팩토리
+- `products/homepage/assets/icon/ChevronIcon.tsx` · `ArrowUpIcon.tsx` — 네비·CTA용 화살표 아이콘
+- `products/homepage/app/globals.css` — 전역 커스텀 스크롤바 스타일 (`::-webkit-scrollbar`, `scrollbar-color` thin)
+
+### 🔄 Changed
+- `packages/ui/components/ui/Drawer.tsx` — 모바일 드로어 본문 `div` → `Scrollbar` 래퍼로 교체
+- `packages/ui/index.ts` — `Scrollbar`·`ScrollbarProps` export 추가
+- `packages/ui/components/LineInput.tsx` — `forwardRef` 전환; `maxLength`·`onBlur` prop 추가; 피그마 명세 패딩·border·helpText 레이아웃 정밀 교정
+- `products/homepage/components/sections/products/ProductBenefits.tsx` — `motion.div` + `scrollFadeInUp` 스프링 진입 애니메이션; `container`·semantic spacing 토큰 (`gap-7xl`, `sticky top-7xl`)
+- `products/homepage/components/sections/products/StoreEffects.tsx` — 인라인 SVG → `EffectIcon` 팩토리 연동
+- `products/homepage/components/layout/LanguageSwitcher.tsx` — `GlobeIcon` 글로벌 에셋 import
+- `products/homepage/components/sections/media/ShowcaseSection.tsx` — `SocialIcon` 팩토리로 SNS 아이콘 통합
+- `products/homepage/config/site.ts` — VCO `heroVideo`·benefit 루프 영상 경로 실제 에셋 바인딩; `clientLogos` Orange Planet 추가; unmanned-store 히어로 `store-hero.png`; contact `complete` 블록·`bg-gradation-n.png` 경로
+- `packages/ui/components/Footer.tsx` — 대표이사 표기 `함명원ㆍ왕민권`으로 업데이트
+
+---
+
+## [2.5.0] - 2026-06-18
+### ✅ Added
+- `packages/ui/components/navigation/MegaMenuPanel.tsx` — 메가 메뉴 범용 패널 컴포넌트 신규 생성 (CSS background + 그라데이션 오버레이, `bgStyle` per-item 배경 포지션/사이즈, hover 시 brand primary 컬러 + scale 애니메이션, `MegaMenuItemData` / `MegaMenuPanelProps` 타입 export)
+- `products/homepage/components/ui/ProductMegaMenu.tsx` — 제품 메가 메뉴 래퍼 컴포넌트 신규 생성 (locale prefix 처리 후 `MegaMenuPanel` 주입)
+- `packages/ui/index.ts` — `MegaMenuPanel`, `MegaMenuItemData`, `MegaMenuPanelProps` export 추가
+- `products/homepage/config/site.ts` — `productMenu` 배열 SoT 추가 (VISION CHECK-OUT / UNMANNED STORE; 이미지 경로 + `bgStyle` 포지션 데이터 포함)
+- `products/homepage/tailwind.config.ts` — `boxShadow` extend 블록 추가 (XS/S/M/L/XL/XXL → `var(--shadow-*)` 토큰); spacing `ml/5xl/6xl/7xl/8xl/9xl` 토큰 추가
+
+### 🔄 Changed
+- `packages/ui/components/NavigationBar.tsx`
+  - `navItems?: readonly NavItem[]` prop 추가 — 미지정 시 내부 `NAV_ITEMS` 사용, homepage에서 `megaMenuPanel` 주입 가능하도록 오버라이드 지원
+  - 우측 액션 div `self-stretch` 추가 → LanguageSwitcher가 헤더 전체 높이를 채워 `top: 100%` = 헤더 하단 정렬 보장
+- `packages/ui/components/hover-dropdown/HoverDropdown.tsx`
+  - `wrapperClassName?` prop 추가 — 지정 시 기본 `"relative"` 제거, 메가 메뉴 패널의 containing block을 `<header>`(position: fixed)로 상승시킬 때 사용
+  - `panelClassName?` prop 추가 — 패널 위치/크기 완전 오버라이드 가능
+- `packages/ui/components/navigation/MegaNavMenu.tsx`
+  - `NavItem`에 `megaMenuPanel?: ReactNode` 필드 추가
+  - `megaMenuPanel` 지정 시 `HoverDropdown` 브랜치로 분기 렌더링 (패널 위치: `top-[calc(100%+var(--spacing-2XS,4px))] left-xl right-xl desktop:left-[150px] desktop:right-[150px]`)
+  - 트리거 버튼 active `font-bold` → inner `<span>`으로 이동 (isTransparent context-aware 색상 유지)
+- `packages/ui/components/ui/Drawer.tsx` — 관련 스타일 조정
+- `products/homepage/components/layout/NavigationBarBridge.tsx` — `NAV_ITEMS` + `ProductMegaMenu` 주입 구조로 재작성; `navItems` prop으로 `NavigationBar`에 전달
+- `products/homepage/components/layout/LanguageSwitcher.tsx`
+  - 데스크톱 wrapper `self-stretch` 추가 → 헤더 높이 채움
+  - 드롭다운 컨테이너 border `0.5px solid var(--color-border-tertiary)` 통일
+  - 드롭다운 gap `top: calc(100% + var(--spacing-2XS, 4px))` 적용
+- `products/homepage/components/sections/home/HeroSection.tsx`
+  - CTA 행 패딩 `px-[150px]` 고정 → `px-l tablet:px-xl desktop:px-[150px]` 반응형으로 변경
+
+---
+
+## [2.4.0] - 2026-06-17
+### ✅ Added
+- `products/homepage/assets/icon/IcRequiredDot.tsx` — 필수 입력 dot 마커 아이콘 컴포넌트 신규 추출 (8×8, `--fai-bg-brand` CSS 변수 fill, `aria-hidden`)
+- `products/homepage/assets/icon/IcArrowRight16.tsx` — CustomersSection 링크 버튼용 오른쪽 화살표 아이콘 (16×16, `currentColor` mask 방식)
+- `products/homepage/config/types.ts` — `ContactComplete` 인터페이스 추가 (`title`, `subCopy`, `buttonLabel`, `backgroundAsset`); `ContactConfig`에 `complete: ContactComplete` 필드 추가
+
+### 🔄 Changed
+- `products/homepage/components/sections/contact/ContactUsSection.tsx`
+  - **완료 화면** — 제출 후 `submitted` 상태 전환, 완료 타이틀·서브카피·`[btn/icoTxt/square/primary/XL]` 버튼 렌더링; `dark` wrapper로 버튼 다크 모드 CSS 변수 강제 해석
+  - **배경 이미지 분리** — `!submitted` / `submitted` 조건별 독립 `<Image>` 렌더링 (form: `bg-gradation-n.png`, complete: `bg-gradation-confirm-n.png`)
+  - **즉시 스크롤** — `flushSync(setSubmitted(true))` 후 `lenisRef.current.scrollTo(section, { immediate: true })` / `window.scrollTo({ behavior: "instant" })` 분기 처리 (Lenis 인터셉트 우회)
+  - **완료 화면 중앙 정렬** — content wrapper 조건부 `h-svh items-center justify-center` 적용
+  - **handleContinue** — `setState(EMPTY_STATE)` · `setSubmitted(false)` 제거 → `router.push("/")` 단독 호출 (완료 화면 플래시 제거)
+  - **Toast 마크업** — `<Toast>` 컴포넌트 + `window.open` → `<a href target="_blank">` + `<CustomerSupportIcon>` 인라인 구조로 교체; `dark` wrapper 다크 시맨틱 토큰 적용
+  - **컬러 토큰 교정** — 임의 hex/RGB → `--color-*` / `--fai-*` CSS 변수 + hex fallback 전면 재정렬 (toast·complete 화면 전체)
+  - **leading 토큰 교정** — `leading-[1.5]` 임의값 7곳 → `--font-lineHeight-{14,18,20,36}` 파운데이션 토큰으로 교체
+  - **IcRequiredDot 도입** — 인라인 SVG → `@/assets/icon/IcRequiredDot` 컴포넌트 import로 전환
+- `products/homepage/config/site.ts` — `contact.backgroundAsset` → `bg-gradation-n.png`; `contact.complete` 데이터 블록 추가 (title·subCopy·buttonLabel·backgroundAsset)
+
+---
+
 ## [2.3.0] - 2026-06-17
 ### ✅ Added
 - `packages/ui/components/Checkbox.tsx` — 순수 체크박스 원자 컴포넌트 신규 생성 (unchecked·checked·partial·disabled·error 5가지 상태; SVG mask 방식 체크·부분선택 아이콘; `useId` 기반 mask ID 충돌 방지)

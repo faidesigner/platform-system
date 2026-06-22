@@ -1,0 +1,466 @@
+@config "../tailwind.config.ts";
+
+/* ============================================================
+   Fonts
+   ============================================================ */
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
+
+@import "tailwindcss";
+
+/* ============================================================
+   LAYER 1 — Primitive Tokens  (원시 수치, 직접 사용 금지)
+   컴포넌트에서는 아래 LAYER 2 시맨틱 변수만 사용할 것.
+   ============================================================ */
+:root {
+  --color-black: #000000;
+  --color-white: #ffffff;
+
+  --color-red-50: #fef6f6;   --color-red-100: #fde5e3;
+  --color-red-200: #fbcfcb;  --color-red-300: #f7a8a1;
+  --color-red-400: #f16355;  --color-red-500: #ea3b2a;
+  --color-red-600: #de2412;  --color-red-700: #a11a0d;
+  --color-red-800: #711209;  --color-red-900: #420b05;
+
+  --color-yellow-50: #fffaeb;   --color-yellow-100: #fef1c8;
+  --color-yellow-200: #fee59a;  --color-yellow-300: #fdd868;
+  --color-yellow-400: #fdcb35;  --color-yellow-500: #fcbe03;
+  --color-yellow-600: #e3ab03;  --color-yellow-700: #a17a02;
+  --color-yellow-800: #6f5401;  --color-yellow-900: #3c2e01;
+
+  --color-orange-50: #fff7f0;   --color-orange-100: #fee4cd;
+  --color-orange-200: #fed5ae;  --color-orange-300: #fdaf68;
+  --color-orange-400: #fd9535;  --color-orange-500: #fc7a03;
+  --color-orange-600: #d46702;  --color-orange-700: #a24e02;
+  --color-orange-800: #743801;  --color-orange-900: #3c1d01;
+
+  --color-green-50: #effced;   --color-green-100: #e4fbdf;
+  --color-green-200: #bcf4b3;  --color-green-300: #81eb70;
+  --color-green-400: #5be444;  --color-green-500: #39db1f;
+  --color-green-600: #36cd1e;  --color-green-700: #2ba018;
+  --color-green-800: #1c6b0f;  --color-green-900: #0e3b08;
+
+  --color-mint-50: #e3fcf1;   --color-mint-100: #baf7de;
+  --color-mint-200: #8cf2c7;  --color-mint-300: #47eba6;
+  --color-mint-400: #19e690;  --color-mint-500: #17cf81;
+  --color-mint-600: #14b873;  --color-mint-700: #0f8a56;
+  --color-mint-800: #0a5c3a;  --color-mint-900: #063723;
+
+  --color-blue-50: #f0f7fe;   --color-blue-100: #ddecfe;
+  --color-blue-200: #b6d7fc;  --color-blue-300: #85bdfa;
+  --color-blue-400: #4a9df7;  --color-blue-500: #2388f6;
+  --color-blue-600: #096edc;  --color-blue-700: #0756ab;
+  --color-blue-800: #053d7a;  --color-blue-900: #03274e;
+
+  --color-indigo-50: #eff1fb;   --color-indigo-100: #d7dcf4;
+  --color-indigo-200: #bbc3ec;  --color-indigo-300: #909ce0;
+  --color-indigo-400: #6071d2;  --color-indigo-500: #4459ca;
+  --color-indigo-600: #374cc3;  --color-indigo-700: #27378c;
+  --color-indigo-800: #1d2867;  --color-indigo-900: #121940;
+
+  --color-purple-50: #f4f1fd;   --color-purple-100: #eae3fc;
+  --color-purple-200: #c9baf7;  --color-purple-300: #a68cf2;
+  --color-purple-400: #8d6cef;  --color-purple-500: #693eea;
+  --color-purple-600: #4c1ae5;  --color-purple-700: #4015c1;
+  --color-purple-800: #311093;  --color-purple-900: #220b65;
+
+  --color-grape-50: #fbf1fd;   --color-grape-100: #f6dffb;
+  --color-grape-200: #ecbff8;  --color-grape-300: #e4a3f5;
+  --color-grape-400: #da7ef1;  --color-grape-500: #cf59ec;
+  --color-grape-600: #c32ce8;  --color-grape-700: #a716ca;
+  --color-grape-800: #81119c;  --color-grape-900: #5b0c6e;
+
+  --color-sand-50:  #f6f6f1;  --color-sand-100: #f0efe9;
+  --color-sand-200: #eceae4;  --color-sand-300: #dcdbd8;
+  --color-sand-400: #cfcfcf;  --color-sand-500: #9e9d9c;
+  --color-sand-600: #807f7d;  --color-sand-700: #62615f;
+  --color-sand-800: #484744;  --color-sand-900: #363531;
+
+  --color-gray-30:  #f5f5f5;
+  --color-gray-50:  #e4e6e7;  --color-gray-100: #d2d3d5;
+  --color-gray-200: #b7b9bd;  --color-gray-300: #a1a5aa;
+  --color-gray-400: #797e86;  --color-gray-500: #61646b;
+  --color-gray-600: #484d51;  --color-gray-700: #3a3d40;
+  --color-gray-800: #2c2d30;  --color-gray-900: #1f2023;
+
+  /* Size scale */
+  --size-2: 0.125rem;   --size-4: 0.25rem;
+  --size-6: 0.375rem;   --size-8: 0.5rem;
+  --size-12: 0.75rem;   --size-16: 1rem;      --size-18: 1.125rem;
+  --size-20: 1.25rem;   --size-24: 1.5rem;
+  --size-32: 2rem;      --size-40: 2.5rem;
+  --size-48: 3rem;      --size-56: 3.5rem;    --size-80: 5rem;
+  --size-100: 6.25rem;  --size-120: 7.5rem;
+  --size-150: 9.375rem; --size-160: 10rem;    --size-180: 11.25rem;
+  --size-240: 15rem;    --size-286: 17.875rem;--size-320: 20rem;
+  --size-560: 35rem;    --size-900: 56.25rem;
+  --size-over: 62.438rem;
+
+  /* MW aliases (root/web/tokens/base.css) */
+  --padding-XS:  var(--size-6);    /* 6px   */
+  --padding-MS:  var(--size-12);   /* 12px  */
+  --padding-L:   var(--size-20);   /* 20px  */
+  --padding-XL:  var(--size-24);   /* 24px  */
+  --padding-2XL: var(--size-32);   /* 32px  */
+  --padding-3XL: var(--size-40);   /* 40px  */
+  --padding-5XL: var(--size-80);   /* 80px  */
+  --padding-8XL: var(--size-150);  /* 150px */
+  --spacing-MS:  var(--size-12);  /* 12px */
+  --spacing-5XL: var(--size-80);  /* 80px */
+  --cornerRadius-S: var(--size-8);
+
+  /* Grid — max content width */
+  --grid-desktopLarge-width: 90rem; /* 1440px */
+}
+
+/* ============================================================
+   LAYER 2 — Semantic Tokens  Light Mode
+   컴포넌트에서 참조하는 유일한 변수. tailwind.config.ts와 연결됨.
+   ============================================================ */
+:root {
+
+  /* --- Background ----------------------------------------- */
+  /* 기본 페이지 배경 (color/bg/100)  */ --color-bg-100:          var(--color-white);
+  /* 페이지 기본 배경                 */ --fai-bg-surface:        var(--color-white);
+  /* 카드·패널 보조 배경              */ --fai-bg-surface-alt:    var(--color-gray-30);
+  /* 인풋·비활성 영역 눌린 배경       */ --fai-bg-surface-sunken: var(--color-gray-50);
+  /* 모달·드롭다운 부상 배경          */ --fai-bg-surface-raised: var(--color-white);
+  /* 스크림 (딤드) 52%               */ --fai-bg-overlay:         rgba(0, 0, 0, 0.52);
+  /* 스크림 강조 74%                 */ --fai-bg-overlay-strong:  rgba(0, 0, 0, 0.74);
+  /* 스크림 최대 87%                 */ --fai-bg-overlay-max:     rgba(0, 0, 0, 0.87);
+  /* 브랜드 기본 배경 (Green)        */ --fai-bg-brand:           var(--color-green-500);
+  /* 브랜드 연한 배경                */ --fai-bg-brand-subtle:    var(--color-green-100);
+  /* 강조 버튼·배지 배경             */ --fai-bg-fill-strong:     var(--color-gray-800);
+  /* 보조 컴포넌트 배경              */ --fai-bg-fill:            var(--color-gray-500);
+  /* 보조 버튼·태그 배경             */ --fai-bg-fill-soft:       var(--color-gray-50);
+  /* 호버·선택 영역 연한 배경        */ --fai-bg-fill-faint:      var(--color-gray-30);
+  /* 반전 배경 (어두운 영역 위 흰색) */ --fai-bg-fill-inverse:    var(--color-white);
+  /* 비활성 배경                     */ --fai-bg-fill-disabled:   var(--color-gray-50);
+  /* 성공 상태 배경 (연한 Mint)      */ --fai-bg-success:         var(--color-mint-50);
+  /* 경고 상태 배경 (연한 Orange)    */ --fai-bg-warning:         var(--color-orange-50);
+  /* 오류 상태 배경 (연한 Red)       */ --fai-bg-error:           var(--color-red-50);
+  /* 정보 상태 배경 (연한 Blue)      */ --fai-bg-info:            var(--color-blue-50);
+
+  /* --- Color (텍스트 & 아이콘) ----------------------------- */
+  /* 기본 본문 텍스트                */ --fai-color-primary:        var(--color-gray-900);
+  /* 보조 텍스트 (레이블·설명)       */ --fai-color-secondary:      var(--color-gray-700);
+  /* 힌트·플레이스홀더               */ --fai-color-tertiary:       var(--color-gray-500);
+  /* 딤드·보조 캡션                  */ --fai-color-quaternary:     var(--color-gray-300);
+  /* 반전 텍스트 (어두운 배경 위)    */ --fai-color-inverse:        var(--color-white);
+  /* 반전 보조 텍스트                */ --fai-color-inverse-subtle: var(--color-gray-100);
+  /* 비활성 텍스트                   */ --fai-color-disabled:       var(--color-gray-100);
+  /* 브랜드 텍스트 (강조 Green)      */ --fai-color-brand:          var(--color-green-600);
+  /* 브랜드 배경 위 텍스트           */ --fai-color-on-brand:       var(--color-gray-900);
+  /* 성공 상태 텍스트·아이콘 (Mint)  */ --fai-color-success:        var(--color-mint-500);
+  /* 경고 상태 텍스트·아이콘         */ --fai-color-warning:        var(--color-orange-500);
+  /* 오류 상태 텍스트·아이콘         */ --fai-color-error:          var(--color-red-500);
+  /* 정보 상태 텍스트·아이콘         */ --fai-color-info:           var(--color-blue-500);
+
+  /* --- Border --------------------------------------------- */
+  /* 기본 테두리                     */ --fai-border-default:        var(--color-gray-700);
+  /* 보조 테두리                     */ --fai-border-subtle:         var(--color-gray-100);
+  /* 연한 구분선                     */ --fai-border-faint:          var(--color-gray-50);
+  /* 반전 테두리 (어두운 배경 위)    */ --fai-border-inverse:        var(--color-white);
+  /* 브랜드 테두리                   */ --fai-border-brand:          var(--color-green-500);
+  /* 브랜드 보조 테두리              */ --fai-border-brand-subtle:   var(--color-green-300);
+  /* 비활성 테두리                   */ --fai-border-disabled:       var(--color-gray-30);
+  /* 성공 상태 테두리                */ --fai-border-success:        var(--color-mint-500);
+  /* 경고 상태 테두리                */ --fai-border-warning:        var(--color-orange-500);
+  /* 오류 상태 테두리                */ --fai-border-error:          var(--color-red-500);
+  /* 정보 상태 테두리                */ --fai-border-info:           var(--color-blue-500);
+
+  /* --- Shadow --------------------------------------------- */
+  --shadow-XS: 0px 1px 5px 0px rgba(0, 0, 0, 0.5);
+  --shadow-S:  0px 1px 5px 1px rgba(0, 0, 0, 0.05);
+  --shadow-M:  0px 1px 3px 0px rgba(0, 0, 0, 0.09);
+  --shadow-L:  0px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 10px 20px -1px rgba(0, 0, 0, 0.1);
+  --shadow-XL: 0px 5px 17px 0px rgba(0, 0, 0, 0.15);
+  --shadow-XXL:0px 10px 40px -6px rgba(0, 0, 0, 0.1), 0px 25px 50px 0px rgba(0, 0, 0, 0.15);
+
+  /* --- Typography (font-size) ----------------------------- */
+  --fai-text-caption-s:  0.688rem;  /* 11px */
+  --fai-text-caption-m:  0.75rem;   /* 12px */
+  --fai-text-body-xs:    0.813rem;  /* 13px */
+  --fai-text-body-s:     0.875rem;  /* 14px */
+  --fai-text-body-ms:    0.938rem;  /* 15px */
+  --fai-text-body:       1rem;      /* 16px */
+  --fai-text-body-l:     1.125rem;  /* 18px */
+  --fai-text-body-xl:    1.25rem;   /* 20px */
+  --fai-text-title-s:    1.5rem;    /* 24px */
+  --fai-text-title-m:    1.75rem;   /* 28px */
+  --fai-text-title-l:    2.25rem;   /* 36px */
+  --fai-text-title-xl:   3rem;      /* 48px */
+  --fai-text-display-s:  3.5rem;    /* 56px */
+  --fai-text-display-m:  4rem;      /* 64px */
+  --fai-text-display-l:  5rem;      /* 80px */
+
+  /* --- Spacing -------------------------------------------- */
+  --fai-space-3xs: var(--size-2);   /* 2px  */
+  --fai-space-2xs: var(--size-4);   /* 4px  */
+  --fai-space-xs:  var(--size-6);   /* 6px  */
+  --fai-space-s:   var(--size-8);   /* 8px  */
+  --fai-space-ms:  var(--size-12);  /* 12px */
+  --fai-space-m:   var(--size-16);  /* 16px */
+  --fai-space-ml:  var(--size-18);  /* 18px */
+  --fai-space-l:   var(--size-20);  /* 20px */
+  --fai-space-xl:  var(--size-24);  /* 24px */
+  --fai-space-2xl: var(--size-32);  /* 32px */
+  --fai-space-3xl: var(--size-40);  /* 40px */
+  --fai-space-4xl: var(--size-56);  /* 56px  */
+  --fai-space-5xl: var(--size-80);  /* 80px  */
+  --fai-space-6xl: var(--size-100); /* 100px */
+  --fai-space-7xl: var(--size-120); /* 120px */
+  --fai-space-8xl: var(--size-180); /* 180px */
+  --fai-space-9xl: var(--size-240); /* 240px */
+
+  /* --- Sand Filled (배경/면, 옅음→진함 위계) -------------- */
+  /* light: primary=옅음(surface용), tertiary=진함(card용)  */
+  --fai-bg-filled-sand-primary:   var(--color-sand-50);
+  --fai-bg-filled-sand-secondary: var(--color-sand-100);
+  --fai-bg-filled-sand-tertiary:  var(--color-sand-200);
+  --fai-bg-filled-sand-disabled:  var(--color-sand-400);
+
+  /* --- Sand Text (sand 면 위 텍스트 위계, 진함→옅음) ----- */
+  --fai-sand-text-primary:   var(--color-sand-900);
+  --fai-sand-text-secondary: var(--color-sand-700);
+  --fai-sand-text-tertiary:  var(--color-sand-600);
+
+  /* --- Sand Border (sand 면 경계선) ----------------------- */
+  --fai-sand-border-primary:   var(--color-sand-700);
+  --fai-sand-border-secondary: var(--color-sand-300);
+
+  /* --- Interaction ---------------------------------------- */
+  /* 호버 오버레이 — 다크/투명 배경 위     */ --fai-interaction-white-hover:   rgba(255, 255, 255, 0.12);
+  /* 호버 오버레이 — 라이트/서피스 배경 위 */ --fai-interaction-black-hover:   rgba(0, 0, 0, 0.06);
+  /* 프레스 오버레이 — 라이트 배경 위 8%  */ --fai-interaction-black-pressed: rgba(0, 0, 0, 0.08);
+
+  /* --- Text Basic (root/foundation/color.css) ------------- */
+  --color-text-basic-primary:           var(--color-gray-900);
+  --color-text-basic-secondary:         var(--color-gray-700);
+  --color-text-basic-tertiary:          var(--color-gray-500);
+  --color-text-basic-inverse:           var(--color-white);
+  --color-text-basic-inverse-secondary: var(--color-gray-100);
+
+  /* --- Text inverse / optional brand ---------------------- */
+  --color-text-inverse:                       var(--color-white);
+  --color-text-optional-brand-primaryBtn:     var(--color-white);
+  --color-text-optional-brand-secondaryBtn:   var(--color-gray-900);
+
+  /* --- Filled (버튼·면 채우기) ----------------------------- */
+  --color-filled-basic-primary:               var(--color-gray-800);
+  --color-filled-basic-tertiary:              var(--color-gray-50);
+  --color-filled-optional-brand-primary:      var(--color-green-500);
+  --color-filled-optional-brand-primaryBtn:   var(--color-gray-800);
+  --color-filled-optional-brand-secondaryBtn: var(--color-gray-50);
+
+  /* --- Icon ------------------------------------------------ */
+  --color-icon-basic-inverse: var(--color-white);
+
+  /* --- Background extended --------------------------------- */
+  --color-bg-200: var(--color-gray-30);
+
+  /* --- Border extended ------------------------------------- */
+  --color-border-secondary: var(--color-gray-100);
+
+  /* --- Typography Web (root/web/tokens/base.css) ---------- */
+  --w-display-S-size:          3.5rem;     /* 56px */
+  --w-display-S-lineHeight:    4.875rem;   /* 78px */
+  --w-display-S-letterSpacing: 0.8px;
+  --w-title-M-size:            1.75rem;    /* 28px */
+  --w-title-M-lineHeight:      2.4375rem;  /* 39px */
+  --w-title-M-letterSpacing:   0.3px;
+  --w-caption-M-size:          0.75rem;    /* 12px */
+  --w-caption-M-lineHeight:    1.125rem;   /* 18px */
+  --w-caption-M-letterSpacing: -0.1px;
+  --w-text-XL-size:            1.25rem;    /* 20px */
+  --w-text-XL-lineHeight:      1.875rem;   /* 30px */
+  --w-text-XL-letterSpacing:   0px;
+  --w-text-L-size:             1.125rem;   /* 18px */
+  --w-text-L-lineHeight:       1.6875rem;  /* 27px */
+  --w-text-L-letterSpacing:    0px;
+  --w-text-M-size:             1rem;       /* 16px */
+  --w-text-M-lineHeight:       1.5rem;     /* 24px */
+  --w-text-M-letterSpacing:    0px;
+  --w-text-S-size:             0.875rem;   /* 14px */
+  --w-text-S-lineHeight:       1.3125rem;  /* 21px */
+  --w-text-S-letterSpacing:    0px;
+
+  /* --- Border Radius -------------------------------------- */
+  --fai-radius-xs:     var(--size-4);    /* 4px  */
+  --fai-radius-s:      var(--size-8);    /* 8px  */
+  --fai-radius-ms:     var(--size-12);   /* 12px */
+  --fai-radius-m:      var(--size-16);   /* 16px */
+  --fai-radius-l:      var(--size-20);   /* 20px */
+  --fai-radius-xl:     var(--size-24);   /* 24px */
+  --fai-radius-circle: var(--size-over); /* 완전한 원 */
+
+  /* Alias — requested rule for round buttons */
+  --cornerRadius-circle: var(--fai-radius-circle);
+
+  /* --- Tag Category ---------------------------------------- */
+  /* 카테고리 태그 텍스트 색상 */
+  --color-text-tag-category-yellow:  var(--color-yellow-600);
+  --color-text-tag-category-green:   var(--color-green-700);
+  --color-text-tag-category-purple:  var(--color-purple-600);
+  --color-text-tag-category-grape:   var(--color-grape-500);
+  --color-text-basic-positive:       var(--color-mint-500);
+  /* 카테고리 태그 아이콘 배경 */
+  --color-filled-tag-category-yellow-secondary: var(--color-yellow-100);
+  --color-filled-tag-category-green-secondary:  var(--color-green-100);
+  --color-filled-tag-category-purple-secondary: var(--color-purple-100);
+  --color-filled-tag-category-grape-secondary:  var(--color-grape-100);
+  --color-filled-basic-positive-secondary:      var(--color-mint-100);
+  /* 카테고리 태그 아이콘 fill 색상 */
+  --color-icon-tag-category-yellow: var(--color-yellow-500);
+  --color-icon-tag-category-mint:   var(--color-mint-500);
+  --color-icon-tag-category-grape:  var(--color-grape-500);
+}
+
+/* ============================================================
+   Dark Mode — 시맨틱 토큰 재정의  (.dark 클래스 기반)
+   ============================================================ */
+:where(.dark) {
+
+  /* Background */
+  --color-bg-100:          var(--color-gray-900);
+  --fai-bg-surface:        var(--color-gray-900);
+  --fai-bg-surface-alt:    var(--color-gray-800);
+  --fai-bg-surface-sunken: var(--color-gray-700);
+  --fai-bg-surface-raised: var(--color-gray-800);
+  --fai-bg-overlay:        rgba(0, 0, 0, 0.35);
+  --fai-bg-brand:          var(--color-green-500);
+  --fai-bg-brand-subtle:   var(--color-green-300);
+  --fai-bg-fill-strong:    var(--color-gray-400);
+  --fai-bg-fill:           var(--color-gray-500);
+  --fai-bg-fill-soft:      var(--color-gray-700);
+  --fai-bg-fill-faint:     var(--color-gray-800);
+  --fai-bg-fill-inverse:   var(--color-gray-900);
+  --fai-bg-fill-disabled:  var(--color-gray-700);
+  --fai-bg-success:        var(--color-mint-900);
+  --fai-bg-warning:        var(--color-orange-900);
+  --fai-bg-error:          var(--color-red-900);
+  --fai-bg-info:           var(--color-blue-900);
+
+  /* Color */
+  --fai-color-primary:        var(--color-white);
+  --fai-color-secondary:      var(--color-gray-100);
+  --fai-color-tertiary:       var(--color-gray-200);
+  --fai-color-quaternary:     var(--color-gray-400);
+  --fai-color-inverse-subtle: var(--color-gray-600);
+  --fai-color-disabled:       var(--color-gray-600);
+  --fai-color-brand:          var(--color-green-500);
+  --fai-color-on-brand:       var(--color-gray-900);
+  --fai-color-success:        var(--color-mint-400);
+  --fai-color-warning:        var(--color-orange-400);
+  --fai-color-error:          var(--color-red-400);
+  --fai-color-info:           var(--color-blue-400);
+
+  /* Interaction — dark 모드 재정의 (16% 블랙) */
+  --fai-interaction-black-pressed: rgba(0, 0, 0, 0.16);
+
+  /* Sand Filled — 명도 반전 (dark: primary=진함, tertiary=옅음) */
+  --fai-bg-filled-sand-primary:   var(--color-sand-900);
+  --fai-bg-filled-sand-secondary: var(--color-sand-800);
+  --fai-bg-filled-sand-tertiary:  var(--color-sand-700);
+  --fai-bg-filled-sand-disabled:  var(--color-sand-500);
+
+  /* Sand Text — 명도 반전 */
+  --fai-sand-text-primary:   var(--color-sand-50);
+  --fai-sand-text-secondary: var(--color-sand-200);
+  --fai-sand-text-tertiary:  var(--color-sand-400);
+
+  /* Sand Border — 명도 반전 */
+  --fai-sand-border-primary:   var(--color-sand-300);
+  --fai-sand-border-secondary: var(--color-sand-600);
+
+  /* Text Basic — dark mode 반전 */
+  --color-text-basic-primary:   var(--color-white);
+  --color-text-basic-secondary: var(--color-gray-200);
+  --color-text-basic-tertiary:  var(--color-gray-400);
+
+  /* Filled / Icon / BG / Border — dark mode 반전 */
+  --color-filled-basic-primary:               var(--color-gray-200);
+  --color-filled-basic-tertiary:              var(--color-gray-700);
+  --color-filled-optional-brand-primaryBtn:   var(--color-green-500);
+  --color-text-optional-brand-primaryBtn:     var(--color-gray-900);
+  --color-filled-optional-brand-secondaryBtn: var(--color-gray-700);
+  --color-text-optional-brand-secondaryBtn:   var(--color-white);
+  --color-icon-basic-inverse:                 var(--color-gray-900);
+  --color-bg-200:                             var(--color-gray-800);
+  --color-border-secondary:                   var(--color-gray-500);
+
+  /* Border */
+  --fai-border-default:      var(--color-gray-200);
+  --fai-border-subtle:       var(--color-gray-500);
+  --fai-border-faint:        var(--color-gray-700);
+  --fai-border-brand-subtle: var(--color-green-700);
+  --fai-border-disabled:     var(--color-gray-700);
+  --fai-border-success:      var(--color-mint-400);
+  --fai-border-warning:      var(--color-orange-400);
+  --fai-border-error:        var(--color-red-400);
+  --fai-border-info:         var(--color-blue-400);
+
+  /* Tag Category — 명도 반전 */
+  --color-text-tag-category-yellow:  var(--color-yellow-400);
+  --color-text-tag-category-green:   var(--color-green-400);
+  --color-text-tag-category-purple:  var(--color-purple-400);
+  --color-text-tag-category-grape:   var(--color-grape-800);
+  --color-text-basic-positive:       var(--color-mint-400);
+  --color-filled-tag-category-yellow-secondary: var(--color-yellow-900);
+  --color-filled-tag-category-green-secondary:  var(--color-green-900);
+  --color-filled-tag-category-purple-secondary: var(--color-purple-900);
+  --color-filled-tag-category-grape-secondary:  var(--color-grape-900);
+  --color-filled-basic-positive-secondary:      var(--color-mint-900);
+  /* 카테고리 태그 아이콘 fill 색상 */
+  --color-icon-tag-category-yellow: var(--color-yellow-400);
+  --color-icon-tag-category-mint:   var(--color-mint-400);
+  --color-icon-tag-category-grape:  var(--color-grape-400);
+}
+
+/* ============================================================
+   Primary CTA Button — 로컬 .dark 스코프 캐스케이딩 보장
+   :where(.dark) 의 zero-specificity 를 보완하기 위해
+   html.dark 와 .dark 선택자를 병합.
+   NavigationBar 에서 header 또는 래퍼에 .dark 를 주입할 때
+   하위 IcoTxtButton 까지 변수가 정확히 캐스케이딩된다.
+   ============================================================ */
+html.dark, .dark {
+  --color-filled-optional-brand-primaryBtn:   var(--color-green-500);
+  --color-text-optional-brand-primaryBtn:     var(--color-gray-900);
+  --color-filled-optional-brand-secondaryBtn: var(--color-gray-700);
+  --color-text-optional-brand-secondaryBtn:   var(--color-white);
+}
+
+/* ============================================================
+   Base Styles
+   ============================================================ */
+body {
+  background: var(--fai-bg-surface);
+  color: var(--fai-color-primary);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background-color: var(--color-filled-basic-tertiary);
+  border-radius: 999px;
+}
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-filled-basic-tertiary) transparent;
+}
+
+/* Marquee — packages/ui/components/marquee/Marquee.tsx */
+@keyframes fai-marquee {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+
+@utility animate-fai-marquee {
+  animation: fai-marquee var(--marquee-duration, 30s) linear infinite;
+}

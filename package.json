@@ -1,0 +1,8 @@
+{
+  "name": "fai-homepage-monorepo",
+  "private": true,
+  "workspaces": [
+    "packages/*",
+    "products/*"
+  ]
+}

@@ -24,6 +24,7 @@ export const clientLogos = [
   { id: "changi",           name: "Changi Airport",    src: "/logos/logo-changi-white.png" },
   { id: "7eleven",          name: "7-Eleven",          src: "/logos/logo-7-eleven-white.png" },
   { id: "tokyu-land",       name: "Tokyu Land",        src: "/logos/logo-tokyu-land-white.png" },
+  { id: "orange-planet",    name: "Orange Planet",     src: "/logos/logo-orange-planet-white-2.png" },
 ] satisfies ClientLogoItem[];
 
 export const siteConfig = {
@@ -44,7 +45,7 @@ export const siteConfig = {
       slug: "vision-check-out",
       label: "VISION CHECK-OUT",
       heroType: "video",
-      heroVideo: "MISSING_FROM_DESIGN",
+      heroVideo: "/videos/product/vco-hero-bg.mp4",
       heroImage: "",
       heroSubtitle: "차세대 AI 무인 결제 솔루션",
       heroTitle: "VISION CHECK-OUT",
@@ -76,7 +77,7 @@ export const siteConfig = {
           icon: "checkout-flow",
           eyebrow: "구매 과정의 간소화",
           title: "바코드 없는 상품까지\n매끄러운 결제",
-          video: "MISSING_FROM_DESIGN",
+          video: "/videos/product/vco-benefit-1-loop.mp4",
           poster: "MISSING_FROM_DESIGN",
           imagePosition: "left",
           items: [
@@ -94,7 +95,7 @@ export const siteConfig = {
           icon: "staffing",
           eyebrow: "인력 리스크 관리",
           title: "구인 스트레스 없는 매장",
-          video: "MISSING_FROM_DESIGN",
+          video: "/videos/product/vco-benefit-2-loop.mp4",
           poster: "MISSING_FROM_DESIGN",
           imagePosition: "right",
           items: [
@@ -112,7 +113,7 @@ export const siteConfig = {
           icon: "profitability",
           eyebrow: "수익성 개선",
           title: "안내가 필요없는\n직관적인 결제 과정",
-          video: "MISSING_FROM_DESIGN",
+          video: "/videos/product/vco-benefit-3-loop.mp4",
           poster: "MISSING_FROM_DESIGN",
           imagePosition: "left",
           items: [
@@ -192,7 +193,7 @@ export const siteConfig = {
       label: "UNMANNED STORE",
       heroType: "image",
       heroVideo: "",
-      heroImage: "/images/products/unmanned-store/store-hero-01.png",
+      heroImage: "/images/products/unmanned-store/store-hero.png",
       heroSubtitle: "세상에서 가장 경제적인 무인 매장 솔루션",
       heroTitle: "What is WALK-THROUGH?",
       ctaLabel: "",
@@ -301,7 +302,7 @@ export const siteConfig = {
     fields: [
       { key: "company",  label: "회사명",   placeholder: "회사명",           type: "text",  required: true,  errorMessage: "회사명을 입력해 주세요." },
       { key: "name",     label: "성함",     placeholder: "성함",             type: "text",  required: true,  errorMessage: "성함을 입력해 주세요." },
-      { key: "email",    label: "이메일",   placeholder: "name@example.com", type: "email", required: true,  errorMessage: "이메일을 입력해 주세요." },
+      { key: "email",    label: "이메일",   placeholder: "name@example.com", type: "text",  required: true,  errorMessage: "이메일을 입력해 주세요." },
       { key: "phone",    label: "전화번호", placeholder: "전화번호",         type: "tel",   required: false },
     ],
     interests: [
@@ -329,7 +330,17 @@ export const siteConfig = {
       buttonLabel: "빠른 상담하기",
       kakaoUrl:    "http://pf.kakao.com/_cZLcn",
     },
-    backgroundAsset: "/images/contact/bg-gradation.png",
+    complete: {
+      title: "문의 주셔서 정말 감사합니다",
+      subCopy: {
+        before:    "내용을 확인하고 ",
+        highlight: "평균 2~3일 이내",
+        after:     " 담당자가 연락드리겠습니다",
+      },
+      buttonLabel:     "계속 둘러보기",
+      backgroundAsset: "/images/contact/bg-gradation-confirm-n.png",
+    },
+    backgroundAsset: "/images/contact/bg-gradation-n.png",
   } satisfies ContactConfig,
 
   media: {
@@ -538,9 +549,10 @@ export const aboutConfig = {
         { id: "spoany",           name: "spoany",           src: "/logos/logo-spoany.png" },
       ],
       [
-        { id: "changi",     name: "Changi Airport", src: "/logos/logo-changi.png" },
-        { id: "7-eleven",   name: "7-Eleven",       src: "/logos/logo-7-eleven.png" },
-        { id: "tokyu-land", name: "Tokyu Land",     src: "/logos/logo-tokyu-land.png" },
+        { id: "changi",        name: "Changi Airport", src: "/logos/logo-changi.png" },
+        { id: "7-eleven",      name: "7-Eleven",       src: "/logos/logo-7-eleven.png" },
+        { id: "tokyu-land",    name: "Tokyu Land",     src: "/logos/logo-tokyu-land.png" },
+        { id: "orange-planet", name: "Orange Planet",  src: "/logos/logo-orange-planet-2.png" },
       ],
     ],
   },
@@ -565,7 +577,7 @@ export const aboutConfig = {
       },
       {
         id: "government",
-        caption: "다양한 정부지원 사업에 선정됨으로써, 기술 우위를 인정받고 있습니다.",
+        caption: "정부의 주요 딥테크 육성 프로그램에 선정되며, 시장을 선도할 압도적인 기술력을 인정받았습니다.",
         logoRows: [
           [
             { id: "k-unicorn", name: "K-유니콘",       src: "/logos/logo-k-unicorn.png" },
@@ -656,3 +668,32 @@ export const aboutConfig = {
     ],
   },
 } satisfies AboutConfig;
+
+/* ──────────────────────────────────────────
+   Product Mega Menu
+────────────────────────────────────────── */
+
+export const productMenu = [
+  {
+    label:       'VISION CHECK-OUT',
+    description: '바코드 스캔이 필요없는 AI 자동 계산대',
+    href:        '/products/vision-check-out',
+    image:       '/images/products/vco/vco-nav-megamenu-thumb-1.jpg',
+    bgStyle: {
+      backgroundPosition: '-30.961px -48.48px',
+      backgroundSize:     '111.5% 148.667%',
+    },
+  },
+  {
+    label:       'UNMANNED STORE',
+    description: 'VISION AI 무인 매장 솔루션',
+    href:        '/products/unmanned-store',
+    image:       '/images/products/unmanned-store/ums-nav-megamenu-thumb-1.jpg',
+    bgStyle: {
+      backgroundPosition: '50%',
+      backgroundSize:     'cover',
+    },
+  },
+] as const;
+
+export type ProductMenuItem = (typeof productMenu)[number];

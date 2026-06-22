@@ -1,6 +1,7 @@
 "use client";
 
 import { type ReactNode } from "react";
+import { Scrollbar } from "../Scrollbar";
 
 interface DrawerProps {
   isOpen: boolean;
@@ -15,8 +16,8 @@ export function Drawer({ isOpen, children }: DrawerProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 top-16 z-40 bg-surface overflow-y-auto">
+    <Scrollbar className="fixed inset-0 top-16 z-40 bg-surface">
       {children}
-    </div>
+    </Scrollbar>
   );
 }

@@ -52,7 +52,7 @@ const COMPANY_NAME = '(주) 파인더스에이아이';
 
 /* row1: 기초 기업 정보 */
 const ROW1_INFO = [
-  { title: '대표이사', text: '함명원' },
+  { title: '대표이사', text: '함명원ㆍ왕민권' },
   { title: '전화',     text: '02-6191-0049' },
   { title: '주소',     text: '0662 서울특별시 서초구 강남대로51길 1, 511타워 13층' },
 ];

@@ -1,0 +1,10 @@
+{
+  "shadow": {
+    "XS": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)",
+    "S": "0px 1px 5px 1px rgba(0, 0, 0, 0.05)",
+    "M": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)",
+    "L": "0px 6px 12px 0px rgba(0, 0, 0, 0.12), 0px 10px 20px -1px rgba(0, 0, 0, 0.1)",
+    "XL": "0px 5px 17px 0px rgba(0, 0, 0, 0.15)",
+    "XXL": "0px 10px 40px -6px rgba(0, 0, 0, 0.1), 0px 25px 50px 0px rgba(0, 0, 0, 0.15)"
+  }
+}

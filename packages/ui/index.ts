@@ -9,10 +9,17 @@ export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';
 
 /* ── Navigation sub-components ── */
+export { TabletNavigationBar } from './components/navigation/TabletNavigationBar';
+export type { TabletNavigationBarProps } from './components/navigation/TabletNavigationBar';
+export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';
+export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';
+export type { TabletDrawerMenuProps } from './components/navigation/TabletDrawerMenu';
 export { default as MegaNavMenu } from './components/navigation/MegaNavMenu';
 export type { NavItem, MegaNavMenuProps } from './components/navigation/MegaNavMenu';
 export { default as GlobalUtilityMenu } from './components/navigation/GlobalUtilityMenu';
 export type { GlobalUtilityMenuProps } from './components/navigation/GlobalUtilityMenu';
+export { MegaMenuPanel } from './components/navigation/MegaMenuPanel';
+export type { MegaMenuItemData, MegaMenuPanelProps } from './components/navigation/MegaMenuPanel';
 
 /* ── Hero ── */
 export { Marquee } from './components/marquee/Marquee';
@@ -27,6 +34,10 @@ export type { LabelProps } from './components/label/Label';
 /* ── ProgressBar ── */
 export { ProgressBar } from './components/ProgressBar';
 export type { ProgressBarProps } from './components/ProgressBar';
+
+/* ── Scrollbar ── */
+export { Scrollbar } from './components/Scrollbar';
+export type { ScrollbarProps } from './components/Scrollbar';
 
 /* ── UI primitives ── */
 export { ScrollTopButton } from './components/ScrollTopButton';

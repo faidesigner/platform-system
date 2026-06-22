@@ -1,10 +1,14 @@
 import { notFound } from 'next/navigation'
 import { siteConfig, type ProductSlug } from '@/config/site'
 import ProductHero from '@/components/sections/products/ProductHero'
+import StoreHero from '@/components/sections/products/StoreHero'
 import ProductFeatures from '@/components/sections/products/ProductFeatures'
 import ProductBenefits from '@/components/sections/products/ProductBenefits'
 import ProductIndustries from '@/components/sections/products/ProductIndustries'
 import ProductReviews from '@/components/sections/products/ProductReviews'
+import StoreEffects from '@/components/sections/products/StoreEffects'
+import StoreInteractiveContainer from '@/components/sections/products/StoreInteractiveContainer'
+import { CtaBanner } from '@/components/sections/CtaBanner'
 
 const PRODUCT_SLUGS = Object.keys(siteConfig.products) as ProductSlug[]
 
@@ -27,10 +31,30 @@ export default async function ProductDetailPage({
 
   return (
     <main className="flex flex-col">
-      <ProductHero
-        subtitle={product.heroSubtitle}
-        title={product.heroTitle}
-        ctaLabel={product.ctaLabel}
+      {product.heroType === 'video' ? (
+        <ProductHero
+          subtitle={product.heroSubtitle}
+          title={product.heroTitle}
+          ctaLabel={product.ctaLabel}
+          videoSrc={product.heroVideo}
+        />
+      ) : (
+        <StoreHero
+          subtitle={product.heroSubtitle}
+          title={product.heroTitle}
+          ctaLabel={product.ctaLabel}
+          imageSrc={product.heroImage}
+        />
+      )}
+      <StoreEffects
+        title={product.effectsTitle}
+        cards={product.effectCards}
+        list={product.effectList}
+      />
+      <StoreInteractiveContainer
+        storeTypes={product.storeTypes}
+        caseStudies={product.caseStudies}
+        caseStudiesEyebrow={product.caseStudiesEyebrow}
       />
       <ProductFeatures
         title={product.featuresTitle}
@@ -49,7 +73,7 @@ export default async function ProductDetailPage({
         title={product.reviewsTitle}
         reviews={product.reviews}
       />
-      {/* 다음 섹션은 여기에 하나씩 추가 */}
+      {slug !== 'unmanned-store' && <CtaBanner />}
     </main>
   );
 }

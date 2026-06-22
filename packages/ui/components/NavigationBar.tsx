@@ -10,6 +10,8 @@ import { ChevronDown, Menu, X } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
 import GlobalUtilityMenu from "./navigation/GlobalUtilityMenu";
 import { Drawer } from "./ui/Drawer";
+import { TabletNavigationBar } from "./navigation/TabletNavigationBar";
+import { TabletDrawerMenu } from "./navigation/TabletDrawerMenu";
 
 /* ──────────────────────────────────────────
    데이터
@@ -47,6 +49,12 @@ interface NavigationBarProps {
   desktopLangSwitcher?: (isTransparent: boolean) => ReactNode;
   /** 모바일 오버레이 언어 전환 UI */
   mobileLangSwitcher?: ReactNode;
+  /**
+   * 네비게이션 아이템 오버라이드.
+   * 미지정 시 packages/ui 내부 NAV_ITEMS 사용.
+   * homepage 등 소비자가 megaMenuPanel 주입 시 이 prop으로 전달.
+   */
+  navItems?: readonly NavItem[];
 }
 
 /* ──────────────────────────────────────────
@@ -56,7 +64,9 @@ interface NavigationBarProps {
 export default function NavigationBar({
   desktopLangSwitcher,
   mobileLangSwitcher,
+  navItems: navItemsProp,
 }: NavigationBarProps = {}) {
+  const navItems = navItemsProp ?? NAV_ITEMS;
   const pathname = usePathname();
   const params   = useParams();
   const locale   = typeof params?.locale === "string" ? params.locale : "";
@@ -136,6 +146,7 @@ export default function NavigationBar({
       <header
         className={[
           "fixed top-0 left-0 z-50 w-full h-16",
+          "tablet:hidden min-[961px]:block",
           "transition-colors duration-300 ease-in-out",
           isTransparent ? "dark bg-transparent" : "bg-surface",
         ].join(" ")}
@@ -153,18 +164,20 @@ export default function NavigationBar({
             />
           </Link>
 
-          {/* ── 데스크톱 메뉴 ── */}
-          <MegaNavMenu isTransparent={isTransparent} navItems={NAV_ITEMS} />
+          {/* ── 데스크톱 메뉴 (961px+) ── */}
+          <div className="hidden min-[961px]:flex items-center">
+            <MegaNavMenu isTransparent={isTransparent} navItems={navItems} />
+          </div>
 
           {/* ── 우측 액션 ── */}
-          <div className="flex items-center gap-m">
+          <div className="flex items-center self-stretch gap-m">
 
             {/* 언어 전환 (데스크톱) — 주입된 경우 사용, 없으면 폴백 드롭다운 */}
             {desktopLangSwitcher ? (
               desktopLangSwitcher(isTransparent)
             ) : (
               <div
-                className="hidden tablet:block relative"
+                className="hidden min-[961px]:block relative"
                 onMouseEnter={() => setLangOpen(true)}
                 onMouseLeave={() => setLangOpen(false)}
               >
@@ -214,7 +227,7 @@ export default function NavigationBar({
               variant="primary"
               shape="square"
               size="L"
-              className="hidden tablet:inline-flex"
+              className="hidden min-[961px]:inline-flex"
               onClick={() => router.push(lhref("/contact"))}
             >
               문의하기
@@ -240,12 +253,35 @@ export default function NavigationBar({
       </header>
 
       {/* ════════════════════════════════════
-          글로벌 유틸리티 메뉴 — Drawer + GlobalUtilityMenu
+          태블릿 네비게이션 (768px–960px) — 독립 헤더 + 드로어
+      ════════════════════════════════════ */}
+      <div className="hidden tablet:block min-[961px]:hidden">
+        <TabletNavigationBar
+          logo={
+            <Image
+              src={isTransparent ? "/logos/logoFaindersai-w.svg" : "/logos/logoFaindersai-b.svg"}
+              alt="Fainders.AI"
+              width={110}
+              height={28}
+              priority
+            />
+          }
+          isDarkMode={isTransparent}
+          renderDrawer={(close) => (
+            <TabletDrawerMenu
+              navItems={navItems}
+              onClose={close}
+            />
+          )}
+        />
+      </div>
+
+      {/* ════════════════════════════════════
+          모바일 드로어 (768px 미만)
       ════════════════════════════════════ */}
       <Drawer isOpen={mobileOpen}>
         <GlobalUtilityMenu
-          navItems={NAV_ITEMS}
-          langRow={mobileLangSwitcher}
+          navItems={navItems}
           onClose={() => setMobileOpen(false)}
         />
       </Drawer>

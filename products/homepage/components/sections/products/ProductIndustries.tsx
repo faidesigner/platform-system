@@ -11,42 +11,22 @@ export default function ProductIndustries({ title, description, industries }: Pr
   if (!industries || industries.length === 0) return null;
 
   return (
-    <section
-      className="flex flex-col items-start w-full max-w-[1440px] mx-auto py-[80px] px-[150px] gap-[56px]"
-      style={{ background: "var(--color-bg-100, #F4F5F6)" }}
-    >
-      <div className="flex flex-col items-start gap-[60px] w-full max-w-[1139px]">
-        <div className="flex flex-col items-start gap-[12px]">
-          <h2
-            style={{
-              color: "var(--color-text-basic-primary, #1F2023)",
-              fontFamily: "var(--w-font-family, Pretendard)",
-              fontSize: "var(--w-display-S-size, 56px)",
-              fontWeight: 700,
-              lineHeight: "var(--w-display-S-lineHeight, 78px)",
-              letterSpacing: "var(--w-display-S-letterSpacing, 0.8px)",
-            }}
-          >
+    <section className="w-full flex flex-col items-center py-5xl bg-bg-100">
+      <div className="w-full max-w-[1440px] px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-4xl">
+      <div className="flex flex-col items-start gap-[60px] w-full">
+        <div className="flex flex-col items-start gap-ms">
+          <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
             {title}
           </h2>
-          <p
-            style={{
-              color: "var(--color-text-basic-tertiary, #61646B)",
-              fontFamily: "var(--font-family-Pretendard, Pretendard)",
-              fontSize: "var(--font-size-20, 20px)",
-              fontWeight: 400,
-              lineHeight: "var(--font-lineHeight-20, 30px)",
-              letterSpacing: "var(--font-letterSpacing-0, 0)",
-            }}
-          >
+          <p className="text-body-l desktop:text-body-xl font-normal text-text-basic-tertiary">
             {description}
           </p>
         </div>
 
-        <div className="flex flex-row items-center gap-[16px] w-full self-stretch">
+        <div className="flex flex-row items-center gap-m w-full self-stretch">
           {industries.map((industry, i) => (
-            <div key={i} className="flex flex-col items-start gap-[24px] w-[369px] shrink-0">
-              <div className="relative flex flex-col items-start w-full self-stretch h-[420px] rounded-[8px] overflow-hidden">
+            <div key={i} className="flex flex-col items-start gap-xl flex-1 min-w-0">
+              <div className="relative flex flex-col items-start w-full self-stretch aspect-[369/420] rounded-fai-s overflow-hidden">
                 <Image
                   src={industry.image}
                   alt={industry.label}
@@ -62,22 +42,13 @@ export default function ProductIndustries({ title, description, industries }: Pr
                   }}
                 />
               </div>
-              <h3
-                className="self-stretch"
-                style={{
-                  color: "var(--color-text-basic-primary, #1F2023)",
-                  fontFamily: "var(--w-font-family, Pretendard)",
-                  fontSize: "var(--w-title-M-size, 28px)",
-                  fontWeight: 600,
-                  lineHeight: "var(--w-title-M-lineHeight, 39px)",
-                  letterSpacing: "var(--w-title-M-letterSpacing, 0.3px)",
-                }}
-              >
+              <h3 className="self-stretch text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
                 {industry.label}
               </h3>
             </div>
           ))}
         </div>
+      </div>
       </div>
     </section>
   );

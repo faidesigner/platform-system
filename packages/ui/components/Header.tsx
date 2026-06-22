@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
+import { TabletNavigationBar } from "./navigation/TabletNavigationBar";
 
 /* packages/ui는 products에 의존하지 않으므로 데이터를 직접 정의 */
 const siteConfig = {
@@ -29,8 +30,8 @@ export default function Header() {
             {siteConfig.name}
           </Link>
 
-          {/* 데스크톱 네비게이션 */}
-          <nav className="hidden md:flex items-center gap-8">
+          {/* 데스크톱 네비게이션 (961px+) */}
+          <nav className="hidden min-[961px]:flex items-center gap-8">
             {siteConfig.nav.map((item) => (
               <Link
                 key={item.href}
@@ -50,9 +51,11 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* 모바일 햄버거 버튼 */}
+          {/* 태블릿 네비게이션 — TabletNavigationBar가 독립 헤더로 렌더링되므로 여기서는 제거 */}
+
+          {/* 모바일 햄버거 버튼 (768px 미만) */}
           <button
-            className="md:hidden p-2 text-gray-600"
+            className="tablet:hidden p-2 text-gray-600"
             onClick={() => setMenuOpen((prev) => !prev)}
             aria-label="메뉴 열기"
           >

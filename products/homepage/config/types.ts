@@ -333,6 +333,17 @@ export interface ContactToast {
   kakaoUrl: string;
 }
 
+export interface ContactComplete {
+  title: string;
+  subCopy: {
+    before: string;
+    highlight: string;
+    after: string;
+  };
+  buttonLabel: string;
+  backgroundAsset: string;
+}
+
 export interface ContactConfig {
   title: readonly string[];
   subCopy: ContactSubCopy;
@@ -340,6 +351,7 @@ export interface ContactConfig {
   fields: readonly ContactField[];
   interests: readonly ContactInterestGroup[];
   toast: ContactToast;
+  complete: ContactComplete;
   backgroundAsset: string;
 }
 
