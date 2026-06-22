@@ -43,9 +43,9 @@ export function CtaBanner() {
       />
 
       {/* Layer 3: 콘텐츠 — dark 컨텍스트 주입 (배너 배경 항상 어두움) */}
-      <div className="dark relative z-10 flex justify-center items-start gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
-        <h2 className="flex-1 text-title-m desktop:text-title-l font-bold text-text-inverse">
-          지금 매장에 도입하고 최대 효율을 경험을 해보세요
+      <div className="dark relative z-10 flex flex-col items-center tablet:flex-row tablet:items-start justify-center gap-l tablet:gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
+        <h2 className="flex-1 text-center tablet:text-left text-title-s tablet:text-title-m desktop:text-title-l font-bold text-text-inverse">
+          지금 매장에 도입하고<br className="tablet:hidden" /> 최대 효율을 경험을 해보세요
         </h2>
 
         <IcoTxtButton
@@ -53,6 +53,7 @@ export function CtaBanner() {
           size="XL"
           shape="square"
           className="shrink-0"
+          style={{ textAlign: 'center' }}
           onClick={() => router.push('/contact')}
         >
           도입 문의하기

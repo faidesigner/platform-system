@@ -9,11 +9,7 @@ export { default as Header } from './components/Header';
 export { default as Footer } from './components/Footer';
 
 /* ── Navigation sub-components ── */
-export { TabletNavigationBar } from './components/navigation/TabletNavigationBar';
-export type { TabletNavigationBarProps } from './components/navigation/TabletNavigationBar';
 export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';
-export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';
-export type { TabletDrawerMenuProps } from './components/navigation/TabletDrawerMenu';
 export { default as MegaNavMenu } from './components/navigation/MegaNavMenu';
 export type { NavItem, MegaNavMenuProps } from './components/navigation/MegaNavMenu';
 export { default as GlobalUtilityMenu } from './components/navigation/GlobalUtilityMenu';
@@ -39,6 +35,9 @@ export type { ProgressBarProps } from './components/ProgressBar';
 export { Scrollbar } from './components/Scrollbar';
 export type { ScrollbarProps } from './components/Scrollbar';
 
+/* ── Card ── */
+export { CardItem } from './components/card/CardItem';
+
 /* ── UI primitives ── */
 export { ScrollTopButton } from './components/ScrollTopButton';
 export { Menu          } from './components/Menu';
@@ -59,3 +58,8 @@ export type { CheckboxProps, CheckboxState } from './components/Checkbox';
 export { CustomerSupportIcon } from './components/CustomerSupportIcon';
 export { Toast } from './components/Toast';
 export type { ToastProps } from './components/Toast';
+
+/* ── Navigation Drawer ── */
+export { DrawerMenu, DrawerListItem, DefaultListIcon } from './components/navigation/DrawerPrimitives';
+export type { DrawerListItemProps } from './components/navigation/DrawerPrimitives';
+export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';

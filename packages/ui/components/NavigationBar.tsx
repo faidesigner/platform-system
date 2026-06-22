@@ -6,12 +6,10 @@ import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "./button/IcoTxtButton";
-import { ChevronDown, Menu, X } from "lucide-react";
+import { ChevronDown } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
-import GlobalUtilityMenu from "./navigation/GlobalUtilityMenu";
-import { Drawer } from "./ui/Drawer";
-import { TabletNavigationBar } from "./navigation/TabletNavigationBar";
 import { TabletDrawerMenu } from "./navigation/TabletDrawerMenu";
+import { Drawer } from "./ui/Drawer";
 
 /* ──────────────────────────────────────────
    데이터
@@ -47,12 +45,11 @@ type Language = (typeof LANGUAGES)[number];
 interface NavigationBarProps {
   /** 데스크톱 언어 전환 UI — isTransparent 값을 받아 스타일 분기 */
   desktopLangSwitcher?: (isTransparent: boolean) => ReactNode;
-  /** 모바일 오버레이 언어 전환 UI */
-  mobileLangSwitcher?: ReactNode;
+  /** 모바일·태블릿 헤더 언어 전환 UI — isDarkMode 값을 받아 스타일 분기 */
+  mobileLangSwitcher?: (isDarkMode: boolean) => ReactNode;
   /**
    * 네비게이션 아이템 오버라이드.
    * 미지정 시 packages/ui 내부 NAV_ITEMS 사용.
-   * homepage 등 소비자가 megaMenuPanel 주입 시 이 prop으로 전달.
    */
   navItems?: readonly NavItem[];
 }
@@ -72,27 +69,29 @@ export default function NavigationBar({
   const locale   = typeof params?.locale === "string" ? params.locale : "";
   const router   = useRouter();
 
-  // 홈 판단: locale prefix만 있는 경우 (/ko, /en, /jp)
-  const isHome = /^\/(ko|en|jp)\/?$/.test(pathname);
-  // 제품 상세 판단: 풀스크린 히어로가 있는 페이지
+  const isHome          = /^\/(ko|en|jp)\/?$/.test(pathname);
   const isProductDetail = /^\/(ko|en|jp)\/products\/[^/]+\/?$/.test(pathname);
-  // 미디어 판단: 항상 라이트 배경 고정
-  const isMedia = /^\/(ko|en|jp)\/media\/?$/.test(pathname);
+  const isMedia         = /^\/(ko|en|jp)\/media\/?$/.test(pathname);
 
-  // 배경 상태
   const [isTransparent, setIsTransparent] = useState(!isHome && !isMedia);
-  // 언어 드롭다운 (desktopLangSwitcher 미주입 시 폴백용)
   const [langOpen, setLangOpen] = useState(false);
   const [lang,     setLang]     = useState<Language>("KO");
-  // 글로벌 유틸리티 메뉴 (Drawer)
-  const [mobileOpen, setMobileOpen] = useState(false);
+  // 960px 이하 공용 드로어
+  const [drawerOpen, setDrawerOpen] = useState(false);
 
-  /** 라우트 변경 시 글로벌 유틸리티 메뉴 닫기 */
+  /** 라우트 변경 시 드로어 닫기 + 뷰포트 상단 이동 */
   useEffect(() => {
-    setMobileOpen(false);
+    setDrawerOpen(false);
+    window.scrollTo({ top: 0, behavior: "instant" });
   }, [pathname]);
 
-  /** 스크롤 감지: 3단계 시나리오 (홈) / 2단계 (서브) */
+  /** 드로어 열림/닫힘 시 body 스크롤 잠금 */
+  useEffect(() => {
+    document.body.style.overflow = drawerOpen ? "hidden" : "";
+    return () => { document.body.style.overflow = ""; };
+  }, [drawerOpen]);
+
+  /** 스크롤 감지 */
   useEffect(() => {
     let threshold = window.innerHeight * 3;
 
@@ -101,10 +100,8 @@ export default function NavigationBar({
       if (isHome) {
         setIsTransparent(y >= 1 && y <= threshold);
       } else if (isProductDetail) {
-        // 히어로 비디오 구간(100vh)에서 투명 유지
         setIsTransparent(y < window.innerHeight);
       } else if (isMedia) {
-        // 미디어 페이지: 스크롤 무관하게 항상 라이트 배경
         setIsTransparent(false);
       } else {
         setIsTransparent(y < 1);
@@ -122,16 +119,22 @@ export default function NavigationBar({
     };
   }, [isHome, isProductDetail, isMedia]);
 
-  /* ── 상태별 색상 토큰 ── */
-  const defaultText = isTransparent ? "text-inverse"                          : "text-primary";
-  const hoverBg     = isTransparent ? "hover:bg-interaction-light-white-hover" : "hover:bg-interaction-light-black-hover";
+  /** 데스크톱 브레이크포인트 진입 시 드로어 닫기 */
+  useEffect(() => {
+    const mq = window.matchMedia("(min-width: 961px)");
+    const handler = (e: MediaQueryListEvent) => { if (e.matches) setDrawerOpen(false); };
+    mq.addEventListener("change", handler);
+    return () => mq.removeEventListener("change", handler);
+  }, []);
 
+  /* 드로어가 열리면 헤더를 라이트 모드로 강제 전환 */
+  const effectiveTransparent = isTransparent && !drawerOpen;
 
+  const defaultText = effectiveTransparent ? "text-inverse"                          : "text-primary";
+  const hoverBg     = effectiveTransparent ? "hover:bg-interaction-light-white-hover" : "hover:bg-interaction-light-black-hover";
 
-  /** locale-prefixed href */
   const lhref = (path: string) => locale ? `/${locale}${path}` : path;
 
-  /** 폴백 언어 선택 핸들러 (desktopLangSwitcher 미주입 시) */
   const handleLangSelect = (selected: Language) => {
     setLang(selected);
     setLangOpen(false);
@@ -141,14 +144,13 @@ export default function NavigationBar({
   return (
     <>
       {/* ════════════════════════════════════
-          Header
+          Header — 모든 breakpoint 공용
       ════════════════════════════════════ */}
       <header
         className={[
           "fixed top-0 left-0 z-50 w-full h-16",
-          "tablet:hidden min-[961px]:block",
           "transition-colors duration-300 ease-in-out",
-          isTransparent ? "dark bg-transparent" : "bg-surface",
+          effectiveTransparent ? "dark bg-transparent" : "bg-surface",
         ].join(" ")}
       >
         <nav className="w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
@@ -156,7 +158,7 @@ export default function NavigationBar({
           {/* ── 로고 ── */}
           <Link href={lhref("/")} className="shrink-0">
             <Image
-              src={isTransparent ? "/logos/logoFaindersai-w.svg" : "/logos/logoFaindersai-b.svg"}
+              src={effectiveTransparent ? "/logos/logoFaindersai-w.svg" : "/logos/logoFaindersai-b.svg"}
               alt="Fainders.AI"
               width={110}
               height={28}
@@ -165,19 +167,19 @@ export default function NavigationBar({
           </Link>
 
           {/* ── 데스크톱 메뉴 (961px+) ── */}
-          <div className="hidden min-[961px]:flex items-center">
-            <MegaNavMenu isTransparent={isTransparent} navItems={navItems} />
+          <div className="hidden desktop-s:flex items-center">
+            <MegaNavMenu isTransparent={effectiveTransparent} navItems={navItems} />
           </div>
 
           {/* ── 우측 액션 ── */}
           <div className="flex items-center self-stretch gap-m">
 
-            {/* 언어 전환 (데스크톱) — 주입된 경우 사용, 없으면 폴백 드롭다운 */}
+            {/* 언어 전환 (데스크톱 961px+) */}
             {desktopLangSwitcher ? (
-              desktopLangSwitcher(isTransparent)
+              desktopLangSwitcher(effectiveTransparent)
             ) : (
               <div
-                className="hidden min-[961px]:block relative"
+                className="hidden desktop-s:block relative"
                 onMouseEnter={() => setLangOpen(true)}
                 onMouseLeave={() => setLangOpen(false)}
               >
@@ -222,68 +224,59 @@ export default function NavigationBar({
               </div>
             )}
 
-            {/* 문의하기 — btn/icoTxt/square/primary/L */}
-            <IcoTxtButton
-              variant="primary"
-              shape="square"
-              size="L"
-              className="hidden min-[961px]:inline-flex"
-              onClick={() => router.push(lhref("/contact"))}
-            >
-              문의하기
-            </IcoTxtButton>
+            {/* 문의하기 (데스크톱 961px+) */}
+            <span className="hidden desktop-s:inline-flex">
+              <IcoTxtButton
+                variant="primary"
+                shape="square"
+                size="L"
+                onClick={() => router.push(lhref("/contact"))}
+              >
+                문의하기
+              </IcoTxtButton>
+            </span>
 
-            {/* 햄버거 (모바일) */}
-            <button
-              type="button"
-              className={[
-                "tablet:hidden transition-colors duration-300 ease-in-out",
-                defaultText,
-              ].join(" ")}
-              onClick={() => setMobileOpen((v) => !v)}
-              aria-label={mobileOpen ? "메뉴 닫기" : "메뉴 열기"}
-            >
-              {mobileOpen
-                ? <X    className="h-2xl w-2xl" aria-hidden />
-                : <Menu className="h-2xl w-2xl" aria-hidden />
-              }
-            </button>
+            {/* 모바일·태블릿 우측 영역 — 언어 전환 + 햄버거 (gap 6px) */}
+            <div className="desktop-s:hidden flex items-center gap-xs">
+              {mobileLangSwitcher && (
+                <div className={`flex items-center ${defaultText} transition-colors duration-300 ease-in-out`}>
+                  {mobileLangSwitcher(effectiveTransparent)}
+                </div>
+              )}
+              <button
+                type="button"
+                className={[
+                  "flex items-center justify-center",
+                  "h-10 px-2",
+                  "rounded-fai-s",
+                  "transition-colors duration-300 ease-in-out",
+                  defaultText,
+                ].join(" ")}
+                onClick={() => setDrawerOpen((v) => !v)}
+                aria-label={drawerOpen ? "메뉴 닫기" : "메뉴 열기"}
+              >
+                {drawerOpen ? (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M6 6l12 12M18 6L6 18" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+                  </svg>
+                ) : (
+                  <svg width="24" height="24" viewBox="0 0 24 24" fill="none" aria-hidden>
+                    <path d="M4 6H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <path d="M4 12H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                    <path d="M4 18H20" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" />
+                  </svg>
+                )}
+              </button>
+            </div>
           </div>
         </nav>
       </header>
 
       {/* ════════════════════════════════════
-          태블릿 네비게이션 (768px–960px) — 독립 헤더 + 드로어
+          드로어 — 960px 이하 공용 (모바일·태블릿)
       ════════════════════════════════════ */}
-      <div className="hidden tablet:block min-[961px]:hidden">
-        <TabletNavigationBar
-          logo={
-            <Image
-              src={isTransparent ? "/logos/logoFaindersai-w.svg" : "/logos/logoFaindersai-b.svg"}
-              alt="Fainders.AI"
-              width={110}
-              height={28}
-              priority
-            />
-          }
-          isDarkMode={isTransparent}
-          renderDrawer={(close) => (
-            <TabletDrawerMenu
-              navItems={navItems}
-              onClose={close}
-            />
-          )}
-        />
-      </div>
-
-      {/* ════════════════════════════════════
-          모바일 드로어 (768px 미만)
-      ════════════════════════════════════ */}
-      <Drawer isOpen={mobileOpen}>
-        <GlobalUtilityMenu
-          navItems={navItems}
-          onClose={() => setMobileOpen(false)}
-        />
+      <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
+        <TabletDrawerMenu onNavigate={() => setDrawerOpen(false)} />
       </Drawer>
     </>
   );

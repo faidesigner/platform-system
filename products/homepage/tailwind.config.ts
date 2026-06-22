@@ -413,6 +413,7 @@ const config: Config = {
       screens: {
         'mobile':      '390px',
         'tablet':      '768px',
+        'desktop-s':   '961px',   // 태블릿·모바일 공용 드로어 ↔ 데스크톱 풀 내비 전환점
         'laptop':      '1280px',
         'desktop':     '1440px',
         'desktop-lg':  '1920px',

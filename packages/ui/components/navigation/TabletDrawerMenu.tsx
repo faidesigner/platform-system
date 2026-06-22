@@ -1,58 +1,12 @@
 'use client';
 
 import { useState } from 'react';
-import type { ReactNode } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import type { NavItem } from './MegaNavMenu';
+import { productMenu } from '@/config/site';
+import { DrawerMenu, DrawerListItem } from './DrawerPrimitives';
 
-/* ──────────────────────────────────────────
-   Props
-────────────────────────────────────────── */
-
-export interface TabletDrawerMenuProps {
-  navItems: readonly NavItem[];
-  langRow?: ReactNode;
-  onClose: () => void;
-}
-
-/* ──────────────────────────────────────────
-   스타일 토큰
-────────────────────────────────────────── */
-
-const menuContainerWrapperStyle: React.CSSProperties = {
-  display: 'flex',
-  flexDirection: 'column',
-  alignItems: 'flex-start',
-  alignSelf: 'stretch',
-  borderRadius: 'var(--cornerRadius-S, 8px)',
-  width: '100%',
-};
-
-const layerStyle: React.CSSProperties = {
-  display: 'flex',
-  padding: 'var(--padding-m, 16px) var(--padding-3-xl, 40px)',
-  justifyContent: 'space-between',
-  alignItems: 'center',
-  alignSelf: 'stretch',
-  width: '100%',
-  cursor: 'pointer',
-  background: 'transparent',
-  border: 'none',
-  textDecoration: 'none',
-};
-
-const textStyle: React.CSSProperties = {
-  color: 'var(--color-text-basic-secondary, #3A3D40)',
-  textAlign: 'center',
-  fontFamily: 'var(--font-family-Pretendard, Pretendard)',
-  fontSize: 'var(--font-size-16, 16px)',
-  fontStyle: 'normal',
-  fontWeight: 500,
-  lineHeight: 'var(--font-lineHeight-16, 24px)',
-  letterSpacing: 'var(--font-letterSpacing-0, 0)',
-};
-
+/* ---------------- 하위 아코디언 스타일 및 컴포넌트 ---------------- */
 const subLayerWrapperStyle: React.CSSProperties = {
   display: 'flex',
   padding: 'var(--padding-ms, 12px) var(--padding-3-xl, 40px)',
@@ -75,10 +29,37 @@ const subMenuItemBaseStyle: React.CSSProperties = {
   transition: 'background 0.2s ease',
 };
 
-/* ──────────────────────────────────────────
-   아이콘
-────────────────────────────────────────── */
+const textStyle: React.CSSProperties = {
+  color: 'var(--color-text-basic-secondary, #3A3D40)',
+  textAlign: 'center',
+  fontFamily: 'var(--font-family-Pretendard, Pretendard)',
+  fontSize: 'var(--font-size-16, 16px)',
+  fontStyle: 'normal',
+  fontWeight: 500,
+  lineHeight: 'var(--font-lineHeight-16, 24px)',
+  letterSpacing: 'var(--font-letterSpacing-0, 0)',
+};
 
+function SubMenuItem({ href, label, onNavigate }: { href: string; label: string; onNavigate?: () => void }) {
+  const [isHovered, setIsHovered] = useState(false);
+
+  return (
+    <Link
+      href={href}
+      onClick={onNavigate}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      style={{
+        ...subMenuItemBaseStyle,
+        background: isHovered ? 'var(--color-interaction-light-black-hover, rgba(0, 0, 0, 0.03))' : 'transparent',
+      }}
+    >
+      <span style={textStyle}>{label}</span>
+    </Link>
+  );
+}
+
+/* ---------------- SVG 아이콘 ---------------- */
 function ChevronDownIcon() {
   return (
     <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" fill="none">
@@ -125,131 +106,46 @@ function ArrowUpRightIcon() {
   );
 }
 
-/* ──────────────────────────────────────────
-   서브 메뉴 아이템
-────────────────────────────────────────── */
-
-function SubMenuItem({ href, label, onClick }: { href: string; label: string; onClick?: () => void }) {
-  const [isHovered, setIsHovered] = useState(false);
-
-  return (
-    <Link
-      href={href}
-      onClick={onClick}
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-      style={{
-        ...subMenuItemBaseStyle,
-        background: isHovered ? 'var(--color-interaction-light-black-hover, rgba(0, 0, 0, 0.03))' : 'transparent',
-      }}
-    >
-      <span style={textStyle}>{label}</span>
-    </Link>
-  );
-}
-
-/* ──────────────────────────────────────────
-   Component
-────────────────────────────────────────── */
-
-export function TabletDrawerMenu({ navItems, langRow, onClose }: TabletDrawerMenuProps) {
-  const [openLabels, setOpenLabels] = useState<Set<string>>(new Set());
-
-  const params = useParams();
-  const locale = typeof params?.locale === 'string' ? params.locale : '';
-
-  const lhref = (path: string) =>
+/* ---------------- Tablet Drawer 메인 컨텐츠 ---------------- */
+export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
+  const [productOpen, setProductOpen] = useState(false);
+  const params  = useParams();
+  const locale  = typeof params?.locale === 'string' ? params.locale : '';
+  const lhref   = (path: string) =>
     path.startsWith('http') ? path : locale ? `/${locale}${path}` : path;
 
-  const toggle = (label: string) =>
-    setOpenLabels((prev) => {
-      const next = new Set(prev);
-      next.has(label) ? next.delete(label) : next.add(label);
-      return next;
-    });
-
   return (
-    <>
-      {/* ── 언어 선택 행 ── */}
-      {langRow && (
-        <div className="flex items-center gap-m px-m pt-2xl pb-l border-b border-border-subtle">
-          {langRow}
-        </div>
-      )}
+    <DrawerMenu>
+      {/* 1. 제품 — 확장형 아코디언 */}
+      <DrawerListItem
+        label="제품"
+        onClick={() => setProductOpen((v) => !v)}
+        rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+      >
+        {productOpen && (
+          <div style={subLayerWrapperStyle}>
+            {productMenu.map((p) => (
+              <SubMenuItem key={p.href} href={lhref(p.href)} label={p.label} onNavigate={onNavigate} />
+            ))}
+          </div>
+        )}
+      </DrawerListItem>
 
-      {/* ── 네비 아이템 목록 ── */}
-      <nav style={menuContainerWrapperStyle} aria-label="태블릿 드로어 네비게이션">
+      {/* 2. 일반 내부 링크 */}
+      <DrawerListItem label="회사소개" href={lhref('/about')}  onClick={onNavigate} />
+      <DrawerListItem label="미디어"   href={lhref('/media')}  onClick={onNavigate} />
 
-        {navItems.map((item) => {
+      {/* 3. 채용 — 외부 링크 ↗ */}
+      <DrawerListItem
+        label="채용"
+        href="https://faindersai.career.greetinghr.com/ko/home"
+        isExternal={true}
+        onClick={onNavigate}
+        rightIcon={<ArrowUpRightIcon />}
+      />
 
-          /* 1. 아코디언 드롭다운 */
-          if (item.dropdown && item.dropdownItems?.length) {
-            const isOpen = openLabels.has(item.label);
-            return (
-              <div key={item.label} style={{ width: '100%' }}>
-                <button
-                  type="button"
-                  style={layerStyle}
-                  aria-expanded={isOpen}
-                  onClick={() => toggle(item.label)}
-                >
-                  <span style={textStyle}>{item.label}</span>
-                  {isOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-                </button>
-
-                {isOpen && (
-                  <div style={subLayerWrapperStyle}>
-                    {item.dropdownItems.map((sub) => (
-                      <SubMenuItem
-                        key={sub.href}
-                        href={lhref(sub.href)}
-                        label={sub.label}
-                        onClick={onClose}
-                      />
-                    ))}
-                  </div>
-                )}
-              </div>
-            );
-          }
-
-          /* 2. 외부 링크 */
-          if (item.external) {
-            return (
-              <a
-                key={item.label}
-                href={item.href}
-                target="_blank"
-                rel="noopener noreferrer"
-                aria-label={item.ariaLabel ?? `${item.label} 바로가기`}
-                style={layerStyle}
-                onClick={onClose}
-              >
-                <span style={textStyle}>{item.label}</span>
-                <ArrowUpRightIcon />
-              </a>
-            );
-          }
-
-          /* 3. 일반 내부 링크 */
-          return (
-            <Link
-              key={item.label}
-              href={lhref(item.href)}
-              style={layerStyle}
-              onClick={onClose}
-            >
-              <span style={textStyle}>{item.label}</span>
-            </Link>
-          );
-        })}
-
-        {/* 문의하기 CTA */}
-        <Link href={lhref('/contact')} style={layerStyle} onClick={onClose}>
-          <span style={textStyle}>문의하기</span>
-        </Link>
-
-      </nav>
-    </>
+      {/* 4. 문의하기 — 내부 링크 */}
+      <DrawerListItem label="문의하기" href={lhref('/contact')} onClick={onNavigate} />
+    </DrawerMenu>
   );
 }

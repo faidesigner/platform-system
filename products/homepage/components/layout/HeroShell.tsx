@@ -26,10 +26,10 @@ export default function HeroShell({ subtitle, title, ctaLabel, children }: HeroS
       {/* ── 콘텐츠 래퍼 — max-w + px, z-20 ── */}
       <div className="absolute inset-0 flex w-full flex-col justify-end items-start px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pb-[var(--size-180)] z-20">
         <div className="flex flex-col items-start gap-m w-full max-w-[1140px]">
-          <p className="text-title-m font-semibold text-inverse">
+          <p className="text-title-s tablet:text-title-m font-semibold text-inverse">
             {subtitle}
           </p>
-          <h1 className="text-display-s font-bold text-inverse">
+          <h1 className="text-title-xl tablet:text-display-s desktop:text-display-m font-bold text-inverse">
             {title}
           </h1>
         </div>

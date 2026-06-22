@@ -80,21 +80,21 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
   if (!title && cards.length === 0 && list.length === 0) return null;
 
   return (
-    <section className="flex flex-col items-center w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-7xl gap-4xl bg-surface">
-      <h2 className="text-title-l desktop:text-title-xl font-bold text-center text-primary">
+    <section className="flex flex-col items-center w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-7xl gap-2xl tablet:gap-3xl desktop-s:gap-4xl bg-surface">
+      <h2 className="text-title-s tablet:text-title-m desktop-s:text-title-l desktop:text-title-xl font-bold text-center text-primary">
         {title}
       </h2>
 
       {/* 상단: 3열 카드 */}
       {cards.length > 0 && (
-        <div ref={cardsRef} className="flex flex-row justify-center items-start gap-xl w-full">
+        <div ref={cardsRef} className="flex flex-row flex-wrap justify-center items-start gap-xl w-full">
           {cards.map((card, i) => (
             <article
               key={i}
-              className="flex flex-col items-start w-[292px] p-4xl gap-[10px] rounded-fai-s bg-fill-faint"
+              className="flex flex-col items-start w-full tablet:flex-1 p-xl desktop-s:p-4xl gap-[10px] rounded-fai-s bg-fill-faint"
             >
               <div className="flex flex-col items-center self-stretch gap-[var(--size-48)]">
-                <h3 className="text-title-s desktop:text-title-m font-semibold text-center text-primary">
+                <h3 className="text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary">
                   {card.title}
                 </h3>
                 <div
@@ -105,7 +105,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 >
                   <EffectIcon name={card.title as import('@/assets/icon/EffectIcon').EffectIconKey} />
                 </div>
-                <p className="text-body font-normal text-center text-tertiary">
+                <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary">
                   {card.description}
                 </p>
               </div>
@@ -116,17 +116,17 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
 
       {/* 하단: 아코디언 리스트 */}
       {list.length > 0 && (
-        <div className="flex flex-col items-start w-[924px] gap-l">
+        <div className="flex flex-col items-start w-full gap-l">
           {list.map((item, i) => (
             <div
               key={i}
               ref={(el) => { itemRefs.current[i] = el; }}
-              className="flex flex-col items-center self-stretch p-4xl rounded-fai-m bg-fill-faint cursor-pointer transition-colors duration-300 hover:bg-surface-sunken"
+              className="flex flex-col items-center self-stretch p-xl desktop-s:p-4xl rounded-fai-m bg-fill-faint cursor-pointer transition-colors duration-300 hover:bg-surface-sunken"
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setLockedIndex(lockedIndex === i ? null : i)}
             >
-              <h4 className="text-title-s desktop:text-title-m font-semibold text-left w-full text-primary">
+              <h4 className="text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-left w-full text-primary">
                 {item.title}
               </h4>
               <div
@@ -135,7 +135,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 }`}
               >
                 <div className="overflow-hidden flex flex-col items-start self-stretch">
-                  <p className="text-body-l desktop:text-body-xl font-medium whitespace-pre-wrap text-secondary">
+                  <p className="text-body-ms tablet:text-body desktop-s:text-body-l desktop:text-body-xl font-medium whitespace-pre-wrap text-secondary">
                     {item.description}
                   </p>
                 </div>

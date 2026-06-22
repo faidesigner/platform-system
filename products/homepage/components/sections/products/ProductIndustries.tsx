@@ -15,17 +15,17 @@ export default function ProductIndustries({ title, description, industries }: Pr
       <div className="w-full max-w-[1440px] px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-4xl">
       <div className="flex flex-col items-start gap-[60px] w-full">
         <div className="flex flex-col items-start gap-ms">
-          <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
+          <h2 className="text-title-m tablet:text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
             {title}
           </h2>
-          <p className="text-body-l desktop:text-body-xl font-normal text-text-basic-tertiary">
+          <p className="text-body tablet:text-body-l desktop:text-body-xl font-normal text-text-basic-tertiary">
             {description}
           </p>
         </div>
 
-        <div className="flex flex-row items-center gap-m w-full self-stretch">
+        <div className="flex flex-col tablet:flex-row items-center gap-m w-full self-stretch">
           {industries.map((industry, i) => (
-            <div key={i} className="flex flex-col items-start gap-xl flex-1 min-w-0">
+            <div key={i} className="flex flex-col items-start gap-xl w-full tablet:flex-1 tablet:min-w-0">
               <div className="relative flex flex-col items-start w-full self-stretch aspect-[369/420] rounded-fai-s overflow-hidden">
                 <Image
                   src={industry.image}
@@ -42,7 +42,7 @@ export default function ProductIndustries({ title, description, industries }: Pr
                   }}
                 />
               </div>
-              <h3 className="self-stretch text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
+              <h3 className="self-stretch text-body-xl tablet:text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
                 {industry.label}
               </h3>
             </div>

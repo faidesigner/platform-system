@@ -192,7 +192,7 @@ export default function LanguageSwitcher({
   return (
     <div
       ref={containerRef}
-      className="hidden tablet:flex items-center self-stretch relative"
+      className="hidden desktop-s:flex items-center self-stretch relative"
       onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
     >

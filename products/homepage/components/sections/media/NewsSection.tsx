@@ -20,7 +20,7 @@ function MediaCard({ item }: { item: MediaItem }) {
     >
       {/* image */}
       {hasThumb ? (
-        <div className="relative h-[240px] tablet:h-[300px] laptop:h-[367px] w-full overflow-hidden rounded-[var(--cornerRadius-M,16px)]">
+        <div className="relative h-[367px] w-full overflow-hidden rounded-[var(--cornerRadius-M,16px)]">
           <Image
             src={item.thumbnail}
             alt={item.thumbnailAlt}
@@ -155,7 +155,7 @@ export default function MediaNewsSection() {
           className="
             grid w-full
             grid-cols-1 gap-y-[var(--spacing-6XL,100px)] gap-x-[var(--spacing-3XL,40px)]
-            min-[961px]:grid-cols-2
+            tablet:grid-cols-2
             desktop:gap-x-[var(--spacing-5XL,80px)] desktop:gap-y-[var(--spacing-5XL,80px)]
           "
         >

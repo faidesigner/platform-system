@@ -138,7 +138,7 @@ export function ContactUsSection() {
       <div className={`relative z-10 flex w-full ${
         submitted
           ? "h-svh items-center justify-center"
-          : "flex-col items-start px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pt-5xl desktop:pt-[var(--padding-8-xl,150px)] pb-[var(--padding-5XL,80px)] gap-[var(--spacing-5XL,80px)]"
+          : "flex-col items-start px-[var(--padding-XL)] min-[961px]:px-[var(--padding-5XL,_80px)] laptop:px-[var(--padding-8XL)] pt-[var(--padding-8-xl,_150px)] desktop-s:pt-[200px] pb-[var(--padding-5XL,80px)] gap-[var(--spacing-5XL,80px)]"
       }`}>
 
         {submitted ? (
@@ -178,7 +178,7 @@ export function ContactUsSection() {
               {/* titleSection */}
               <div className="flex flex-1 flex-col items-start gap-[var(--spacing-XL,24px)] min-w-0" data-node-id="6542:11319">
                 <h2
-                  className="self-stretch text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-inverse"
+                  className="self-stretch max-[420px]:text-[length:var(--font-size-20,20px)] text-[length:var(--font-size-28,28px)] desktop-s:text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-inverse"
                   data-node-id="6542:11320"
                 >
                   {contact.title.map((line, idx) => (
@@ -189,7 +189,7 @@ export function ContactUsSection() {
                   ))}
                 </h2>
                 <p
-                  className="self-stretch text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]"
+                  className="self-stretch max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]"
                   data-node-id="6542:11323"
                 >
                   <span className="text-brand-text">{contact.subCopy.highlight}</span>
@@ -206,7 +206,7 @@ export function ContactUsSection() {
                 ref={formRef}
                 noValidate
                 onSubmit={handleSubmit}
-                className="flex flex-col items-start p-[var(--padding-3-xl,40px)] gap-[var(--spacing-4XL,56px)] flex-1 rounded-fai-xl bg-fill-inverse min-w-0"
+                className="flex flex-col items-start p-[var(--padding-3-xl,40px)] gap-[var(--spacing-4XL,56px)] flex-1 self-stretch rounded-fai-xl bg-fill-inverse min-w-0"
                 data-node-id="6548:5844"
               >
                 <div className="flex w-full flex-col gap-[var(--spacing-4XL,56px)]" data-node-id="6548:5845">
@@ -214,7 +214,7 @@ export function ContactUsSection() {
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch w-full" data-node-id="6548:5846">
                     {/* title */}
                     <div className="flex justify-between items-end self-stretch w-full" data-node-id="6548:5847">
-                      <p className="text-secondary text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
+                      <p className="text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
                         {contact.form.connectTitle}
                       </p>
                       {/* titleItems — 필수 입력 범례 */}
@@ -256,7 +256,7 @@ export function ContactUsSection() {
 
                   {/* select: 관심 정보 */}
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch" data-node-id="6548:5857">
-                    <p className="self-stretch text-secondary text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
+                    <p className="self-stretch text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
                       {contact.form.selectTitle}
                     </p>
 
@@ -267,10 +267,10 @@ export function ContactUsSection() {
 
                             {/* titleItem */}
                             <div className="flex items-center gap-[var(--spacing-S,8px)]">
-                              <span className="text-secondary text-[length:var(--font-size-18,18px)] font-medium leading-[var(--font-lineHeight-18,27px)]">
+                              <span className="text-secondary max-[420px]:text-[length:var(--font-size-14,14px)] text-[length:var(--font-size-18,18px)] font-medium leading-[var(--font-lineHeight-18,27px)]">
                                 {group.group}
                               </span>
-                              <span className="text-quaternary text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
+                              <span className="text-quaternary max-[420px]:text-[length:var(--font-size-12,12px)] text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
                                 {group.multipleLabel}
                               </span>
                             </div>
@@ -324,7 +324,7 @@ export function ContactUsSection() {
               <div className="flex w-full max-w-[1140px] items-center justify-between rounded-[999px] bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-M,16px)] pl-[var(--padding-3-xl,40px)] pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
                   <CustomerSupportIcon className="w-[40px] h-[40px] shrink-0" />
-                  <p className="text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                  <p className="max-[420px]:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] tablet:text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
                     {contact.toast.text}
                   </p>
                 </div>
@@ -335,7 +335,7 @@ export function ContactUsSection() {
                   className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-M,16px)] px-[var(--padding-XL,24px)]"
                   data-node-id="6542:11372"
                 >
-                  <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
+                  <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
                     {contact.toast.buttonLabel}
                   </span>
                 </a>

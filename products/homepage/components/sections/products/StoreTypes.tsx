@@ -44,8 +44,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
         {/* ── 중앙 설명 ── */}
         <div className="flex flex-col items-center gap-[4px] self-stretch text-center w-full">
-          <p className="text-title-s desktop:text-title-m font-semibold text-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
-          <p className="text-title-s desktop:text-title-m font-normal text-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
+          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
+          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
         </div>
       </div>
 
@@ -54,14 +54,14 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
         <div className="flex flex-col items-start gap-3xl self-stretch w-full">
 
           {/* ── 섹션 타이틀 ── */}
-          <h2 className="text-title-m desktop:text-title-l font-bold text-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
+          <h2 className="max-[420px]:text-body-l text-body-xl tablet:text-title-s desktop-s:text-title-m desktop:text-title-l font-bold text-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
 
           {/* ── 카드 그리드 ── */}
-          <div className="grid grid-cols-2 gap-xl w-full">
+          <div className="grid max-[420px]:grid-cols-1 grid-cols-2 gap-xl w-full">
             {current.cards.map((card, i) => (
               <div
                 key={i}
-                className={`relative flex flex-col items-start p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "col-span-2 h-[430px]" : "col-span-1 h-[640px]"}`}
+                className={`relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[420px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px]"}`}
               >
                 {/* 이미지 */}
                 {card.image && card.image !== "MISSING_FROM_DESIGN" ? (
@@ -78,8 +78,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
                 {/* 텍스트 — 좌상단 */}
                 <div className="relative z-20 flex flex-col items-start gap-m self-stretch">
-                  <h3 className="text-title-s desktop:text-title-m font-semibold text-inverse tracking-[0.3px] text-left">{card.title}</h3>
-                  <p className="text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch">{card.description}</p>
+                  <h3 className="max-[420px]:text-body text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-inverse tracking-[0.3px] text-left">{card.title}</h3>
+                  <p className="max-[420px]:text-body-xs text-body-s tablet:text-body-ms desktop-s:text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch">{card.description}</p>
                 </div>
               </div>
             ))}

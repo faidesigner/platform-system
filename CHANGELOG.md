@@ -2,6 +2,27 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.0.0] - 2026-06-22
+
+### 🔄 Changed
+- `products/homepage/components/sections/products/ProductIndustries.tsx` — 768px 이하 카드 세로 스택, 타이틀/본문 폰트 반응형 축소, 좌우 버튼 768px 이하 숨김
+- `products/homepage/components/sections/products/ProductReviews.tsx` — 960px/768px 반응형 CSS 블록 추가 (카드 너비 `min()` 함수 반응형, 768px 이하 세로 배치·이미지 하단 정렬, 폰트 단계 축소)
+- `products/homepage/components/sections/products/StoreEffects.tsx` — 상단 3열 카드 768px 이하 세로 전환, 960px/768px 패딩·폰트 반응형 단계 축소, 아코디언 리스트 반응형 패딩 적용
+- `products/homepage/components/sections/products/StoreTypes.tsx` — 960px/768px/420px 폰트 단계 축소, 420px 이하 1열 그리드 전환, 카드 높이·패딩 반응형 대응 (`max-[420px]:grid-cols-1`, `max-[420px]:h-[536px]`, `max-[768px]:p-3xl`, `max-[420px]:p-xl`)
+- `products/homepage/components/ui/Tabs.tsx` — 960px/768px 탭 폰트·패딩·보더 반응형 축소 (`var(--w-title-S-size)`, `var(--padding-ms)`, `border-b-[3px]`)
+- `products/homepage/components/sections/contact/ContactUsSection.tsx` — 상단 패딩 200px, 960px/1280px 좌우 패딩 단계 대응, 420px 이하 타이틀·폼 텍스트 폰트 축소, 토스트 본문 420px 이하 숨김
+- `products/homepage/components/sections/media/NewsSection.tsx` — 768px 이하 1열 그리드 전환, 카드 이미지 높이 367px 고정
+- `packages/ui/components/NavigationBar.tsx` — active 텍스트 색상 버그 수정, font-bold inner span 이동
+- `packages/ui/components/navigation/TabletDrawerMenu.tsx` — 드로어 메뉴 구조 개선
+- `packages/ui/components/navigation/LanguageSwitcher.tsx` — 언어 스위처 로직 개선
+- `packages/ui/components/ui/Drawer.tsx` — Drawer 컴포넌트 개선
+- `packages/ui/index.ts` — export 업데이트
+
+### 🗑️ Removed
+- `packages/ui/components/navigation/TabletNavigationBar.tsx` — TabletNavigationBar 컴포넌트 삭제 (통합)
+
+---
+
 ## [2.9.0] - 2026-06-22
 
 ### ✅ Added

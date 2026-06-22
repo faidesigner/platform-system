@@ -199,7 +199,7 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
           playsInline
           poster="/videos/case-study-poster.jpg"
         >
-          <source src="/videos/home/home-efficiency-timelapse-2.mp4" type="video/mp4" />
+          <source src="/videos/home/home-efficiency-timelapse-3.mp4" type="video/mp4" />
         </video>
 
         {/* ── 전체폭 scrim (비디오 위 풀스크린) ── */}
@@ -218,7 +218,7 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
             <div style={titleAreaStyle}>
               {/* font-size: mobile text-title-xl(3rem) → laptop text-display-s(3.5rem) */}
               <h2
-                className="text-title-l laptop:text-title-xl desktop:text-display-s"
+                className="text-title-m tablet:text-title-l laptop:text-title-xl desktop:text-display-s"
                 style={titleColorStyle}
               >
                 Efficiency
@@ -232,12 +232,12 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
                   mobile:  flex-col, gap-2xl
                   tablet+: flex-row, justify-between, items-end
             ── */}
-            <div style={statsWrapperStyle}>
+            <div className="flex flex-col gap-2xl desktop-s:flex-row desktop-s:justify-between desktop-s:items-end desktop-s:gap-0 self-stretch w-full">
               {STATS.map((stat) => (
-                /* mobile: w-full / desktop: w-[380px] */
                 <div
                   key={stat.label}
-                  style={statContainerStyle}
+                  className="w-full desktop-s:w-[311px]"
+                  style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-2XL, 32px)' }}
                 >
 
                   {/* 커스텀 라운드 보더 */}
@@ -252,14 +252,14 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
                       target={stat.target}
                       decimals={stat.decimals}
                       suffix={stat.suffix}
-                      className="text-title-l desktop:text-title-xl"
+                      className="text-title-m tablet:text-title-l desktop:text-title-xl"
                       style={statTitleStyle}
                     />
 
                     {/* 2단 + 3단: 라벨·설명 묶음 (gap 0) */}
                     <div style={{ display: 'flex', flexDirection: 'column', gap: 0 }}>
                       {/* 2단: 굵은 라벨 + 보조 캡션 */}
-                      <div className="text-body-l desktop:text-body-xl" style={statLabelStyle}>
+                      <div className="text-body tablet:text-body-l desktop:text-body-xl" style={statLabelStyle}>
                         {stat.label}
                         {stat.labelCaption && (
                           <span style={{ ...statCaptionStyle, fontSize: 'var(--font-size-14, 14px)' }}> {stat.labelCaption}</span>
@@ -267,7 +267,7 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
                       </div>
 
                       {/* 3단: 서브 설명 */}
-                      <div className="text-body desktop:text-body-l" style={statCaptionStyle}>
+                      <div className="text-body-ms tablet:text-body desktop:text-body-l" style={statCaptionStyle}>
                         {stat.description}
                       </div>
                     </div>

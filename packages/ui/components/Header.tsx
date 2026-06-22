@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
-import { TabletNavigationBar } from "./navigation/TabletNavigationBar";
 
 /* packages/ui는 products에 의존하지 않으므로 데이터를 직접 정의 */
 const siteConfig = {

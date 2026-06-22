@@ -33,8 +33,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         {/* 상단 카피 — 확장 전에만 표시 */}
         {!isExpanded && (
           <div className="absolute left-0 right-0 top-0 z-20 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
-            <h2 className="text-display-m font-bold tracking-tight text-primary">리테일의 미래</h2>
-            <h2 className="text-display-m font-bold tracking-tight text-primary">한발 먼저 시작하세요</h2>
+            <h2 className="text-title-xl tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">리테일의 미래</h2>
+            <h2 className="text-title-xl tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">한발 먼저 시작하세요</h2>
           </div>
         )}
 
@@ -73,9 +73,9 @@ export default function HeroSection({ logos }: HeroSectionProps) {
           <div className={`absolute inset-0 z-20 flex flex-col justify-end pb-3xl pointer-events-none ${isExpanded ? "opacity-100" : "opacity-0"}`}>
             <div className="flex flex-col gap-5xl w-full">
               {/* 타이틀+CTA 행 — 좌/우 정렬 */}
-              <div className="flex w-full items-end justify-between px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
+              <div className="flex flex-col tablet:flex-row w-full tablet:items-end tablet:justify-between gap-l tablet:gap-0 px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
                 <div className="flex flex-col gap-s">
-                  <p className="text-title-s font-medium text-inverse">
+                  <p className="text-body-xl tablet:text-title-s font-medium text-inverse">
                     <span className="block overflow-hidden relative">
                       <span
                         className={`block transition-all duration-1000 delay-300 ease-[cubic-bezier(0.25,1,0.5,1)] transform ${
@@ -86,7 +86,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
                       </span>
                     </span>
                   </p>
-                  <h2 className="text-title-xl font-bold text-inverse">
+                  <h2 className="text-title-m tablet:text-title-l desktop:text-title-xl font-bold text-inverse">
                     <span className="block overflow-hidden relative">
                       <span
                         className={`block transition-all duration-1000 delay-500 ease-[cubic-bezier(0.25,1,0.5,1)] transform ${

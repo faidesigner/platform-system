@@ -1,8 +1,8 @@
 'use client';
 
-import { NavigationBar } from '@fai/ui';
+import { NavigationBar, LanguageSwitcher } from '@fai/ui';
 import type { NavItem } from '@fai/ui';
-import LanguageSwitcher from '@/components/layout/LanguageSwitcher';
+import HomepageLangSwitcher from '@/components/layout/LanguageSwitcher';
 import ProductMegaMenu from '@/components/ui/ProductMegaMenu';
 
 const NAV_ITEMS: readonly NavItem[] = [
@@ -27,9 +27,11 @@ export default function NavigationBarBridge() {
     <NavigationBar
       navItems={NAV_ITEMS}
       desktopLangSwitcher={(isTransparent) => (
-        <LanguageSwitcher isTransparent={isTransparent} variant="desktop" />
+        <HomepageLangSwitcher isTransparent={isTransparent} variant="desktop" />
       )}
-      mobileLangSwitcher={<LanguageSwitcher isTransparent={false} variant="mobile" />}
+      mobileLangSwitcher={(isDarkMode) => (
+        <LanguageSwitcher isDarkMode={isDarkMode} />
+      )}
     />
   );
 }

@@ -37,27 +37,118 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
     <section id="product-reviews" className="flex w-full flex-col items-center gap-4xl py-5xl bg-bg-100">
       {/* 타이틀 + 버튼 */}
       <div className="flex w-full max-w-[1440px] items-end justify-between gap-ms px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
-        <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
+        <h2 className="text-title-m tablet:text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
           {title}
         </h2>
-        <div className="flex shrink-0 gap-ms">
+        <div className="hidden tablet:flex shrink-0 gap-ms">
           <IconButton size="L" icon="arrowshapeLeft"  aria-label="이전" onClick={() => scrollByStep(-1)} />
           <IconButton size="L" icon="arrowshapeRight" aria-label="다음" onClick={() => scrollByStep(1)}  />
         </div>
       </div>
 
+      {/* 960px 이하 카드 정밀 수치 및 폰트 위계 강등 CSS 블록 */}
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 960px) {
+          .fai-review-card {
+            display: flex !important;
+            width: min(888px, calc(100vw - var(--padding-XL))) !important;
+            padding: var(--padding-3-xl, 40px) var(--padding-2-xl, 32px) !important;
+            align-items: flex-end !important;
+            gap: var(--spacing-2XL, 32px) !important;
+            border-radius: var(--cornerRadius-XL, 24px) !important;
+            background: var(--color-filled-basic-fourth, #F5F5F5) !important;
+            flex-shrink: 0 !important;
+          }
+          .fai-review-text-area {
+            display: flex !important;
+            width: 285px !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            gap: var(--spacing-3XL, 40px) !important;
+            align-self: stretch !important;
+          }
+          .fai-review-text-area .fai-review-category {
+            font-size: var(--font-size-20, 20px) !important;
+            line-height: var(--font-lineHeight-20, 30px) !important;
+          }
+          .fai-review-text-area .fai-review-store {
+            font-size: var(--font-size-14, 14px) !important;
+            line-height: var(--font-lineHeight-14, 21px) !important;
+          }
+          .fai-review-text-area .fai-review-quote {
+            font-size: var(--font-size-14, 14px) !important;
+            line-height: var(--font-lineHeight-14, 21px) !important;
+            width: auto !important;
+          }
+          .fai-review-image {
+            display: flex !important;
+            width: 507px !important;
+            height: 380px !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
+            align-items: flex-start !important;
+            aspect-ratio: 503 / 377 !important;
+            flex: none !important;
+            min-width: unset !important;
+          }
+        }
+        @media (max-width: 768px) {
+          .fai-review-card {
+            display: flex !important;
+            width: min(372px, calc(100vw - var(--padding-XL))) !important;
+            padding: var(--padding-3-xl, 40px) var(--padding-2-xl, 32px) !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
+            align-items: flex-start !important;
+            gap: var(--spacing-2XL, 32px) !important;
+            border-radius: var(--cornerRadius-XL, 24px) !important;
+            background: var(--color-filled-basic-fourth, #F5F5F5) !important;
+            flex-shrink: 0 !important;
+          }
+          .fai-review-text-area {
+            display: flex !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            align-self: stretch !important;
+            gap: var(--spacing-2XL, 32px) !important;
+          }
+          .fai-review-text-area .fai-review-category {
+            font-size: var(--font-size-16, 16px) !important;
+            line-height: var(--font-lineHeight-16, 24px) !important;
+          }
+          .fai-review-text-area .fai-review-store,
+          .fai-review-text-area .fai-review-quote {
+            font-size: var(--font-size-12, 12px) !important;
+            line-height: var(--font-lineHeight-12, 18px) !important;
+          }
+          .fai-review-image {
+            display: flex !important;
+            width: 308px !important;
+            height: 231px !important;
+            flex-direction: column !important;
+            justify-content: flex-end !important;
+            align-items: flex-start !important;
+            aspect-ratio: 4 / 3 !important;
+            flex: none !important;
+            min-width: unset !important;
+            order: 2 !important;
+            background-size: cover !important;
+          }
+        }
+      `}} />
+
       {/* 가로 슬라이더 — 패딩 배분형 Full-bleed */}
       <div
         ref={sliderRef}
-        className="flex w-full snap-x snap-mandatory items-start gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] desktop:pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] pr-0 scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] desktop:scroll-pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scrollbar-none"
+        className="flex w-full snap-x snap-mandatory items-start gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] pr-0 scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] scrollbar-none"
       >
         {reviews.map((review, i) => (
           <article
             key={i}
-            className="flex w-[calc(100%-var(--padding-XL))] min-[961px]:w-[calc(100%-var(--padding-8XL))] desktop:w-[1140px] shrink-0 snap-start flex-col items-start gap-xl rounded-fai-m p-xl tablet:flex-row tablet:items-end tablet:gap-2xl tablet:rounded-fai-xl tablet:py-3xl tablet:px-2xl bg-surface-alt"
+            className="fai-review-card flex w-[1140px] shrink-0 snap-start flex-row items-end gap-2xl rounded-fai-xl py-3xl px-2xl bg-surface-alt"
           >
             {/* 좌: 텍스트 */}
-            <div className="flex flex-col items-start self-stretch gap-3xl tablet:gap-5xl">
+            <div className="fai-review-text-area flex flex-col items-start self-stretch gap-5xl">
               <div className="flex flex-col items-start gap-l self-stretch">
                 <span
                   className="flex shrink-0 items-center justify-center rounded-full p-ms"
@@ -66,7 +157,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
                   <ReviewIcon name={review.icon} />
                 </span>
                 <span
-                  className="self-stretch text-title-s desktop:text-title-m font-semibold"
+                  className="fai-review-category self-stretch text-title-s desktop:text-title-m font-semibold"
                   style={{ color: `var(${review.categoryColorVar})` }}
                 >
                   {review.category}
@@ -74,14 +165,14 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
               </div>
 
               <div className="flex flex-col items-start gap-l">
-                <p className="text-body desktop:text-body-l font-bold text-text-basic-secondary">
+                <p className="fai-review-store text-body desktop:text-body-l font-bold text-text-basic-secondary">
                   {review.store}
                   {review.role && (
                     <span style={{ padding: "0 8px", color: "var(--fai-color-quaternary)" }}>|</span>
                   )}
                   {review.role}
                 </p>
-                <p className="w-full tablet:w-[432px] text-body-l desktop:text-body-xl font-normal text-tertiary">
+                <p className="fai-review-quote w-[432px] text-body-xl font-normal text-tertiary">
                   {review.quote.map((seg, j) =>
                     seg.emphasis ? (
                       <span
@@ -101,13 +192,13 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
 
             {/* 우: 이미지 613×460 + 그라데이션 오버레이 */}
             {review.icon === "bakery" ? (
-              <div className="relative flex w-full aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-m bg-fill-faint tablet:flex-1 tablet:min-w-0 tablet:w-auto tablet:rounded-fai-xl">
+              <div className="fai-review-image relative flex flex-1 min-w-0 aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
                 <Image
                   src={review.image}
                   alt={`${review.store} 전경`}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 613px"
+                  sizes="(max-width: 960px) 507px, 613px"
                   style={{ objectPosition: "center bottom" }}
                 />
                 <div
@@ -116,13 +207,13 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
                 />
               </div>
             ) : (
-              <div className="relative flex w-full aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-m bg-fill-faint tablet:flex-1 tablet:min-w-0 tablet:w-auto tablet:rounded-fai-xl">
+              <div className="fai-review-image relative flex flex-1 min-w-0 aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
                 <Image
                   src={review.image}
                   alt={`${review.store} 전경`}
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 613px"
+                  sizes="(max-width: 960px) 507px, 613px"
                 />
                 <div
                   className="absolute inset-0 z-10 pointer-events-none"

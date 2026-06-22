@@ -1,6 +1,6 @@
 'use client';
 
-import * as React from 'react';
+import { useState } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from 'next/navigation';
 
@@ -10,48 +10,77 @@ const LOCALES = [
   { code: 'jp', label: 'JP' },
 ] as const;
 
-/* ---------------- 스타일 객체 ---------------- */
+/* ---------------- 구분선 컴포넌트 ---------------- */
+const LineDivider = () => (
+  <svg xmlns="http://www.w3.org/2000/svg" width="1" height="14" viewBox="0 0 1 14" fill="none" style={{ flexShrink: 0 }}>
+    <path d="M0.375 0V14" stroke="currentColor" strokeWidth="0.75" strokeOpacity="0.3" />
+  </svg>
+);
 
-const listWrapperStyle: React.CSSProperties = {
-  display: 'flex',
-  alignItems: 'center',
-  gap: '6px',
-};
+/* ---------------- 개별 언어 버튼 컴포넌트 (상태 관리) ---------------- */
+function LocaleButton({
+  localeInfo,
+  isActive,
+  isDarkMode,
+  onClick,
+}: {
+  localeInfo: { code: string; label: string };
+  isActive: boolean;
+  isDarkMode: boolean;
+  onClick: () => void;
+}) {
+  const [isHovered, setIsHovered] = useState(false);
 
-const baseStyle: React.CSSProperties = {
-  fontFamily: 'var(--font-family-Pretendard, Pretendard)',
-  fontSize: 'var(--font-size-14, 14px)',
-  fontStyle: 'normal',
-  lineHeight: 'var(--font-lineHeight-14, 21px)',
-  letterSpacing: 'var(--font-letterSpacing-0, 0)',
-  background: 'transparent',
-  border: 'none',
-  cursor: 'pointer',
-  padding: '8px',
-  borderRadius: 'var(--cornerRadius-S, 8px)',
-  transition: 'all 0.2s ease',
-  textAlign: 'center',
-};
+  let fontWeight = 500;
+  let background = 'transparent';
+  let opacity = 0.5; // 비활성: 부모 색상을 50% 투명도로
 
-/* ---------------- 구분선 ---------------- */
+  if (isActive) {
+    fontWeight = 700;
+    opacity = 1;
+  } else if (isHovered) {
+    fontWeight = 600;
+    opacity = 1;
+    background = isDarkMode
+      ? 'var(--color-interaction-light-white-hover, rgba(255, 255, 255, 0.12))'
+      : 'var(--color-interaction-light-black-hover, rgba(0, 0, 0, 0.03))';
+  }
 
-function LineDivider() {
+  const buttonStyle: React.CSSProperties = {
+    display: 'flex',
+    flexDirection: 'column',
+    alignItems: 'flex-start',
+    borderRadius: 'var(--cornerRadius-S, 8px)',
+    fontFamily: 'var(--font-family-Pretendard, Pretendard)',
+    fontSize: 'var(--font-size-14, 14px)',
+    fontStyle: 'normal',
+    lineHeight: 'var(--font-lineHeight-14, 21px)',
+    letterSpacing: 'var(--font-letterSpacing-0, 0)',
+    background,
+    border: 'none',
+    cursor: 'pointer',
+    padding: '8px',
+    textAlign: 'center',
+    transition: 'all 0.2s ease',
+    fontWeight,
+    opacity,
+  };
+
   return (
-    <svg
-      xmlns="http://www.w3.org/2000/svg"
-      width="1"
-      height="14"
-      viewBox="0 0 1 14"
-      fill="none"
-      style={{ flexShrink: 0 }}
+    <button
+      type="button"
+      onClick={onClick}
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+      aria-current={isActive ? 'true' : undefined}
+      style={buttonStyle}
     >
-      <path d="M0.375 0V14" stroke="var(--color-border-secondary, #D2D3D5)" strokeWidth="0.75" />
-    </svg>
+      {localeInfo.label}
+    </button>
   );
 }
 
-/* ---------------- 컴포넌트 ---------------- */
-
+/* ---------------- 메인 스위처 컴포넌트 ---------------- */
 export function LanguageSwitcher({ isDarkMode = false }: { isDarkMode?: boolean }) {
   const locale = useLocale();
   const router = useRouter();
@@ -59,41 +88,23 @@ export function LanguageSwitcher({ isDarkMode = false }: { isDarkMode?: boolean 
 
   const switchTo = (code: string) => {
     if (code === locale) return;
-    // next/navigation pathname includes the locale prefix (e.g. /ko/products)
-    // Replace first occurrence of current locale segment with the new one
     const newPath = pathname.replace(`/${locale}`, `/${code}`);
     router.push(newPath);
   };
 
   return (
-    <div style={listWrapperStyle}>
-      {LOCALES.map((l, i) => {
-        const active = l.code === locale;
-
-        const activeColor = isDarkMode
-          ? 'var(--color-text-basic-primary, #FFF)'
-          : 'var(--color-text-basic-primary, #1F2023)';
-        const inactiveColor = isDarkMode
-          ? 'var(--color-text-basic-secondary, #D2D3D5)'
-          : 'var(--color-text-basic-tertiary, #61646B)';
-
-        const color = active ? activeColor : inactiveColor;
-        const fontWeight = active ? 700 : 500;
-
-        return (
-          <React.Fragment key={l.code}>
-            {i > 0 && <LineDivider />}
-            <button
-              type="button"
-              onClick={() => switchTo(l.code)}
-              aria-current={active ? 'true' : undefined}
-              style={{ ...baseStyle, color, fontWeight }}
-            >
-              {l.label}
-            </button>
-          </React.Fragment>
-        );
-      })}
+    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-XS, 6px)' }}>
+      {LOCALES.map((l, i) => (
+        <span key={l.code} className="flex items-center" style={{ gap: 'var(--spacing-XS, 6px)' }}>
+          {i > 0 && <LineDivider />}
+          <LocaleButton
+            localeInfo={l}
+            isActive={l.code === locale}
+            isDarkMode={isDarkMode}
+            onClick={() => switchTo(l.code)}
+          />
+        </span>
+      ))}
     </div>
   );
 }

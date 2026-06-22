@@ -26,11 +26,11 @@ export function AboutHero() {
       {/* contentsArea — 세로 gap 16 = m, 텍스트 inverse */}
       <div className="relative w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-m text-inverse">
         {/* subtitle: w/title/M (28/39/0.3), weight 600 */}
-        <p className="w-full text-body-xl desktop:text-title-m font-semibold">
+        <p className="w-full text-body-l tablet:text-body-xl desktop:text-title-m font-semibold">
           {eyebrow}
         </p>
         {/* title: w/display/S (56/78/0.8), weight 700, 2줄 */}
-        <h1 className="w-full text-title-l tablet:text-title-xl desktop:text-display-s font-bold">
+        <h1 className="w-full text-title-m tablet:text-title-xl desktop:text-display-s font-bold">
           {title.map((line) => (
             <span key={line} className="block">
               {line}

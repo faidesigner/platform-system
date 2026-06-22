@@ -64,6 +64,7 @@ export interface PeopleCard {
   role: string;
   label: string;
   image: AboutImage;
+  href: string;
   /** 디자인 미확정 항목에 대한 작업 메모 */
   _description?: string;
 }

@@ -40,39 +40,48 @@ export function AboutPeople() {
           [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
         {cards.map((card) => (
-          <article key={card.id} className="flex shrink-0 snap-start flex-col gap-4xl">
-            {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}
-            <div className="relative h-[400px] w-[720px] overflow-hidden rounded-fai-m">
-              <Image
-                src={card.image.src}
-                alt={card.image.alt}
-                fill
-                sizes="720px"
-                className="object-cover"
-              />
-              <div
-                aria-hidden
-                className="absolute inset-0 bg-gradient-to-b from-[rgba(9,9,11,0.25)] to-[rgba(0,0,0,0)]"
-              />
-            </div>
-
-            {/* textBox: 세로 gap-ms */}
-            <div className="flex w-[720px] flex-col gap-ms">
-              <h3 className="text-title-s desktop:text-title-m font-bold text-primary">
-                {card.title}
-              </h3>
-              {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
-              <div className="flex items-center gap-ms">
-                <p className="text-body desktop:text-body-l text-primary">
-                  {card.name} ㅣ {card.role}
-                </p>
-                {/* 라벨: mint-400 배경 고정 승인, px-s */}
-                <span className="flex items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
-                  {card.label}
-                </span>
+          <a
+            key={card.id}
+            href={card.href}
+            target="_blank"
+            rel="noopener noreferrer"
+            aria-label={`${card.name} 직무 인터뷰 보기 (새창)`}
+            className="block shrink-0 snap-start cursor-pointer"
+          >
+            <article className="flex flex-col gap-3xl">
+              {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}
+              <div className="relative h-[400px] w-[720px] overflow-hidden rounded-fai-m">
+                <Image
+                  src={card.image.src}
+                  alt={card.image.alt}
+                  fill
+                  sizes="720px"
+                  className="object-cover"
+                />
+                <div
+                  aria-hidden
+                  className="absolute inset-0 bg-gradient-to-b from-[rgba(9,9,11,0.25)] to-[rgba(0,0,0,0)]"
+                />
               </div>
-            </div>
-          </article>
+
+              {/* textBox: 세로 gap-ms */}
+              <div className="flex w-[720px] flex-col gap-ms">
+                <h3 className="text-title-s desktop:text-title-m font-bold text-primary">
+                  {card.title}
+                </h3>
+                {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
+                <div className="flex items-center gap-ms">
+                  <p className="text-body desktop:text-body-l text-primary">
+                    {card.name} ㅣ {card.role}
+                  </p>
+                  {/* 라벨: mint-400 배경 고정 승인, px-s */}
+                  <span className="flex items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
+                    {card.label}
+                  </span>
+                </div>
+              </div>
+            </article>
+          </a>
         ))}
       </div>
 

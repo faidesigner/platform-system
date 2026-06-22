@@ -67,7 +67,7 @@ export const siteConfig = {
         {
           title: "오차없이 정확한 99.9% 인식률",
           description: "타사 대비 월등한 성능으로 1초면 스캔 완료되는 압도적인 속도로 처리해요",
-          image: "/images/products/vco/vco-feature-accuracy.png",
+          image: "/images/products/vco/vco-feature-accuracy-2.png",
           imagePosition: "right",
         },
       ],
@@ -618,9 +618,9 @@ export const aboutConfig = {
       },
       {
         id: "lee",
-        role: "CXO",
+        role: "CSO",
         name: "이현규",
-        photo: { src: "/images/about/member-cxo-lee.png", alt: "이현규 CXO" },
+        photo: { src: "/images/about/member-cso-lee.png", alt: "이현규 CSO" },
         education: ["연세대학교 건축공학 학사"],
         career: ["전 나이스평가정보 사업기획단", "전 BCG 컨설턴트"],
       },
@@ -638,6 +638,7 @@ export const aboutConfig = {
         role: "CTO",
         label: "Fainders.AI",
         image: { src: "/images/about/people-hong.webp", alt: "홍석범 CTO 인터뷰" },
+        href: "https://faindersai.career.greetinghr.com/ko/interview1",
       },
       {
         id: "wang",
@@ -646,6 +647,7 @@ export const aboutConfig = {
         role: "CEO",
         label: "Fainders.AI",
         image: { src: "/images/about/people-wang.webp", alt: "왕민권 CEO 인터뷰" },
+        href: "https://faindersai.career.greetinghr.com/ko/interview2",
       },
       {
         id: "park",
@@ -654,6 +656,7 @@ export const aboutConfig = {
         role: "BE 개발",
         label: "Fainders.AI",
         image: { src: "/images/about/people-park.webp", alt: "박성빈 BE 개발 인터뷰" },
+        href: "https://faindersai.career.greetinghr.com/ko/interview3",
         _description: "card3 title 카피 — 디자인에서 미확인",
       },
       {
@@ -663,6 +666,7 @@ export const aboutConfig = {
         role: "CEO",
         label: "Fainders.AI JAPAN",
         image: { src: "/images/about/people-lee.webp", alt: "이지민 CEO 인터뷰" },
+        href: "https://faindersai.career.greetinghr.com/ko/interview4",
         _description: "card4 title 카피 — 디자인에서 미확인",
       },
     ],
