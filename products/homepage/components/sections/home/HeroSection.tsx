@@ -58,7 +58,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
             loop
             muted
             playsInline
-            src="/videos/home/home-hero-bg.mp4"
+            src="/videos/home/home-hero-bg-2.mp4"
           />
 
           {/* z-10: Dim Overlay */}
