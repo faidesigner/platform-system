@@ -30,7 +30,7 @@ export function AboutHero() {
           {eyebrow}
         </p>
         {/* title: w/display/S (56/78/0.8), weight 700, 2줄 */}
-        <h1 className="w-full text-title-m tablet:text-title-xl desktop:text-display-s font-bold">
+        <h1 className="w-full text-title-xl max-[420px]:text-title-l desktop:text-display-s font-bold">
           {title.map((line) => (
             <span key={line} className="block">
               {line}

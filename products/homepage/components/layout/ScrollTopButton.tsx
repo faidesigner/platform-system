@@ -39,7 +39,7 @@ export function ScrollTopButton() {
   return (
     <motion.div
       className={[
-        "w-fit h-fit absolute right-[56px] top-[56px] -rotate-90 rounded-[999px]",
+        "w-fit h-fit absolute right-4xl top-4xl -rotate-90 rounded-fai-circle",
         "transition-opacity duration-300",
         visible ? "opacity-100" : "opacity-0 pointer-events-none",
       ].join(" ")}

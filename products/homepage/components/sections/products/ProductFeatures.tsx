@@ -10,6 +10,12 @@ interface ProductFeaturesProps {
   features: ProductFeature[];
 }
 
+/** 피그마 정밀 배경 좌표 — Card 0·1 공통 (background-position / background-size) */
+const CARD_BG: Record<number, { position: string; size: string }> = {
+  0: { position: "20.52% -813%",  size: "191.549% 101.411%" },
+  1: { position: "100% 0%",       size: "93.104% 110.797%" },
+};
+
 export default function ProductFeatures({ title, features }: ProductFeaturesProps) {
   if (!features || features.length === 0) return null;
 
@@ -53,39 +59,17 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
       <div className="grid grid-cols-1 gap-xl tablet:grid-cols-2">
         {features.map((feature, i) => {
 
-          /* ── Card 0 — 피그마 정밀 배경 좌표 시스템 (CSS background) ── */
-          if (i === 0) {
+          /* ── Card 0·1 — 피그마 정밀 배경 좌표 (구조 동일, 좌표만 상이) ── */
+          if (i < 2) {
+            const { position, size } = CARD_BG[i];
             return (
               <article
                 key={i}
                 className="relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary"
                 style={{
                   backgroundImage: `url(${feature.image})`,
-                  backgroundPosition: "20.52% -813%",
-                  backgroundSize: "191.549% 101.411%",
-                  backgroundRepeat: "no-repeat",
-                }}
-              >
-                <h3 className="relative z-10 whitespace-pre-line max-[420px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
-                  {feature.title}
-                </h3>
-                <p className="relative z-10 self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
-                  {feature.description}
-                </p>
-              </article>
-            );
-          }
-
-          /* ── Card 1 — 피그마 정밀 배경 좌표 시스템 (CSS background) ── */
-          if (i === 1) {
-            return (
-              <article
-                key={i}
-                className="relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary"
-                style={{
-                  backgroundImage: `url(${feature.image})`,
-                  backgroundPosition: "100% 0%",
-                  backgroundSize: "93.104% 110.797%",
+                  backgroundPosition: position,
+                  backgroundSize: size,
                   backgroundRepeat: "no-repeat",
                 }}
               >

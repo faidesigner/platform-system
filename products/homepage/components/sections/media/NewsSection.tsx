@@ -112,7 +112,7 @@ export function MediaCardSkeleton() {
         {/* title */}
         <div className="flex justify-center items-center self-stretch h-[36px] rounded-[var(--cornerRadius-default,4px)] bg-fill-faint" />
         {/* description */}
-        <div className="flex items-center gap-[12px] self-stretch h-[22px] rounded-[var(--cornerRadius-default,4px)] bg-fill-faint" />
+        <div className="flex items-center gap-ms self-stretch h-[22px] rounded-[var(--cornerRadius-default,4px)] bg-fill-faint" />
       </div>
     </div>
   );

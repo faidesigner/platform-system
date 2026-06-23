@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { IcoTxtButton, IconButton, ProgressBar } from "@fai/ui";
 import SocialIcon from "@/assets/icon/SocialIcon";
@@ -13,7 +13,17 @@ type Social       = (typeof siteConfig.mediaShowcase.socials)[number];
 function YoutubeCard() {
   const { youtube } = siteConfig.mediaShowcase;
   const videos = youtube.videos;
+  const DURATION = 5000;
   const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    if (videos.length <= 1) return;
+    const timer = setTimeout(
+      () => setIndex((i) => (i + 1) % videos.length),
+      DURATION,
+    );
+    return () => clearTimeout(timer);
+  }, [index, videos.length]);
 
   if (!videos.length) return null;
 
@@ -27,8 +37,8 @@ function YoutubeCard() {
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-fai-m min-[961px]:flex-row">
 
-      {/* 좌: 텍스트 패널 */}
-      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-3xl">
+      {/* 좌: 텍스트 패널 — 960px 이하에서 order-2 (썸네일 아래) */}
+      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-3xl max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px]">
         <div className="flex flex-col justify-between items-start flex-1 self-stretch">
 
           {/* 상단: 채널 아이콘 + 캐러셀 화살표 */}
@@ -106,8 +116,8 @@ function YoutubeCard() {
         </div>
       </div>
 
-      {/* 우: 영상 썸네일 + progressBar */}
-      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-3xl min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m">
+      {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단), h-[472px] */}
+      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-3xl min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none">
         {hasThumb ? (
           <Image
             src={current.thumbnail}
@@ -125,6 +135,7 @@ function YoutubeCard() {
           count={videos.length}
           activeIndex={index}
           onChange={setIndex}
+          duration={DURATION}
           getAriaLabel={(i) => `영상 ${i + 1}로 이동`}
         />
       </div>

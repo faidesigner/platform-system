@@ -92,7 +92,7 @@ export default function StoreCaseStudies({ eyebrow, cases }: StoreCaseStudiesPro
                     style={{ cursor: isActive ? "default" : "pointer" }}
                   >
                     {isActive ? (
-                      <div className="flex flex-col items-start gap-[4px]">
+                      <div className="flex flex-col items-start gap-2xs">
                         <div className="flex items-baseline">
                           <span className="text-title-s desktop:text-title-m font-bold text-brand-text">{titleLabel}</span>
                           {c.date && (
@@ -104,7 +104,7 @@ export default function StoreCaseStudies({ eyebrow, cases }: StoreCaseStudiesPro
                         )}
                       </div>
                     ) : (
-                      <div className="flex flex-col items-start gap-[4px]">
+                      <div className="flex flex-col items-start gap-2xs">
                         <span className="text-body text-inverse opacity-40 hover:opacity-100 transition-all cursor-pointer">{titleLabel}</span>
                       </div>
                     )}

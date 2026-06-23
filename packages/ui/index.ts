@@ -6,7 +6,7 @@ export { IcoTxtButton } from './components/button/IcoTxtButton';
 export type { IcoTxtButtonProps } from './components/button/IcoTxtButton';
 export { default as NavigationBar } from './components/NavigationBar';
 export { default as Header } from './components/Header';
-export { default as Footer } from './components/Footer';
+export { default as Footer } from './components/footer/Footer';
 
 /* ── Navigation sub-components ── */
 export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';

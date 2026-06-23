@@ -46,70 +46,49 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
         </div>
       </div>
 
-      {/* 960px 이하 카드 정밀 수치 및 폰트 위계 강등 CSS 블록 */}
+      {/* 반응형 카드 수치 및 폰트 위계 강등 CSS 블록 */}
       <style dangerouslySetInnerHTML={{ __html: `
         @media (max-width: 960px) {
           .fai-review-card {
-            display: flex !important;
             width: min(888px, calc(100vw - var(--padding-XL))) !important;
-            padding: var(--padding-3-xl, 40px) var(--padding-2-xl, 32px) !important;
-            align-items: flex-end !important;
-            gap: var(--spacing-2XL, 32px) !important;
-            border-radius: var(--cornerRadius-XL, 24px) !important;
-            background: var(--color-filled-basic-fourth, #F5F5F5) !important;
-            flex-shrink: 0 !important;
           }
           .fai-review-text-area {
-            display: flex !important;
             width: 285px !important;
-            flex-direction: column !important;
-            align-items: flex-start !important;
+            flex-shrink: 0 !important;
             gap: var(--spacing-3XL, 40px) !important;
-            align-self: stretch !important;
           }
           .fai-review-text-area .fai-review-category {
             font-size: var(--font-size-20, 20px) !important;
             line-height: var(--font-lineHeight-20, 30px) !important;
           }
-          .fai-review-text-area .fai-review-store {
+          .fai-review-text-area .fai-review-store,
+          .fai-review-text-area .fai-review-quote {
             font-size: var(--font-size-14, 14px) !important;
             line-height: var(--font-lineHeight-14, 21px) !important;
           }
           .fai-review-text-area .fai-review-quote {
-            font-size: var(--font-size-14, 14px) !important;
-            line-height: var(--font-lineHeight-14, 21px) !important;
             width: auto !important;
           }
           .fai-review-image {
-            display: flex !important;
             width: 507px !important;
             height: 380px !important;
-            flex-direction: column !important;
-            justify-content: flex-end !important;
-            align-items: flex-start !important;
-            aspect-ratio: 503 / 377 !important;
             flex: none !important;
             min-width: unset !important;
+            aspect-ratio: unset !important;
           }
         }
         @media (max-width: 768px) {
           .fai-review-card {
-            display: flex !important;
             width: min(372px, calc(100vw - var(--padding-XL))) !important;
-            padding: var(--padding-3-xl, 40px) var(--padding-2-xl, 32px) !important;
+            align-self: stretch !important;
+            padding: var(--padding-2-xl, 32px) var(--padding-xl, 24px) !important;
             flex-direction: column !important;
-            justify-content: flex-end !important;
+            justify-content: flex-start !important;
             align-items: flex-start !important;
-            gap: var(--spacing-2XL, 32px) !important;
-            border-radius: var(--cornerRadius-XL, 24px) !important;
-            background: var(--color-filled-basic-fourth, #F5F5F5) !important;
-            flex-shrink: 0 !important;
           }
           .fai-review-text-area {
-            display: flex !important;
-            flex-direction: column !important;
-            align-items: flex-start !important;
-            align-self: stretch !important;
+            width: 100% !important;
+            flex: 1 !important;
             gap: var(--spacing-2XL, 32px) !important;
           }
           .fai-review-text-area .fai-review-category {
@@ -122,17 +101,9 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
             line-height: var(--font-lineHeight-12, 18px) !important;
           }
           .fai-review-image {
-            display: flex !important;
-            width: 308px !important;
+            width: 100% !important;
             height: 231px !important;
-            flex-direction: column !important;
-            justify-content: flex-end !important;
-            align-items: flex-start !important;
-            aspect-ratio: 4 / 3 !important;
-            flex: none !important;
-            min-width: unset !important;
             order: 2 !important;
-            background-size: cover !important;
           }
         }
       `}} />
@@ -140,7 +111,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
       {/* 가로 슬라이더 — 패딩 배분형 Full-bleed */}
       <div
         ref={sliderRef}
-        className="flex w-full snap-x snap-mandatory items-start gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] pr-0 scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] scrollbar-none"
+        className="flex w-full snap-x snap-mandatory items-start max-[768px]:items-stretch gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] desktop:pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] pr-0 scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] desktop:scroll-pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scrollbar-none"
       >
         {reviews.map((review, i) => (
           <article

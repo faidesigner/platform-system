@@ -1,0 +1,43 @@
+/* ── fai-footer 반응형 토글 ──
+   > 960px : .fai-footer__desktop + .fai-footer__desktop-policies 표시
+   ≤ 960px : .fai-footer__compact 표시
+*/
+
+/* 기본(desktop): compact 숨김 */
+.fai-footer__compact {
+  display: none;
+}
+
+/* ≤ 420px: logoArea 숨김 + ScrollTopButton 숨김 + 폰트 위계 한 단계 축소 */
+@media (max-width: 420px) {
+  .fai-footer__compact-top {
+    display: none;
+  }
+  .fai-footer__scroll-top {
+    display: none;
+  }
+  /* 라벨/값: 13px → text-caption-s(12px) */
+  .fai-footer__info span {
+    font-size: var(--font-size-12, 12px);
+    line-height: var(--font-lineHeight-12, 18px);
+  }
+  /* 정책 링크: text-body-s(14px) → text-caption-s(12px) */
+  .fai-footer__policies a {
+    font-size: var(--font-size-12, 12px);
+    line-height: var(--font-lineHeight-12, 18px);
+  }
+}
+
+/* ≤ 960px: desktop 숨기고 compact 표시 */
+@media (max-width: 960px) {
+  .fai-footer__desktop,
+  .fai-footer__desktop-policies {
+    display: none;
+  }
+  .fai-footer__compact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3XL, 40px);
+    padding: var(--padding-3XL) var(--padding-XL);
+  }
+}

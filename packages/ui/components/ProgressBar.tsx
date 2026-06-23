@@ -9,6 +9,8 @@ export interface ProgressBarProps {
   onChange: (index: number) => void;
   /** 각 버튼의 aria-label 생성 함수 (기본: `스텝 ${i + 1}로 이동`) */
   getAriaLabel?: (index: number) => string;
+  /** 활성 바가 0% → 100% 채워지는 시간 (ms, 기본 4000) */
+  duration?: number;
   className?: string;
 }
 
@@ -17,10 +19,12 @@ export function ProgressBar({
   activeIndex,
   onChange,
   getAriaLabel,
+  duration = 4000,
   className = "",
 }: ProgressBarProps) {
   return (
     <div className={`relative z-10 flex items-start gap-2xs w-full self-stretch ${className}`}>
+      <style>{`@keyframes fai-progress-fill { from { width: 0% } to { width: 100% } }`}</style>
       {Array.from({ length: count }, (_, i) => (
         <button
           key={i}
@@ -29,9 +33,17 @@ export function ProgressBar({
           className="relative flex-1 h-2xs rounded-fai-s bg-quaternary overflow-hidden cursor-pointer"
           aria-label={getAriaLabel ? getAriaLabel(i) : `스텝 ${i + 1}로 이동`}
         >
-          <div
-            className={`absolute inset-y-0 left-0 bg-icon-basic-inverse transition-all duration-300 ease-in-out ${i <= activeIndex ? "w-full" : "w-0"}`}
-          />
+          {i <= activeIndex && (
+            <div
+              key={i === activeIndex ? `fill-${activeIndex}` : `done-${i}`}
+              className={`absolute inset-y-0 left-0 bg-icon-basic-inverse ${i < activeIndex ? "w-full" : ""}`}
+              style={
+                i === activeIndex
+                  ? { animation: `fai-progress-fill ${duration}ms linear forwards` }
+                  : undefined
+              }
+            />
+          )}
         </button>
       ))}
     </div>

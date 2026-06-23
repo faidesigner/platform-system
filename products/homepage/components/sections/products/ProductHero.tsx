@@ -55,7 +55,7 @@ export default function ProductHero({
 
       {/* z-20: 콘텐츠 레이어 */}
       <div className="absolute inset-0 z-20 flex w-full flex-col justify-end px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pb-8xl pointer-events-none">
-        <div className="flex flex-col tablet:flex-row w-full tablet:items-end tablet:justify-between gap-l tablet:gap-0">
+        <div className="flex flex-col tablet:flex-row w-full tablet:items-end tablet:justify-between gap-[var(--spacing-2XL,32px)] tablet:gap-0">
           {/* 타이틀 */}
           <div className="flex flex-col items-start gap-m max-w-[1140px]">
             <p className="text-title-s tablet:text-title-m font-semibold text-text-basic-inverse">
@@ -69,7 +69,7 @@ export default function ProductHero({
                 </span>
               </span>
             </p>
-            <h1 className="text-title-xl tablet:text-display-s desktop:text-display-m font-bold text-text-basic-inverse">
+            <h1 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold text-text-basic-inverse">
               <span className="block overflow-hidden relative">
                 <span
                   className={`block transition-all duration-1000 delay-500 ease-[cubic-bezier(0.25,1,0.5,1)] transform ${
