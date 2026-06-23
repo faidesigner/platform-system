@@ -118,6 +118,7 @@ export default function LanguageSwitcher({
 
   /** next-intl locale 전환 — 경로 보존 */
   const handleSelect = (code: string) => {
+    if (code === locale) { setOpen(false); return; }
     router.push(pathname, { locale: code });
     setOpen(false);
   };

@@ -2,6 +2,17 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.3.0] - 2026-06-23
+
+### 🐛 Fixed
+
+#### 언어 전환 라우팅
+- `packages/ui/components/navigation/LanguageSwitcher.tsx` — `next/navigation` 의존성 제거, `onLocaleChange: (code: string) => void` 콜백 prop 추가. 라우팅 로직을 컴포넌트 외부로 분리해 next-intl 미인식 문제 해결
+- `NavigationBarBridge.tsx` — `useRouter` + `usePathname` from `@/i18n/navigation` 추가, `handleLocaleChange`에서 `router.push(pathname, { locale: code })` 호출 → 모바일 언어 전환도 next-intl 라우터 사용
+- `products/homepage/components/layout/LanguageSwitcher.tsx` — `handleSelect`에 `if (code === locale) { setOpen(false); return; }` 가드 추가: 현재 언어 재클릭 시 라우팅 이벤트 방지 (모바일은 기존 가드 유지)
+
+---
+
 ## [3.2.0] - 2026-06-23
 
 ### ✨ Added

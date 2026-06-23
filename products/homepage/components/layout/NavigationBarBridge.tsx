@@ -2,6 +2,7 @@
 
 import { NavigationBar, LanguageSwitcher } from '@fai/ui';
 import type { NavItem } from '@fai/ui';
+import { useRouter, usePathname } from '@/i18n/navigation';
 import HomepageLangSwitcher from '@/components/layout/LanguageSwitcher';
 import ProductMegaMenu from '@/components/ui/ProductMegaMenu';
 
@@ -23,6 +24,13 @@ const NAV_ITEMS: readonly NavItem[] = [
 ];
 
 export default function NavigationBarBridge() {
+  const router   = useRouter();
+  const pathname = usePathname();
+
+  const handleLocaleChange = (code: string) => {
+    router.push(pathname, { locale: code });
+  };
+
   return (
     <NavigationBar
       navItems={NAV_ITEMS}
@@ -30,7 +38,7 @@ export default function NavigationBarBridge() {
         <HomepageLangSwitcher isTransparent={isTransparent} variant="desktop" />
       )}
       mobileLangSwitcher={(isDarkMode) => (
-        <LanguageSwitcher isDarkMode={isDarkMode} />
+        <LanguageSwitcher isDarkMode={isDarkMode} onLocaleChange={handleLocaleChange} />
       )}
     />
   );

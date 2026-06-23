@@ -2,7 +2,6 @@
 
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
-import { useRouter, usePathname } from 'next/navigation';
 
 const LOCALES = [
   { code: 'ko', label: 'KR' },
@@ -81,15 +80,18 @@ function LocaleButton({
 }
 
 /* ---------------- 메인 스위처 컴포넌트 ---------------- */
-export function LanguageSwitcher({ isDarkMode = false }: { isDarkMode?: boolean }) {
+export function LanguageSwitcher({
+  isDarkMode = false,
+  onLocaleChange,
+}: {
+  isDarkMode?: boolean;
+  onLocaleChange: (code: string) => void;
+}) {
   const locale = useLocale();
-  const router = useRouter();
-  const pathname = usePathname();
 
   const switchTo = (code: string) => {
     if (code === locale) return;
-    const newPath = pathname.replace(`/${locale}`, `/${code}`);
-    router.push(newPath);
+    onLocaleChange(code);
   };
 
   return (
