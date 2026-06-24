@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { IconButton } from "@fai/ui";
-import ArrowUpIcon from "@/assets/icon/ArrowUpIcon";
+import ArrowUpIcon from "@fai/ui/components/common/Icon/ArrowUpIcon";
 
 const rollingIcon = (
   <div className="relative flex h-full w-full items-center justify-center overflow-hidden">

@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import Image from "next/image";
 import { IcoTxtButton, IconButton, ProgressBar } from "@fai/ui";
-import SocialIcon from "@/assets/icon/SocialIcon";
+import SocialIcon from "@fai/ui/components/common/Icon/SocialIcon";
 import { siteConfig } from "@/config/site";
 
 type YoutubeVideo = (typeof siteConfig.mediaShowcase.youtube.videos)[number];

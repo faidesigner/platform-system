@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState } from "react";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useScroll } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { LogoMarquee, IcoTxtButton } from "@fai/ui";
@@ -22,9 +22,11 @@ export default function HeroSection({ logos }: HeroSectionProps) {
     offset: ["start start", "end end"],
   });
 
-  useMotionValueEvent(scrollYProgress, "change", (v) => {
-    setIsExpanded(v >= 0.2);
-  });
+  useEffect(() => {
+    return scrollYProgress.on("change", (v) => {
+      setIsExpanded(v >= 0.2);
+    });
+  }, [scrollYProgress]);
 
   return (
     <section ref={sectionRef} className="relative h-[400vh] w-full">

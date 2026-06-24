@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import Image from "next/image";
 import { IconButton } from "@fai/ui";
-import ReviewIcon, { type ReviewIconKey } from "@/assets/icon/ReviewIcon";
+import ReviewIcon, { type ReviewIconKey } from "@fai/ui/components/common/Icon/ReviewIcon";
 import type { QuoteSegment } from "@/config/site";
 
 const SCROLL_STEP = 1164; // 카드 폭(1140) + gap(24)

@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useRef, useEffect } from "react";
-import EffectIcon from "@/assets/icon/EffectIcon";
+import EffectGraphic from "@fai/ui/components/common/Icon/EffectGraphic";
 
 interface EffectCard {
   title: string;
@@ -106,7 +106,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                   }`}
                   style={{ transitionDelay: `${i * 160}ms` }}
                 >
-                  <EffectIcon name={card.title as import('@/assets/icon/EffectIcon').EffectIconKey} />
+                  <EffectGraphic name={card.title as import('@fai/ui/components/common/Icon/EffectGraphic').EffectIconKey} />
                 </div>
                 <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary">
                   {card.description}

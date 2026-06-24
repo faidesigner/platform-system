@@ -2,6 +2,59 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.4.0] - 2026-06-24
+
+### ✨ Added
+
+#### 디자인 토큰 신규
+- `products/homepage/app/globals.css` — `--color-icon-optional-brand-primary` 시맨틱 토큰 추가 (light: `--color-green-600`, dark: `--color-green-500`)
+
+### 🔄 Changed
+
+#### 아이콘 폴더 승격 (packages/ui)
+- `packages/ui/components/common/Icon/` — `products/homepage/components/common/Icon/` 전체 이동 (ArrowUpIcon, BenefitGraphic, ChevronIcon, EffectGraphic, GlobeIcon, IcArrowRight16, IcRequiredDot, ReviewIcon, SocialIcon 9개 파일)
+- import 경로 7개 파일 일괄 교체: `@/components/common/Icon/` → `@fai/ui/components/common/Icon/` (LanguageSwitcher, ShowcaseSection, ScrollTopButton, ContactUsSection, ProductBenefits, ProductReviews, StoreEffects)
+
+#### SVG → SVGR 전환 (인라인 SVG 제거)
+- `ReviewIcon.tsx` — 인라인 SVG → `bakery.svg`, `cafeteria.svg`, `resort.svg` SVGR import
+- `SocialIcon.tsx` — 인라인 SVG → `linkedin-brand.svg`, `instagram-brand.svg` SVGR import
+- `ArrowUpIcon.tsx` — 인라인 SVG → `arrow-up.svg` SVGR import (기본 className `w-[24px] h-[24px]`)
+- `ChevronIcon.tsx` — 인라인 SVG → `chevron-down.svg` SVGR import (`open` prop → `rotate-180` className)
+- `GlobeIcon.tsx` — 인라인 SVG → `globe.svg` SVGR import
+- `IcArrowRight16.tsx` — 인라인 SVG → `ic-arrow-right-16.svg` SVGR import
+- `IcRequiredDot.tsx` — 인라인 SVG → `ic-required-dot.svg` SVGR import; `className="text-[var(--color-icon-optional-brand-primary)]"` 컬러 토큰 적용
+
+#### SVG 파일명 정리
+- `review-bakery.svg` → `bakery.svg`, `review-cafeteria.svg` → `cafeteria.svg`, `review-resort.svg` → `resort.svg` (review- prefix 제거)
+- `sns-instagram.svg` → `instagram.svg`, `sns-linkedin.svg` → `linkedin.svg`, `sns-youtube.svg` → `youtube.svg` (sns- prefix 제거)
+- `social-instagram.svg` → `instagram-brand.svg`, `social-linkedin.svg` → `linkedin-brand.svg` (social- prefix 제거, brand 구분 명칭)
+
+#### SVG currentColor 전환
+- `root/assets/icon/arrow-up.svg` — `fill="white"` → `fill="currentColor"`
+- `root/assets/icon/ic-required-dot.svg` — `fill="var(--fai-bg-brand)"` → `fill="currentColor"`
+- `root/assets/icon/bakery.svg`, `cafeteria.svg`, `resort.svg` — 컬러 fills → `fill="currentColor"`
+- `root/assets/icon/file.svg`, `window.svg`, `next.svg`, `vercel.svg` — `#666`/`#000`/`#fff` → `fill="currentColor"`
+
+#### Turbopack SVGR 설정
+- `products/homepage/next.config.ts` — Turbopack용 `turbopack.rules` 최상위 키 추가 (`*.svg` → `@svgr/webpack` 로더); Webpack `webpack()` 설정은 Turbopack에서 무시되므로 별도 분리
+
+#### StoreEffects import 정정
+- `products/homepage/components/sections/products/StoreEffects.tsx` — `EffectIcon` → `EffectGraphic` import 및 타입 캐스팅 교체
+
+#### 문의하기 ContactUsSection 반응형·UX 개선
+- **진입 스크롤** — 문의하기 버튼 클릭 후 진입 시 항상 최상단(`lenisRef.current.scrollTo(0, { immediate: true })`)으로 뷰포트 열리도록 `useEffect` 추가
+- **완료 스크롤** — 폼 제출 후 완료 화면 전환 시 `sectionRef` 기준 → 절대 최상단(`0`) 스크롤로 수정
+- **완료 화면 폰트** — h2: ≤768px `28px/42px`, ≥769px `36px/54px`; p: ≤768px `18px/27px`, ≥769px `20px/30px`
+- **완료 화면 패딩** — ≤960px `px-[var(--padding-XL)]`, ≥961px `px-0`
+
+### 🐛 Fixed
+
+#### React 상태 업데이트 에러 해결
+- `products/homepage/components/sections/home/AnimatedStat.tsx` — `let mounted = true` 마운트 가드 + cleanup에서 `startedRef.current = false` 리셋 추가 (Strict Mode 이중 호출 대응)
+- `products/homepage/components/sections/home/HeroSection.tsx` — `useMotionValueEvent` → `useEffect` + `scrollYProgress.on("change", cb)` 교체 (마운트 전 상태 업데이트 경고 제거)
+
+---
+
 ## [3.3.0] - 2026-06-23
 
 ### 🐛 Fixed

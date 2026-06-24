@@ -3,8 +3,8 @@
 import { useState, useRef, useEffect, useCallback } from 'react';
 import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
-import GlobeIcon from '@/assets/icon/GlobeIcon';
-import ChevronIcon from '@/assets/icon/ChevronIcon';
+import GlobeIcon from '@fai/ui/components/common/Icon/GlobeIcon';
+import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
 
 /* ──────────────────────────────────────────
    상수

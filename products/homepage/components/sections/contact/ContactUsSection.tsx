@@ -8,8 +8,8 @@ import { siteConfig } from "@/config/site";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
 import { IcoTxtButton } from "@fai/ui/components/button/IcoTxtButton";
-import { CustomerSupportIcon } from "@fai/ui/components/CustomerSupportIcon";
-import { IcRequiredDot } from "@/assets/icon/IcRequiredDot";
+import { CustomerSupportGraphic } from "@fai/ui/components/CustomerSupportGraphic";
+import { IcRequiredDot } from "@fai/ui/components/common/Icon/IcRequiredDot";
 
 const { contact } = siteConfig;
 
@@ -28,6 +28,14 @@ export function ContactUsSection() {
 
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
+
+  React.useEffect(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
+  }, []);
 
   const validateField = (key: string, value: string): string => {
     if (key === "company" && (!value || value.trim() === "")) return "회사명을 입력해주세요.";
@@ -85,12 +93,10 @@ export function ContactUsSection() {
       .map(([k]) => k);
     console.log("[contact submit]", { ...state.values, interests: selectedInterests });
     flushSync(() => { setSubmitted(true); });
-    if (sectionRef.current) {
-      if (lenisRef.current) {
-        lenisRef.current.scrollTo(sectionRef.current, { immediate: true, offset: 0 });
-      } else {
-        window.scrollTo({ top: sectionRef.current.getBoundingClientRect().top + window.scrollY, behavior: "instant" });
-      }
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
     }
   };
 
@@ -143,12 +149,12 @@ export function ContactUsSection() {
 
         {submitted ? (
           /* ───────── 제출 완료 화면 — form + toast 완전 대체 ───────── */
-          <div className="flex w-full flex-col items-center justify-center gap-[var(--spacing-3XL,40px)] text-center">
+          <div className="flex w-full flex-col items-center justify-center gap-[var(--spacing-3XL,40px)] text-center px-[var(--padding-XL)] min-[961px]:px-0">
             <div className="flex flex-col items-center gap-[var(--spacing-M,16px)]">
-              <h2 className="text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-[var(--color-text-inverse,#FFF)]">
+              <h2 className="text-[length:var(--font-size-28,28px)] leading-[var(--font-lineHeight-28,42px)] min-[769px]:text-[length:var(--font-size-36,36px)] min-[769px]:leading-[var(--font-lineHeight-36,54px)] font-bold text-[var(--color-text-inverse,#FFF)]">
                 {contact.complete.title}
               </h2>
-              <p className="text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]">
+              <p className="text-[length:var(--font-size-18,18px)] leading-[var(--font-lineHeight-18,27px)] min-[769px]:text-[length:var(--font-size-20,20px)] min-[769px]:leading-[var(--font-lineHeight-20,30px)] font-medium">
                 <span className="text-[var(--color-text-inverse,#FFF)]">{contact.complete.subCopy.before}</span>
                 <span className="text-[var(--fai-color-brand,#39DB1F)]">{contact.complete.subCopy.highlight}</span>
                 <span className="text-[var(--color-text-inverse,#FFF)]">{contact.complete.subCopy.after}</span>
@@ -219,7 +225,7 @@ export function ContactUsSection() {
                       </p>
                       {/* titleItems — 필수 입력 범례 */}
                       <div className="flex items-center p-[var(--padding-3XS,2px)] gap-[var(--spacing-2XS,4px)] rounded-[var(--cornerRadius-none,0)]">
-                        <IcRequiredDot />
+                        <IcRequiredDot className="text-[var(--color-icon-optional-brand-primary)]" />
                         <span className="text-quaternary text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
                           {contact.form.requiredLabel}
                         </span>
@@ -323,7 +329,7 @@ export function ContactUsSection() {
             <div className="dark self-stretch">
               <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-M,16px)] pl-[var(--padding-3-xl,40px)] pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
-                  <CustomerSupportIcon className="w-[40px] h-[40px] shrink-0" />
+                  <CustomerSupportGraphic className="w-[40px] h-[40px] shrink-0" />
                   {/* ≥768px: 원본 텍스트 */}
                   <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] tablet:text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
                     {contact.toast.text}

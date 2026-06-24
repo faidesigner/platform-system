@@ -39,10 +39,12 @@ export function AnimatedStat({
     const el = ref.current;
     if (!el) return;
 
+    let mounted = true;
+
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
       setDisplay(format(target));
-      return;
+      return () => { mounted = false; };
     }
 
     let rafId = 0;
@@ -51,6 +53,7 @@ export function AnimatedStat({
     const SHUFFLE_INTERVAL = 66; // ~15fps 로 셔플 속도 제한
 
     const animate = (now: number) => {
+      if (!mounted) return;
       if (!startTime) startTime = now;
       const elapsed = now - startTime;
 
@@ -89,6 +92,8 @@ export function AnimatedStat({
     observer.observe(el);
 
     return () => {
+      mounted = false;
+      startedRef.current = false;
       observer.disconnect();
       cancelAnimationFrame(rafId);
     };

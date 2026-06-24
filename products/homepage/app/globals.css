@@ -310,9 +310,10 @@
   --color-filled-tag-category-grape-secondary:  var(--color-grape-100);
   --color-filled-basic-positive-secondary:      var(--color-mint-100);
   /* 카테고리 태그 아이콘 fill 색상 */
-  --color-icon-tag-category-yellow: var(--color-yellow-500);
-  --color-icon-tag-category-mint:   var(--color-mint-500);
-  --color-icon-tag-category-grape:  var(--color-grape-500);
+  --color-icon-tag-category-yellow:        var(--color-yellow-500);
+  --color-icon-tag-category-mint:          var(--color-mint-500);
+  --color-icon-tag-category-grape:         var(--color-grape-500);
+  --color-icon-optional-brand-primary:     var(--color-green-600);
 }
 
 /* ============================================================
@@ -411,9 +412,10 @@
   --color-filled-tag-category-grape-secondary:  var(--color-grape-900);
   --color-filled-basic-positive-secondary:      var(--color-mint-900);
   /* 카테고리 태그 아이콘 fill 색상 */
-  --color-icon-tag-category-yellow: var(--color-yellow-400);
-  --color-icon-tag-category-mint:   var(--color-mint-400);
-  --color-icon-tag-category-grape:  var(--color-grape-400);
+  --color-icon-tag-category-yellow:        var(--color-yellow-400);
+  --color-icon-tag-category-mint:          var(--color-mint-400);
+  --color-icon-tag-category-grape:         var(--color-grape-400);
+  --color-icon-optional-brand-primary:     var(--color-green-500);
 }
 
 /* ============================================================

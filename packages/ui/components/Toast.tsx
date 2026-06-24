@@ -1,6 +1,6 @@
 "use client";
 import * as React from "react";
-import { CustomerSupportIcon } from "./CustomerSupportIcon";
+import { CustomerSupportGraphic } from "./CustomerSupportGraphic";
 
 export type ToastProps = {
   text: string;
@@ -16,7 +16,7 @@ export function Toast({ text, buttonLabel, onButtonClick }: ToastProps) {
 
         {/* titleSection */}
         <div className="flex items-center gap-[var(--spacing-M,16px)]">
-          <CustomerSupportIcon className="w-[40px] h-[40px] shrink-0" />
+          <CustomerSupportGraphic className="w-[40px] h-[40px] shrink-0" />
           <p className="text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
             {text}
           </p>

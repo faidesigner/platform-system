@@ -55,7 +55,7 @@ export { CheckboxField } from './components/CheckboxField';
 export type { CheckboxFieldProps } from './components/CheckboxField';
 export { Checkbox } from './components/Checkbox';
 export type { CheckboxProps, CheckboxState } from './components/Checkbox';
-export { CustomerSupportIcon } from './components/CustomerSupportIcon';
+export { CustomerSupportGraphic } from './components/CustomerSupportGraphic';
 export { Toast } from './components/Toast';
 export type { ToastProps } from './components/Toast';
 

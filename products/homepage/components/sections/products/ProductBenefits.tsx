@@ -2,7 +2,7 @@
 
 import { motion } from "framer-motion";
 import { InViewVideo } from "@fai/ui";
-import BenefitIcon, { type BenefitIconKey } from "@/assets/icon/BenefitIcon";
+import BenefitGraphic, { type BenefitIconKey } from "@fai/ui/components/common/Icon/BenefitGraphic";
 
 const scrollFadeInUp = {
   initial: { opacity: 0, y: 100, filter: "blur(12px)" },
@@ -70,7 +70,7 @@ export default function ProductBenefits({ title, benefits }: ProductBenefitsProp
             >
               <div className="flex flex-col items-start gap-s w-full">
                 <div className="flex items-center gap-s">
-                  <BenefitIcon name={benefit.icon} />
+                  <BenefitGraphic name={benefit.icon} className="w-10 h-10 max-[960px]:w-8 max-[960px]:h-8 max-[768px]:w-6 max-[768px]:h-6 shrink-0" />
                   <span className="text-body-l desktop-s:text-body-xl desktop:text-title-s font-semibold text-brand-text">
                     {benefit.eyebrow}
                   </span>
