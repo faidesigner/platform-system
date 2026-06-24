@@ -613,7 +613,7 @@ export const aboutConfig = {
         role: "CTO",
         name: "홍석범",
         photo: { src: "/images/about/member-cto-hong.png", alt: "홍석범 CTO" },
-        education: ["서울과학고", "서울대학교 전기컴퓨터공학 학사/박사(Ph.D)"],
+        education: ["서울과학고", "서울대학교 전기컴퓨터공학\n학사/박사(Ph.D)"],
         career: ["전 삼성전자", "전 프라이피 CTO (Co-founder)"],
       },
       {

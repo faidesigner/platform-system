@@ -325,32 +325,46 @@ export function ContactUsSection() {
               </form>
             </div>
 
-            {/* toast */}
-            <div className="dark self-stretch">
-              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-M,16px)] pl-[var(--padding-3-xl,40px)] pr-[var(--padding-XL,24px)]">
+            {/* toast — ≥421px */}
+            <div className="hidden min-[421px]:block dark self-stretch">
+              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
-                  <CustomerSupportGraphic className="w-[40px] h-[40px] shrink-0" />
-                  {/* ≥768px: 원본 텍스트 */}
-                  <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] tablet:text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                  {/* 아이콘: ≥768px에서만 표시 */}
+                  <CustomerSupportGraphic className="hidden tablet:block w-[40px] h-[40px] shrink-0" />
+                  {/* ≥768px 텍스트 */}
+                  <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
                     {contact.toast.text}
                   </p>
-                  {/* 421px~767px: 단축 텍스트 */}
-                  <p className="max-[420px]:hidden tablet:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
-                    카카오톡 채널로 간편 문의하세요
+                  {/* 421px~767px 텍스트 */}
+                  <p className="tablet:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                    카카오톡 채널로 문의하세요
                   </p>
                 </div>
                 <a
                   href={contact.toast.kakaoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-M,16px)] px-[var(--padding-XL,24px)]"
-                 
+                  className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
                 >
                   <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
                     {contact.toast.buttonLabel}
                   </span>
                 </a>
               </div>
+            </div>
+
+            {/* ≤420px — 풀너비 버튼만 */}
+            <div className="dark min-[421px]:hidden w-full">
+              <a
+                href={contact.toast.kakaoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)]"
+              >
+                <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)]">
+                  {contact.toast.buttonLabel}
+                </span>
+              </a>
             </div>
           </>
         )}

@@ -215,26 +215,29 @@ export default function MediaShowcaseSection() {
   if (!hasContent) return null;
 
   return (
-    <section className="
-      flex w-full flex-col items-start bg-bg-100
-      gap-3xl
-      px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]
-      pt-7xl pb-5xl
-    ">
-      <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
-        {mediaShowcase.title}
-      </h2>
+    <section className="w-full bg-bg-100">
+      <div className="
+        flex flex-col items-start
+        max-w-[1440px] mx-auto
+        gap-3xl
+        px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]
+        pt-7xl pb-5xl
+      ">
+        <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
+          {mediaShowcase.title}
+        </h2>
 
-      <div className="flex w-full flex-col gap-l">
-        <YoutubeCard />
+        <div className="flex w-full flex-col gap-l">
+          <YoutubeCard />
 
-        {mediaShowcase.socials.length > 0 && (
-          <div className="flex items-start self-stretch w-full flex-col gap-3xl min-[961px]:flex-row">
-            {mediaShowcase.socials.map((social) => (
-              <SocialCard key={social.label} social={social} />
-            ))}
-          </div>
-        )}
+          {mediaShowcase.socials.length > 0 && (
+            <div className="flex items-start self-stretch w-full flex-col gap-3xl min-[961px]:flex-row">
+              {mediaShowcase.socials.map((social) => (
+                <SocialCard key={social.label} social={social} />
+              ))}
+            </div>
+          )}
+        </div>
       </div>
     </section>
   );

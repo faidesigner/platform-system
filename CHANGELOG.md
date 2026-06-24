@@ -2,6 +2,44 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.4.2] - 2026-06-24
+
+### 🐛 Fixed
+
+#### WhyFaiSection 비디오 좌우 검정 프레임
+- `WhyFaiSection` — 호버 시 비디오 좌우 촬영 환경 노출 버그 수정
+  - 원인: 비디오(800×694)와 카드(364×320) 비율이 근접해 `object-cover`가 영상 전체 너비를 노출
+  - 수정: `scale-[1.15]` 적용 → 좌우 각 7.5% 확대 크롭, 래퍼 `overflow-hidden`으로 클리핑
+
+### 🔄 Changed
+
+#### 회사소개 페이지 섹션 레이아웃
+- `AboutHero`, `AboutManagement`, `AboutPartners`, `AboutPeople`, `AboutLogos` — 1440px 이상 뷰포트에서 콘텐츠 중앙 정렬 적용 (`max-w-[1440px] mx-auto`)
+- `AboutPeople` 가로 스크롤 컨테이너: 1440px 이상에서 `pl-[calc(((100vw-1440px)/2)+var(--padding-8XL))]`로 시작점 동기화
+
+#### AboutPeople 카드 링크
+- `target="_blank"` → 동일 창 이동으로 변경, 뒤로가기 스크롤 위치 복원 (`sessionStorage` + `setTimeout`)
+
+#### 푸터 SNS 링크
+- LinkedIn / YouTube / Instagram href를 실제 채널 URL로 업데이트 (`Footer.tsx`, `footer/Footer.tsx` 동시 반영)
+
+#### ContactUsSection 토스트
+- 768px 이하: 아이콘 숨김, 텍스트 "카카오톡 채널로 문의하세요"
+- 420px 이하: 토스트 제거, 풀너비 버튼만 노출 (dark 토큰 적용)
+- 토스트 패딩 768px 이하 한 단계 낮춤
+
+#### AboutManagement CTO 학력
+- "서울대학교 전기컴퓨터공학 학사/박사(Ph.D)" → 줄바꿈 적용 (`\n`)
+
+## [3.4.1] - 2026-06-24
+
+### 🔄 Changed
+
+#### 미디어 페이지 섹션 레이아웃
+- `ShowcaseSection`, `NewsSection`, `RetailTechLetterSection` — 1440px 이상 뷰포트에서 콘텐츠 중앙 정렬 적용
+  - `section`은 `w-full` + 배경색만 유지 (배경 풀 뷰포트)
+  - 내부 래퍼 `div`에 `max-w-[1440px] mx-auto` 추가, 기존 패딩/gap/pt/pb 값 그대로 유지
+
 ## [3.4.0] - 2026-06-24
 
 ### ✨ Added
