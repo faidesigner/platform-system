@@ -5,7 +5,8 @@ export function AboutLogos() {
   const { groups } = aboutConfig.investors;
 
   return (
-    <section className="flex w-full flex-col items-start bg-surface px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
+    <section className="w-full bg-surface">
+      <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
       <div className="flex w-full flex-col items-center gap-4xl rounded-fai-xl bg-sand-filled-primary px-l tablet:px-xl laptop:px-5xl py-4xl">
         {groups.map((group) => (
           <div key={group.id} className="flex flex-col items-center gap-3xl">
@@ -32,6 +33,7 @@ export function AboutLogos() {
             </div>
           </div>
         ))}
+      </div>
       </div>
     </section>
   );

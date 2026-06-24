@@ -24,7 +24,8 @@ export function AboutHero() {
       />
 
       {/* contentsArea — 세로 gap 16 = m, 텍스트 inverse */}
-      <div className="relative w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-m text-inverse">
+      <div className="relative w-full">
+      <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col items-start gap-m text-inverse">
         {/* subtitle: w/title/M (28/39/0.3), weight 600 */}
         <p className="w-full text-body-l tablet:text-body-xl desktop:text-title-m font-semibold">
           {eyebrow}
@@ -37,6 +38,7 @@ export function AboutHero() {
             </span>
           ))}
         </h1>
+      </div>
       </div>
     </section>
   );

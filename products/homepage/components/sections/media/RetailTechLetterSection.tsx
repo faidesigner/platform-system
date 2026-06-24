@@ -31,8 +31,9 @@ export default function RetailTechLetterSection() {
   const ready     = hasIframe || hasScript;
 
   return (
-    <section
-      className="flex flex-col items-start w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pt-[var(--padding-5XL,80px)] pb-[var(--padding-7-xl,120px)] gap-[var(--spacing-3XL,40px)] bg-surface"
+    <section className="w-full bg-surface">
+    <div
+      className="flex flex-col items-start max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pt-[var(--padding-5XL,80px)] pb-[var(--padding-7-xl,120px)] gap-[var(--spacing-3XL,40px)]"
     >
       <h2
         className="flex-1 w-full text-title-l desktop:text-title-xl font-bold text-primary"
@@ -68,6 +69,7 @@ export default function RetailTechLetterSection() {
           </div>
         )}
       </div>
+    </div>
     </section>
   );
 }

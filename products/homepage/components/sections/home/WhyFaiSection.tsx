@@ -87,19 +87,22 @@ function WhyFaiCard({ item, index }: { item: WhyFaiItem; index: number }) {
       transition={{ type: 'spring', stiffness: 80, damping: 20, mass: 1, delay: index * 0.15 }}
     >
       {/* ── 배경 비디오 (항상 루프, 호버 시 표시) ── */}
+      {/* 전용 overflow-hidden 래퍼: Framer Motion GPU 레이어와 overflow-hidden+border-radius 충돌 방지 */}
       {item.videoSrc && (
-        <video
-          src={item.videoSrc}
-          autoPlay
-          muted
-          loop
-          playsInline
-          className={`absolute inset-0 w-full h-full object-cover -z-10 transition-opacity duration-500 ${hovered ? 'opacity-100' : 'opacity-0'}`}
-        />
+        <div className="absolute inset-0 rounded-fai-s overflow-hidden">
+          <video
+            src={item.videoSrc}
+            autoPlay
+            muted
+            loop
+            playsInline
+            className={`w-full h-full object-cover scale-[1.15] transition-opacity duration-500 ${hovered ? 'opacity-100' : 'opacity-0'}`}
+          />
+        </div>
       )}
 
       {/* ── 카드 바디 ── */}
-      <div className={`relative flex flex-col items-start gap-ms flex-1 self-stretch transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
+      <div className={`relative z-10 flex flex-col items-start gap-ms flex-1 self-stretch transition-opacity duration-500 ${hovered ? 'opacity-0' : 'opacity-100'}`}>
         <h3 className="text-body-l tablet:text-body-xl desktop:text-title-s font-semibold text-sand-text-primary">
           {item.title}
         </h3>

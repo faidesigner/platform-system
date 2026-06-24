@@ -74,23 +74,25 @@ export function AboutManagement() {
   const { title, members } = aboutConfig.management;
 
   return (
-    <section className="w-full bg-surface px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
-      {/* title */}
-      <h2 className="text-title-l max-[420px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
+    <section className="w-full bg-surface">
+      <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
+        {/* title */}
+        <h2 className="text-title-l max-[420px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
 
-      {/* cardGrid: 2×2, 행/열 gap 56 = 4xl */}
-      <div className="mt-5xl grid grid-cols-1 laptop:grid-cols-2 gap-7xl justify-items-center laptop:justify-items-stretch">
-        {members.map((member, index) => (
-          <motion.div
-            key={member.id}
-            initial={{ opacity: 0, y: 40 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true, margin: "-100px" }}
-            transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index * 0.15 }}
-          >
-            <ManagementCard member={member} />
-          </motion.div>
-        ))}
+        {/* cardGrid: 2×2, 행/열 gap 56 = 4xl */}
+        <div className="mt-5xl grid grid-cols-1 laptop:grid-cols-2 gap-7xl justify-items-center laptop:justify-items-stretch">
+          {members.map((member, index) => (
+            <motion.div
+              key={member.id}
+              initial={{ opacity: 0, y: 40 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true, margin: "-100px" }}
+              transition={{ duration: 0.6, ease: [0.22, 1, 0.36, 1], delay: index * 0.15 }}
+            >
+              <ManagementCard member={member} />
+            </motion.div>
+          ))}
+        </div>
       </div>
     </section>
   );

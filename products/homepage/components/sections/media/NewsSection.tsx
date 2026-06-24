@@ -132,10 +132,11 @@ export default function MediaNewsSection() {
   const hasMore = visibleCount < media.items.length;
 
   return (
-    <section
+    <section className="w-full bg-surface">
+    <div
       className="
-        flex w-full flex-col items-start
-        bg-surface
+        flex flex-col items-start
+        max-w-[1440px] mx-auto
         gap-[var(--spacing-4XL,56px)]
         px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]
         pt-[var(--padding-5XL,80px)] pb-5xl
@@ -187,6 +188,7 @@ export default function MediaNewsSection() {
           </IcoTxtButton>
         )}
       </div>
+    </div>
     </section>
   );
 }
