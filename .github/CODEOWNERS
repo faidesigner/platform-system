@@ -1,0 +1,5 @@
+# 디자인 토큰 — 담당 디자이너만 수정 가능
+/root/foundation/   @Nayeon97 @sunyeonlee-debug @yeseulkim-gif @faidesigner
+
+# 공용 UI 컴포넌트 — 담당 디자이너만 수정 가능
+/packages/ui/       @Nayeon97 @sunyeonlee-debug @yeseulkim-gif @faidesigner
