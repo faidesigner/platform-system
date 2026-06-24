@@ -102,7 +102,7 @@ export function ContactUsSection() {
     <section
       ref={sectionRef}
       className="relative w-full min-h-svh overflow-hidden bg-black"
-      data-node-id="6542:11317"
+     
     >
       {/* 배경 — 기본 화면 */}
       {!submitted && (
@@ -138,7 +138,7 @@ export function ContactUsSection() {
       <div className={`relative z-10 flex w-full ${
         submitted
           ? "h-svh items-center justify-center"
-          : "flex-col items-start px-[var(--padding-XL)] min-[961px]:px-[var(--padding-5XL,_80px)] laptop:px-[var(--padding-8XL)] pt-[var(--padding-8-xl,_150px)] desktop-s:pt-[200px] pb-[var(--padding-5XL,80px)] gap-[var(--spacing-5XL,80px)]"
+          : "flex-col items-start px-[var(--padding-XL)] min-[961px]:px-[var(--padding-5XL,_80px)] laptop:px-[var(--padding-8XL)] pt-6xl desktop-s:pt-[200px] pb-[var(--padding-5XL,80px)] gap-[var(--spacing-5XL,80px)]"
       }`}>
 
         {submitted ? (
@@ -173,13 +173,13 @@ export function ContactUsSection() {
             {/* contentsArea */}
             <div
               className="flex items-start gap-[var(--spacing-3XL,40px)] self-stretch w-full lg:flex-row flex-col"
-              data-node-id="6542:11318"
+             
             >
               {/* titleSection */}
-              <div className="flex flex-1 flex-col items-start gap-[var(--spacing-XL,24px)] min-w-0" data-node-id="6542:11319">
+              <div className="flex flex-1 flex-col items-start gap-[var(--spacing-XL,24px)] min-w-0">
                 <h2
                   className="self-stretch max-[420px]:text-[length:var(--font-size-20,20px)] text-[length:var(--font-size-28,28px)] desktop-s:text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-inverse"
-                  data-node-id="6542:11320"
+                 
                 >
                   {contact.title.map((line, idx) => (
                     <React.Fragment key={idx}>
@@ -190,7 +190,7 @@ export function ContactUsSection() {
                 </h2>
                 <p
                   className="self-stretch max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]"
-                  data-node-id="6542:11323"
+                 
                 >
                   <span className="text-brand-text">{contact.subCopy.highlight}</span>
                   <span className="text-inverse">
@@ -207,13 +207,13 @@ export function ContactUsSection() {
                 noValidate
                 onSubmit={handleSubmit}
                 className="flex flex-col items-start p-[var(--padding-3-xl,40px)] gap-[var(--spacing-4XL,56px)] flex-1 self-stretch rounded-fai-xl bg-fill-inverse min-w-0"
-                data-node-id="6548:5844"
+               
               >
-                <div className="flex w-full flex-col gap-[var(--spacing-4XL,56px)]" data-node-id="6548:5845">
+                <div className="flex w-full flex-col gap-[var(--spacing-4XL,56px)]">
                   {/* contents/contact — 연락처 입력 */}
-                  <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch w-full" data-node-id="6548:5846">
+                  <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch w-full">
                     {/* title */}
-                    <div className="flex justify-between items-end self-stretch w-full" data-node-id="6548:5847">
+                    <div className="flex justify-between items-end self-stretch w-full">
                       <p className="text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
                         {contact.form.connectTitle}
                       </p>
@@ -226,7 +226,7 @@ export function ContactUsSection() {
                       </div>
                     </div>
                     {/* 입력 필드 목록 */}
-                    <div className="flex flex-col items-start gap-[var(--spacing-M,16px)] self-stretch w-full" data-node-id="6548:5850">
+                    <div className="flex flex-col items-start gap-[var(--spacing-M,16px)] self-stretch w-full">
                       {contact.fields.map((field) => (
                         <LineInput
                           key={field.key}
@@ -255,7 +255,7 @@ export function ContactUsSection() {
                   </div>
 
                   {/* select: 관심 정보 */}
-                  <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch" data-node-id="6548:5857">
+                  <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch">
                     <p className="self-stretch text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
                       {contact.form.selectTitle}
                     </p>
@@ -312,7 +312,7 @@ export function ContactUsSection() {
                   size="XL"
                   shape="square"
                   className="w-full self-stretch"
-                  data-node-id="6548:5875"
+                 
                 >
                   {contact.form.submitLabel}
                 </IcoTxtButton>
@@ -320,12 +320,17 @@ export function ContactUsSection() {
             </div>
 
             {/* toast */}
-            <div className="dark self-stretch" data-node-id="6542:11367">
-              <div className="flex w-full max-w-[1140px] items-center justify-between rounded-[999px] bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-M,16px)] pl-[var(--padding-3-xl,40px)] pr-[var(--padding-XL,24px)]">
+            <div className="dark self-stretch">
+              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-M,16px)] pl-[var(--padding-3-xl,40px)] pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
                   <CustomerSupportIcon className="w-[40px] h-[40px] shrink-0" />
-                  <p className="max-[420px]:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] tablet:text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                  {/* ≥768px: 원본 텍스트 */}
+                  <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] tablet:text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
                     {contact.toast.text}
+                  </p>
+                  {/* 421px~767px: 단축 텍스트 */}
+                  <p className="max-[420px]:hidden tablet:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                    카카오톡 채널로 간편 문의하세요
                   </p>
                 </div>
                 <a
@@ -333,7 +338,7 @@ export function ContactUsSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-M,16px)] px-[var(--padding-XL,24px)]"
-                  data-node-id="6542:11372"
+                 
                 >
                   <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
                     {contact.toast.buttonLabel}

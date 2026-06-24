@@ -2,6 +2,82 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.3.0] - 2026-06-23
+
+### 🐛 Fixed
+
+#### 언어 전환 라우팅
+- `packages/ui/components/navigation/LanguageSwitcher.tsx` — `next/navigation` 의존성 제거, `onLocaleChange: (code: string) => void` 콜백 prop 추가. 라우팅 로직을 컴포넌트 외부로 분리해 next-intl 미인식 문제 해결
+- `NavigationBarBridge.tsx` — `useRouter` + `usePathname` from `@/i18n/navigation` 추가, `handleLocaleChange`에서 `router.push(pathname, { locale: code })` 호출 → 모바일 언어 전환도 next-intl 라우터 사용
+- `products/homepage/components/layout/LanguageSwitcher.tsx` — `handleSelect`에 `if (code === locale) { setOpen(false); return; }` 가드 추가: 현재 언어 재클릭 시 라우팅 이벤트 방지 (모바일은 기존 가드 유지)
+
+---
+
+## [3.2.0] - 2026-06-23
+
+### ✨ Added
+
+#### ShowcaseSection 자동 슬라이드
+- `ShowcaseSection.tsx` — `useEffect` + `setTimeout(5000ms)` 기반 자동 전환 타이머 추가: `index` 변경 시 타이머 리셋, 마지막 → 첫 번째 무한 루프, 화살표·프로그레스바 수동 클릭 시에도 타이머 재시작
+- `ShowcaseSection.tsx` — `ProgressBar`에 `duration={DURATION}` 전달해 게이지 애니메이션과 자동 전환 시간 동기화
+
+### 🔄 Changed
+
+#### ProgressBar 게이지 애니메이션 (B 방식)
+- `packages/ui/components/ProgressBar.tsx` — `i <= activeIndex ? w-full : w-0` 단순 토글 → 3단계 분기로 변경
+  - `i < activeIndex`: `w-full` 즉시 완료
+  - `i === activeIndex`: `@keyframes fai-progress-fill` CSS 애니메이션으로 0%→100% 서서히 채워짐, `key={fill-${activeIndex}}`로 인덱스 변경 시 애니메이션 재시작 보장
+  - `i > activeIndex`: div 미렌더 (빈 상태)
+- `duration` prop 추가 (기본값 `4000ms`) — 호출부에서 채워지는 시간 조정 가능
+
+#### next.config.ts
+- `images.remotePatterns`에 `{ protocol: "https", hostname: "i.ytimg.com" }` 추가 — YouTube 동적 썸네일 Next.js `<Image>` 안전 로드 허용
+
+---
+
+## [3.1.0] - 2026-06-23
+
+### 🔄 Changed
+
+#### 반응형 타이포그래피
+- `HeroSection.tsx`, `ProductHero.tsx`, `HeroShell.tsx`(StoreHero), `AboutHero.tsx` — Hero 섹션 타이틀 폰트 사이즈 통일: ≤768px `text-title-xl`(48px), ≤420px `max-[420px]:text-title-l`(36px), ≥769px 기존 tablet/desktop 위계 유지
+
+#### 반응형 레이아웃
+- `HeroSection.tsx` — 비디오 확장 구간 타이틀↔CTA 간격 `gap-l` → `gap-[var(--spacing-2XL,32px)]`
+- `ProductHero.tsx` — 동일 간격 `gap-l` → `gap-[var(--spacing-2XL,32px)]` (≤768px)
+- `CtaBanner.tsx` — 960이하 단일 컬럼 대응: `tablet:` → `min-[961px]:`, `<br>` ≤768px에서만 표시
+- `StoreTypes.tsx` — 1440이상 콘텐츠 중앙 고정 (`desktop:max-w-[1440px] desktop:mx-auto`), ≤960px 카드 높이 상단 540px·하단 320px
+- `StoreEffects.tsx` — 내부 컨테이너 좌우 패딩 `min-[961px]:px-[var(--padding-6-xl,100px)]`, ≥1440px 중앙 고정; 카드·아코디언 패딩 `p-xl desktop-s:p-4xl`
+- `ProductReviews.tsx` — 1440이상 타이틀 정렬 `desktop:pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))]` + `desktop:scroll-pl-[...]`
+- `ContactUsSection.tsx` — 상단 패딩 `pt-[var(--padding-8-xl,_150px)]` → `pt-6xl`(100px, ≤960px) / `desktop-s:pt-[200px]`(≥961px) 분리
+- `AboutManagement.tsx`, `AboutPeople.tsx`, `AboutPartners.tsx` — h2 `max-[420px]:text-title-m` 추가
+- `AboutLogos.tsx` — caption `max-[420px]:text-body-s` 추가
+
+#### 디자인 토큰 점검·교체
+- `ScrollTopButton.tsx` — `rounded-[999px]` → `rounded-fai-circle`, `right/top-[56px]` → `right/top-4xl`
+- `Toast.tsx` — `rounded-[999px]` → `rounded-fai-circle`, titleSection↔버튼 `gap-m` 추가
+- `ContactUsSection.tsx` — `rounded-[999px]` → `rounded-fai-circle`, toast 컨텐츠 `gap-m` 추가
+- `Tabs.tsx` — `gap-[32px]` → `gap-2xl`, `gap-[8px]` → `gap-s`, `px-[24px]` → `px-xl`
+- `StoreCaseStudies.tsx` — `gap-[4px]` → `gap-2xs` (2개소)
+- `StoreTypes.tsx` — `gap-[4px]` → `gap-2xs`
+- `NewsSection.tsx` — `gap-[12px]` → `gap-ms`
+- `Footer.tsx` (legacy) — `gap-[40px]` → `gap-3xl`, `md:py-[56px]` → `md:py-4xl`, `md:px-[150px]` → `md:px-[var(--padding-8XL)]`
+- `packages/ui/footer/Footer.tsx` — `py-[56px] px-[150px]` → `py-4xl px-[var(--padding-8XL)]`, `pb-[56px]` → `pb-4xl`
+
+#### 코드 최적화 (기능·구조 변경 없음)
+- `EfficiencySection.tsx` — inline style 객체 12개 → 1개로 축소: dead code(`statsWrapperStyle`, `statContainerStyle`) 제거, layout-only style 객체 5개 → className으로 이동, color/typography style 4개 단순화
+- `ProductFeatures.tsx` — Card 0·1 동일 JSX 중복 → `CARD_BG` 상수 + `if (i < 2)` 단일 코드 경로로 통합 (~25줄 제거)
+- `packages/ui/footer/Footer.tsx` — 데스크톱 row1·row2 동일 렌더링 → `InfoRow` 컴포넌트 추출
+- `ContactUsSection.tsx` — Figma Dev Mode 잔여 `data-node-id` 속성 14개 제거
+
+#### ContactUsSection 추가 개선
+- toast 768이하 텍스트 → "카카오톡 채널로 간편 문의하세요" (`tablet:hidden`/`hidden tablet:block` 분기)
+
+#### packages/ui/footer 신규 파일
+- `packages/ui/components/footer/Footer.tsx`, `footer.css` — 반응형 토글 CSS 기반 Footer 컴포넌트 신규 추가 (>960px 데스크톱 / ≤960px compact 레이아웃 분리; `fai-footer__` BEM 클래스; ScrollTopButton ≤420px 숨김)
+
+---
+
 ## [3.0.0] - 2026-06-22
 
 ### 🔄 Changed

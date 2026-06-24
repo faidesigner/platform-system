@@ -32,7 +32,7 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
   const current = tabs.find((t) => t.key === activeKey) || tabs[0];
 
   return (
-    <section className="flex flex-col items-center w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pb-5xl gap-7xl">
+    <section className="flex flex-col items-center w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pb-5xl gap-7xl desktop:max-w-[1440px] desktop:mx-auto">
 
       {/* ── 탭 + 설명 래퍼 ── */}
       <div className="flex flex-col items-center gap-[50px] self-stretch w-full">
@@ -43,7 +43,7 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
         />
 
         {/* ── 중앙 설명 ── */}
-        <div className="flex flex-col items-center gap-[4px] self-stretch text-center w-full">
+        <div className="flex flex-col items-center gap-2xs self-stretch text-center w-full">
           <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
           <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
         </div>
@@ -61,7 +61,7 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
             {current.cards.map((card, i) => (
               <div
                 key={i}
-                className={`relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[420px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px]"}`}
+                className={`relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[420px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px] max-[960px]:h-[320px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px] max-[960px]:h-[540px]"}`}
               >
                 {/* 이미지 */}
                 {card.image && card.image !== "MISSING_FROM_DESIGN" ? (

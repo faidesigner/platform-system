@@ -56,7 +56,7 @@ const POLICIES = [
 
 export default function Footer() {
   return (
-    <footer className="relative w-full bg-bg-200 flex flex-col items-start px-6 py-10 gap-[40px] md:py-[56px] md:px-[150px] md:items-end">
+    <footer className="relative w-full bg-bg-200 flex flex-col items-start px-6 py-10 gap-3xl md:py-4xl md:px-[var(--padding-8XL)] md:items-end">
 
       <ScrollTopButton />
 

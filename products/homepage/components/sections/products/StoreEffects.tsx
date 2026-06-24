@@ -85,6 +85,9 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
         {title}
       </h2>
 
+      {/* 카드 + 아코디언 내부 컨테이너: 좌우 padding-6-xl, 1440 이상 max-width 고정 후 mx-auto */}
+      <div className="flex flex-col w-full min-[961px]:px-[var(--padding-6-xl,100px)] desktop:max-w-[calc(1440px_-_2_*_var(--padding-8XL))] desktop:mx-auto gap-2xl tablet:gap-3xl desktop-s:gap-4xl">
+
       {/* 상단: 3열 카드 */}
       {cards.length > 0 && (
         <div ref={cardsRef} className="flex flex-row flex-wrap justify-center items-start gap-xl w-full">
@@ -121,7 +124,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
             <div
               key={i}
               ref={(el) => { itemRefs.current[i] = el; }}
-              className="flex flex-col items-center self-stretch p-xl desktop-s:p-4xl rounded-fai-m bg-fill-faint cursor-pointer transition-colors duration-300 hover:bg-surface-sunken"
+              className="flex flex-col items-center self-stretch p-3xl desktop-s:p-4xl rounded-fai-m bg-fill-faint cursor-pointer transition-colors duration-300 hover:bg-surface-sunken"
               onMouseEnter={() => setHoveredIndex(i)}
               onMouseLeave={() => setHoveredIndex(null)}
               onClick={() => setLockedIndex(lockedIndex === i ? null : i)}
@@ -144,6 +147,8 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
           ))}
         </div>
       )}
+
+      </div>
     </section>
   );
 }

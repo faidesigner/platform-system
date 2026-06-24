@@ -43,16 +43,28 @@ export function CtaBanner() {
       />
 
       {/* Layer 3: 콘텐츠 — dark 컨텍스트 주입 (배너 배경 항상 어두움) */}
-      <div className="dark relative z-10 flex flex-col items-center tablet:flex-row tablet:items-start justify-center gap-l tablet:gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
-        <h2 className="flex-1 text-center tablet:text-left text-title-s tablet:text-title-m desktop:text-title-l font-bold text-text-inverse">
-          지금 매장에 도입하고<br className="tablet:hidden" /> 최대 효율을 경험을 해보세요
+      <div className="dark relative z-10 flex flex-col items-center min-[961px]:flex-row min-[961px]:items-center justify-center gap-l min-[961px]:gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
+        <h2 className="flex-1 text-center min-[961px]:text-left text-title-s min-[961px]:text-title-m desktop:text-title-l font-bold text-text-inverse">
+          지금 매장에 도입하고<br className="min-[769px]:hidden" /> 최대 효율을 경험을 해보세요
         </h2>
 
+        {/* > 420px: XL */}
         <IcoTxtButton
           variant="primary"
           size="XL"
           shape="square"
-          className="shrink-0"
+          className="shrink-0 max-[420px]:hidden"
+          style={{ textAlign: 'center' }}
+          onClick={() => router.push('/contact')}
+        >
+          도입 문의하기
+        </IcoTxtButton>
+        {/* ≤ 420px: L (한 단계 축소) */}
+        <IcoTxtButton
+          variant="primary"
+          size="L"
+          shape="square"
+          className="shrink-0 min-[421px]:hidden"
           style={{ textAlign: 'center' }}
           onClick={() => router.push('/contact')}
         >

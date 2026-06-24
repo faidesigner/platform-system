@@ -248,7 +248,7 @@ export const siteConfig = {
           cards: [
             { title: "저렴한 도입 비용", description: "규격화된 선조립 공법으로, 가장 저렴한 가격에 무인화 매장을 도입하세요",                                                                image: "/images/products/unmanned-store/us-micro-cost.jpg",    wide: false },
             { title: "빠른 설치",       description: "정해진 규격을 고르시면, 하루만에 설치 완료.\n다음날부터 판매를 시작하세요",                                                          image: "/images/products/unmanned-store/us-micro-speed.jpg",   wide: false },
-            { title: "유휴 공간의 수익화", description: "마지막 한 평까지 알뜰하게.\n샵인샵, 로비, 스타디움 내부 등 어떤 형태의 공간이든 무인샵 도입이 가능해요", image: "/images/products/unmanned-store/us-micro-revenue.jpg", wide: true, objectPosition: "0px -978.417px" },
+            { title: "유휴 공간의 수익화", description: "마지막 한 평까지 알뜰하게.\n샵인샵, 로비, 스타디움 내부 등 어떤 형태의 공간이든 무인샵 도입이 가능해요", image: "/images/products/unmanned-store/us-micro-revenue.jpg", wide: true, objectPosition: "center" },
           ],
         },
       ],

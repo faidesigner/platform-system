@@ -10,9 +10,9 @@ export type ToastProps = {
 
 export function Toast({ text, buttonLabel, onButtonClick }: ToastProps) {
   return (
-    <div className="flex flex-col justify-center items-start self-stretch rounded-[999px] bg-[var(--color-filled-basic-fourth,#2C2D30)] pt-[var(--padding-m,16px)] pr-[var(--padding-xl,24px)] pb-[var(--padding-m,16px)] pl-[var(--padding-3-xl,40px)] w-full max-w-[1140px]">
+    <div className="flex flex-col justify-center items-start self-stretch rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] pt-[var(--padding-m,16px)] pr-[var(--padding-xl,24px)] pb-[var(--padding-m,16px)] pl-[var(--padding-3-xl,40px)] w-full max-w-[1140px]">
       {/* contents */}
-      <div className="flex justify-between items-center self-stretch w-full">
+      <div className="flex justify-between items-center gap-m self-stretch w-full">
 
         {/* titleSection */}
         <div className="flex items-center gap-[var(--spacing-M,16px)]">
