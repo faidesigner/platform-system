@@ -47,7 +47,7 @@ export default async function HomePage({
     <>
       <HeroSection logos={PARTNER_LOGOS} />
       <ImageSection
-        src="/images/main/imageSection-hero-2.png"
+        src="/images/main/imageSection-hero-2.webp"
         alt="FAI Platform Fullscreen Overview"
         priority
       />

@@ -24,7 +24,7 @@ export function CtaBanner() {
     <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] justify-center overflow-hidden">
       {/* Layer 1: 배경 이미지 */}
       <Image
-        src="/images/main/cta-banner-gradation.png"
+        src="/images/main/cta-banner-gradation.webp"
         alt=""
         fill
         priority
