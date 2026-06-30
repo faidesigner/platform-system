@@ -41,6 +41,16 @@ export const metadata: Metadata = {
     index: true,
     follow: true,
   },
+  // FAI 브랜드 파비콘 세트(app/favicon.ico + public PNG/Apple/PWA manifest).
+  icons: {
+    icon: [
+      { url: "/favicon-32x32.png", sizes: "32x32", type: "image/png" },
+      { url: "/favicon-16x16.png", sizes: "16x16", type: "image/png" },
+    ],
+    apple: "/apple-touch-icon.png",
+    other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg" }],
+  },
+  manifest: "/site.webmanifest",
 };
 
 // 검색엔진용 구조화 데이터(Organization). 리치 결과·지식 패널 노출에 도움.
