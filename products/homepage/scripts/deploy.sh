@@ -56,6 +56,17 @@ if [ "$FLAT_HTML" = "true" ]; then
   ( cd "$OUT" && find . -mindepth 2 -name index.html | while read -r f; do cp "$f" "$(dirname "$f").html"; done )
 fi
 
+# 필수 standalone 페이지 누락 방지 — out/에 없으면 배포 중단(public/ 에서 빠졌는지 확인)
+REQUIRED_FILES=(
+  "contact-bakery-vco.html"
+  "contact-van-vco.html"
+  "naverc27da09292da484463448fab767cc3eb.html"  # 네이버 사이트 인증
+)
+for rf in "${REQUIRED_FILES[@]}"; do
+  [ -f "$OUT/$rf" ] || { echo "❌ 필수 standalone 파일 누락: out/$rf — 배포 중단. products/homepage/public/ 확인."; exit 1; }
+done
+echo "▶ 필수 standalone 페이지 확인 OK (${#REQUIRED_FILES[@]}개)"
+
 # S3 동기화 (_original 백업은 항상 제외)
 echo "▶ S3 업로드..."
 SYNC_ARGS=(--exclude "*_original*")
