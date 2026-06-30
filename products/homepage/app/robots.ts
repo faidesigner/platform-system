@@ -13,6 +13,7 @@ export default function robots(): MetadataRoute.Robots {
       disallow: ["/ko/playground/", "/en/playground/", "/jp/playground/"],
     },
     sitemap: `${siteConfig.url}/sitemap.xml`,
-    host: siteConfig.url,
+    // host 디렉티브는 스킴 없는 호스트명만 받는다(www.fainders.ai).
+    host: new URL(siteConfig.url).host,
   };
 }

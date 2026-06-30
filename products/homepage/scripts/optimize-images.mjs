@@ -90,7 +90,14 @@ async function run() {
     else if (ext === ".webp") pipeline = pipeline.webp({ quality: QUALITY });
     else pipeline = pipeline.jpeg({ quality: QUALITY, mozjpeg: true });
 
-    await pipeline.toFile(file);
+    // 쓰기 실패 시 원본을 되돌린다 — 그러지 않으면 원래 경로가 비고 _original만 남아
+    // (재실행 시 멱등 스킵에 걸려) 영구 데이터 손실로 고착된다.
+    try {
+      await pipeline.toFile(file);
+    } catch (err) {
+      await rename(orig, file); // 롤백
+      throw err;
+    }
     const after = (await stat(file)).size;
     totalBefore += size;
     totalAfter += after;

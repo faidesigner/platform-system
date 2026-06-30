@@ -50,7 +50,7 @@ const organizationJsonLd = {
   name: "Fainders AI",
   alternateName: siteConfig.name,
   url: siteConfig.url,
-  logo: `${siteConfig.url}/logos/logoFaindersai-b.svg`,
+  logo: `${siteConfig.url}/logos/logoFaindersai-b.png`,
   description: siteConfig.description,
   sameAs: [
     "https://www.instagram.com/fainders_ai",

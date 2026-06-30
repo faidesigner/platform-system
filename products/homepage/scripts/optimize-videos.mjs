@@ -84,7 +84,14 @@ async function run() {
       "-y",
       file,
     );
-    execFileSync("ffmpeg", args, { stdio: ["ignore", "ignore", "ignore"] });
+    // 인코딩 실패 시 원본을 되돌린다(데이터 손실 방지). stderr는 진단용으로 캡처.
+    try {
+      execFileSync("ffmpeg", args, { stdio: ["ignore", "ignore", "pipe"] });
+    } catch (err) {
+      await rename(orig, file); // 롤백
+      const detail = err.stderr ? `\n${err.stderr.toString().slice(-500)}` : "";
+      throw new Error(`ffmpeg 실패: ${rel}${detail}`);
+    }
 
     const after = (await stat(file)).size;
     // 이미 효율적으로 인코딩된 원본(고모션 타임랩스 등)은 재인코딩이 더 커질 수 있다.

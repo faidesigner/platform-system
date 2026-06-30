@@ -1,6 +1,7 @@
 import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
+import { routing } from '@/i18n/routing'
 import { siteConfig, type ProductSlug } from '@/config/site'
 import ProductHero from '@/components/sections/products/ProductHero'
 import StoreHero from '@/components/sections/products/StoreHero'
@@ -29,8 +30,8 @@ export async function generateMetadata({
   return {
     title: product.label,
     description: product.heroSubtitle,
-    ...(locale === 'ko'
-      ? { alternates: { canonical: `/ko/products/${slug}/` } }
+    ...(locale === routing.defaultLocale
+      ? { alternates: { canonical: `/${locale}/products/${slug}/` } }
       : {}),
   }
 }
