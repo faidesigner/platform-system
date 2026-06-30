@@ -1,3 +1,4 @@
+import type { Metadata } from 'next'
 import { notFound } from 'next/navigation'
 import { setRequestLocale } from 'next-intl/server'
 import { siteConfig, type ProductSlug } from '@/config/site'
@@ -15,6 +16,23 @@ const PRODUCT_SLUGS = Object.keys(siteConfig.products) as ProductSlug[]
 
 export function generateStaticParams() {
   return PRODUCT_SLUGS.map((slug) => ({ slug }))
+}
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string; slug: string }>
+}): Promise<Metadata> {
+  const { locale, slug } = await params
+  if (!PRODUCT_SLUGS.includes(slug as ProductSlug)) return {}
+  const product = siteConfig.products[slug as ProductSlug]
+  return {
+    title: product.label,
+    description: product.heroSubtitle,
+    ...(locale === 'ko'
+      ? { alternates: { canonical: `/ko/products/${slug}/` } }
+      : {}),
+  }
 }
 
 export default async function ProductDetailPage({

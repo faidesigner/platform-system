@@ -30,7 +30,7 @@ export const clientLogos = [
 export const siteConfig = {
   name: "FAI",
   fullName: "FAI | Fainders AI",
-  url: "https://fainders.ai",
+  url: "https://www.fainders.ai",
   description: "AI 기반 솔루션으로 비즈니스의 미래를 함께 만들어갑니다.",
   keywords: ["AI", "인공지능", "솔루션", "FAI", "Fainders"],
 

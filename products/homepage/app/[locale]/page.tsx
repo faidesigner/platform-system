@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
 import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
@@ -21,6 +22,16 @@ const CUSTOMER_IMAGES: CustomerImage[] = [
 ];
 
 const PARTNER_LOGOS: LogoItem[] = clientLogos.map(({ src, name }) => ({ src, alt: name }));
+
+export async function generateMetadata({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}): Promise<Metadata> {
+  const { locale } = await params;
+  // 홈 title은 루트 기본값(siteConfig.fullName) 유지, ko에만 self-canonical 부여.
+  return locale === "ko" ? { alternates: { canonical: "/ko/" } } : {};
+}
 
 export default async function HomePage({
   params,
