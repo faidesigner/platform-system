@@ -1,4 +1,5 @@
 import { notFound } from 'next/navigation'
+import { setRequestLocale } from 'next-intl/server'
 import { siteConfig, type ProductSlug } from '@/config/site'
 import ProductHero from '@/components/sections/products/ProductHero'
 import StoreHero from '@/components/sections/products/StoreHero'
@@ -19,9 +20,10 @@ export function generateStaticParams() {
 export default async function ProductDetailPage({
   params,
 }: {
-  params: Promise<{ slug: string }>
+  params: Promise<{ locale: string; slug: string }>
 }) {
-  const { slug } = await params
+  const { locale, slug } = await params
+  setRequestLocale(locale)
 
   if (!PRODUCT_SLUGS.includes(slug as ProductSlug)) {
     notFound()

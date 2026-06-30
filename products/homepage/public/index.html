@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>FAI | Fainders AI</title>
+    <!-- 정적 export엔 미들웨어가 없어 서버 언어협상이 불가. 루트(/)는 이 페이지가
+         브라우저 언어를 보고 /ko · /en · /jp 로 클라이언트 리다이렉트한다. -->
+    <link rel="canonical" href="https://fainders.ai/ko/" />
+    <link rel="alternate" hreflang="ko" href="https://fainders.ai/ko/" />
+    <link rel="alternate" hreflang="en" href="https://fainders.ai/en/" />
+    <link rel="alternate" hreflang="ja" href="https://fainders.ai/jp/" />
+    <link rel="alternate" hreflang="x-default" href="https://fainders.ai/ko/" />
+    <!-- JS 비활성/크롤러 폴백: 기본 로케일(ko)로 이동 -->
+    <noscript><meta http-equiv="refresh" content="0; url=/ko/" /></noscript>
+    <script>
+      (function () {
+        // 사이트 로케일 코드: ja(브라우저) → jp(사이트) 매핑 포함
+        var map = { ko: "ko", en: "en", ja: "jp", jp: "jp" };
+        var langs = navigator.languages || [navigator.language || "ko"];
+        var target = "ko"; // 매칭 실패 시 기본값
+        for (var i = 0; i < langs.length; i++) {
+          var code = (langs[i] || "").toLowerCase().split("-")[0];
+          if (map[code]) {
+            target = map[code];
+            break;
+          }
+        }
+        // replace: 뒤로가기 시 리다이렉트 루프 방지
+        location.replace("/" + target + "/");
+      })();
+    </script>
+  </head>
+  <body>
+    <!-- JS가 막힌 환경을 위한 수동 링크 -->
+    <p>Redirecting… 자동 이동이 안 되면 언어를 선택하세요:
+      <a href="/ko/">한국어</a> · <a href="/en/">English</a> · <a href="/jp/">日本語</a>
+    </p>
+  </body>
+</html>

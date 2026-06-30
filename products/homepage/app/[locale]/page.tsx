@@ -1,3 +1,4 @@
+import { setRequestLocale } from "next-intl/server";
 import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
 import type { LogoItem } from "@fai/ui";
@@ -21,7 +22,13 @@ const CUSTOMER_IMAGES: CustomerImage[] = [
 
 const PARTNER_LOGOS: LogoItem[] = clientLogos.map(({ src, name }) => ({ src, alt: name }));
 
-export default function HomePage() {
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
   return (
     <>
       <HeroSection logos={PARTNER_LOGOS} />
