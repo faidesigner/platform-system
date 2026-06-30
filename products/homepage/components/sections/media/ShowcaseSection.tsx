@@ -5,14 +5,53 @@ import Image from "next/image";
 import { IcoTxtButton, IconButton, ProgressBar } from "@fai/ui";
 import SocialIcon from "@fai/ui/components/common/Icon/SocialIcon";
 import { siteConfig } from "@/config/site";
+// scripts/sync-youtube.mjs 가 RSS에서 생성하는 쇼케이스 데이터(채널 최신 영상).
+import showcase from "@/config/youtube-showcase.json";
 
-type YoutubeVideo = (typeof siteConfig.mediaShowcase.youtube.videos)[number];
+type YoutubeVideo = (typeof showcase.videos)[number];
 type Social       = (typeof siteConfig.mediaShowcase.socials)[number];
+
+/* 유튜브 썸네일 — 고화질(maxres) → 표준(hq) → 빈 화면 순으로 fallback */
+function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
+  const sources = [
+    `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
+    `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
+  ];
+  const [level, setLevel] = useState(0);
+  // 영상이 바뀌면 다시 maxres부터 시도
+  useEffect(() => setLevel(0), [videoId]);
+
+  // 썸네일 모두 실패 시: 깨진 X박스 대신 브랜드 디폴트 이미지(Figma 코멘트 반영)
+  if (!videoId || level >= sources.length) {
+    return (
+      <div className="absolute inset-0 flex items-center justify-center bg-fill-faint">
+        <Image
+          src="/logos/logoFaindersai-b.svg"
+          alt={alt || "Fainders AI"}
+          width={180}
+          height={42}
+          className="opacity-40"
+        />
+      </div>
+    );
+  }
+  return (
+    <Image
+      key={`${videoId}-${level}`}
+      src={sources[level]}
+      alt={alt}
+      fill
+      className="object-cover"
+      sizes="(max-width: 1280px) 100vw, 580px"
+      onError={() => setLevel((l) => l + 1)}
+    />
+  );
+}
 
 /* ── YouTube 카드 ────────────────────────────────────── */
 function YoutubeCard() {
-  const { youtube } = siteConfig.mediaShowcase;
-  const videos = youtube.videos;
+  const { youtube } = siteConfig.mediaShowcase; // 라벨(채널명/CTA)은 설정에서
+  const videos = showcase.videos; // 영상 데이터는 RSS 동기화 JSON에서
   const DURATION = 5000;
   const [index, setIndex] = useState(0);
 
@@ -28,8 +67,6 @@ function YoutubeCard() {
   if (!videos.length) return null;
 
   const current: YoutubeVideo = videos[index];
-  const hasThumb = current.thumbnail && current.thumbnail !== "MISSING_FROM_DESIGN";
-  const hasHref  = current.href     && current.href     !== "MISSING_FROM_DESIGN";
 
   const move = (dir: -1 | 1) =>
     setIndex((i) => (i + dir + videos.length) % videos.length);
@@ -94,15 +131,15 @@ function YoutubeCard() {
           <div className="flex flex-col items-start self-stretch gap-4xl">
             {/* textBox */}
             <div className="flex flex-col items-start self-stretch gap-m">
-              <h3 className="text-body-xl desktop:text-title-s font-bold text-text-basic-primary">
+              <h3 className="line-clamp-2 text-body-xl desktop:text-title-s font-bold text-text-basic-primary">
                 {current.title}
               </h3>
-              <p className="text-body-s desktop:text-body font-normal text-text-basic-tertiary">
+              <p className="line-clamp-2 text-body-s desktop:text-body font-normal text-text-basic-tertiary">
                 {current.description}
               </p>
             </div>
             <a
-              href="https://www.youtube.com/@faindersAI/featured"
+              href={current.href}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
@@ -118,17 +155,7 @@ function YoutubeCard() {
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단), h-[472px] */}
       <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-3xl min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none">
-        {hasThumb ? (
-          <Image
-            src={current.thumbnail}
-            alt={current.thumbnailAlt}
-            fill
-            className="object-cover"
-            sizes="(max-width: 1280px) 100vw, 580px"
-          />
-        ) : (
-          <div className="absolute inset-0 bg-surface-sunken" />
-        )}
+        <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
 
         {/* progressBar */}
         <ProgressBar
@@ -211,7 +238,7 @@ function SocialCard({ social }: { social: Social }) {
 /* ── Section ─────────────────────────────────────────── */
 export default function MediaShowcaseSection() {
   const { mediaShowcase } = siteConfig;
-  const hasContent = mediaShowcase.youtube.videos.length || mediaShowcase.socials.length;
+  const hasContent = showcase.videos.length || mediaShowcase.socials.length;
   if (!hasContent) return null;
 
   return (
