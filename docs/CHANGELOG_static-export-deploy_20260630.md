@@ -39,8 +39,15 @@
 5. `8246653` **영상 최적화** — `scripts/optimize-videos.mjs`(ffmpeg, ≤1080p, H.264 CRF28, 무음, 멱등).
    13개 최적화 + 재인코딩 이득 없는 타임랩스 2개 원본유지. 배포본 207MB → 71MB (-66%)
 6. `c94c4ab` **QA 수정** — `case-study-poster.jpg` 404(기존 버그) → 영상 첫 프레임으로 poster 생성
+7. `4de8f40` **코드 리뷰 픽스** — index.html canonical/hreflang www 통일, 미디어 스크립트
+   실패 시 롤백 가드(데이터 손실 방지), `locale==="ko"`→`routing.defaultLocale`,
+   robots host bare hostname, JSON-LD logo SVG→PNG
+8. `15dc084` **PNG → webp** — `scripts/convert-png-to-webp.mjs`. 이미지 PNG 25개를 webp로
+   변환(그라데이션 lossless·사진 q82, 알파 보존) + `/images/*.png` 참조만 정밀 치환.
+   이미지 추가로 15.0MB → 3.75MB (-75%). 원본 `*_original.png` 보존
 
-**배포 미디어 총합: ~343MB → ~97MB (-72%).** git에는 `*_original` 백업 ~319MB 포함(사용자 선택).
+**배포 미디어 총합: ~343MB → ~86MB (-75%).** (이미지 ~15MB + 영상 ~71MB)
+git에는 `*_original` 백업 포함(사용자 선택).
 
 ---
 
@@ -60,6 +67,7 @@
 
 ## 후속 과제 (이번 범위 밖)
 
-- **컨택트 폼 미배선**: `ContactUsSection`이 제출 시 `console.log`만 함(외부 전송 없음). 구 홈페이지의 Zapier 연동 부재.
+- **컨택트 폼 미배선**: `ContactUsSection`이 제출 시 `console.log`만 함(외부 전송 없음 + 개인정보 콘솔 노출).
+  구 홈페이지의 Zapier 연동 부재. 폼 배선 시 PII 로그 제거 필요.
 - **en/jp 번역**: 본문이 `config/site.ts`에 한국어 하드코딩. 번역 후 next-intl 메시지로 분리 + 색인/hreflang 해제 필요.
-- **`about-hero.png`**: 최적화 후에도 2.9MB(2560 PNG). webp 변환 시 ~300KB 가능하나 코드 참조 수정 필요.
+- (해결됨) ~~`about-hero.png` 2.9MB~~ → webp 변환으로 0.24MB (커밋 `15dc084`).
