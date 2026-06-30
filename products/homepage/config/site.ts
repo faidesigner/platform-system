@@ -508,7 +508,7 @@ export const siteConfig = {
     description:
       "리테일 기술 트렌드와 파인더스에이아이의 최신 소식을 정리한 뉴스레터입니다. 지난 레터를 읽어보고 구독해보세요.",
     ctaLabel: "레터 구독하기",
-    url: "https://faindersai.stibee.com/",
+    url: "https://faindersai.stibee.com/subscribe",
   } satisfies RetailTechLetterConfig,
 } satisfies SiteConfig;
 
