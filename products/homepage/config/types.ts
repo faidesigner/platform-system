@@ -272,17 +272,13 @@ export interface MediaShowcaseConfig {
   socials: SocialLink[];
 }
 
-export interface RetailTechLetterEmbed {
-  type: "iframe" | "script";
-  src: string;
-  height: number;
-  scriptSrc: string;
-  mountId: string;
-}
-
+// Stibee는 외부 도메인 iframe 임베드를 차단(X-Frame-Options)하므로,
+// 임베드 대신 새 탭으로 레터 사이트를 여는 링크아웃 방식으로 구성한다.
 export interface RetailTechLetterConfig {
   title: string;
-  embed: RetailTechLetterEmbed;
+  description: string;
+  ctaLabel: string;
+  url: string;
 }
 
 // ─── Contact ──────────────────────────────────────────────────────────────────

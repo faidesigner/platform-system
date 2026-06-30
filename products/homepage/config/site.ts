@@ -505,13 +505,10 @@ export const siteConfig = {
   } satisfies MediaShowcaseConfig,
   retailTechLetter: {
     title: "Retail Tech Letter",
-    embed: {
-      type: "iframe" as "iframe" | "script",
-      src: "https://faindersai.stibee.com/",
-      height: 608,
-      scriptSrc: "MISSING_FROM_DESIGN",
-      mountId: "retail-tech-letter-form",
-    },
+    description:
+      "리테일 기술 트렌드와 파인더스에이아이의 최신 소식을 정리한 뉴스레터입니다. 지난 레터를 읽어보고 구독해보세요.",
+    ctaLabel: "레터 구독하기",
+    url: "https://faindersai.stibee.com/",
   } satisfies RetailTechLetterConfig,
 } satisfies SiteConfig;
 
