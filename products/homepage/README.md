@@ -39,40 +39,32 @@ pnpm --filter fai-homepage build
 - 현재 **`/ko`만 검색 색인**, `/en`·`/jp`는 `noindex`(번역 완료 시 해제).
 - `out/`에는 `*_original.*`(미디어 원본 백업)이 포함되므로 **배포 시 반드시 제외**한다.
 
-### 배포 대상 (static-sites 인프라 계승)
+### 배포 (한 줄 스크립트)
 
-| 항목 | 값 |
-|---|---|
-| S3 버킷 | `s3://www.fainders.ai` (region `ap-northeast-2`, 계정 `406460793488`) |
-| CloudFront | distribution `E3GUSL3ADNKGFD` |
-| 정식 도메인 | `https://www.fainders.ai` (apex `fainders.ai` 아님 — canonical 일치 필수) |
-
-### 배포 절차 (복붙 실행 가능)
+빌드·S3 업로드·CloudFront 무효화를 `scripts/deploy.sh` 가 한 번에 처리한다.
+설정은 `deploy/<target>.env` 에 있고, **AWS 자격증명은 `aws` CLI가 별도 관리**한다(`aws configure`/SSO).
 
 ```bash
 cd products/homepage
 
-# 0) [필수] 배포 직전 버킷 대조 — repo에 없는 라이브 standalone 파일 누락 방지
-aws s3 ls s3://www.fainders.ai/ | grep -iE '\.html$' 
-# 위 목록 중 out/ 루트에 없는 파일이 있으면 그대로 둘지 확인 후 진행
-
-# 1) 해시 에셋(불변) — 장기 캐시, _original·HTML류 제외
-aws s3 sync out/ s3://www.fainders.ai \
-  --exclude "*_original*" --exclude "*.html" --exclude "*.txt" --exclude "*.xml" \
-  --cache-control "public,max-age=31536000,immutable"
-
-# 2) HTML/sitemap/robots(가변) — no-cache + stale 삭제, _original 제외
-aws s3 sync out/ s3://www.fainders.ai \
-  --exclude "*_original*" \
-  --cache-control "public,max-age=0,must-revalidate" --delete
-
-# 3) CloudFront 무효화
-aws cloudfront create-invalidation --distribution-id E3GUSL3ADNKGFD --paths "/*"
+./scripts/deploy.sh dev    # DEV 프리뷰 (전용 CloudFront, 루트 서빙)
+./scripts/deploy.sh prd    # PRD 실서비스 www.fainders.ai (확인 프롬프트 있음)
 ```
 
-> ⚠️ `--exclude "*_original*"` 를 빼먹으면 미디어 원본(수백 MB)이 그대로 CDN에 올라간다.
-> ⚠️ `--delete` 는 2단계에만 둔다. standalone 페이지(`contact-*.html`, 네이버 인증 파일)는
-> `out/`에 포함돼 있으므로 삭제되지 않는다(0번 대조에서 재확인).
+| 타깃 | S3 | CloudFront | 주소 | 비고 |
+|---|---|---|---|---|
+| **dev** | `s3://www.fainders.ai/homepage_v2` | `E1N1DKK4N6NNIM` | https://d6hs8futv6rcu.cloudfront.net | noindex 주입, prefix 한정(안전) |
+| **prd** | `s3://www.fainders.ai` (루트) | `E3GUSL3ADNKGFD` | https://www.fainders.ai | 실서비스 컷오버 — 아래 주의 |
+
+공통: region `ap-northeast-2`, 계정 `406460793488`. `out/`의 `*_original.*`(미디어 원본 백업)은 sync에서 항상 제외된다.
+
+#### ⚠️ PRD 배포 전 반드시
+- **CloudFront 함수 비호환**: 라이브 dist의 `rewriteForHomepageSSG` 함수는 `/foo/ → /foo.html` 로 재작성한다.
+  새 홈페이지는 `dir/index.html` 구조라, `prd.env` 의 `FLAT_HTML=true` 가 flat `<dir>.html` 을 생성해 호환시킨다.
+  (정석은 함수를 `/foo/ → /foo/index.html` 로 바꾸는 것.)
+- **`DELETE=false`(기본)**: 루트에서 `--delete` 는 구 사이트 파일(`company.html`, `assets/`, `career/` 등)을 지운다.
+  완전 컷오버를 원할 때만 `prd.env` 에서 `true` 로. 켜기 전 `aws s3 ls s3://www.fainders.ai/` 로 무엇이 지워질지 확인.
+- 미디어 영상 최신화가 필요하면 배포 전에 `node scripts/sync-youtube.mjs` 실행(별도 가이드: `docs/youtube-showcase-sync.md`).
 
 ---
 
