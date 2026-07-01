@@ -34,5 +34,60 @@
   "products": {
     "visionCheckout": "VISION CHECK-OUT",
     "unmannedStore": "UNMANNED STORE"
+  },
+  "home": {
+    "hero": {
+      "title1": "리테일의 미래",
+      "title2": "한발 먼저 시작하세요",
+      "tagline": "No Staff, No Problem.",
+      "subtitle": "Next-Gen AI Retail Automation"
+    },
+    "whyFai": {
+      "headline": "Why FAI",
+      "subheadline": "멈춤 없이, 인건비 추가 없이, 대기줄 없이\n효율적인 매장 운영을 할 수 있습니다.",
+      "items": {
+        "0": {
+          "title": "멈춤 없이 매끄러운 결제",
+          "description": "바코드 스캔 없이 쓱 올려두면 결제가 끝나요\n쾌적한 결제 경험이 우리 매장의 매출을 바꿔요"
+        },
+        "1": {
+          "title": "최소 인력으로 최대 효율을",
+          "description": "단순 계산 업무는 똑똑한 AI에 맡기고, 사장님은 더 가치 있는 매장 관리에 집중하세요"
+        },
+        "2": {
+          "title": "막힘없는 고객 경험",
+          "description": "대기 시간이 줄어든 만큼 기분 좋게 매장을 나선 손님들은 이곳을 다시 찾게 될 거예요"
+        }
+      }
+    },
+    "customers": {
+      "title": "Customers"
+    },
+    "efficiency": {
+      "title": "Efficiency",
+      "subtitle": "숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다",
+      "stats": {
+        "0": {
+          "label": "결제 정확도",
+          "description": "오차 없는 완벽한 비전 AI"
+        },
+        "1": {
+          "label": "고객 대기시간 감소",
+          "labelCaption": "(VCO 도입 전후 비교)",
+          "description": "이탈을 막는 초고속 결제"
+        },
+        "2": {
+          "label": "매출 증가율",
+          "description": "피크타임 회전율 극대화"
+        }
+      }
+    },
+    "imageSection": {
+      "alt": "FAI Platform Fullscreen Overview"
+    },
+    "ctaBanner": {
+      "titleLine1": "지금 매장에 도입하고",
+      "titleLine2": "최대 효율을 경험을 해보세요"
+    }
   }
 }

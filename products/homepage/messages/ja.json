@@ -34,5 +34,60 @@
   "products": {
     "visionCheckout": "VISION CHECK-OUT",
     "unmannedStore": "UNMANNED STORE"
+  },
+  "home": {
+    "hero": {
+      "title1": "リテールの未来",
+      "title2": "一歩先に始めましょう",
+      "tagline": "No Staff, No Problem.",
+      "subtitle": "Next-Gen AI Retail Automation"
+    },
+    "whyFai": {
+      "headline": "Why FAI",
+      "subheadline": "止まらず、人件費を増やさず、待ち時間もなく\n効率的な店舗運営ができます。",
+      "items": {
+        "0": {
+          "title": "止まらないスムーズな決済",
+          "description": "バーコードスキャン不要、置くだけで決済完了\n快適な決済体験が店舗の売上を変えます"
+        },
+        "1": {
+          "title": "最小限の人員で最大の効率を",
+          "description": "単純な計算業務は賢いAIに任せ、オーナー様はより価値のある店舗管理に集中できます"
+        },
+        "2": {
+          "title": "ストレスのない顧客体験",
+          "description": "待ち時間が減った分、気持ちよく店舗を後にしたお客様はまた戻ってきます"
+        }
+      }
+    },
+    "customers": {
+      "title": "Customers"
+    },
+    "efficiency": {
+      "title": "Efficiency",
+      "subtitle": "数字で証明された圧倒的なパフォーマンスが、店舗の基準を変えます",
+      "stats": {
+        "0": {
+          "label": "決済精度",
+          "description": "誤差のない完璧なビジョンAI"
+        },
+        "1": {
+          "label": "顧客待ち時間の削減",
+          "labelCaption": "(VCO導入前後比較)",
+          "description": "離脱を防ぐ超高速決済"
+        },
+        "2": {
+          "label": "売上増加率",
+          "description": "ピークタイムの回転率を最大化"
+        }
+      }
+    },
+    "imageSection": {
+      "alt": "FAI Platform Fullscreen Overview"
+    },
+    "ctaBanner": {
+      "titleLine1": "今すぐ店舗に導入して",
+      "titleLine2": "最大の効率を体験してください"
+    }
   }
 }

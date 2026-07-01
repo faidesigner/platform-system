@@ -34,5 +34,60 @@
   "products": {
     "visionCheckout": "VISION CHECK-OUT",
     "unmannedStore": "UNMANNED STORE"
+  },
+  "home": {
+    "hero": {
+      "title1": "The Future of Retail",
+      "title2": "Start One Step Ahead",
+      "tagline": "No Staff, No Problem.",
+      "subtitle": "Next-Gen AI Retail Automation"
+    },
+    "whyFai": {
+      "headline": "Why FAI",
+      "subheadline": "No stoppages, no added labor cost, no waiting in line\nRun your store at peak efficiency.",
+      "items": {
+        "0": {
+          "title": "Seamless, uninterrupted checkout",
+          "description": "No barcode scanning — just set items down and checkout is done\nA smooth checkout experience changes your store's revenue"
+        },
+        "1": {
+          "title": "Maximum efficiency, minimum staff",
+          "description": "Let smart AI handle simple calculations, so you can focus on higher-value store management"
+        },
+        "2": {
+          "title": "A seamless customer experience",
+          "description": "With shorter wait times, customers leave happier and are more likely to come back"
+        }
+      }
+    },
+    "customers": {
+      "title": "Customers"
+    },
+    "efficiency": {
+      "title": "Efficiency",
+      "subtitle": "Proven performance in numbers, redefining the standard for stores",
+      "stats": {
+        "0": {
+          "label": "Payment accuracy",
+          "description": "Flawless vision AI with zero error"
+        },
+        "1": {
+          "label": "Reduced customer wait time",
+          "labelCaption": "(before/after VCO adoption)",
+          "description": "Ultra-fast checkout that stops churn"
+        },
+        "2": {
+          "label": "Revenue growth rate",
+          "description": "Maximized turnover during peak hours"
+        }
+      }
+    },
+    "imageSection": {
+      "alt": "FAI Platform Fullscreen Overview"
+    },
+    "ctaBanner": {
+      "titleLine1": "Deploy it in your store today",
+      "titleLine2": "and experience maximum efficiency"
+    }
   }
 }

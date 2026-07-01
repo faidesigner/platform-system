@@ -45,3 +45,62 @@
 ### 기타 검수 포인트
 - `footer.policies.cctv` en/ja는 의역. 법적 문서명(정책 정식 명칭)과 일치시킬지 검토 필요.
 - `common.cta.reviewsMore`(실제 도입 후기 더보기) en "More Customer Stories" / ja "導入事例をもっと見る"는 후속 페이즈에서 실제 섹션 문맥과 함께 재검토.
+
+## Phase 2 — home (2026-07-01)
+
+### home.hero (히어로 헤드라인)
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| home.hero.title1 | 리테일의 미래 | The Future of Retail | リテールの未来 |
+| home.hero.title2 | 한발 먼저 시작하세요 | Start One Step Ahead | 一歩先に始めましょう |
+| home.hero.tagline | No Staff, No Problem. | No Staff, No Problem. (원문 유지) | No Staff, No Problem. (원문 유지 — 직역 시 어색해 영문 태그라인 유지) |
+| home.hero.subtitle | Next-Gen AI Retail Automation | Next-Gen AI Retail Automation (원문 유지) | Next-Gen AI Retail Automation (원문 유지 — 마케팅 태그라인, 일본 시장에서도 영문 노출 관행 감안) |
+
+**검수 포인트:** `tagline`/`subtitle`은 원래 한국어 화면에도 영문 그대로 노출되던 마케팅 태그라인. ja를 직역(スタッフ不要、問題なし。등)할지 원문 유지할지는 브랜드 가이드 확인 후 확정 필요 — 현재는 원문 유지로 초벌 처리.
+
+### home.whyFai (Why FAI 카드)
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| home.whyFai.headline | Why FAI | Why FAI (고유 섹션명 유지) | Why FAI (고유 섹션명 유지) |
+| home.whyFai.subheadline | 멈춤 없이, 인건비 추가 없이, 대기줄 없이\n효율적인 매장 운영을 할 수 있습니다. | No stoppages, no added labor cost, no waiting in line\nRun your store at peak efficiency. | 止まらず、人件費を増やさず、待ち時間もなく\n効率的な店舗運営ができます。|
+| home.whyFai.items.0.title | 멈춤 없이 매끄러운 결제 | Seamless, uninterrupted checkout | 止まらないスムーズな決済 |
+| home.whyFai.items.0.description | 바코드 스캔 없이 쓱 올려두면 결제가 끝나요\n쾌적한 결제 경험이 우리 매장의 매출을 바꿔요 | No barcode scanning — just set items down and checkout is done\nA smooth checkout experience changes your store's revenue | バーコードスキャン不要、置くだけで決済完了\n快適な決済体験が店舗の売上を変えます |
+| home.whyFai.items.1.title | 최소 인력으로 최대 효율을 | Maximum efficiency, minimum staff | 最小限の人員で最大の効率を |
+| home.whyFai.items.1.description | 단순 계산 업무는 똑똑한 AI에 맡기고, 사장님은 더 가치 있는 매장 관리에 집중하세요 | Let smart AI handle simple calculations, so you can focus on higher-value store management | 単純な計算業務は賢いAIに任せ、オーナー様はより価値のある店舗管理に集中できます |
+| home.whyFai.items.2.title | 막힘없는 고객 경험 | A seamless customer experience | ストレスのない顧客体験 |
+| home.whyFai.items.2.description | 대기 시간이 줄어든 만큼 기분 좋게 매장을 나선 손님들은 이곳을 다시 찾게 될 거예요 | With shorter wait times, customers leave happier and are more likely to come back | 待ち時間が減った分、気持ちよく店舗を後にしたお客様はまた戻ってきます |
+
+**참고:** `subheadline`은 컴포넌트 계약(prop)에는 존재하나 원본 JSX에도 렌더링되지 않던 미노출 필드 — 번역은 준비해뒀으나 현재 화면에 보이지 않음. 향후 노출 시 재검수.
+
+### home.customers
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| home.customers.title | Customers | Customers (고유 섹션명 유지) | Customers (고유 섹션명 유지) |
+
+CTA는 `common.cta.reviewsMore` 재사용(신규 키 없음).
+
+### home.efficiency (스탯 라벨 — 숫자 자체는 번역 대상 아님)
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| home.efficiency.title | Efficiency | Efficiency (고유 섹션명 유지) | Efficiency (고유 섹션명 유지) |
+| home.efficiency.subtitle | 숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다 | Proven performance in numbers, redefining the standard for stores | 数字で証明された圧倒的なパフォーマンスが、店舗の基準を変えます |
+| home.efficiency.stats.0.label | 결제 정확도 | Payment accuracy | 決済精度 |
+| home.efficiency.stats.0.description | 오차 없는 완벽한 비전 AI | Flawless vision AI with zero error | 誤差のない完璧なビジョンAI |
+| home.efficiency.stats.1.label | 고객 대기시간 감소 | Reduced customer wait time | 顧客待ち時間の削減 |
+| home.efficiency.stats.1.labelCaption | (VCO 도입 전후 비교) | (before/after VCO adoption) | (VCO導入前後比較) |
+| home.efficiency.stats.1.description | 이탈을 막는 초고속 결제 | Ultra-fast checkout that stops churn | 離脱を防ぐ超高速決済 |
+| home.efficiency.stats.2.label | 매출 증가율 | Revenue growth rate | 売上増加率 |
+| home.efficiency.stats.2.description | 피크타임 회전율 극대화 | Maximized turnover during peak hours | ピークタイムの回転率を最大化 |
+
+### home.ctaBanner
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| home.ctaBanner.titleLine1 | 지금 매장에 도입하고 | Deploy it in your store today | 今すぐ店舗に導入して |
+| home.ctaBanner.titleLine2 | 최대 효율을 경험을 해보세요 | and experience maximum efficiency | 最大の効率を体験してください |
+
+CTA 버튼은 `common.cta.requestDemo` 재사용(신규 키 없음). 원본 `<br className="min-[769px]:hidden" />`(모바일 전용 줄바꿈, 의미상 줄바꿈 아님)을 보존하기 위해 title을 2줄로 분리 — 언어별 줄바꿈 위치가 자연스러운지 검수 필요.
+
+### 기타 검수 포인트 (Phase 2)
+- `home.hero.tagline` / `home.hero.subtitle`의 ja 원문 유지 여부(직역 vs 영문 유지) — 브랜드팀 확인 필요.
+- `home.ctaBanner.titleLine1/2` 2분할이 en/ja 각각에서 모바일 줄바꿈 위치상 자연스러운지 확인 필요.
+- `home.customers.title`, `home.efficiency.title`, `home.whyFai.headline`은 섹션 고유 라벨로 판단해 3개 언어 모두 영문 원문 유지 — 검수 시 이 판단에 이견 있으면 재조정.

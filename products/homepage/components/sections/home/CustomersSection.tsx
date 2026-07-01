@@ -2,6 +2,7 @@
 
 import Image from 'next/image';
 import Link from 'next/link';
+import { useTranslations } from 'next-intl';
 import { Marquee } from '@fai/ui';
 import { trackEvent } from '@/lib/analytics/track';
 
@@ -32,19 +33,24 @@ const DEFAULT_IMAGES: CustomerImage[] = [
 ];
 
 export default function CustomersSection({
-  title     = 'Customers',
-  linkLabel = '실제 도입 후기 더보기',
+  title,
+  linkLabel,
   linkHref  = '/customers',
   images    = DEFAULT_IMAGES,
   speed     = 40,
 }: CustomersSectionProps) {
+  const t = useTranslations('home.customers');
+  const tCommon = useTranslations('common');
+  const resolvedTitle = title ?? t('title');
+  const resolvedLinkLabel = linkLabel ?? tCommon('cta.reviewsMore');
+
   return (
     <section className="bg-bg-100 py-5xl overflow-hidden">
       {/* 헤더 — container 내부에서 좌우 정렬 */}
       <div className="w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
         <div className="pb-4xl flex w-full justify-between items-end">
           <h2 className="text-title-l desktop:text-title-xl font-bold text-sand-text-primary">
-            {title}
+            {resolvedTitle}
           </h2>
           {/*
            * btn/icoTxt/assistive 사양
@@ -54,7 +60,7 @@ export default function CustomersSection({
            */}
           <Link
             href={linkHref}
-            onClick={() => trackEvent('interest_click', { location: 'home_customers', label: linkLabel })}
+            onClick={() => trackEvent('interest_click', { location: 'home_customers', label: resolvedLinkLabel })}
             className={[
               'shrink-0',
               'flex flex-col justify-center items-center',
@@ -65,7 +71,7 @@ export default function CustomersSection({
             ].join(' ')}
           >
             <span className="flex items-center justify-center px-2xs gap-2xs">
-              <span className="text-body-ms font-semibold">{linkLabel}</span>
+              <span className="text-body-ms font-semibold">{resolvedLinkLabel}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"
