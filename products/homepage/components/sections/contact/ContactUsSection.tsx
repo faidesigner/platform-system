@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { lenisRef } from "@/components/layout/SmoothScroll";
 import { siteConfig } from "@/config/site";
 import { trackEvent } from "@/lib/analytics/track";
+import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
 import { IcoTxtButton } from "@fai/ui/components/button/IcoTxtButton";
@@ -58,7 +59,7 @@ export function ContactUsSection() {
   const toggleInterest = (value: string, checked: boolean) =>
     setState((s) => ({ ...s, interests: { ...s.interests, [value]: checked } }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors: Record<string, string> = {};
@@ -89,10 +90,26 @@ export function ContactUsSection() {
       return;
     }
 
-    const selectedInterests = Object.entries(state.interests)
-      .filter(([, v]) => v)
-      .map(([k]) => k);
-    console.log("[contact submit]", { ...state.values, interests: selectedInterests });
+    // 라이브 contact-us와 동일한 Zapier 웹훅 전송.
+    // 포맷 고정: Content-Type은 form-urlencoded, body는 JSON 문자열
+    // (application/json으로 보내면 Zap 필드 매핑이 비어 들어감).
+    const payload = buildContactPayload({
+      values: state.values,
+      interests: state.interests,
+      utm: parseUtm(typeof window !== "undefined" ? window.location.search : ""),
+      referrer: typeof document !== "undefined" ? document.referrer : "",
+    });
+    try {
+      await fetch(ZAPIER_CONTACT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      // 전송 실패해도 사용자 UX는 완료 처리(라이브 동작 동일). 리드 유실만 경고 로그.
+      console.warn("[contact submit] Zapier 전송 실패:", err);
+    }
+
     trackEvent("inquiry_complete", { location: "contact_form", label: "문의하기" });
     flushSync(() => { setSubmitted(true); });
     if (lenisRef.current) {
