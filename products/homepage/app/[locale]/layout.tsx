@@ -59,7 +59,7 @@ export async function generateMetadata({
       other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg" }],
     },
     manifest: "/site.webmanifest",
-    title: { default: s.title, template: `%s | ${siteConfig.name}` },
+    title: { default: s.title, template: "%s | Fainders.AI" },
     description: s.description,
     keywords: s.keywords,
     openGraph: {
