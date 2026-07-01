@@ -42,7 +42,7 @@ const SNS = [
   },
 ];
 
-/* ── 실데이터 값(번역 대상 아님) ── */
+/* ── 실데이터 값(번역 대상 아님, address 제외) ── */
 const VALUES = {
   ceo:     '함명원ㆍ왕민권',
   tel:     '02-6191-0049',
@@ -61,25 +61,28 @@ const POLICY_HREFS = {
  * 소비자(homepage FooterBridge)가 번역 문자열을 주입하며, 미지정 시 아래 한국어 기본값을 사용한다.
  */
 export interface FooterLabels {
-  company?: string;
-  ceo?:     string;
-  tel?:     string;
-  address?: string;
-  bizNo?:   string;
-  email?:   string;
-  privacy?: string;
-  cctv?:    string;
+  company?:      string;
+  ceo?:          string;
+  tel?:          string;
+  address?:      string;
+  /** 주소 실데이터 값(로케일별). 미지정 시 한국어 기본 주소 사용. */
+  addressValue?: string;
+  bizNo?:        string;
+  email?:        string;
+  privacy?:      string;
+  cctv?:         string;
 }
 
 const DEFAULT_LABELS: Required<FooterLabels> = {
-  company: '(주) 파인더스에이아이',
-  ceo:     '대표이사',
-  tel:     '전화',
-  address: '주소',
-  bizNo:   '사업자등록번호',
-  email:   '이메일 문의',
-  privacy: '개인정보 처리방침',
-  cctv:    '영상정보처리기기 운영 · 관리 방침',
+  company:      '(주) 파인더스에이아이',
+  ceo:          '대표이사',
+  tel:          '전화',
+  address:      '주소',
+  addressValue: VALUES.address,
+  bizNo:        '사업자등록번호',
+  email:        '이메일 문의',
+  privacy:      '개인정보 처리방침',
+  cctv:         '영상정보처리기기 운영 · 관리 방침',
 };
 
 /* ── SNS 버튼 공용 ── */
@@ -162,7 +165,7 @@ export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
   const row1Info = [
     { title: l.ceo,     text: VALUES.ceo },
     { title: l.tel,     text: VALUES.tel },
-    { title: l.address, text: VALUES.address },
+    { title: l.address, text: l.addressValue },
   ];
   const row2Info = [
     { title: l.bizNo, text: VALUES.bizNo },

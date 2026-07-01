@@ -23,6 +23,7 @@
   },
   "footer": {
     "company": "Fainders.AI Inc.",
+    "addressValue": "ソウル特別市 瑞草区 江南大路51ギル 1, 511タワー 13階",
     "labels": {
       "ceo": "代表取締役",
       "tel": "電話",
@@ -237,28 +238,34 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "brand": "GS25 DX LAB",
             "store": "加山スマート店",
             "description": "国内初のロードショップ型完全無人コンビニ\nアジア初の統合ロードセル技術を導入"
           },
           "1": {
+            "brand": "Super Swift",
             "store": "自社運営店舗",
             "description": "自社運営店舗\n国内初の後払いCXを導入"
           },
           "2": {
+            "brand": "ナジュ テックフレンドリー",
             "store": "CU アンシムスマート店舗",
             "description": "KISA本院のテスト店舗"
           },
           "3": {
+            "brand": "パンギョ Alphadom",
             "store": "\"Worker Shop\"",
             "description": "「Shadow」セレクトショップ"
           }
         },
         "micro": {
           "0": {
+            "brand": "PX24",
             "store": "乙支路店",
             "description": "フィットネスセンター内に位置する\n24時間営業・約16平米規模の無人店舗"
           },
           "1": {
+            "brand": "PX24",
             "store": "禾谷店",
             "description": "フィットネスセンター内に位置する\n約11.5平米規模の超小型無人店舗"
           }

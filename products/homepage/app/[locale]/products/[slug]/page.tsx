@@ -123,6 +123,7 @@ export default async function ProductDetailPage({
       key,
       list.map((cs, i) => ({
         ...cs,
+        brand: t(`caseStudies.${key}.${i}.brand`),
         store: t(`caseStudies.${key}.${i}.store`),
         description: t(`caseStudies.${key}.${i}.description`),
       })),

@@ -326,3 +326,34 @@ Phase 3에서 지적됐던 "aria-label 이전/다음이 en/ja에서도 한국어
 **주의(설계 결정):** `config/site.ts`의 `interests[].options[].label`(한국어)은 Zapier 리드 payload의 `content` 필드(영업팀이 읽음)를 만들기 위해 **의도적으로 한국어로 유지**함. UI 표시는 위 `contact.interests.*.options.*` 메시지 키로 로케일별 렌더 — 라벨이 config/messages에 이중 존재하는 것은 의도된 설계(payload=한국어 고정, UI=현지화). `lib/contact/payload.ts` 및 그 테스트는 미변경.
 
 **KakaoTalk 표기:** 카카오 채널명은 en/ja에서 "KakaoTalk"으로 표기(브랜드 고유명사). 한국어는 "카카오톡" 유지.
+
+---
+
+## Phase 7 — i18n cleanup: 주소 로마자화 · 무인매장 지명 로마자화 · en/ja 색인 전환 (2026-07-01)
+
+기존 스캔에서 누락됐던 실데이터 VALUE(주소)와 케이스 스터디 브랜드 지명 프리픽스를 로마자화. **아래 로마자 표기는 모두 초벌(best-effort) — 마케팅/현지화 담당자의 네이티브 검수 확정 필요.**
+
+### footer.addressValue (실주소 — 이전까지 전 로케일 한국어 고정이었음)
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| footer.addressValue | 0662 서울특별시 서초구 강남대로51길 1, 511타워 13층 | 13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul, Republic of Korea | ソウル特別市 瑞草区 江南大路51ギル 1, 511タワー 13階 |
+
+- 우편번호(0662)는 en/ja 표기에서 생략(해외 발신 기준 도로명주소 관용 표기 우선) — 우편번호 포함 여부는 마케팅 검수 시 재확인.
+- ja 표기는 한자/가나 혼용 로마자化 초벌이며, 정식 일본어 주소 표기 컨벤션(丁目/番地 등 사용 안 함, 한국 도로명주소를 그대로 훈독 표기) 검수 필요.
+
+### products.unmannedStore.caseStudies.standard[].brand (지명 프리픽스)
+| index | ko | en (초벌) | ja (초벌) |
+|-------|----|-----------|-----------|
+| standard.0 | GS25 DX LAB | GS25 DX LAB (고유명사 유지) | GS25 DX LAB (고유명사 유지) |
+| standard.1 | Super Swift | Super Swift (고유명사 유지) | Super Swift (고유명사 유지) |
+| standard.2 | 나주 테크프렌들리 | Naju Tech-Friendly | ナジュ テックフレンドリー |
+| standard.3 | 판교 Alphadom | Pangyo Alphadom | パンギョ Alphadom |
+| micro.0 / micro.1 | PX24 | PX24 (고유명사 유지) | PX24 (고유명사 유지) |
+
+- "나주"→"Naju"/"ナジュ", "판교"→"Pangyo"/"パンギョ"는 국토교통부 로마자 표기법 기준 표준 표기(검수 시 재확인 권장).
+- "테크프렌들리"는 원래 한국어 조어(영어 "Tech Friendly"의 한글 표기)라 en에서는 원의도대로 역변환(`Tech-Friendly`), ja에서는 가타카나 음역(`テックフレンドリー`) 처리 — 실제 브랜드/매장 공식 영문·일문 표기가 있다면 그것으로 교체 필요.
+
+### 색인 정책 전환 (en/ja noindex → index)
+- `app/[locale]/layout.tsx`: `robots.index`를 로케일 무관 `true`로 전환(기존엔 `locale === defaultLocale`로 ko만 색인).
+- `app/sitemap.ts`: `INDEXED_LOCALE="ko"` 단일값 제거, `routing.locales`(ko/en/ja) 전체를 순회해 로케일별 URL 생성.
+- 전제: Phase 1~7 번역이 완료되어 en/ja 본문에 한국어 잔존이 없다는 가정하에 전환. 위 Phase 5 항목(YouTube/Stibee 동기화 콘텐츠 미번역)은 여전히 미해결 상태로 en/ja에 한국어 원문이 일부 노출되므로, **완전한 "en/ja 한국어 잔존 0" 달성 전 색인 전환의 SEO 리스크**(다국어 사이트에서 미번역 콘텐츠 노출 시 품질 신호 저하 가능)를 마케팅/SEO 담당자와 재확인 권장.

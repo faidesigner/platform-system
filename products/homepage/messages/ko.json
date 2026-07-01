@@ -23,6 +23,7 @@
   },
   "footer": {
     "company": "(주) 파인더스에이아이",
+    "addressValue": "0662 서울특별시 서초구 강남대로51길 1, 511타워 13층",
     "labels": {
       "ceo": "대표이사",
       "tel": "전화",
@@ -237,28 +238,34 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "brand": "GS25 DX LAB",
             "store": "가산스마트점",
             "description": "국내 최초 로드샵형 완전 무인화 편의점\n아시아 최초 통합로드셀 기술 도입"
           },
           "1": {
+            "brand": "Super Swift",
             "store": "자체 운영 매장",
             "description": "자체 운영 매장\n국내 최초 후결제 CX도입"
           },
           "2": {
+            "brand": "나주 테크프렌들리",
             "store": "CU 안심스마트점포",
             "description": "KISA 본원 테스트 점포"
           },
           "3": {
+            "brand": "판교 Alphadom",
             "store": "\"Worker Shop\"",
             "description": "\"Shadow\" 편집샵"
           }
         },
         "micro": {
           "0": {
+            "brand": "PX24",
             "store": "을지로점",
             "description": "피트니스 센터 내 위치한\n24/7운영의 5평 규모 무인매장"
           },
           "1": {
+            "brand": "PX24",
             "store": "화곡점",
             "description": "피트니스 센터 내 위치한\n3.5평 규모 초소형 무인매장"
           }

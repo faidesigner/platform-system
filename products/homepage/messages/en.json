@@ -23,6 +23,7 @@
   },
   "footer": {
     "company": "Fainders.AI Inc.",
+    "addressValue": "13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul, Republic of Korea",
     "labels": {
       "ceo": "CEO",
       "tel": "Tel",
@@ -237,28 +238,34 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "brand": "GS25 DX LAB",
             "store": "Gasan Smart Store",
             "description": "Korea's first fully unmanned roadside-style convenience store\nAsia's first integrated load-cell technology"
           },
           "1": {
+            "brand": "Super Swift",
             "store": "Self-operated store",
             "description": "Directly operated store\nKorea's first pay-later CX"
           },
           "2": {
+            "brand": "Naju Tech-Friendly",
             "store": "CU Ansim Smart Store",
             "description": "KISA headquarters test store"
           },
           "3": {
+            "brand": "Pangyo Alphadom",
             "store": "\"Worker Shop\"",
             "description": "\"Shadow\" select shop"
           }
         },
         "micro": {
           "0": {
+            "brand": "PX24",
             "store": "Euljiro branch",
             "description": "A 24/7, 16 sqm unmanned store\nlocated inside a fitness center"
           },
           "1": {
+            "brand": "PX24",
             "store": "Hwagok branch",
             "description": "An ultra-compact 11.5 sqm unmanned store\nlocated inside a fitness center"
           }

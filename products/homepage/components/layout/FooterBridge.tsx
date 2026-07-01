@@ -14,14 +14,15 @@ export default function FooterBridge() {
   const t = useTranslations("footer");
 
   const labels: FooterLabels = {
-    company: t("company"),
-    ceo:     t("labels.ceo"),
-    tel:     t("labels.tel"),
-    address: t("labels.address"),
-    bizNo:   t("labels.bizNo"),
-    email:   t("labels.email"),
-    privacy: t("policies.privacy"),
-    cctv:    t("policies.cctv"),
+    company:      t("company"),
+    ceo:          t("labels.ceo"),
+    tel:          t("labels.tel"),
+    address:      t("labels.address"),
+    addressValue: t("addressValue"),
+    bizNo:        t("labels.bizNo"),
+    email:        t("labels.email"),
+    privacy:      t("policies.privacy"),
+    cctv:         t("policies.cctv"),
   };
 
   return (
