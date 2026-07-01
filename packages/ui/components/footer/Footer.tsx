@@ -51,9 +51,10 @@ const VALUES = {
   email:   'contact@fainders.ai',
 };
 
+// 실제 정책 문서(PDF) — 라이브 사이트와 동일 경로. (기존 /privacy·/cctv-policy 는 존재하지 않아 404였음)
 const POLICY_HREFS = {
-  privacy: '/privacy',
-  cctv:    '/cctv-policy',
+  privacy: 'https://www.fainders.ai/document/%5B%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%83%E1%85%A5%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%5D+%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%87%E1%85%A9+%E1%84%8E%E1%85%A5%E1%84%85%E1%85%B5%E1%84%87%E1%85%A1%E1%86%BC%E1%84%8E%E1%85%B5%E1%86%B7.pdf',
+  cctv:    'https://www.fainders.ai/document/%5B%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%83%E1%85%A5%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%5D+%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%87%E1%85%A9%E1%84%8E%E1%85%A7%E1%84%85%E1%85%B5%E1%84%80%E1%85%B5%E1%84%80%E1%85%B5+%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E3%86%8D%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5+%E1%84%87%E1%85%A1%E1%86%BC%E1%84%8E%E1%85%B5%E1%86%B7.pdf',
 };
 
 /**
@@ -119,7 +120,7 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
       {policies.map((p, i) => (
         <span key={p.href} className="flex items-center gap-m">
           {i > 0 && <span className="text-border-secondary">|</span>}
-          <a href={p.href} className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
+          <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
             {p.label}
           </a>
         </span>
@@ -265,7 +266,7 @@ export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
               {policies.map((p, i) => (
                 <span key={p.href} className="flex items-center gap-m">
                   {i > 0 && <span className="text-border-secondary">|</span>}
-                  <a href={p.href} className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
                     {p.label}
                   </a>
                 </span>
