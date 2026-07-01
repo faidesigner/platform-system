@@ -136,8 +136,8 @@ export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick }: Ta
       <DrawerListItem
         label="제품"
         onClick={() => {
+          if (!productOpen) onItemClick?.({ label: '제품', href: '/products' });
           setProductOpen((v) => !v);
-          onItemClick?.({ label: '제품', href: '/products' });
         }}
         rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
       >

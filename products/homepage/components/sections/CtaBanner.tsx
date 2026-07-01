@@ -14,7 +14,7 @@
 "use client";
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useRouter } from '@/i18n/navigation';
 import { IcoTxtButton } from '@fai/ui';
 import { trackEvent } from '@/lib/analytics/track';
 import type { GaLocation } from '@/lib/analytics/events';

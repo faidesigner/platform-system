@@ -68,6 +68,8 @@ function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void
         <a
           key={sns.label}
           href={sns.href}
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label={sns.label}
           onClick={() => onSocialClick?.(sns.label)}
           className="flex flex-col items-center justify-center rounded-full p-[var(--padding-XS)] bg-filled-optional-brand-secondaryBtn"
