@@ -21,6 +21,9 @@ export interface GaParams {
 }
 
 /** GA로 보낼 payload를 조립하는 순수 함수(사이드이펙트 없음). */
-export function buildEvent(name: GaEventName, params: GaParams) {
+export function buildEvent(
+  name: GaEventName,
+  params: GaParams
+): { name: GaEventName; params: GaParams } {
   return { name, params };
 }
