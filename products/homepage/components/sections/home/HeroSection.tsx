@@ -6,6 +6,7 @@ import Link from "next/link";
 import { useParams } from "next/navigation";
 import { LogoMarquee, IcoTxtButton } from "@fai/ui";
 import type { LogoItem } from "@fai/ui";
+import { trackEvent } from "@/lib/analytics/track";
 
 interface HeroSectionProps {
   logos?: LogoItem[];
@@ -106,7 +107,10 @@ export default function HeroSection({ logos }: HeroSectionProps) {
                   }`}
                 >
                   <Link href={locale ? `/${locale}/products/vision-check-out` : "/products/vision-check-out"}>
-                    <IcoTxtButton variant="secondary" size="L" shape="round" className="shrink-0">
+                    <IcoTxtButton
+                      variant="secondary" size="L" shape="round" className="shrink-0"
+                      onClick={() => trackEvent("interest_click", { location: "home_hero", label: "자세히 알아보기" })}
+                    >
                       자세히 알아보기
                     </IcoTxtButton>
                   </Link>

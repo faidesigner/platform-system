@@ -16,9 +16,19 @@
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
 import { IcoTxtButton } from '@fai/ui';
+import { trackEvent } from '@/lib/analytics/track';
+import type { GaLocation } from '@/lib/analytics/events';
 
-export function CtaBanner() {
+export function CtaBanner({
+  location = 'home_cta_banner',
+}: {
+  location?: Extract<GaLocation, 'home_cta_banner' | 'product_cta_banner'>;
+}) {
   const router = useRouter();
+  const handleCta = () => {
+    trackEvent('lead_acquisition_click', { location, label: '도입 문의하기' });
+    router.push('/contact');
+  };
 
   return (
     <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] justify-center overflow-hidden">
@@ -55,7 +65,7 @@ export function CtaBanner() {
           shape="square"
           className="shrink-0 max-[420px]:hidden"
           style={{ textAlign: 'center' }}
-          onClick={() => router.push('/contact')}
+          onClick={handleCta}
         >
           도입 문의하기
         </IcoTxtButton>
@@ -66,7 +76,7 @@ export function CtaBanner() {
           shape="square"
           className="shrink-0 min-[421px]:hidden"
           style={{ textAlign: 'center' }}
-          onClick={() => router.push('/contact')}
+          onClick={handleCta}
         >
           도입 문의하기
         </IcoTxtButton>
