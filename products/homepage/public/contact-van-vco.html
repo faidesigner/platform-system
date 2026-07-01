@@ -264,6 +264,7 @@
         if (typeof gtag === 'undefined') return;
         var utm = getUTM();
         gtag('event', 'kakao_inquiry_click', {
+          form_id:  'van_vco',
           source:   utm.utm_source || '(direct)',
           medium:   utm.utm_medium,
           campaign: utm.utm_campaign
@@ -310,6 +311,7 @@
         });
         // 전환 이벤트에 소스 첨부 → GA4에서 소스별 리드 분해(맞춤 측정기준 등록 시)
         if (typeof gtag !== 'undefined') gtag('event', 'form_submitted', {
+          form_id:  'van_vco',
           source:   utm.utm_source || '(direct)',
           medium:   utm.utm_medium,
           campaign: utm.utm_campaign
