@@ -57,3 +57,6 @@ node_modules/
 
 # typescript
 *.tsbuildinfo
+
+# git worktrees (repo 내부 보관)
+.worktrees/
