@@ -1,10 +1,35 @@
 {
+  "common": {
+    "cta": {
+      "contact": "Contact",
+      "requestDemo": "Request a Demo",
+      "learnMore": "Learn More",
+      "more": "More",
+      "quickChat": "Quick Chat",
+      "reviewsMore": "More Customer Stories",
+      "mediaMore": "Learn More"
+    }
+  },
   "nav": {
     "products": "Products",
     "about": "About",
     "media": "Media",
     "careers": "Careers",
     "contact": "Contact"
+  },
+  "footer": {
+    "company": "Fainders.AI Inc.",
+    "labels": {
+      "ceo": "CEO",
+      "tel": "Tel",
+      "address": "Address",
+      "bizNo": "Business Reg. No.",
+      "email": "Email"
+    },
+    "policies": {
+      "privacy": "Privacy Policy",
+      "cctv": "CCTV Operation & Management Policy"
+    }
   },
   "products": {
     "visionCheckout": "VISION CHECK-OUT",

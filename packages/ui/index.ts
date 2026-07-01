@@ -7,6 +7,7 @@ export type { IcoTxtButtonProps } from './components/button/IcoTxtButton';
 export { default as NavigationBar } from './components/NavigationBar';
 export { default as Header } from './components/Header';
 export { default as Footer } from './components/footer/Footer';
+export type { FooterLabels } from './components/footer/Footer';
 
 /* ── Navigation sub-components ── */
 export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';
@@ -63,3 +64,4 @@ export type { ToastProps } from './components/Toast';
 export { DrawerMenu, DrawerListItem, DefaultListIcon } from './components/navigation/DrawerPrimitives';
 export type { DrawerListItemProps } from './components/navigation/DrawerPrimitives';
 export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';
+export type { DrawerLabels, TabletDrawerMenuProps } from './components/navigation/TabletDrawerMenu';

@@ -1,10 +1,35 @@
 {
+  "common": {
+    "cta": {
+      "contact": "お問い合わせ",
+      "requestDemo": "導入のお問い合わせ",
+      "learnMore": "詳しく見る",
+      "more": "もっと見る",
+      "quickChat": "かんたん相談",
+      "reviewsMore": "導入事例をもっと見る",
+      "mediaMore": "詳しく見る"
+    }
+  },
   "nav": {
     "products": "製品",
-    "about": "会社紹介",
+    "about": "会社概要",
     "media": "メディア",
     "careers": "採用",
     "contact": "お問い合わせ"
+  },
+  "footer": {
+    "company": "Fainders.AI Inc.",
+    "labels": {
+      "ceo": "代表取締役",
+      "tel": "電話",
+      "address": "住所",
+      "bizNo": "事業者登録番号",
+      "email": "メールでのお問い合わせ"
+    },
+    "policies": {
+      "privacy": "プライバシーポリシー",
+      "cctv": "映像情報処理機器 運営・管理方針"
+    }
   },
   "products": {
     "visionCheckout": "VISION CHECK-OUT",

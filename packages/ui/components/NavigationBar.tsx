@@ -8,7 +8,7 @@ import { usePathname, useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "./button/IcoTxtButton";
 import { ChevronDown } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
-import { TabletDrawerMenu } from "./navigation/TabletDrawerMenu";
+import { TabletDrawerMenu, type DrawerLabels } from "./navigation/TabletDrawerMenu";
 import { Drawer } from "./ui/Drawer";
 
 /* ──────────────────────────────────────────
@@ -62,6 +62,10 @@ interface NavigationBarProps {
    * 기존 라우팅(/contact 이동) 동작은 그대로 유지되며 콜백이 선행 호출된다.
    */
   onContactClick?: () => void;
+  /** 데스크톱 문의하기 CTA 텍스트(번역 주입용). 미지정 시 한국어 기본값. */
+  contactLabel?: string;
+  /** 태블릿·모바일 드로어 라벨(번역 주입용). 미지정 값은 한국어 기본값. */
+  drawerLabels?: DrawerLabels;
 }
 
 /* ──────────────────────────────────────────
@@ -74,6 +78,8 @@ export default function NavigationBar({
   navItems: navItemsProp,
   onItemClick,
   onContactClick,
+  contactLabel = "문의하기",
+  drawerLabels,
 }: NavigationBarProps = {}) {
   const navItems = navItemsProp ?? NAV_ITEMS;
   const pathname = usePathname();
@@ -244,7 +250,7 @@ export default function NavigationBar({
                 size="L"
                 onClick={() => { onContactClick?.(); router.push(lhref("/contact")); }}
               >
-                문의하기
+                {contactLabel}
               </IcoTxtButton>
             </span>
 
@@ -292,6 +298,7 @@ export default function NavigationBar({
           onNavigate={() => setDrawerOpen(false)}
           onItemClick={onItemClick}
           onContactClick={onContactClick}
+          labels={drawerLabels}
         />
       </Drawer>
     </>

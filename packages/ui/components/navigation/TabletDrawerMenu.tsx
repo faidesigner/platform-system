@@ -108,6 +108,27 @@ function ArrowUpRightIcon() {
 }
 
 /* ---------------- Tablet Drawer 메인 컨텐츠 ---------------- */
+
+/**
+ * 드로어 nav 라벨 세트 — i18n 비결합(@fai/ui는 next-intl을 import하지 않음).
+ * 소비자(homepage 브릿지)가 번역 문자열을 주입하며, 미지정 값은 한국어 기본값을 사용한다.
+ */
+export interface DrawerLabels {
+  products?: string;
+  about?:    string;
+  media?:    string;
+  careers?:  string;
+  contact?:  string;
+}
+
+const DEFAULT_DRAWER_LABELS: Required<DrawerLabels> = {
+  products: '제품',
+  about:    '회사소개',
+  media:    '미디어',
+  careers:  '채용',
+  contact:  '문의하기',
+};
+
 export interface TabletDrawerMenuProps {
   onNavigate?: () => void;
   /**
@@ -121,9 +142,12 @@ export interface TabletDrawerMenuProps {
    * 기존 라우팅(/contact 이동) 동작 및 onNavigate(드로어 닫힘)는 그대로 유지되며 콜백이 함께 호출된다.
    */
   onContactClick?: () => void;
+  /** nav 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값. */
+  labels?: DrawerLabels;
 }
 
-export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick }: TabletDrawerMenuProps) {
+export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick, labels }: TabletDrawerMenuProps) {
+  const l = { ...DEFAULT_DRAWER_LABELS, ...labels };
   const [productOpen, setProductOpen] = useState(false);
   const params  = useParams();
   const locale  = typeof params?.locale === 'string' ? params.locale : '';
@@ -134,9 +158,9 @@ export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick }: Ta
     <DrawerMenu>
       {/* 1. 제품 — 확장형 아코디언 (하위 항목은 계측 대상 아님 — 데스크톱과 동일) */}
       <DrawerListItem
-        label="제품"
+        label={l.products}
         onClick={() => {
-          if (!productOpen) onItemClick?.({ label: '제품', href: '/products' });
+          if (!productOpen) onItemClick?.({ label: l.products, href: '/products' });
           setProductOpen((v) => !v);
         }}
         rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
@@ -152,19 +176,19 @@ export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick }: Ta
 
       {/* 2. 일반 내부 링크 */}
       <DrawerListItem
-        label="회사소개"
+        label={l.about}
         href={lhref('/about')}
-        onClick={() => { onNavigate?.(); onItemClick?.({ label: '회사소개', href: '/about' }); }}
+        onClick={() => { onNavigate?.(); onItemClick?.({ label: l.about, href: '/about' }); }}
       />
       <DrawerListItem
-        label="미디어"
+        label={l.media}
         href={lhref('/media')}
-        onClick={() => { onNavigate?.(); onItemClick?.({ label: '미디어', href: '/media' }); }}
+        onClick={() => { onNavigate?.(); onItemClick?.({ label: l.media, href: '/media' }); }}
       />
 
       {/* 3. 채용 — 외부 링크 ↗ (계측 대상 아님) */}
       <DrawerListItem
-        label="채용"
+        label={l.careers}
         href="https://faindersai.career.greetinghr.com/ko/home"
         isExternal={true}
         onClick={onNavigate}
@@ -173,7 +197,7 @@ export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick }: Ta
 
       {/* 4. 문의하기 — 내부 링크 (리드 CTA) */}
       <DrawerListItem
-        label="문의하기"
+        label={l.contact}
         href={lhref('/contact')}
         onClick={() => { onNavigate?.(); onContactClick?.(); }}
       />
