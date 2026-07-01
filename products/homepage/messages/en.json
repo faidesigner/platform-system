@@ -32,8 +32,234 @@
     }
   },
   "products": {
-    "visionCheckout": "VISION CHECK-OUT",
-    "unmannedStore": "UNMANNED STORE"
+    "visionCheckout": {
+      "heroSubtitle": "Next-Gen AI Autonomous Checkout Solution",
+      "featuresTitle": "What makes VCO different?",
+      "features": {
+        "0": {
+          "title": "14 AI cameras that\nscan every angle",
+          "description": "Powered by Korea's only multi-view 3D recognition technology"
+        },
+        "1": {
+          "title": "Keep your existing POS,\nno equipment swap",
+          "description": "Works with the POS you already use"
+        },
+        "2": {
+          "title": "Flawless 99.9% recognition accuracy",
+          "description": "Far outperforms competitors, completing a scan in just one second at overwhelming speed"
+        }
+      },
+      "benefitsTitle": "How does it change things?",
+      "benefits": {
+        "0": {
+          "eyebrow": "Simplified purchase flow",
+          "title": "Seamless checkout,\neven for barcode-free items",
+          "items": {
+            "0": {
+              "subtitle": "Easy to use",
+              "description": "No need to scan barcodes yourself, just place the tray and you're done!"
+            },
+            "1": {
+              "subtitle": "AI recognition with no item limits",
+              "description": "From barcode-free items like bread, salads, cafeteria meals to parts, 3D Vision AI recognizes them precisely, enabling automation with no item restrictions"
+            }
+          }
+        },
+        "1": {
+          "eyebrow": "Workforce risk management",
+          "title": "A store free of hiring stress",
+          "items": {
+            "0": {
+              "subtitle": "Reduced labor costs",
+              "description": "VCO handles simple checkout tasks, easing the owner's labor cost burden and enabling reasonable store operation"
+            },
+            "1": {
+              "subtitle": "No hiring or training burden",
+              "description": "Free yourself from complex staff management and job training\nRun stably with minimal staff even where hiring is hard"
+            }
+          }
+        },
+        "2": {
+          "eyebrow": "Improved profitability",
+          "title": "An intuitive checkout\nthat needs no guidance",
+          "items": {
+            "0": {
+              "subtitle": "Fast turnover",
+              "description": "Faster checkout shortens queues, boosting peak-time sales"
+            },
+            "1": {
+              "subtitle": "Contactless with no digital exclusion",
+              "description": "From customers who find kiosks difficult to those who prefer self-checkout\nEasy for everyone, fast for all"
+            }
+          }
+        }
+      },
+      "industriesTitle": "Key industries served",
+      "industriesDescription": "In spaces where many people gather in a short time, even barcode-free items can be checked out quickly",
+      "industries": {
+        "0": {
+          "label": "Bakery&Cafe"
+        },
+        "1": {
+          "label": "Cafeteria&Canteen"
+        },
+        "2": {
+          "label": "Hospitality"
+        }
+      },
+      "reviewsTitle": "Customer testimonials",
+      "reviews": {
+        "0": {
+          "store": "Mannameal Bakery",
+          "role": "General Manager, Song Ju-hee",
+          "quote": {
+            "0": {
+              "text": "\"Hiring extra staff was a burden, so we adopted VCO. "
+            },
+            "1": {
+              "text": "It does the work of one employee"
+            },
+            "2": {
+              "text": ", which clearly reduced our workload. It even tells apart look-alike breads well, so I'd recommend it to other stores.\""
+            }
+          }
+        },
+        "1": {
+          "store": "Manager, large catering firm W",
+          "role": "",
+          "quote": {
+            "0": {
+              "text": "\"At lunch peak time, we can now process "
+            },
+            "1": {
+              "text": "360 people per hour"
+            },
+            "2": {
+              "text": ", drastically shortening queues, and the solution improved checkout accuracy.\""
+            }
+          }
+        },
+        "2": {
+          "store": "Resort Manager, Niseko, Hokkaido, Japan",
+          "role": "",
+          "quote": {
+            "0": {
+              "text": "\"Given a mountain resort's difficulty in hiring and retaining staff, adopting VCO eased our "
+            },
+            "1": {
+              "text": "hiring worries"
+            },
+            "2": {
+              "text": ". Since it can even serve foreign customers, our workload has lightened.\""
+            }
+          }
+        }
+      }
+    },
+    "unmannedStore": {
+      "heroSubtitle": "The world's most economical autonomous store solution",
+      "effectsTitle": "Experience the impact of WALK-THROUGH",
+      "effectCards": {
+        "0": {
+          "title": "Reduced labor costs",
+          "description": "Operate with minimal staff"
+        },
+        "1": {
+          "title": "Unmanned checkout",
+          "description": "No need to scan barcodes"
+        },
+        "2": {
+          "title": "Remote operation",
+          "description": "Get real-time status updates"
+        }
+      },
+      "effectList": {
+        "0": {
+          "title": "Differentiated VISION-AI technology",
+          "description": "Through multiple cameras and AI technology,\nwe deliver an autonomous store solution with unprecedented technology for offline stores"
+        },
+        "1": {
+          "title": "Inventory management via real-time shelf status",
+          "description": "Real-time shelf status checks enable out-of-stock management\nRespond instantly to sales losses from empty shelves"
+        },
+        "2": {
+          "title": "Offline customer data analysis",
+          "description": "Cameras track the products customers pick and checkout happens automatically,\napplying a fully autonomous checkout system"
+        }
+      },
+      "storeTypes": {
+        "0": {
+          "subtitle": "Automating small stores under 100 sqm",
+          "description": "With high flexibility that fits any store format,\ntry it in convenience stores, small supermarkets, and select shops",
+          "sectionTitle": "What makes Walk-through different?",
+          "cards": {
+            "0": {
+              "title": "Simple customer experience",
+              "description": "No checkout lines, no barcode scanning, the simplest customer experience."
+            },
+            "1": {
+              "title": "Proven accuracy",
+              "description": "Start a new store on the excellent accuracy proven at stores already in operation"
+            },
+            "2": {
+              "title": "Greater operational efficiency",
+              "description": "Like online, use in-store data to decide the optimal direction for operations"
+            }
+          }
+        },
+        "1": {
+          "subtitle": "Open an unmanned retail shop in idle space of around 16 sqm",
+          "description": "Start an unmanned shop with prefab construction that installs in a day",
+          "sectionTitle": "What makes Walk-through different?",
+          "cards": {
+            "0": {
+              "title": "Low setup cost",
+              "description": "With standardized prefab construction, adopt an unmanned store at the lowest price"
+            },
+            "1": {
+              "title": "Fast installation",
+              "description": "Choose a set spec and installation completes in a day.\nStart selling the next day"
+            },
+            "2": {
+              "title": "Monetizing idle space",
+              "description": "Make the most of every last space.\nShop-in-shop, lobbies, inside stadiums, an unmanned shop fits any kind of space"
+            }
+          }
+        }
+      },
+      "caseStudies": {
+        "standard": {
+          "0": {
+            "description": "Korea's first fully unmanned roadside-style convenience store\nAsia's first integrated load-cell technology"
+          },
+          "1": {
+            "description": "Directly operated store\nKorea's first pay-later CX"
+          },
+          "2": {
+            "description": "KISA headquarters test store"
+          },
+          "3": {
+            "description": "\"Shadow\" select shop"
+          }
+        },
+        "micro": {
+          "0": {
+            "description": "A 24/7, 16 sqm unmanned store\nlocated inside a fitness center"
+          },
+          "1": {
+            "description": "An ultra-compact 11.5 sqm unmanned store\nlocated inside a fitness center"
+          }
+        }
+      }
+    },
+    "productMenu": {
+      "0": {
+        "description": "AI self-checkout with no barcode scanning"
+      },
+      "1": {
+        "description": "VISION AI autonomous store solution"
+      }
+    }
   },
   "home": {
     "hero": {

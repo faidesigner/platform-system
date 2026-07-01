@@ -104,3 +104,36 @@ CTA 버튼은 `common.cta.requestDemo` 재사용(신규 키 없음). 원본 `<br
 - `home.hero.tagline` / `home.hero.subtitle`의 ja 원문 유지 여부(직역 vs 영문 유지) — 브랜드팀 확인 필요.
 - `home.ctaBanner.titleLine1/2` 2분할이 en/ja 각각에서 모바일 줄바꿈 위치상 자연스러운지 확인 필요.
 - `home.customers.title`, `home.efficiency.title`, `home.whyFai.headline`은 섹션 고유 라벨로 판단해 3개 언어 모두 영문 원문 유지 — 검수 시 이 판단에 이견 있으면 재조정.
+
+---
+
+## Phase 3: products (en/ja 초벌 — 마케팅 검수 필요)
+
+> 제품·기능 고유명사(VCO, VISION CHECK-OUT, WALK-THROUGH, STANDARD/MICRO STORE), 고객사·브랜드(GS25, CU, PX24, Niseko 등), 날짜(`23.10 등), 카테고리 표기(Bakery&Cafe 등)는 번역하지 않고 원문 유지. heroTitle("VISION CHECK-OUT", "What is WALK-THROUGH?")도 브랜드 표현이라 config 유지. CTA는 `common.cta.requestDemo` 재사용.
+
+### products.visionCheckout — 주요 검수 포인트
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| heroSubtitle | 차세대 AI 무인 결제 솔루션 | Next-Gen AI Autonomous Checkout Solution | 次世代AI無人決済ソリューション |
+| featuresTitle | VCO는 무엇이 다를까요? | What makes VCO different? | VCOは何が違うのでしょうか？ |
+| features.2.title | 오차없이 정확한 99.9% 인식률 | Flawless 99.9% recognition accuracy | 誤差のない正確な99.9%の認識率 |
+| benefitsTitle | 어떻게 달라질까요? | How does it change things? | どのように変わるのでしょうか？ |
+| reviews.1.quote.1.text | 시간당 360명 | 360 people per hour | 1時間あたり360名 |
+
+- 리뷰 인용문의 emphasis 세그먼트(quote.N.1.text)는 구두점 앞뒤 공백으로 문장을 이어붙이므로, en/ja에서 문장이 자연스럽게 연결되는지 검수 필요(특히 조사·어순 차이).
+- reviews.*.store/role(점포명·직함)의 en/ja 표기(예: "Mannameal Bakery", "マンナミル・ベーカリー", "General Manager, Song Ju-hee")는 실제 고객사 공식 표기 확인 필요.
+- industries.*.label("Bakery&Cafe" 등)은 카테고리 고유표기로 판단해 3개 언어 모두 원문 유지.
+
+### products.unmannedStore — 주요 검수 포인트
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| heroSubtitle | 세상에서 가장 경제적인 무인 매장 솔루션 | The world's most economical autonomous store solution | 世界で最も経済的な無人店舗ソリューション |
+| storeTypes.0.subtitle | 30평 이하의 소형 매장 무인화 | Automating small stores under 100 sqm | 約100平米以下の小型店舗の無人化 |
+| storeTypes.1.subtitle | 5평 내외 유휴 공간… | …idle space of around 16 sqm | …約16平米前後の遊休スペース |
+| caseStudies.micro.1.description | 3.5평 규모 초소형 무인매장 | ultra-compact 11.5 sqm unmanned store | 約11.5平米規模の超小型無人店舗 |
+
+- **평(坪) 단위 환산 검수 필요**: 30평→100㎡, 5평→16㎡, 3.5평→11.5㎡로 근사 환산했음. 정확한 수치·표기 정책(㎡ vs sqft vs 평 유지) 브랜드팀 확정 필요.
+- sectionTitle "Walk-through는 무엇이 다를까요?"의 en/ja는 "What makes Walk-through different?" / "Walk-throughは何が違うのでしょうか？"로 번역(제품명 Walk-through는 유지).
+
+### 미배선(잔존 UI 텍스트) — 별도 결정 필요
+- 접근성 텍스트(aria-label "이전"/"다음"/"이전 케이스"/"다음 케이스", 리뷰 이미지 alt `${store} 전경`)는 Phase 3 필드 범위(공용 common 네임스페이스) 밖이라 현행 한국어 유지. 공용 a11y 키(common.a11y.*)로 별도 처리 권장 — 현재 en/ja 페이지에서도 한국어로 렌더됨(비가시 접근성 텍스트).
