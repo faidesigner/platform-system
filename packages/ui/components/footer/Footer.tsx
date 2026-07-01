@@ -51,10 +51,11 @@ const VALUES = {
   email:   'contact@fainders.ai',
 };
 
-// 실제 정책 문서(PDF) — 라이브 사이트와 동일 경로. (기존 /privacy·/cctv-policy 는 존재하지 않아 404였음)
+// 정책 문서(PDF) — 저장소에 자체 호스팅(public/document/). 상대경로라 환경 독립(프리뷰·PRD 모두 동작).
+// 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
 const POLICY_HREFS = {
-  privacy: 'https://www.fainders.ai/document/%5B%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%83%E1%85%A5%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%5D+%E1%84%80%E1%85%A2%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%87%E1%85%A9+%E1%84%8E%E1%85%A5%E1%84%85%E1%85%B5%E1%84%87%E1%85%A1%E1%86%BC%E1%84%8E%E1%85%B5%E1%86%B7.pdf',
-  cctv:    'https://www.fainders.ai/document/%5B%E1%84%91%E1%85%A1%E1%84%8B%E1%85%B5%E1%86%AB%E1%84%83%E1%85%A5%E1%84%89%E1%85%B3%E1%84%8B%E1%85%A6%E1%84%8B%E1%85%B5%E1%84%8B%E1%85%A1%E1%84%8B%E1%85%B5%5D+%E1%84%8B%E1%85%A7%E1%86%BC%E1%84%89%E1%85%A1%E1%86%BC%E1%84%8C%E1%85%A5%E1%86%AB%E1%84%87%E1%85%A9%E1%84%8E%E1%85%A7%E1%84%85%E1%85%B5%E1%84%80%E1%85%B5%E1%84%80%E1%85%B5+%E1%84%8B%E1%85%AE%E1%86%AB%E1%84%8B%E1%85%A7%E1%86%BC%E3%86%8D%E1%84%80%E1%85%AA%E1%86%AB%E1%84%85%E1%85%B5+%E1%84%87%E1%85%A1%E1%86%BC%E1%84%8E%E1%85%B5%E1%86%B7.pdf',
+  privacy: '/document/privacy-policy.pdf',
+  cctv:    '/document/cctv-policy.pdf',
 };
 
 /**
