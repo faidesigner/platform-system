@@ -132,6 +132,7 @@ export interface ProductReview {
   category: string;
   categoryColorVar: string;
   iconBgVar: string;
+  iconColorVar: string;
   icon: ReviewIconType;
   store: string;
   role: string;

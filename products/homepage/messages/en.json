@@ -506,11 +506,6 @@
           "title": "AI Unmanned Store Startup Fainders.AI Raises KRW 600M in Seed Funding",
           "description": "Fainders.AI, developer of AI-based offline retail store automation technology, has raised KRW 600 million in seed funding from Kkeullim Ventures.",
           "thumbnailAlt": "Fainders.AI raises KRW 600M in seed funding"
-        },
-        "13": {
-          "title": "[Card for Verifying Empty Image Fallback UI]",
-          "description": "Verifies that the Empty Image Fallback UI renders correctly when no thumbnail image is available.",
-          "thumbnailAlt": ""
         }
       }
     },

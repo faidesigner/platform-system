@@ -60,6 +60,12 @@ function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
       className="object-cover"
       sizes="(max-width: 1280px) 100vw, 580px"
       onError={() => setLevel((l) => l + 1)}
+      onLoad={(e) => {
+        // maxresdefault가 없는 영상은 YouTube가 120x90 회색 플레이스홀더를 HTTP 200으로 반환해
+        // onError가 발생하지 않는다 → naturalWidth로 감지해 다음 소스(hqdefault)로 폴백.
+        const img = e.currentTarget as HTMLImageElement;
+        if (img.naturalWidth && img.naturalWidth <= 120) setLevel((l) => l + 1);
+      }}
     />
   );
 }

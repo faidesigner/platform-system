@@ -506,11 +506,6 @@
           "title": "AI店舗無人化スタートアップ『ファインダーズAI』、6億ウォンの投資を誘致",
           "description": "AIベースのオフライン流通店舗無人化技術を開発する『ファインダーズAI』が、Kkeullim Venturesから6億ウォンのシード投資を誘致した。",
           "thumbnailAlt": "ファインダーズAI、6億ウォンのシード投資を誘致"
-        },
-        "13": {
-          "title": "【画像なしフォールバックUI確認用カード】",
-          "description": "サムネイル画像がない場合にEmpty Image Fallback UIが正しく表示されるかを確認します。",
-          "thumbnailAlt": ""
         }
       }
     },
