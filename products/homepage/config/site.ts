@@ -85,7 +85,6 @@ export const clientLogos = [
 
 export const siteConfig = {
   name: "FAI",
-  fullName: "FAI | Fainders AI",
   url: "https://www.fainders.ai",
   // backward-compat: 메타데이터는 seo.* 맵이 단일 소스. 아래 값은 seo.ko를 가리킨다.
   description: seo.ko.description,

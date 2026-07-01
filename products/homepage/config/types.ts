@@ -377,7 +377,6 @@ export interface CompanyConfig {
 /** 사이트 전체 데이터 계약 */
 export interface SiteConfig {
   name: string;
-  fullName: string;
   url: string;
   description: string;
   keywords: string[];

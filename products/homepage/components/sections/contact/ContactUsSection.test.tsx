@@ -2,10 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 
-// jsdom은 scrollIntoView/scrollTo를 구현하지 않아 검증 실패 경로(폼 스크롤)에서
-// "Not implemented" 예외를 던진다. 테스트 대상과 무관한 jsdom 한계이므로 no-op 폴리필.
-Element.prototype.scrollIntoView = vi.fn();
-window.scrollTo = vi.fn();
+// scrollIntoView/scrollTo jsdom 폴리필은 vitest.setup.ts에서 전역 처리.
 
 const trackEvent = vi.fn();
 vi.mock("@/lib/analytics/track", () => ({ trackEvent: (...a: unknown[]) => trackEvent(...a) }));
