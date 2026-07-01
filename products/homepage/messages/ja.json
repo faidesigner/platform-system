@@ -539,5 +539,88 @@
       "description": "リテールテックのトレンドとファインダーズAIの最新情報をまとめたニュースレターです。過去のレターを読んで購読しましょう。",
       "ctaLabel": "レターを購読する"
     }
+  },
+  "contact": {
+    "meta": {
+      "title": "お問い合わせ",
+      "description": "導入のご相談からカスタムソリューションのご提案まで、専門家が直接お答えします。"
+    },
+    "title": [
+      "導入のご相談から",
+      "カスタムソリューションのご提案まで",
+      "専門家が直接お答えします"
+    ],
+    "subCopy": {
+      "highlight": "最適なソリューションのご提案",
+      "rest": "のため、お問い合わせフォームにご記入いただければ",
+      "line2": "担当者が迅速にご連絡いたします"
+    },
+    "form": {
+      "connectTitle": "ご連絡先をご入力ください",
+      "requiredLabel": "必須入力",
+      "selectTitle": "お問い合わせになりたい情報をお選びください",
+      "submitLabel": "お問い合わせ",
+      "privacyNotice": {
+        "before": "お問い合わせへの回答のために収集されるデータの",
+        "link": "個人情報の取り扱い方針",
+        "after": "に同意します"
+      }
+    },
+    "fields": {
+      "company": {
+        "label": "会社名",
+        "placeholder": "会社名",
+        "errorMessage": "会社名をご入力ください。"
+      },
+      "name": {
+        "label": "お名前",
+        "placeholder": "お名前",
+        "errorMessage": "お名前をご入力ください。"
+      },
+      "email": {
+        "label": "メール",
+        "placeholder": "name@example.com",
+        "errorMessage": "メールアドレスをご入力ください。"
+      },
+      "phone": {
+        "label": "電話番号",
+        "placeholder": "電話番号",
+        "errorMessage": ""
+      }
+    },
+    "interests": {
+      "vco": {
+        "group": "VCO",
+        "multipleLabel": "（複数選択可）",
+        "options": {
+          "bakery": "ベーカリー",
+          "catering": "給食",
+          "special-venue": "特殊立地（スタジアム/公演会場/リゾート）",
+          "etc": "その他"
+        }
+      },
+      "store": {
+        "group": "STORE",
+        "multipleLabel": "（複数選択可）",
+        "options": {
+          "standard-store": "STANDARD STORE",
+          "micro-store": "MICRO STORE"
+        }
+      }
+    },
+    "toast": {
+      "text": "簡単なソリューションのお問い合わせはKakaoTalkチャンネルをご利用ください",
+      "textShort": "KakaoTalkチャンネルでお問い合わせ",
+      "buttonLabel": "すぐに相談する"
+    },
+    "complete": {
+      "title": "お問い合わせいただき誠にありがとうございます",
+      "subCopy": {
+        "before": "内容を確認のうえ、",
+        "highlight": "平均2〜3日以内",
+        "after": "に担当者がご連絡いたします"
+      },
+      "buttonLabel": "引き続き見る"
+    }
   }
 }

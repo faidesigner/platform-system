@@ -290,3 +290,39 @@ Phase 3에서 지적됐던 "aria-label 이전/다음이 en/ja에서도 한국어
 | media.retailTechLetter.ctaLabel | 레터 구독하기 | Subscribe to the Letter | レターを購読する |
 
 **참고:** `retailTechLetter.description`은 `config/site.ts`에는 존재하지만 `RetailTechLetterSection` 컴포넌트에서 실제로 렌더되지 않는 죽은 필드(기존부터 그러함, Phase 5에서 변경 없음) — messages에는 스펙대로 번역해뒀으나 화면에는 보이지 않음.
+
+---
+
+## Phase 6 — contact (문의 페이지)
+
+담당 마케팅/현지화 검수 대상. 고유명사(Fainders.AI, VCO, STANDARD/MICRO STORE, KakaoTalk), URL, 이메일 형식은 번역하지 않음.
+
+| 키 | 한국어(ko) | 영어(en) | 일본어(ja) |
+|----|-----------|---------|-----------|
+| contact.meta.title | 문의하기 | Contact | お問い合わせ |
+| contact.meta.description | 도입 고민부터 커스텀 솔루션 제안까지 전문가가 직접 답변해드립니다. | From adoption questions to custom solution proposals, our experts answer you directly. | 導入のご相談からカスタムソリューションのご提案まで、専門家が直接お答えします。 |
+| contact.title (3줄) | 도입 고민부터 / 커스텀 솔루션 제안까지 / 전문가가 직접 답변해드립니다 | From adoption questions / to custom solution proposals, / our experts answer you directly | 導入のご相談から / カスタムソリューションのご提案まで / 専門家が直接お答えします |
+| contact.subCopy.highlight | 맞춤형 솔루션 제안 | a tailored solution proposal | 最適なソリューションのご提案 |
+| contact.subCopy.rest / line2 | 을 위해 문의 폼을 작성해주시면 / 담당자가 빠르게 연락드릴게요 | , just fill out the inquiry form and / our team will get back to you promptly | のため、お問い合わせフォームにご記入いただければ / 担当者が迅速にご連絡いたします |
+| contact.form.connectTitle | 연락드릴 정보를 입력해 주세요 | Enter your contact details | ご連絡先をご入力ください |
+| contact.form.requiredLabel | 필수 입력 | Required | 必須入力 |
+| contact.form.selectTitle | 문의하고 싶은 정보를 선택해 주세요 | Select the information you'd like to inquire about | お問い合わせになりたい情報をお選びください |
+| contact.form.submitLabel | 문의하기 | Submit inquiry | お問い合わせ |
+| contact.form.privacyNotice (before/link/after) | 귀하의 문의에 답변하기 위해 수집된 데이터의 / 개인정보 처리방침 / 에 동의합니다 | I agree to the / Privacy Policy / regarding the data collected to respond to your inquiry | お問い合わせへの回答のために収集されるデータの / 個人情報の取り扱い方針 / に同意します |
+| contact.fields.company.{label,placeholder,errorMessage} | 회사명 / 회사명 / 회사명을 입력해 주세요. | Company / Company / Please enter your company name. | 会社名 / 会社名 / 会社名をご入力ください。 |
+| contact.fields.name.* | 성함 / 성함 / 성함을 입력해 주세요. | Name / Name / Please enter your name. | お名前 / お名前 / お名前をご入力ください。 |
+| contact.fields.email.* | 이메일 / name@example.com / 이메일을 입력해 주세요. | Email / name@example.com / Please enter your email. | メール / name@example.com / メールアドレスをご入力ください。 |
+| contact.fields.phone.{label,placeholder} | 전화번호 / 전화번호 | Phone / Phone | 電話番号 / 電話番号 |
+| contact.interests.vco.group / multipleLabel | VCO / (복수선택 가능) | VCO / (multiple selection allowed) | VCO / （複数選択可） |
+| contact.interests.vco.options.bakery/catering/special-venue/etc | 베이커리 / 급식 / 특수 입지(경기장/공연장/리조트) / 기타 | Bakery / Catering / Special venue (stadium/arena/resort) / Other | ベーカリー / 給食 / 特殊立地（スタジアム/公演会場/リゾート） / その他 |
+| contact.interests.store.group / options | STORE / STANDARD STORE / MICRO STORE | STORE / STANDARD STORE / MICRO STORE | STORE / STANDARD STORE / MICRO STORE |
+| contact.toast.text | 간단한 솔루션 문의는 카카오톡 채널을 이용해 주세요 | For quick solution inquiries, please use our KakaoTalk channel | 簡単なソリューションのお問い合わせはKakaoTalkチャンネルをご利用ください |
+| contact.toast.textShort | 카카오톡 채널로 문의하세요 | Ask us on the KakaoTalk channel | KakaoTalkチャンネルでお問い合わせ |
+| contact.toast.buttonLabel | 빠른 상담하기 | Quick consultation | すぐに相談する |
+| contact.complete.title | 문의 주셔서 정말 감사합니다 | Thank you so much for reaching out | お問い合わせいただき誠にありがとうございます |
+| contact.complete.subCopy (before/highlight/after) | 내용을 확인하고 / 평균 2~3일 이내 / 담당자가 연락드리겠습니다 | We'll review your message and / within 2–3 days on average / our team will get in touch | 内容を確認のうえ、 / 平均2〜3日以内 / に担当者がご連絡いたします |
+| contact.complete.buttonLabel | 계속 둘러보기 | Keep exploring | 引き続き見る |
+
+**주의(설계 결정):** `config/site.ts`의 `interests[].options[].label`(한국어)은 Zapier 리드 payload의 `content` 필드(영업팀이 읽음)를 만들기 위해 **의도적으로 한국어로 유지**함. UI 표시는 위 `contact.interests.*.options.*` 메시지 키로 로케일별 렌더 — 라벨이 config/messages에 이중 존재하는 것은 의도된 설계(payload=한국어 고정, UI=현지화). `lib/contact/payload.ts` 및 그 테스트는 미변경.
+
+**KakaoTalk 표기:** 카카오 채널명은 en/ja에서 "KakaoTalk"으로 표기(브랜드 고유명사). 한국어는 "카카오톡" 유지.
