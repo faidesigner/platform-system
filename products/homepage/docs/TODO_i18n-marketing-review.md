@@ -164,3 +164,68 @@ Phase 3에서 en/ja에 한국어 원문이 그대로 렌더되던 2개 필드를
 | 1 | 화곡점 | Hwagok branch | 禾谷店 | 고유 지점명 — 로마자/한자 표기 확인 필요 |
 
 **검수 포인트:** 위 4개 고유 지점명(가산스마트점/CU 안심스마트점포/을지로점/화곡점)의 en/ja 표기는 초벌 로마자·한자 번역이며, 실제 고객사(GS25, CU, PX24)의 공식 영문/일문 브랜드 표기와 일치하는지 마케팅팀 확인 전까지는 확정 아님.
+
+## Phase 4 — about (2026-07-01)
+
+### about.hero
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| about.hero.eyebrow | 리테일 혁신 | Retail Innovation | リテール革新 |
+| about.hero.title.0 | 고객이 리테일의 본질에 | So Customers Can Focus | お客様がリテールの本質に |
+| about.hero.title.1 | 집중할 수 있도록 | on What Retail Is Really About | 集中できるように |
+
+**검수 포인트:** 2줄 헤드라인을 en/ja는 자연스러운 어순으로 재구성(1:1 줄바꿈 대응 아님) — 레이아웃에서 줄바꿈 위치가 어색하지 않은지 디자인 확인 필요.
+
+### about.partners / about.investors
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| about.partners.title | Partners | Partners (고유 섹션명 유지) | Partners (고유 섹션명 유지) |
+| about.partners.description.0-1 | 글로벌 시장 리더들과 / 기술 그 이상의 가치를 만들어가고 있습니다 | Working with global market leaders, / we're creating value that goes beyond technology | グローバル市場のリーダーたちと / 技術以上の価値を作り上げています |
+| about.investors.groups.0.caption | 누적 127억원 투자 유치를 통해... | With KRW 12.7B in cumulative funding, we've earned recognition for our global business performance and growth potential | 累計127億ウォンの投資誘致を通じて... |
+| about.investors.groups.1.caption | 정부의 주요 딥테크 육성 프로그램에... | Selected for major government deep-tech development programs, recognized for technology that leads the market. | 政府の主要ディープテック育成プログラムに... |
+
+**검수 포인트:** "누적 127억원"은 en에서 "KRW 12.7B"로 통화·단위 표기 변환(원문 숫자 유지하되 통화 표기를 국제 표준 축약형으로 치환). 실제 투자 유치 총액이 변경되면 3개 로케일 모두 갱신 필요 — 숫자가 하드코딩이라 자동 동기화 안 됨.
+
+### about.management — 학력/경력 처리 방식
+기관·학교·회사명(고유명사)은 유지하고, 연결어·서술어만 번역. 예:
+| ko | en | ja |
+|----|----|----|
+| 전 삼성전자 | Former Samsung Electronics | 元サムスン電子 |
+| KAIST 전산학 학사 | B.S. in Computer Science, KAIST | KAIST 計算学 学士 |
+| 서울대학교 전기컴퓨터공학 학사/박사(Ph.D) | B.S./Ph.D. in Electrical & Computer Engineering, Seoul National University | ソウル大学校 電気コンピュータ工学 学士/博士（Ph.D） |
+| 전 Funded 창업(CEO)&매각 | Former Founder & CEO, Funded (acquired) | 元Funded創業（CEO）＆売却 |
+
+**검수 포인트:** en 표기에서 "학사"→"B.S.", "석사"→"M.S.", "박사"→"Ph.D." 등 학위 축약 표기가 실제 이력서/공식 프로필과 일치하는지, 그리고 인명(함명원/왕민권/홍석범/이현규 등)은 이번 스코프에서 로마자 변환하지 않고 한글 그대로 유지했음 — en/ja 화면에 한글 인명이 노출되는 것이 브랜드 가이드상 허용되는지 마케팅 확인 필요. 로마자 표기가 필요하면 별도 라운드에서 `about.management.members[].name`(현재 config 고정값)에 로케일별 로마자 변형을 추가해야 함.
+
+### about.people
+| key | ko | en (초벌) | ja (초벌) |
+|-----|----|-----------|-----------|
+| about.people.title | People | People (고유 섹션명 유지) | People (고유 섹션명 유지) |
+| about.people.subtitle | 파인더스에이아이의 멤버들을 만나보세요 | Meet the members of Fainders.AI | ファインダーズエーアイのメンバーを紹介します |
+| about.people.cards.0.title | AI로 세상을 더 이롭게 만드는 기술을 만드는 일 | Building technology that makes the world better with AI | AIで世界をより良くする技術をつくる仕事 |
+| about.people.cards.1.title | 문제를 피하지 않고 끝까지 해결하는 사람들과 함께 | Working with people who solve problems all the way through, without avoiding them | 問題から逃げず最後まで解決する仲間たちと共に |
+| about.people.cards.2.title | 기술보다 문제, 속도보다 방향, 구현보다 경험을 고민해요 | Thinking about the problem before the technology, the direction before the speed, the experience before the implementation | 技術より課題、スピードより方向性、実装より体験を考えます |
+| about.people.cards.3.title | 일본 리테일 시장의 새로운 미래를 만들고 있어요 | Building a new future for Japan's retail market | 日本のリテール市場に新しい未来をつくっています |
+| about.people.cards.2.role | BE 개발 | BE Engineer | BE開発 |
+
+**검수 포인트:** 인터뷰 카피(카드 title)는 인터뷰이 발언의 의역 초벌 — 실제 인터뷰 원문/영문 보도자료가 있다면 그것과 대조해 재작성 권장. `config/site.ts`의 `people.cards[2,3]._description`("카피 — 디자인에서 미확인") 메모는 여전히 유효 — 해당 카피가 최종 디자인 확정본인지 재확인 필요.
+
+### common.a11y (신규 공용 네임스페이스) — Phase 3 잔여 이슈 일부 해소
+Phase 3에서 지적됐던 "aria-label 이전/다음이 en/ja에서도 한국어로 렌더" 문제를 Phase 4에서 `common.a11y.prev`/`common.a11y.next`로 해결하고 `AboutPeople`에 배선함.
+| key | ko | en | ja |
+|-----|----|----|----|
+| common.a11y.prev | 이전 | Previous | 前へ |
+| common.a11y.next | 다음 | Next | 次へ |
+
+**잔존 이슈:** `components/sections/products/ProductReviews.tsx`의 동일한 aria-label("이전"/"다음")은 Phase 4 스코프(about만) 밖이라 미수정 — 이제 재사용 가능한 `common.a11y.*` 키가 존재하므로, products 섹션을 다시 건드리는 후속 작업(또는 별도 소규모 패치)에서 이 키로 교체 권장.
+
+### about.people.interviewAriaLabel (신규 — 접근성 텍스트, ICU 보간)
+`{card.name} 직무 인터뷰 보기` 하드코딩을 `about.people.interviewAriaLabel`("{name} 직무 인터뷰 보기" 템플릿)로 이전. en "View {name}'s job interview" / ja "{name} の職務インタビューを見る". `name`은 인명(고유명사, 미번역)이 그대로 보간됨.
+
+### 스코프 제외 — image alt (비가시 접근성 텍스트)
+아래 `alt` 값들은 plan 지시대로 "화면 비노출(innerText 아님)"이라 이번 스코프에서 번역하지 않고 config 원문(한국어) 유지:
+- `aboutConfig.hero.image.alt` ("Fainders.AI 오피스 전경")
+- `aboutConfig.management.members[].photo.alt` (예: "함명원 CEO")
+- `aboutConfig.people.cards[].image.alt` (예: "홍석범 CTO 인터뷰")
+
+**검수 포인트:** en/ja 페이지에서도 스크린리더 사용자에게는 이 alt 텍스트가 한국어로 노출됨. 접근성 관점에서는 다국어 alt도 필요하므로, 후속 페이즈(또는 전체 완료 후 스캔)에서 번역 여부를 최종 결정 필요.

@@ -1,9 +1,13 @@
 import Image from "next/image";
-import { aboutConfig } from "@/config/site";
+import type { LogoItem } from "@/config/types";
 
-export function AboutPartners() {
-  const { title, description, logoRows } = aboutConfig.partners;
+interface AboutPartnersProps {
+  title: string;
+  description: string[];
+  logoRows: LogoItem[][];
+}
 
+export function AboutPartners({ title, description, logoRows }: AboutPartnersProps) {
   return (
     <section className="w-full bg-surface">
       {/* contentsArea: titleSection ↔ logosSection gap 56 = 4xl */}
@@ -14,8 +18,8 @@ export function AboutPartners() {
             {title}
           </h2>
           <p className="text-body-l desktop:text-body-xl text-tertiary">
-            {description.map((line) => (
-              <span key={line} className="block">
+            {description.map((line, i) => (
+              <span key={i} className="block">
                 {line}
               </span>
             ))}

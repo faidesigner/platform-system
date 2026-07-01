@@ -8,6 +8,10 @@
       "quickChat": "Quick Chat",
       "reviewsMore": "More Customer Stories",
       "mediaMore": "Learn More"
+    },
+    "a11y": {
+      "prev": "Previous",
+      "next": "Next"
     }
   },
   "nav": {
@@ -323,6 +327,104 @@
     "ctaBanner": {
       "titleLine1": "Deploy it in your store today",
       "titleLine2": "and experience maximum efficiency"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "Retail Innovation",
+      "title": [
+        "So Customers Can Focus",
+        "on What Retail Is Really About"
+      ]
+    },
+    "partners": {
+      "title": "Partners",
+      "description": [
+        "Working with global market leaders,",
+        "we're creating value that goes beyond technology"
+      ]
+    },
+    "investors": {
+      "groups": {
+        "0": {
+          "caption": "With KRW 12.7B in cumulative funding, we've earned recognition for our global business performance and growth potential"
+        },
+        "1": {
+          "caption": "Selected for major government deep-tech development programs, recognized for technology that leads the market."
+        }
+      }
+    },
+    "management": {
+      "title": "Management",
+      "members": {
+        "0": {
+          "education": {
+            "0": "Seoul Science High School",
+            "1": "B.S. in Computer Science, KAIST",
+            "2": "M.S. in Computer Science, UCLA"
+          },
+          "career": {
+            "0": "Former Samsung Electronics",
+            "1": "Former CTO (Co-founder), Fripy"
+          }
+        },
+        "1": {
+          "education": {
+            "0": "B.A. in Mathematics & Economics, Boston College",
+            "1": "M.S. in ITM, KAIST"
+          },
+          "career": {
+            "0": "Former Founder & CEO, Funded (acquired)",
+            "1": "Former WeMakePrice NBE TF"
+          }
+        },
+        "2": {
+          "education": {
+            "0": "Seoul Science High School",
+            "1": "B.S./Ph.D. in Electrical & Computer Engineering,\nSeoul National University"
+          },
+          "career": {
+            "0": "Former Samsung Electronics",
+            "1": "Former CTO (Co-founder), Fripy"
+          }
+        },
+        "3": {
+          "education": {
+            "0": "B.A. in Architectural Engineering, Yonsei University"
+          },
+          "career": {
+            "0": "Former NICE Information Service, Business Planning Team",
+            "1": "Former BCG Consultant"
+          }
+        }
+      }
+    },
+    "people": {
+      "title": "People",
+      "subtitle": "Meet the members of Fainders.AI",
+      "cards": {
+        "0": {
+          "title": "Building technology that makes the world better with AI",
+          "role": "CTO"
+        },
+        "1": {
+          "title": "Working with people who solve problems all the way through, without avoiding them",
+          "role": "CEO"
+        },
+        "2": {
+          "title": "Thinking about the problem before the technology, the direction before the speed, the experience before the implementation",
+          "role": "BE Engineer"
+        },
+        "3": {
+          "title": "Building a new future for Japan's retail market",
+          "role": "CEO"
+        }
+      },
+      "interviewAriaLabel": "View {name}’s job interview"
+    },
+    "meta": {
+      "title": "About Us",
+      "description": "About Fainders.AI — Realizing store automation with multi-view 3D Vision AI."
     }
   }
 }

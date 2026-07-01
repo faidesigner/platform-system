@@ -1,9 +1,13 @@
 import Image from "next/image";
-import { aboutConfig } from "@/config/site";
+import type { AboutImage } from "@/config/types";
 
-export function AboutHero() {
-  const { eyebrow, title, image } = aboutConfig.hero;
+interface AboutHeroProps {
+  eyebrow: string;
+  title: string[];
+  image: AboutImage;
+}
 
+export function AboutHero({ eyebrow, title, image }: AboutHeroProps) {
   return (
     // container 1440×900, 하단 정렬(justify-end), px150/py180 = Hero 전용 고정 여백
     <section className="relative isolate flex min-h-[100svh] w-full flex-col items-start justify-end overflow-hidden py-7xl desktop:py-8xl">
@@ -32,8 +36,8 @@ export function AboutHero() {
         </p>
         {/* title: w/display/S (56/78/0.8), weight 700, 2줄 */}
         <h1 className="w-full text-title-xl max-[420px]:text-title-l desktop:text-display-s font-bold">
-          {title.map((line) => (
-            <span key={line} className="block">
+          {title.map((line, i) => (
+            <span key={i} className="block">
               {line}
             </span>
           ))}

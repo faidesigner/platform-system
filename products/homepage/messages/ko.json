@@ -8,6 +8,10 @@
       "quickChat": "빠른 상담하기",
       "reviewsMore": "실제 도입 후기 더보기",
       "mediaMore": "더 알아보기"
+    },
+    "a11y": {
+      "prev": "이전",
+      "next": "다음"
     }
   },
   "nav": {
@@ -323,6 +327,104 @@
     "ctaBanner": {
       "titleLine1": "지금 매장에 도입하고",
       "titleLine2": "최대 효율을 경험을 해보세요"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "리테일 혁신",
+      "title": [
+        "고객이 리테일의 본질에",
+        "집중할 수 있도록"
+      ]
+    },
+    "partners": {
+      "title": "Partners",
+      "description": [
+        "글로벌 시장 리더들과",
+        "기술 그 이상의 가치를 만들어가고 있습니다"
+      ]
+    },
+    "investors": {
+      "groups": {
+        "0": {
+          "caption": "누적 127억원 투자 유치를 통해, 글로벌 사업성과 성장성을 인정받고 있습니다"
+        },
+        "1": {
+          "caption": "정부의 주요 딥테크 육성 프로그램에 선정되며, 시장을 선도할 압도적인 기술력을 인정받았습니다."
+        }
+      }
+    },
+    "management": {
+      "title": "Management",
+      "members": {
+        "0": {
+          "education": {
+            "0": "서울과학고",
+            "1": "KAIST 전산학 학사",
+            "2": "UCLA 컴퓨터공학 석사"
+          },
+          "career": {
+            "0": "전 삼성전자",
+            "1": "전 프라이피 CTO (Co-founder)"
+          }
+        },
+        "1": {
+          "education": {
+            "0": "Boston Coll. 수학, 경제학 학사",
+            "1": "KAIST ITM 석사"
+          },
+          "career": {
+            "0": "전 Funded 창업(CEO)&매각",
+            "1": "전 위메프 NBE TF"
+          }
+        },
+        "2": {
+          "education": {
+            "0": "서울과학고",
+            "1": "서울대학교 전기컴퓨터공학\n학사/박사(Ph.D)"
+          },
+          "career": {
+            "0": "전 삼성전자",
+            "1": "전 프라이피 CTO (Co-founder)"
+          }
+        },
+        "3": {
+          "education": {
+            "0": "연세대학교 건축공학 학사"
+          },
+          "career": {
+            "0": "전 나이스평가정보 사업기획단",
+            "1": "전 BCG 컨설턴트"
+          }
+        }
+      }
+    },
+    "people": {
+      "title": "People",
+      "subtitle": "파인더스에이아이의 멤버들을 만나보세요",
+      "cards": {
+        "0": {
+          "title": "AI로 세상을 더 이롭게 만드는 기술을 만드는 일",
+          "role": "CTO"
+        },
+        "1": {
+          "title": "문제를 피하지 않고 끝까지 해결하는 사람들과 함께",
+          "role": "CEO"
+        },
+        "2": {
+          "title": "기술보다 문제, 속도보다 방향, 구현보다 경험을 고민해요",
+          "role": "BE 개발"
+        },
+        "3": {
+          "title": "일본 리테일 시장의 새로운 미래를 만들고 있어요",
+          "role": "CEO"
+        }
+      },
+      "interviewAriaLabel": "{name} 직무 인터뷰 보기"
+    },
+    "meta": {
+      "title": "회사소개",
+      "description": "Fainders AI 회사 소개 — 멀티뷰 3D Vision AI로 매장 무인화를 실현합니다."
     }
   }
 }
