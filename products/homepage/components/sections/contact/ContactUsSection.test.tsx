@@ -1,9 +1,9 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
-import { render, screen, fireEvent } from "@testing-library/react";
+import { render, screen, fireEvent, waitFor } from "@testing-library/react";
+import { ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 
 // jsdom은 scrollIntoView/scrollTo를 구현하지 않아 검증 실패 경로(폼 스크롤)에서
-// "Not implemented" 예외를 던진다. 테스트 대상(inquiry_complete 발화)과 무관한
-// jsdom 환경 한계이므로 no-op으로 폴리필한다.
+// "Not implemented" 예외를 던진다. 테스트 대상과 무관한 jsdom 한계이므로 no-op 폴리필.
 Element.prototype.scrollIntoView = vi.fn();
 window.scrollTo = vi.fn();
 
@@ -11,7 +11,7 @@ const trackEvent = vi.fn();
 vi.mock("@/lib/analytics/track", () => ({ trackEvent: (...a: unknown[]) => trackEvent(...a) }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
 // SVGR 임포트(.svg → 컴포넌트)는 Next 빌드 전용 변환이라 Vite/jsdom에서 해석 불가 —
-// 테스트 대상(inquiry_complete 발화)과 무관한 순수 아이콘이므로 최소 스텁으로 대체.
+// 테스트 대상과 무관한 순수 아이콘이므로 최소 스텁으로 대체.
 vi.mock("@fai/ui/components/common/Icon/IcRequiredDot", () => ({
   IcRequiredDot: () => null,
 }));
@@ -19,23 +19,58 @@ vi.mock("@fai/ui/components/CustomerSupportGraphic", () => ({
   CustomerSupportGraphic: () => null,
 }));
 
+const fetchMock = vi.fn(() => Promise.resolve({ ok: true } as Response));
+
 import { ContactUsSection } from "./ContactUsSection";
 
-describe("ContactUsSection inquiry_complete", () => {
-  beforeEach(() => trackEvent.mockClear());
+function fillRequired() {
+  fireEvent.change(screen.getByPlaceholderText("회사명"), { target: { value: "FAI" } });
+  fireEvent.change(screen.getByPlaceholderText("성함"), { target: { value: "함명원" } });
+  fireEvent.change(screen.getByPlaceholderText("name@example.com"), { target: { value: "a@b.com" } });
+}
 
-  it("검증 실패(빈 폼)면 발화하지 않는다", () => {
+describe("ContactUsSection 제출", () => {
+  beforeEach(() => {
+    trackEvent.mockClear();
+    fetchMock.mockClear();
+    vi.stubGlobal("fetch", fetchMock);
+  });
+
+  it("검증 실패(빈 폼)면 Zapier 전송도 inquiry_complete도 하지 않는다", () => {
     render(<ContactUsSection />);
     fireEvent.click(screen.getByRole("button", { name: "문의하기" }));
+    expect(fetchMock).not.toHaveBeenCalled();
     expect(trackEvent).not.toHaveBeenCalled();
   });
 
-  it("필수값 입력 후 제출하면 inquiry_complete를 발화한다", () => {
+  it("필수값 입력 후 제출하면 Zapier 웹훅으로 규격대로 전송하고 inquiry_complete를 발화한다", async () => {
     render(<ContactUsSection />);
-    fireEvent.change(screen.getByPlaceholderText("회사명"), { target: { value: "FAI" } });
-    fireEvent.change(screen.getByPlaceholderText("성함"), { target: { value: "함명원" } });
-    fireEvent.change(screen.getByPlaceholderText("name@example.com"), { target: { value: "a@b.com" } });
+    fillRequired();
     fireEvent.click(screen.getByRole("button", { name: "문의하기" }));
-    expect(trackEvent).toHaveBeenCalledWith("inquiry_complete", { location: "contact_form", label: "문의하기" });
+
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+
+    const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe(ZAPIER_CONTACT_URL);
+    expect(init.method).toBe("POST");
+    expect((init.headers as Record<string, string>)["Content-Type"]).toBe(
+      "application/x-www-form-urlencoded",
+    );
+    // body는 form-urlencoded content-type이지만 내용은 JSON 문자열(Zap 계약).
+    const body = JSON.parse(init.body as string);
+    expect(body).toMatchObject({
+      company: "FAI",
+      name: "함명원",
+      email: "a@b.com",
+      solution: [],
+      option: [],
+    });
+
+    await waitFor(() =>
+      expect(trackEvent).toHaveBeenCalledWith("inquiry_complete", {
+        location: "contact_form",
+        label: "문의하기",
+      }),
+    );
   });
 });
