@@ -87,9 +87,9 @@ export default function NavigationBar({
   const locale   = typeof params?.locale === "string" ? params.locale : "";
   const router   = useRouter();
 
-  const isHome          = /^\/(ko|en|jp)\/?$/.test(pathname);
-  const isProductDetail = /^\/(ko|en|jp)\/products\/[^/]+\/?$/.test(pathname);
-  const isMedia         = /^\/(ko|en|jp)\/media\/?$/.test(pathname);
+  const isHome          = /^\/(ko|en|ja)\/?$/.test(pathname);
+  const isProductDetail = /^\/(ko|en|ja)\/products\/[^/]+\/?$/.test(pathname);
+  const isMedia         = /^\/(ko|en|ja)\/media\/?$/.test(pathname);
 
   const [isTransparent, setIsTransparent] = useState(!isHome && !isMedia);
   const [langOpen, setLangOpen] = useState(false);
