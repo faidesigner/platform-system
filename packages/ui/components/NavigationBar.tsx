@@ -288,7 +288,11 @@ export default function NavigationBar({
           드로어 — 960px 이하 공용 (모바일·태블릿)
       ════════════════════════════════════ */}
       <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <TabletDrawerMenu onNavigate={() => setDrawerOpen(false)} />
+        <TabletDrawerMenu
+          onNavigate={() => setDrawerOpen(false)}
+          onItemClick={onItemClick}
+          onContactClick={onContactClick}
+        />
       </Drawer>
     </>
   );
