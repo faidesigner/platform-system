@@ -426,5 +426,118 @@
       "title": "회사소개",
       "description": "Fainders AI 회사 소개 — 멀티뷰 3D Vision AI로 매장 무인화를 실현합니다."
     }
+  },
+  "media": {
+    "meta": {
+      "title": "미디어",
+      "description": "Fainders AI 뉴스, 보도자료, 쇼케이스 및 리테일 테크 소식."
+    },
+    "news": {
+      "title": "FAI News",
+      "items": {
+        "0": {
+          "title": "파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대",
+          "description": "AI 기반 리테일 솔루션 스타트업 파인더스에이아이가 프리 시리즈B 라운드에서 약 50억원 규모의 투자를 유치했다.",
+          "thumbnailAlt": "파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대"
+        },
+        "1": {
+          "title": "파인더스에이아이, 삼성웰스토리와 'AI 자동 계산대' 협업…간편식 무인 결제 경험 고도화",
+          "description": "AI 기반 리테일 솔루션 기업 주식회사 파인더스에이아이는 삼성웰스토리와 협업해 'AI 자동 계산대(이하 VCO)'를 삼성웰스토리의 간편식 무인 결제 시스템에 적용했다.",
+          "thumbnailAlt": "파인더스에이아이, 삼성웰스토리와 'AI 자동 계산대' 협업"
+        },
+        "2": {
+          "title": "파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현",
+          "description": "파인더스에이아이가 편의점 세븐일레븐의 싱가포르 매장의 AI 완전 무인 매장 기술을 제공, 운영을 시작했다고 밝혔다.",
+          "thumbnailAlt": "파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현"
+        },
+        "3": {
+          "title": "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공",
+          "description": "AI 기반 리테일 솔루션 기업 파인더스에이아이는 일본 법인을 통해 일본 홋카이도 니세코 지역의 대형 스키 리조트 레스토랑에 AI 셀프 계산대 'VCO'를 제공했다.",
+          "thumbnailAlt": "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공"
+        },
+        "4": {
+          "title": "도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'에서 AI 셀프 계산대 PoC 착수",
+          "description": "도큐부동산, 도큐리조트앤스테이, 파인더즈AI재팬은 신규 레스토랑 'NEST813'에서 AI 셀프 계산대 'VISION CHECK-OUT'의 도입을 위한 PoC에 착수했다.",
+          "thumbnailAlt": "도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'에서 AI 셀프 계산대 PoC 착수"
+        },
+        "5": {
+          "title": "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정",
+          "description": "인공지능(AI) 매장 자동화 기업 파인더스에이아이는 일본 홋카이도에서 개최된 글로벌 액셀러레이션 프로그램 '홋카이도 F 빌리지 X(HFX)'에 최종 선정됐다.",
+          "thumbnailAlt": "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정"
+        },
+        "6": {
+          "title": "한국 리테일 AI 스타트업, 라이프스타일 랩 'TOYONOMA'에서 PoC 스토어 오픈",
+          "description": "도쿄 도요스의 라이프스타일 랩 '토요노마'에서 한국 스타트업 Fainders.AI가 차세대 AI 셀프 계산대를 적용한 일본 최초의 PoC 스토어를 정식 오픈했다.",
+          "thumbnailAlt": "한국 리테일 AI 스타트업, 라이프스타일 랩 'TOYONOMA'에서 PoC 스토어 오픈"
+        },
+        "7": {
+          "title": "\"물건 골라 나가면 바로 결제\"...파인더스에이아이 무인 스토어 2호점 오픈",
+          "description": "파인더스에이아이는 AI 무인 마이크로 스토어 2호점을 스포애니 화곡점에 오픈하고 운영을 시작했다고 밝혔다.",
+          "thumbnailAlt": "파인더스에이아이 무인 스토어 2호점 오픈"
+        },
+        "8": {
+          "title": "파인더스에이아이, AI 무인 마이크로 스토어 오픈",
+          "description": "매장 자동화 AI 스타트업 파인더스에이아이는 국내 최초로 AI 무인 마이크로 스토어를 오픈했다고 공식 발표했다.",
+          "thumbnailAlt": "파인더스에이아이, AI 무인 마이크로 스토어 오픈"
+        },
+        "9": {
+          "title": "파인더스AI, 중기부 '아기유니콘' 선정…해외 진출 시동",
+          "description": "파인더스AI가 인공지능(AI) 무인 매장 솔루션 분야 최초로 중소벤처기업부가 선정한 올해 '아기유니콘'에 선정됐다.",
+          "thumbnailAlt": "파인더스AI, 중기부 '아기유니콘' 선정"
+        },
+        "10": {
+          "title": "파인더스에이아이, GS리테일과 AI 완전 무인 편의점 구현",
+          "description": "매장 자동화 AI 기술 기업 파인더스에이아이는 GS리테일의 미래형 편의점 GS25 DX LAB 2호점에 무인 매장 기술을 제공한다.",
+          "thumbnailAlt": "파인더스에이아이, GS리테일과 AI 완전 무인 편의점 구현"
+        },
+        "11": {
+          "title": "AI 매장 무인화 스타트업 '파인더스에이아이', 71억원 규모 시리즈 A 투자 유치",
+          "description": "AI 무인 매장 솔루션을 개발하는 '파인더스에이아이'가 71억원 규모 시리즈 A 라운드 투자를 유치하는 데 성공했다.",
+          "thumbnailAlt": "파인더스에이아이 71억원 규모 시리즈 A 투자 유치"
+        },
+        "12": {
+          "title": "AI 매장 무인화 스타트업 '파인더스에이아이' 6억원 투자 유치",
+          "description": "AI기반 오프라인 유통매장 무인화 기술을 개발하는 '파인더스에이아이'가 끌림벤처스로부터 6억원 시드 투자를 유치했다.",
+          "thumbnailAlt": "파인더스에이아이 6억원 시드 투자 유치"
+        },
+        "13": {
+          "title": "[빈 이미지 폴백 UI 확인용 카드]",
+          "description": "썸네일 이미지가 없는 경우 Empty Image Fallback UI가 정상 렌더링되는지 확인합니다.",
+          "thumbnailAlt": ""
+        }
+      }
+    },
+    "showcase": {
+      "title": "Media",
+      "youtube": {
+        "channelLabel": "YouTube",
+        "ctaLabel": "더 알아보기",
+        "videos": {
+          "0": {
+            "title": "파인더스에이아이 VCO는 뭐가 다른가요?②",
+            "description": "비슷하게 생긴 빵도 정확하게 구별해요!",
+            "thumbnailAlt": "파인더스에이아이 VCO 소금빵 구별"
+          },
+          "1": {
+            "title": "MISSING_FROM_DESIGN",
+            "description": "MISSING_FROM_DESIGN",
+            "thumbnailAlt": "MISSING_FROM_DESIGN"
+          }
+        },
+        "a11y": {
+          "prevVideo": "이전 영상",
+          "nextVideo": "다음 영상",
+          "goToVideo": "영상 {index}로 이동"
+        }
+      },
+      "socials": {
+        "followAriaLabel": "{label} 바로가기"
+      }
+    },
+    "retailTechLetter": {
+      "title": "Retail Tech Letter",
+      "description": "리테일 기술 트렌드와 파인더스에이아이의 최신 소식을 정리한 뉴스레터입니다. 지난 레터를 읽어보고 구독해보세요.",
+      "ctaLabel": "레터 구독하기"
+    }
   }
 }

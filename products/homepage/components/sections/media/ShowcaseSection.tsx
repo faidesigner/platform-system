@@ -4,13 +4,28 @@ import { useState, useEffect } from "react";
 import Image from "next/image";
 import { IcoTxtButton, IconButton, ProgressBar } from "@fai/ui";
 import SocialIcon from "@fai/ui/components/common/Icon/SocialIcon";
-import { siteConfig } from "@/config/site";
-// scripts/sync-youtube.mjs 가 RSS에서 생성하는 쇼케이스 데이터(채널 최신 영상).
-import showcase from "@/config/youtube-showcase.json";
+import type { SocialLink } from "@/config/types";
 import { trackEvent } from "@/lib/analytics/track";
 
-type YoutubeVideo = (typeof showcase.videos)[number];
-type Social       = (typeof siteConfig.mediaShowcase.socials)[number];
+// scripts/sync-youtube.mjs가 RSS에서 생성하는 쇼케이스 영상 데이터의 항목 shape(config/youtube-showcase.json).
+interface YoutubeVideo {
+  videoId: string;
+  title: string;
+  description: string;
+  thumbnailAlt: string;
+  href: string;
+}
+
+type Social = SocialLink;
+
+// 서버 컴포넌트에서 함수 props를 클라이언트로 넘길 수 없어(직렬화 불가),
+// "{index}"/"{label}" 플레이스홀더가 남은 템플릿 문자열을 받아 클라에서 치환한다.
+interface ShowcaseA11y {
+  prevVideo: string;
+  nextVideo: string;
+  goToVideoTemplate: string;
+  followAriaLabelTemplate: string;
+}
 
 /* 유튜브 썸네일 — 고화질(maxres) → 표준(hq) → 빈 화면 순으로 fallback */
 function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
@@ -50,9 +65,14 @@ function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
 }
 
 /* ── YouTube 카드 ────────────────────────────────────── */
-function YoutubeCard() {
-  const { youtube } = siteConfig.mediaShowcase; // 라벨(채널명/CTA)은 설정에서
-  const videos = showcase.videos; // 영상 데이터는 RSS 동기화 JSON에서
+interface YoutubeCardProps {
+  channelLabel: string;
+  ctaLabel: string;
+  videos: YoutubeVideo[];
+  a11y: ShowcaseA11y;
+}
+
+function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps) {
   const DURATION = 5000;
   const [index, setIndex] = useState(0);
 
@@ -86,7 +106,7 @@ function YoutubeCard() {
                 <path d="M16.0049 5.66602C16.0049 5.66602 25.1746 5.66619 27.4668 6.28711C28.729 6.62354 29.7222 7.62193 30.0586 8.89453C30.6672 11.1897 30.6641 15.9684 30.6641 15.999C30.6641 15.999 30.6643 20.8009 30.0537 23.1035C29.7174 24.3712 28.7235 25.3694 27.4609 25.7109C25.1737 26.3267 16 26.3271 16 26.3271C15.9853 26.3271 6.82442 26.3262 4.53906 25.7109C3.27652 25.3746 2.28262 24.3764 1.94629 23.1035C1.33574 20.8009 1.33594 15.999 1.33594 15.999C1.33594 15.9684 1.33838 11.19 1.95215 8.88965C2.28849 7.62205 3.28153 6.62377 4.54395 6.28223C6.82333 5.66855 15.9437 5.66602 16.0049 5.66602ZM13.0039 20.3613L20.6729 15.999L13.0039 11.6377V20.3613Z" fill="#FF0000"/>
               </svg>
               <span className="text-body-xl font-semibold text-text-basic-primary">
-                {youtube.channelLabel}
+                {channelLabel}
               </span>
             </div>
 
@@ -95,7 +115,7 @@ function YoutubeCard() {
                 <IconButton
                   variant="assistive"
                   size="M"
-                  aria-label="이전 영상"
+                  aria-label={a11y.prevVideo}
                   onClick={() => move(-1)}
                   icon={
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -111,7 +131,7 @@ function YoutubeCard() {
                 <IconButton
                   variant="assistive"
                   size="M"
-                  aria-label="다음 영상"
+                  aria-label={a11y.nextVideo}
                   onClick={() => move(1)}
                   icon={
                     <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none" aria-hidden="true">
@@ -144,10 +164,10 @@ function YoutubeCard() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
-              onClick={() => trackEvent("interest_click", { location: "media_showcase", label: youtube.ctaLabel })}
+              onClick={() => trackEvent("interest_click", { location: "media_showcase", label: ctaLabel })}
             >
               <IcoTxtButton variant="primary" size="L" shape="square">
-                {youtube.ctaLabel}
+                {ctaLabel}
               </IcoTxtButton>
             </a>
           </div>
@@ -165,7 +185,7 @@ function YoutubeCard() {
           activeIndex={index}
           onChange={setIndex}
           duration={DURATION}
-          getAriaLabel={(i) => `영상 ${i + 1}로 이동`}
+          getAriaLabel={(i) => a11y.goToVideoTemplate.replace("{index}", String(i + 1))}
         />
       </div>
 
@@ -174,13 +194,13 @@ function YoutubeCard() {
 }
 
 /* ── 소셜 카드 ─────────────────────────────────────────── */
-function SocialCard({ social }: { social: Social }) {
+function SocialCard({ social, followAriaLabel }: { social: Social; followAriaLabel: string }) {
   return (
     <a
       href={social.href}
       target="_blank"
       rel="noopener noreferrer"
-      aria-label={`${social.label} 바로가기`}
+      aria-label={followAriaLabel}
       className="group/card flex flex-col items-center flex-1 self-stretch py-xl px-2xl rounded-fai-m bg-fill-faint"
       onClick={() => trackEvent("interest_click", { location: "media_showcase", label: social.label })}
     >
@@ -239,9 +259,24 @@ function SocialCard({ social }: { social: Social }) {
 }
 
 /* ── Section ─────────────────────────────────────────── */
-export default function MediaShowcaseSection() {
-  const { mediaShowcase } = siteConfig;
-  const hasContent = showcase.videos.length || mediaShowcase.socials.length;
+interface MediaShowcaseSectionProps {
+  title: string;
+  channelLabel: string;
+  ctaLabel: string;
+  videos: YoutubeVideo[];
+  socials: Social[];
+  a11y: ShowcaseA11y;
+}
+
+export default function MediaShowcaseSection({
+  title,
+  channelLabel,
+  ctaLabel,
+  videos,
+  socials,
+  a11y,
+}: MediaShowcaseSectionProps) {
+  const hasContent = videos.length || socials.length;
   if (!hasContent) return null;
 
   return (
@@ -254,16 +289,20 @@ export default function MediaShowcaseSection() {
         pt-7xl pb-5xl
       ">
         <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
-          {mediaShowcase.title}
+          {title}
         </h2>
 
         <div className="flex w-full flex-col gap-l">
-          <YoutubeCard />
+          <YoutubeCard channelLabel={channelLabel} ctaLabel={ctaLabel} videos={videos} a11y={a11y} />
 
-          {mediaShowcase.socials.length > 0 && (
+          {socials.length > 0 && (
             <div className="flex items-start self-stretch w-full flex-col gap-3xl min-[961px]:flex-row">
-              {mediaShowcase.socials.map((social) => (
-                <SocialCard key={social.label} social={social} />
+              {socials.map((social) => (
+                <SocialCard
+                  key={social.label}
+                  social={social}
+                  followAriaLabel={a11y.followAriaLabelTemplate.replace("{label}", social.label)}
+                />
               ))}
             </div>
           )}

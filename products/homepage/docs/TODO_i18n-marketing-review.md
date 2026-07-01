@@ -229,3 +229,64 @@ Phase 3에서 지적됐던 "aria-label 이전/다음이 en/ja에서도 한국어
 - `aboutConfig.people.cards[].image.alt` (예: "홍석범 CTO 인터뷰")
 
 **검수 포인트:** en/ja 페이지에서도 스크린리더 사용자에게는 이 alt 텍스트가 한국어로 노출됨. 접근성 관점에서는 다국어 alt도 필요하므로, 후속 페이즈(또는 전체 완료 후 스캔)에서 번역 여부를 최종 결정 필요.
+
+## Phase 5 — media (2026-07-01)
+
+### media.news (FAI News — 언론 보도 헤드라인, 실제 기사 제목 번역)
+`config/site.ts`의 `media.items[]`(14개, 그중 1개는 빈 썸네일 폴백 UI 확인용 테스트 카드) `title`/`description`/`thumbnailAlt`를 `media.news.items.<i>.*`로 이전, en/ja 초벌 번역. **이 항목들은 실제 한국 언론사 기사 헤드라인이므로 번역 정확성·뉘앙스·보도 매체명 표기가 특히 중요 — 외부 노출 전 마케팅/PR 검수 필수.**
+
+| index | ko (원문 헤드라인) | en (초벌) | ja (초벌) |
+|-------|---------------------|-----------|-----------|
+| 0 | 파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대 | Fainders.AI Raises KRW 5B in Pre-Series B, Expanding AI Unmanned Store Solutions | ファインダーズAI、プレシリーズBで50億ウォン調達…AI無人店舗ソリューションを拡大 |
+| 1 | 파인더스에이아이, 삼성웰스토리와 'AI 자동 계산대' 협업… | Fainders.AI Partners with Samsung Welstory on 'AI Self-Checkout,' … | ファインダーズAI、サムスンウェルストーリーと『AI自動レジ』で協業… |
+| 2 | 파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현 | Fainders.AI Deploys Fully Unmanned AI Convenience Store at 7-Eleven Singapore | ファインダーズAI、シンガポールのセブンイレブンに完全無人AIコンビニを導入 |
+| 3 | 파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공 | Fainders.AI Supplies AI Self-Checkout to Major Resort Restaurant in Japan | ファインダーズAI、日本の大型リゾートレストランにAIセルフレジを提供 |
+| 4 | 도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'… PoC 착수 | Tokyu Land and Partners Launch AI Self-Checkout PoC at 'NEST813' Restaurant… | 東急不動産など、ニセコ東急グラン・ヒラフのレストラン『NEST813』でPoCを開始 |
+| 5 | 파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정 | Fainders.AI Selected for Global Acceleration Program 'HFX' | ファインダーズAI、グローバルアクセラレーションプログラム『HFX』に最終選定 |
+| 6 | 한국 리테일 AI 스타트업, 라이프스타일 랩 'TOYONOMA'… PoC 스토어 오픈 | Korean Retail AI Startup Opens PoC Store at Lifestyle Lab 'TOYONOMA' | 韓国のリテールAIスタートアップ、ライフスタイルラボ『TOYONOMA』にPoCストアをオープン |
+| 7 | "물건 골라 나가면 바로 결제"...무인 스토어 2호점 오픈 | "Pick Up and Walk Out, Payment Done"... Fainders.AI Opens Second Unmanned Store | 「商品を選んで出るだけで決済完了」…無人ストア2号店をオープン |
+| 8 | 파인더스에이아이, AI 무인 마이크로 스토어 오픈 | Fainders.AI Opens AI Unmanned Micro Store | ファインダーズAI、AI無人マイクロストアをオープン |
+| 9 | 파인더스AI, 중기부 '아기유니콘' 선정…해외 진출 시동 | Fainders.AI Selected as a 'Baby Unicorn' by the Ministry of SMEs… | ファインダーズAI、韓国中小ベンチャー企業部『ベビーユニコーン』に選定… |
+| 10 | 파인더스에이아이, GS리테일과 AI 완전 무인 편의점 구현 | Fainders.AI Deploys Fully Unmanned AI Convenience Store with GS Retail | ファインダーズAI、GSリテールと完全無人AIコンビニを実現 |
+| 11 | '파인더스에이아이', 71억원 규모 시리즈 A 투자 유치 | AI Unmanned Store Startup Fainders.AI Raises KRW 7.1B in Series A Funding | ファインダーズAI、71億ウォン規模のシリーズA投資を誘致 |
+| 12 | '파인더스에이아이' 6억원 투자 유치 | AI Unmanned Store Startup Fainders.AI Raises KRW 600M in Seed Funding | ファインダーズAI、6億ウォンのシード投資を誘致 |
+| 13 | [빈 이미지 폴백 UI 확인용 카드] (테스트 카드, 실서비스 문구 아님) | [Card for Verifying Empty Image Fallback UI] | 【画像なしフォールバックUI確認用カード】 |
+
+**검수 포인트:**
+- 보도 매체명(머니투데이/이코노미스트/GS리테일 등)은 본문에 없어 그대로 두었으나, 실제 en/ja 배포 시 언론사·매체명 표기 방식(현지 매체명 병기 여부)을 검토 필요.
+- "끌림벤처스" → en "Kkeullim Ventures"(음역), 고유명사 표기가 실제 영문 공식 표기와 일치하는지 확인 필요.
+- 금액 단위(억원/万円/등) 표기 방식 — en/ja 모두 "KRW 5B"/"50億ウォン"처럼 원화 그대로 표기. 현지 통화 환산 병기 여부는 마케팅 판단 필요.
+- item 13은 디자인 QA용 테스트 카드(빈 썸네일 폴백 확인)이며 실제 뉴스가 아님 — 프로덕션 배포 전 제거 여부 확인 권장(기존부터 존재하던 이슈, 이번 Phase 5 스코프 밖).
+
+### media.showcase (섹션 라벨만 번역 — 실제 영상 데이터는 번역 대상 아님)
+| key | ko | en | ja |
+|-----|----|----|----|
+| media.showcase.title | Media | Media (고유 섹션명 유지) | メディア |
+| media.showcase.youtube.channelLabel | YouTube | YouTube (고유명사 유지) | YouTube (고유명사 유지) |
+| media.showcase.youtube.ctaLabel | 더 알아보기 | Learn More | 詳しく見る |
+| media.showcase.youtube.a11y.prevVideo | 이전 영상 | Previous video | 前の動画 |
+| media.showcase.youtube.a11y.nextVideo | 다음 영상 | Next video | 次の動画 |
+| media.showcase.youtube.a11y.goToVideo | 영상 {index}로 이동 | Go to video {index} | 動画{index}へ移動 |
+| media.showcase.socials.followAriaLabel | {label} 바로가기 | Visit {label} | {label}へ移動 |
+
+`config/site.ts`의 `mediaShowcase.youtube.videos[]`(2개, 플레이스홀더 포함)도 스펙대로 `media.showcase.youtube.videos.<i>.*`로 번역해뒀으나, **이 배열은 실제로 어디서도 소비되지 않는 죽은 코드**(실제 렌더는 `config/youtube-showcase.json`을 사용). 컴포넌트 배선 시 확인됨 — 정리(제거) 여부는 별도 결정 필요.
+
+### ⚠️ 구조적 미해결 — 외부 동기화 콘텐츠(YouTube RSS·Stibee)는 번역 불가 상태로 en/ja에 노출됨
+`MediaShowcaseSection`이 실제로 렌더하는 영상 데이터(`config/youtube-showcase.json`, `scripts/sync-youtube.mjs`가 채널 RSS에서 생성, 13개 영상)와 `RetailTechLetterSection`이 렌더하는 레터 목록(`config/retail-tech-letter.json`, `scripts/sync-stibee.mjs`가 Stibee API에서 생성, 31개 레터)은:
+- **정적 `messages/*.json` 인덱스 키로 매핑 불가** — 리싱크할 때마다 항목 순서/개수/내용이 바뀌는 외부 소스이기 때문에, 지금 번역해봐야 다음 `sync-youtube.mjs`/`sync-stibee.mjs` 실행 시 인덱스가 어긋나 오번역이 됨.
+- 결과적으로 `/en/media`, `/ja/media`에서 YouTube 쇼케이스 카드(현재 13개 영상 중 한국어/일본어 원문 혼재)와 Retail Tech Letter 목록(31개, 전부 한국어 제목)이 **로케일과 무관하게 원문(주로 한국어) 그대로 노출**됨. 이는 "en/ja에 한국어가 남지 않도록" 요구사항을 이 두 섹션에서는 충족하지 못함.
+- **왜 이렇게 뒀는가:** Phase 5 지시서의 번역 대상은 `config/site.ts`의 `siteConfig.media`/`mediaShowcase`/`retailTechLetter`(정적 구조)였고, 실제 렌더 데이터인 두 JSON은 지시서 작성 시점에 존재를 알기 어려웠던 별도의 동적 동기화 파이프라인. 정적 텍스트 이전 패턴(Phase 1~4와 동일한 인덱스 키 방식)을 그대로 적용할 수 없는 근본적으로 다른 데이터 소스.
+- **권장 해결 방향(택 1, 마케팅·엔지니어링 합의 필요):**
+  1. **번역 API 파이프라인 추가**: `sync-youtube.mjs`/`sync-stibee.mjs` 실행 시 각 언어로 자동 번역(예: DeepL/OpenAI API)해서 `youtube-showcase.{ko,en,ja}.json` 등으로 3벌 저장 — 유지보수 비용 증가, 번역 품질 관리 필요.
+  2. **로케일별 노출 제한**: en/ja에서는 이 두 섹션을 아예 숨기거나(예: "한국어 채널입니다" 안내로 대체) YouTube/Stibee 원문 링크만 노출.
+  3. **현행 유지 + 명시적 정책 문서화**: "이 두 섹션은 다국어 미지원, 원문(한국어/영상 원어) 그대로 노출"을 공식 정책으로 명시하고 QA/마케팅에 공지.
+- 이 이슈는 Phase 5 완료 정의("en/ja 한국어 잔존 0")를 완전히 충족하지 못하게 만드는 유일한 항목이며, **최종 페이즈(전체 완료 후 스캔) 또는 별도 티켓에서 반드시 재검토 필요.**
+
+### media.retailTechLetter (섹션 라벨만 번역 — 레터 목록 자체는 위 이슈 참고)
+| key | ko | en | ja |
+|-----|----|----|----|
+| media.retailTechLetter.title | Retail Tech Letter | Retail Tech Letter (고유 섹션명 유지) | Retail Tech Letter (고유 섹션명 유지) |
+| media.retailTechLetter.description | 리테일 기술 트렌드와... 구독해보세요. | A newsletter covering retail technology trends... | リテールテックのトレンドと...購読しましょう。 |
+| media.retailTechLetter.ctaLabel | 레터 구독하기 | Subscribe to the Letter | レターを購読する |
+
+**참고:** `retailTechLetter.description`은 `config/site.ts`에는 존재하지만 `RetailTechLetterSection` 컴포넌트에서 실제로 렌더되지 않는 죽은 필드(기존부터 그러함, Phase 5에서 변경 없음) — messages에는 스펙대로 번역해뒀으나 화면에는 보이지 않음.

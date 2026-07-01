@@ -2,9 +2,15 @@
 
 import { useState } from "react";
 import { IcoTxtButton } from "@fai/ui";
-import { siteConfig } from "@/config/site";
-// scripts/sync-stibee.mjs 가 Stibee API에서 생성하는 레터 목록.
-import letterData from "@/config/retail-tech-letter.json";
+
+// scripts/sync-stibee.mjs가 Stibee API에서 생성하는 레터 목록 항목 shape(config/retail-tech-letter.json).
+interface Letter {
+  id: string;
+  title: string;
+  previewText: string;
+  publishedAt: string;
+  url: string;
+}
 
 // "2026-06-25T11:00:..." → "2026. 6. 25."
 const fmtDate = (iso: string) => {
@@ -15,11 +21,24 @@ const fmtDate = (iso: string) => {
 const PAGE = 6; // 처음 6개, 더보기 클릭마다 +6
 
 /* ── Section ─────────────────────────────────────────── */
+interface RetailTechLetterSectionProps {
+  title: string;
+  ctaLabel: string;
+  moreLabel: string;
+  url: string;
+  letters: Letter[];
+}
+
 // Stibee는 외부 iframe 임베드를 차단(X-Frame-Options)하므로, 원본 Stibee의 "지난 뉴스레터"
 // 목록을 동일한 plain 리스트로 직접 렌더하고, 클릭 시 새 탭으로 개별 글을 연다.
-export default function RetailTechLetterSection() {
-  const { retailTechLetter } = siteConfig;
-  const letters = letterData.letters;
+// letters(레터 제목)는 Stibee에서 리싱크마다 그대로 받아오는 원문 — 정적 messages 인덱스로 옮기지 않음.
+export default function RetailTechLetterSection({
+  title,
+  ctaLabel,
+  moreLabel,
+  url,
+  letters,
+}: RetailTechLetterSectionProps) {
   const [visibleCount, setVisibleCount] = useState(PAGE);
 
   if (!letters.length) return null;
@@ -33,11 +52,11 @@ export default function RetailTechLetterSection() {
         {/* 헤더: 제목 + 구독하기 */}
         <div className="flex w-full flex-col items-start justify-between gap-l min-[641px]:flex-row min-[641px]:items-center">
           <h2 className="text-title-l desktop:text-title-xl font-bold text-primary">
-            {retailTechLetter.title}
+            {title}
           </h2>
-          <a href={retailTechLetter.url} target="_blank" rel="noopener noreferrer" className="inline-block shrink-0">
+          <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block shrink-0">
             <IcoTxtButton variant="primary" size="L" shape="square">
-              {retailTechLetter.ctaLabel}
+              {ctaLabel}
             </IcoTxtButton>
           </a>
         </div>
@@ -83,7 +102,7 @@ export default function RetailTechLetterSection() {
                 </svg>
               }
             >
-              더보기
+              {moreLabel}
             </IcoTxtButton>
           )}
         </div>
