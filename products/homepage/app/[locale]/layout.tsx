@@ -7,13 +7,13 @@ import NavigationBarBridge from "@/components/layout/NavigationBarBridge";
 import FooterBridge from "@/components/layout/FooterBridge";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 
-// 정적 export: 빌드 타임에 /ko, /en, /jp 를 프리렌더.
+// 정적 export: 빌드 타임에 /ko, /en, /ja 를 프리렌더.
 export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
 // 로케일별 색인 정책: 현재 본문이 한국어뿐이라 ko만 색인하고
-// en·jp는 noindex(번역 완료 시 해제). 미번역 페이지의 중복 색인 방지.
+// en·ja는 noindex(번역 완료 시 해제). 미번역 페이지의 중복 색인 방지.
 export async function generateMetadata({
   params,
 }: {
