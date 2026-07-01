@@ -3,8 +3,8 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { Footer } from "@fai/ui";
 import NavigationBarBridge from "@/components/layout/NavigationBarBridge";
+import FooterBridge from "@/components/layout/FooterBridge";
 import SmoothScroll from "@/components/layout/SmoothScroll";
 
 // 정적 export: 빌드 타임에 /ko, /en, /jp 를 프리렌더.
@@ -49,7 +49,7 @@ export default async function LocaleLayout({
       <SmoothScroll>
         <NavigationBarBridge />
         <main>{children}</main>
-        <Footer />
+        <FooterBridge />
       </SmoothScroll>
     </NextIntlClientProvider>
   );

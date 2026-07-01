@@ -61,14 +61,17 @@ const POLICIES = [
 ];
 
 /* ── SNS 버튼 공용 ── */
-function SnsButtons() {
+function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void }) {
   return (
     <div className="flex items-start gap-s">
       {SNS.map((sns) => (
         <a
           key={sns.label}
           href={sns.href}
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label={sns.label}
+          onClick={() => onSocialClick?.(sns.label)}
           className="flex flex-col items-center justify-center rounded-full p-[var(--padding-XS)] bg-filled-optional-brand-secondaryBtn"
         >
           <span className="flex items-center justify-center w-4 h-4">
@@ -122,7 +125,7 @@ function InfoRow({ items, className }: { items: { title: string; text: string }[
 
 /* ── Component ── */
 
-export default function Footer() {
+export default function Footer({ onSocialClick }: { onSocialClick?: (label: string) => void } = {}) {
   return (
     <footer className="relative w-full bg-bg-200">
 
@@ -141,7 +144,7 @@ export default function Footer() {
           {/* logoArea */}
           <div className="flex flex-col items-start justify-between self-stretch gap-6">
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
-            <SnsButtons />
+            <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
           {/* contentsArea */}
@@ -177,7 +180,7 @@ export default function Footer() {
               <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             </div>
             <div className="fai-footer__socials">
-              <SnsButtons />
+              <SnsButtons onSocialClick={onSocialClick} />
             </div>
           </div>
 

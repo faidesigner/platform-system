@@ -3,6 +3,7 @@
 import Image from 'next/image';
 import Link from 'next/link';
 import { Marquee } from '@fai/ui';
+import { trackEvent } from '@/lib/analytics/track';
 
 export interface CustomerImage {
   name: string;
@@ -53,6 +54,7 @@ export default function CustomersSection({
            */}
           <Link
             href={linkHref}
+            onClick={() => trackEvent('interest_click', { location: 'home_customers', label: linkLabel })}
             className={[
               'shrink-0',
               'flex flex-col justify-center items-center',

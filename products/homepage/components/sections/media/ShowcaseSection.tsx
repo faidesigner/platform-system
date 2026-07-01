@@ -7,6 +7,7 @@ import SocialIcon from "@fai/ui/components/common/Icon/SocialIcon";
 import { siteConfig } from "@/config/site";
 // scripts/sync-youtube.mjs 가 RSS에서 생성하는 쇼케이스 데이터(채널 최신 영상).
 import showcase from "@/config/youtube-showcase.json";
+import { trackEvent } from "@/lib/analytics/track";
 
 type YoutubeVideo = (typeof showcase.videos)[number];
 type Social       = (typeof siteConfig.mediaShowcase.socials)[number];
@@ -143,6 +144,7 @@ function YoutubeCard() {
               target="_blank"
               rel="noopener noreferrer"
               className="inline-block"
+              onClick={() => trackEvent("interest_click", { location: "media_showcase", label: youtube.ctaLabel })}
             >
               <IcoTxtButton variant="primary" size="L" shape="square">
                 {youtube.ctaLabel}
@@ -180,6 +182,7 @@ function SocialCard({ social }: { social: Social }) {
       rel="noopener noreferrer"
       aria-label={`${social.label} 바로가기`}
       className="group/card flex flex-col items-center flex-1 self-stretch py-xl px-2xl rounded-fai-m bg-fill-faint"
+      onClick={() => trackEvent("interest_click", { location: "media_showcase", label: social.label })}
     >
       <div className="flex justify-between items-center self-stretch w-full">
         <div className="flex items-center gap-ms">

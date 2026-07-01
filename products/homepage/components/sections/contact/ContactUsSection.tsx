@@ -5,6 +5,7 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 import { lenisRef } from "@/components/layout/SmoothScroll";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/analytics/track";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
 import { IcoTxtButton } from "@fai/ui/components/button/IcoTxtButton";
@@ -92,6 +93,7 @@ export function ContactUsSection() {
       .filter(([, v]) => v)
       .map(([k]) => k);
     console.log("[contact submit]", { ...state.values, interests: selectedInterests });
+    trackEvent("inquiry_complete", { location: "contact_form", label: "문의하기" });
     flushSync(() => { setSubmitted(true); });
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
@@ -344,6 +346,7 @@ export function ContactUsSection() {
                   href={contact.toast.kakaoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
                   className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
                 >
                   <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
@@ -359,6 +362,7 @@ export function ContactUsSection() {
                 href={contact.toast.kakaoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
                 className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)]"
               >
                 <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)]">

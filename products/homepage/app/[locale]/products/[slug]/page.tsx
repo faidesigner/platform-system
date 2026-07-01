@@ -94,7 +94,7 @@ export default async function ProductDetailPage({
         title={product.reviewsTitle}
         reviews={product.reviews}
       />
-      {slug !== 'unmanned-store' && <CtaBanner />}
+      {slug !== 'unmanned-store' && <CtaBanner location="product_cta_banner" />}
     </main>
   );
 }

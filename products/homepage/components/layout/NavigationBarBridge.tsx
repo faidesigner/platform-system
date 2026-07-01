@@ -5,6 +5,7 @@ import type { NavItem } from '@fai/ui';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import HomepageLangSwitcher from '@/components/layout/LanguageSwitcher';
 import ProductMegaMenu from '@/components/ui/ProductMegaMenu';
+import { trackEvent } from '@/lib/analytics/track';
 
 const NAV_ITEMS: readonly NavItem[] = [
   {
@@ -34,6 +35,8 @@ export default function NavigationBarBridge() {
   return (
     <NavigationBar
       navItems={NAV_ITEMS}
+      onItemClick={(item) => trackEvent('interest_click', { location: 'nav', label: item.label })}
+      onContactClick={() => trackEvent('lead_acquisition_click', { location: 'nav', label: '문의하기' })}
       desktopLangSwitcher={(isTransparent) => (
         <HomepageLangSwitcher isTransparent={isTransparent} variant="desktop" />
       )}
