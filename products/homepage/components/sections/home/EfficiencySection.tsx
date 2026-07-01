@@ -9,42 +9,23 @@
  *   statItem  mobile w-full → desktop w-[311px]
  */
 
+import { getTranslations } from 'next-intl/server';
 import { AnimatedStat } from './AnimatedStat';
 
 /* ──────────────────────────────────────────
-   Types & Data
+   Types & Data — 숫자(target/decimals/suffix)만 여기 유지, 라벨·설명은 messages(home.efficiency.stats.N)
 ────────────────────────────────────────── */
 
-interface Stat {
+interface StatConfig {
   target: number;
   decimals?: number;
   suffix?: string;
-  label: string;
-  labelCaption?: string;
-  description: string;
 }
 
-const STATS: Stat[] = [
-  {
-    target: 99.7,
-    decimals: 1,
-    suffix: '%',
-    label: '결제 정확도',
-    description: '오차 없는 완벽한 비전 AI',
-  },
-  {
-    target: 75,
-    suffix: '%',
-    label: '고객 대기시간 감소',
-    labelCaption: '(VCO 도입 전후 비교)',
-    description: '이탈을 막는 초고속 결제',
-  },
-  {
-    target: 15,
-    suffix: '%',
-    label: '매출 증가율',
-    description: '피크타임 회전율 극대화',
-  },
+const STAT_CONFIGS: StatConfig[] = [
+  { target: 99.7, decimals: 1, suffix: '%' },
+  { target: 75, suffix: '%' },
+  { target: 15, suffix: '%' },
 ];
 
 /* ──────────────────────────────────────────
@@ -70,7 +51,15 @@ interface EfficiencySectionProps {
   pinDuration?: string;
 }
 
-export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionProps) {
+export async function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionProps) {
+  const t = await getTranslations('home.efficiency');
+  const stats = STAT_CONFIGS.map((config, i) => ({
+    ...config,
+    label: t(`stats.${i}.label`),
+    labelCaption: t.has(`stats.${i}.labelCaption`) ? t(`stats.${i}.labelCaption`) : undefined,
+    description: t(`stats.${i}.description`),
+  }));
+
   return (
     <section
       className="relative w-full"
@@ -106,10 +95,10 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
                 className="text-title-m tablet:text-title-l laptop:text-title-xl desktop:text-display-s font-bold font-base text-text-basic-inverse"
                 style={{ letterSpacing: 'var(--w-display-S-letterSpacing, 0.8px)' }}
               >
-                Efficiency
+                {t('title')}
               </h2>
               <p className="text-body-xl font-normal font-base text-text-basic-inverse-secondary">
-                숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다
+                {t('subtitle')}
               </p>
             </div>
 
@@ -118,7 +107,7 @@ export function EfficiencySection({ pinDuration = '200vh' }: EfficiencySectionPr
                   961+:    flex-row, justify-between, items-end
             ── */}
             <div className="flex flex-col gap-2xl desktop-s:flex-row desktop-s:justify-between desktop-s:items-end desktop-s:gap-0 self-stretch w-full">
-              {STATS.map((stat) => (
+              {stats.map((stat) => (
                 <div
                   key={stat.label}
                   className="w-full desktop-s:w-[311px] flex items-center gap-2xl"

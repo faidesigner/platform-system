@@ -1,4 +1,4 @@
-import { setRequestLocale } from "next-intl/server";
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
 import type { LogoItem } from "@fai/ui";
@@ -32,12 +32,13 @@ export default async function HomePage({
 }) {
   const { locale } = await params;
   setRequestLocale(locale);
+  const t = await getTranslations("home.imageSection");
   return (
     <>
       <HeroSection logos={PARTNER_LOGOS} />
       <ImageSection
         src="/images/main/imageSection-hero-2.webp"
-        alt="FAI Platform Fullscreen Overview"
+        alt={t("alt")}
         priority
       />
       <WhyFaiSection />

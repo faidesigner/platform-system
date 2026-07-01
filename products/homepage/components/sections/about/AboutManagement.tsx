@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import { motion } from "framer-motion";
-import { aboutConfig, type ManagementMember } from "@/config/site";
+import type { ManagementMember } from "@/config/types";
 
 // name박스 그린 그라데이션 — 카드 고유 장식, 고정값 승인 영역
 const NAME_GRADIENT =
@@ -53,15 +53,15 @@ function ManagementCard({ member }: { member: ManagementMember }) {
         {/* [textSection] */}
         <div className="flex shrink-0 flex-col items-start gap-s">
           <div className="self-stretch text-body font-normal text-secondary">
-            {member.education.map((line) => (
-              <p key={line} className="whitespace-pre-line">{line}</p>
+            {member.education.map((line, i) => (
+              <p key={i} className="whitespace-pre-line">{line}</p>
             ))}
           </div>
           {/* [stroke]: 0.5px 정밀 구분선 */}
           <hr className="h-0 self-stretch border-t-[0.5px] border-solid border-[var(--color-border-secondary,#D2D3D5)]" />
           <div className="self-stretch text-body font-normal text-secondary">
-            {member.career.map((line) => (
-              <p key={line} className="whitespace-pre-line">{line}</p>
+            {member.career.map((line, i) => (
+              <p key={i} className="whitespace-pre-line">{line}</p>
             ))}
           </div>
         </div>
@@ -70,9 +70,12 @@ function ManagementCard({ member }: { member: ManagementMember }) {
   );
 }
 
-export function AboutManagement() {
-  const { title, members } = aboutConfig.management;
+interface AboutManagementProps {
+  title: string;
+  members: ManagementMember[];
+}
 
+export function AboutManagement({ title, members }: AboutManagementProps) {
   return (
     <section className="w-full bg-surface">
       <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">

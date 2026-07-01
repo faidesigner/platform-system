@@ -1,4 +1,19 @@
 {
+  "common": {
+    "cta": {
+      "contact": "문의하기",
+      "requestDemo": "도입 문의하기",
+      "learnMore": "자세히 알아보기",
+      "more": "더보기",
+      "quickChat": "빠른 상담하기",
+      "reviewsMore": "실제 도입 후기 더보기",
+      "mediaMore": "더 알아보기"
+    },
+    "a11y": {
+      "prev": "이전",
+      "next": "다음"
+    }
+  },
   "nav": {
     "products": "제품",
     "about": "회사소개",
@@ -6,8 +21,613 @@
     "careers": "채용",
     "contact": "문의하기"
   },
+  "footer": {
+    "company": "(주) 파인더스에이아이",
+    "addressValue": "0662 서울특별시 서초구 강남대로51길 1, 511타워 13층",
+    "labels": {
+      "ceo": "대표이사",
+      "tel": "전화",
+      "address": "주소",
+      "bizNo": "사업자등록번호",
+      "email": "이메일 문의"
+    },
+    "policies": {
+      "privacy": "개인정보 처리방침",
+      "cctv": "영상정보처리기기 운영 · 관리 방침"
+    }
+  },
   "products": {
-    "visionCheckout": "VISION CHECK-OUT",
-    "unmannedStore": "UNMANNED STORE"
+    "visionCheckout": {
+      "heroSubtitle": "차세대 AI 무인 결제 솔루션",
+      "featuresTitle": "VCO는 무엇이 다를까요?",
+      "features": {
+        "0": {
+          "title": "빈틈없이 스캔하는\n14대의 AI 카메라",
+          "description": "국내 유일 멀티뷰 3D 인식 기술을 적용했어요"
+        },
+        "1": {
+          "title": "장비 교체없이\n기존 POS 그대로",
+          "description": "사용 중인 POS 그대로 사용할 수 있어요"
+        },
+        "2": {
+          "title": "오차없이 정확한 99.9% 인식률",
+          "description": "타사 대비 월등한 성능으로 1초면 스캔 완료되는 압도적인 속도로 처리해요"
+        }
+      },
+      "benefitsTitle": "어떻게 달라질까요?",
+      "benefits": {
+        "0": {
+          "eyebrow": "구매 과정의 간소화",
+          "title": "바코드 없는 상품까지\n매끄러운 결제",
+          "items": {
+            "0": {
+              "subtitle": "쉬운 사용법",
+              "description": "바코드를 직접 스캔할 필요 없이 트레이를 올려놓기만 하면 끝!"
+            },
+            "1": {
+              "subtitle": "품목 제한 없는 AI 인식 기술",
+              "description": "바코드가 없는 상품인 빵, 샐러드, 구내식당 메뉴, 부품까지 3D Vision AI가 정확히 인식하여 품목 제한 없이 무인화가 가능해요"
+            }
+          }
+        },
+        "1": {
+          "eyebrow": "인력 리스크 관리",
+          "title": "구인 스트레스 없는 매장",
+          "items": {
+            "0": {
+              "subtitle": "인건비 절감",
+              "description": "VCO가 단순 계산 업무를 대신하여 사장님의 인건비 부담이 줄어 합리적인 매장 운영이 가능해요"
+            },
+            "1": {
+              "subtitle": "근무자 채용 및 교육 부담 해소",
+              "description": "복잡한 직원 관리와 업무 교육에서 벗어날 수 있어요\n사람을 구하기 힘든 환경에서도 최소 인원으로 안정적으로 운영하세요"
+            }
+          }
+        },
+        "2": {
+          "eyebrow": "수익성 개선",
+          "title": "안내가 필요없는\n직관적인 결제 과정",
+          "items": {
+            "0": {
+              "subtitle": "빠른 회전율",
+              "description": "신속한 결제로 대기줄이 줄어들어 피크 타임 매출을 높일 수 있어요"
+            },
+            "1": {
+              "subtitle": "디지털 소외 없는 언택트 환경",
+              "description": "키오스크 사용을 어려워하는 고객부터 셀프 결제를 원하는 고객까지\n누구에게나 쉽고, 모두에게 빠른 결제"
+            }
+          }
+        }
+      },
+      "industriesTitle": "주요 적용 산업",
+      "industriesDescription": "짧은 시간에 많은 사람이 몰리는 공간에서 바코드 없는 물건도 빠르게 결제할 수 있어요",
+      "industries": {
+        "0": {
+          "label": "Bakery&Cafe"
+        },
+        "1": {
+          "label": "Cafeteria&Canteen"
+        },
+        "2": {
+          "label": "Hospitality"
+        }
+      },
+      "reviewsTitle": "고객사 도입 후기",
+      "reviews": {
+        "0": {
+          "category": "베이커리",
+          "store": "만나밀 베이커리",
+          "role": "총괄 매니저 송주희",
+          "quote": {
+            "0": {
+              "text": "\"추가로 직원을 뽑기에는 부담이 있어 VCO를 도입했어요. "
+            },
+            "1": {
+              "text": "직원 1명 역할"
+            },
+            "2": {
+              "text": "을 해주니 확실히 업무량이 줄었어요. 비슷하게 생긴 빵도 구분을 잘 해서 다른 매장에 추천하고 싶어요.\""
+            }
+          }
+        },
+        "1": {
+          "category": "급식",
+          "store": "대형급식 W사 관리자",
+          "role": "",
+          "quote": {
+            "0": {
+              "text": "\"점심 피크타임에 "
+            },
+            "1": {
+              "text": "시간당 360명"
+            },
+            "2": {
+              "text": " 결제 처리가 가능해져 대기줄이 대폭 줄었고, 솔루션 도입으로 결제 정확도가 높아졌습니다.\""
+            }
+          }
+        },
+        "2": {
+          "category": "리조트",
+          "store": "일본 홋카이도 Niseko 리조트 매니저",
+          "role": "",
+          "quote": {
+            "0": {
+              "text": "\"산속 리조트 특성상 인력 채용과 유지가 어려운데, VCO 도입으로 "
+            },
+            "1": {
+              "text": "구인 걱정"
+            },
+            "2": {
+              "text": "을 덜었습니다. 외국인 고객까지 응대 가능하니 업무 부담이 적어졌어요.\""
+            }
+          }
+        }
+      }
+    },
+    "unmannedStore": {
+      "heroSubtitle": "세상에서 가장 경제적인 무인 매장 솔루션",
+      "effectsTitle": "WALK-THROUGH의 효과를 경험해 보세요",
+      "effectCards": {
+        "0": {
+          "title": "인건비 절감",
+          "description": "최소 인력으로 운영해요"
+        },
+        "1": {
+          "title": "결제 무인화",
+          "description": "바코드를 찍을 필요 없어요"
+        },
+        "2": {
+          "title": "원격 운영 가능",
+          "description": "실시간으로 현황을 알려줘요"
+        }
+      },
+      "effectList": {
+        "0": {
+          "title": "차별화된 VISION-AI 기술력",
+          "description": "다수의 카메라와 AI 기술을 통해,\n오프라인 매장에 세상에 없던 기술로 무인 매장 솔루션을 제공해요"
+        },
+        "1": {
+          "title": "실시간 선반 현황 확인으로 상품 관리",
+          "description": "실시간 선반의 현황 확인을 통해 결품 관리가 가능해요\n빈 선반으로 인한 매출 손실에 즉시 대응 할 수 있어요"
+        },
+        "2": {
+          "title": "오프라인 고객 데이터 분석",
+          "description": "고객이 선택한 상품을 카메라로 추적하고 자동으로 결제까기 이루어지는\n완전한 결제 무인화 시스템을 적용했어요"
+        }
+      },
+      "storeTypes": {
+        "0": {
+          "subtitle": "30평 이하의 소형 매장 무인화",
+          "description": "어떤 형태의 매장에도 적용이 가능한, 높은 자유도를 바탕으로\n편의점, 소형 슈퍼마켓, 편집샵 등에 적용해 보세요",
+          "sectionTitle": "Walk-through는 무엇이 다를까요?",
+          "cards": {
+            "0": {
+              "title": "간편한 고객 경험",
+              "description": "결제줄 없이, 바코드 인식도 없이, 가장 간편한 고객 경험을 제공합니다."
+            },
+            "1": {
+              "title": "검증된 정확도",
+              "description": "실제 운영 중인 매장들에서 검증된 우수한 정확도를 바탕으로 새로운 매장을 시작해보세요"
+            },
+            "2": {
+              "title": "운영 효율성 증대",
+              "description": "오프라인도 온라인처럼 매장 내 데이터를 활용해 최적의 운영 방향성을 결정하세요"
+            }
+          }
+        },
+        "1": {
+          "subtitle": "5평 내외 유휴 공간에 무인 리테일샵 입점이 가능해요",
+          "description": "하루면 설치가 끝나는 선조립 공법의 무인샵을 시작하세요",
+          "sectionTitle": "Walk-through는 무엇이 다를까요?",
+          "cards": {
+            "0": {
+              "title": "저렴한 도입 비용",
+              "description": "규격화된 선조립 공법으로, 가장 저렴한 가격에 무인화 매장을 도입하세요"
+            },
+            "1": {
+              "title": "빠른 설치",
+              "description": "정해진 규격을 고르시면, 하루만에 설치 완료.\n다음날부터 판매를 시작하세요"
+            },
+            "2": {
+              "title": "유휴 공간의 수익화",
+              "description": "마지막 한 평까지 알뜰하게.\n샵인샵, 로비, 스타디움 내부 등 어떤 형태의 공간이든 무인샵 도입이 가능해요"
+            }
+          }
+        }
+      },
+      "caseStudies": {
+        "standard": {
+          "0": {
+            "brand": "GS25 DX LAB",
+            "store": "가산스마트점",
+            "description": "국내 최초 로드샵형 완전 무인화 편의점\n아시아 최초 통합로드셀 기술 도입"
+          },
+          "1": {
+            "brand": "Super Swift",
+            "store": "자체 운영 매장",
+            "description": "자체 운영 매장\n국내 최초 후결제 CX도입"
+          },
+          "2": {
+            "brand": "나주 테크프렌들리",
+            "store": "CU 안심스마트점포",
+            "description": "KISA 본원 테스트 점포"
+          },
+          "3": {
+            "brand": "판교 Alphadom",
+            "store": "\"Worker Shop\"",
+            "description": "\"Shadow\" 편집샵"
+          }
+        },
+        "micro": {
+          "0": {
+            "brand": "PX24",
+            "store": "을지로점",
+            "description": "피트니스 센터 내 위치한\n24/7운영의 5평 규모 무인매장"
+          },
+          "1": {
+            "brand": "PX24",
+            "store": "화곡점",
+            "description": "피트니스 센터 내 위치한\n3.5평 규모 초소형 무인매장"
+          }
+        }
+      }
+    },
+    "productMenu": {
+      "0": {
+        "description": "바코드 스캔이 필요없는 AI 자동 계산대"
+      },
+      "1": {
+        "description": "VISION AI 무인 매장 솔루션"
+      }
+    }
+  },
+  "home": {
+    "hero": {
+      "title1": "리테일의 미래",
+      "title2": "한발 먼저 시작하세요",
+      "tagline": "No Staff, No Problem.",
+      "subtitle": "Next-Gen AI Retail Automation"
+    },
+    "whyFai": {
+      "headline": "Why FAI",
+      "subheadline": "멈춤 없이, 인건비 추가 없이, 대기줄 없이\n효율적인 매장 운영을 할 수 있습니다.",
+      "items": {
+        "0": {
+          "title": "멈춤 없이 매끄러운 결제",
+          "description": "바코드 스캔 없이 쓱 올려두면 결제가 끝나요\n쾌적한 결제 경험이 우리 매장의 매출을 바꿔요"
+        },
+        "1": {
+          "title": "최소 인력으로 최대 효율을",
+          "description": "단순 계산 업무는 똑똑한 AI에 맡기고, 사장님은 더 가치 있는 매장 관리에 집중하세요"
+        },
+        "2": {
+          "title": "막힘없는 고객 경험",
+          "description": "대기 시간이 줄어든 만큼 기분 좋게 매장을 나선 손님들은 이곳을 다시 찾게 될 거예요"
+        }
+      }
+    },
+    "customers": {
+      "title": "Customers"
+    },
+    "efficiency": {
+      "title": "Efficiency",
+      "subtitle": "숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다",
+      "stats": {
+        "0": {
+          "label": "결제 정확도",
+          "description": "오차 없는 완벽한 비전 AI"
+        },
+        "1": {
+          "label": "고객 대기시간 감소",
+          "labelCaption": "(VCO 도입 전후 비교)",
+          "description": "이탈을 막는 초고속 결제"
+        },
+        "2": {
+          "label": "매출 증가율",
+          "description": "피크타임 회전율 극대화"
+        }
+      }
+    },
+    "imageSection": {
+      "alt": "FAI Platform Fullscreen Overview"
+    },
+    "ctaBanner": {
+      "titleLine1": "지금 매장에 도입하고",
+      "titleLine2": "최대 효율을 경험을 해보세요"
+    }
+  },
+  "about": {
+    "hero": {
+      "eyebrow": "리테일 혁신",
+      "title": [
+        "고객이 리테일의 본질에",
+        "집중할 수 있도록"
+      ]
+    },
+    "partners": {
+      "title": "Partners",
+      "description": [
+        "글로벌 시장 리더들과",
+        "기술 그 이상의 가치를 만들어가고 있습니다"
+      ]
+    },
+    "investors": {
+      "groups": {
+        "0": {
+          "caption": "누적 127억원 투자 유치를 통해, 글로벌 사업성과 성장성을 인정받고 있습니다"
+        },
+        "1": {
+          "caption": "정부의 주요 딥테크 육성 프로그램에 선정되며, 시장을 선도할 압도적인 기술력을 인정받았습니다."
+        }
+      }
+    },
+    "management": {
+      "title": "Management",
+      "members": {
+        "0": {
+          "education": {
+            "0": "서울과학고",
+            "1": "KAIST 전산학 학사",
+            "2": "UCLA 컴퓨터공학 석사"
+          },
+          "career": {
+            "0": "전 삼성전자",
+            "1": "전 프라이피 CTO (Co-founder)"
+          }
+        },
+        "1": {
+          "education": {
+            "0": "Boston Coll. 수학, 경제학 학사",
+            "1": "KAIST ITM 석사"
+          },
+          "career": {
+            "0": "전 Funded 창업(CEO)&매각",
+            "1": "전 위메프 NBE TF"
+          }
+        },
+        "2": {
+          "education": {
+            "0": "서울과학고",
+            "1": "서울대학교 전기컴퓨터공학\n학사/박사(Ph.D)"
+          },
+          "career": {
+            "0": "전 삼성전자",
+            "1": "전 프라이피 CTO (Co-founder)"
+          }
+        },
+        "3": {
+          "education": {
+            "0": "연세대학교 건축공학 학사"
+          },
+          "career": {
+            "0": "전 나이스평가정보 사업기획단",
+            "1": "전 BCG 컨설턴트"
+          }
+        }
+      }
+    },
+    "people": {
+      "title": "People",
+      "subtitle": "파인더스에이아이의 멤버들을 만나보세요",
+      "cards": {
+        "0": {
+          "title": "AI로 세상을 더 이롭게 만드는 기술을 만드는 일",
+          "role": "CTO"
+        },
+        "1": {
+          "title": "문제를 피하지 않고 끝까지 해결하는 사람들과 함께",
+          "role": "CEO"
+        },
+        "2": {
+          "title": "기술보다 문제, 속도보다 방향, 구현보다 경험을 고민해요",
+          "role": "BE 개발"
+        },
+        "3": {
+          "title": "일본 리테일 시장의 새로운 미래를 만들고 있어요",
+          "role": "CEO"
+        }
+      },
+      "interviewAriaLabel": "{name} 직무 인터뷰 보기"
+    },
+    "meta": {
+      "title": "회사소개",
+      "description": "Fainders AI 회사 소개 — 멀티뷰 3D Vision AI로 매장 무인화를 실현합니다."
+    }
+  },
+  "media": {
+    "meta": {
+      "title": "미디어",
+      "description": "Fainders AI 뉴스, 보도자료, 쇼케이스 및 리테일 테크 소식."
+    },
+    "news": {
+      "title": "FAI News",
+      "items": {
+        "0": {
+          "title": "파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대",
+          "description": "AI 기반 리테일 솔루션 스타트업 파인더스에이아이가 프리 시리즈B 라운드에서 약 50억원 규모의 투자를 유치했다.",
+          "thumbnailAlt": "파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대"
+        },
+        "1": {
+          "title": "파인더스에이아이, 삼성웰스토리와 'AI 자동 계산대' 협업…간편식 무인 결제 경험 고도화",
+          "description": "AI 기반 리테일 솔루션 기업 주식회사 파인더스에이아이는 삼성웰스토리와 협업해 'AI 자동 계산대(이하 VCO)'를 삼성웰스토리의 간편식 무인 결제 시스템에 적용했다.",
+          "thumbnailAlt": "파인더스에이아이, 삼성웰스토리와 'AI 자동 계산대' 협업"
+        },
+        "2": {
+          "title": "파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현",
+          "description": "파인더스에이아이가 편의점 세븐일레븐의 싱가포르 매장의 AI 완전 무인 매장 기술을 제공, 운영을 시작했다고 밝혔다.",
+          "thumbnailAlt": "파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현"
+        },
+        "3": {
+          "title": "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공",
+          "description": "AI 기반 리테일 솔루션 기업 파인더스에이아이는 일본 법인을 통해 일본 홋카이도 니세코 지역의 대형 스키 리조트 레스토랑에 AI 셀프 계산대 'VCO'를 제공했다.",
+          "thumbnailAlt": "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공"
+        },
+        "4": {
+          "title": "도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'에서 AI 셀프 계산대 PoC 착수",
+          "description": "도큐부동산, 도큐리조트앤스테이, 파인더즈AI재팬은 신규 레스토랑 'NEST813'에서 AI 셀프 계산대 'VISION CHECK-OUT'의 도입을 위한 PoC에 착수했다.",
+          "thumbnailAlt": "도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'에서 AI 셀프 계산대 PoC 착수"
+        },
+        "5": {
+          "title": "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정",
+          "description": "인공지능(AI) 매장 자동화 기업 파인더스에이아이는 일본 홋카이도에서 개최된 글로벌 액셀러레이션 프로그램 '홋카이도 F 빌리지 X(HFX)'에 최종 선정됐다.",
+          "thumbnailAlt": "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정"
+        },
+        "6": {
+          "title": "한국 리테일 AI 스타트업, 라이프스타일 랩 'TOYONOMA'에서 PoC 스토어 오픈",
+          "description": "도쿄 도요스의 라이프스타일 랩 '토요노마'에서 한국 스타트업 Fainders.AI가 차세대 AI 셀프 계산대를 적용한 일본 최초의 PoC 스토어를 정식 오픈했다.",
+          "thumbnailAlt": "한국 리테일 AI 스타트업, 라이프스타일 랩 'TOYONOMA'에서 PoC 스토어 오픈"
+        },
+        "7": {
+          "title": "\"물건 골라 나가면 바로 결제\"...파인더스에이아이 무인 스토어 2호점 오픈",
+          "description": "파인더스에이아이는 AI 무인 마이크로 스토어 2호점을 스포애니 화곡점에 오픈하고 운영을 시작했다고 밝혔다.",
+          "thumbnailAlt": "파인더스에이아이 무인 스토어 2호점 오픈"
+        },
+        "8": {
+          "title": "파인더스에이아이, AI 무인 마이크로 스토어 오픈",
+          "description": "매장 자동화 AI 스타트업 파인더스에이아이는 국내 최초로 AI 무인 마이크로 스토어를 오픈했다고 공식 발표했다.",
+          "thumbnailAlt": "파인더스에이아이, AI 무인 마이크로 스토어 오픈"
+        },
+        "9": {
+          "title": "파인더스AI, 중기부 '아기유니콘' 선정…해외 진출 시동",
+          "description": "파인더스AI가 인공지능(AI) 무인 매장 솔루션 분야 최초로 중소벤처기업부가 선정한 올해 '아기유니콘'에 선정됐다.",
+          "thumbnailAlt": "파인더스AI, 중기부 '아기유니콘' 선정"
+        },
+        "10": {
+          "title": "파인더스에이아이, GS리테일과 AI 완전 무인 편의점 구현",
+          "description": "매장 자동화 AI 기술 기업 파인더스에이아이는 GS리테일의 미래형 편의점 GS25 DX LAB 2호점에 무인 매장 기술을 제공한다.",
+          "thumbnailAlt": "파인더스에이아이, GS리테일과 AI 완전 무인 편의점 구현"
+        },
+        "11": {
+          "title": "AI 매장 무인화 스타트업 '파인더스에이아이', 71억원 규모 시리즈 A 투자 유치",
+          "description": "AI 무인 매장 솔루션을 개발하는 '파인더스에이아이'가 71억원 규모 시리즈 A 라운드 투자를 유치하는 데 성공했다.",
+          "thumbnailAlt": "파인더스에이아이 71억원 규모 시리즈 A 투자 유치"
+        },
+        "12": {
+          "title": "AI 매장 무인화 스타트업 '파인더스에이아이' 6억원 투자 유치",
+          "description": "AI기반 오프라인 유통매장 무인화 기술을 개발하는 '파인더스에이아이'가 끌림벤처스로부터 6억원 시드 투자를 유치했다.",
+          "thumbnailAlt": "파인더스에이아이 6억원 시드 투자 유치"
+        },
+        "13": {
+          "title": "[빈 이미지 폴백 UI 확인용 카드]",
+          "description": "썸네일 이미지가 없는 경우 Empty Image Fallback UI가 정상 렌더링되는지 확인합니다.",
+          "thumbnailAlt": ""
+        }
+      }
+    },
+    "showcase": {
+      "title": "Media",
+      "youtube": {
+        "channelLabel": "YouTube",
+        "ctaLabel": "더 알아보기",
+        "videos": {
+          "0": {
+            "title": "파인더스에이아이 VCO는 뭐가 다른가요?②",
+            "description": "비슷하게 생긴 빵도 정확하게 구별해요!",
+            "thumbnailAlt": "파인더스에이아이 VCO 소금빵 구별"
+          },
+          "1": {
+            "title": "MISSING_FROM_DESIGN",
+            "description": "MISSING_FROM_DESIGN",
+            "thumbnailAlt": "MISSING_FROM_DESIGN"
+          }
+        },
+        "a11y": {
+          "prevVideo": "이전 영상",
+          "nextVideo": "다음 영상",
+          "goToVideo": "영상 {index}로 이동"
+        }
+      },
+      "socials": {
+        "followAriaLabel": "{label} 바로가기"
+      }
+    },
+    "retailTechLetter": {
+      "title": "Retail Tech Letter",
+      "description": "리테일 기술 트렌드와 파인더스에이아이의 최신 소식을 정리한 뉴스레터입니다. 지난 레터를 읽어보고 구독해보세요.",
+      "ctaLabel": "레터 구독하기"
+    }
+  },
+  "contact": {
+    "meta": {
+      "title": "문의하기",
+      "description": "도입 고민부터 커스텀 솔루션 제안까지 전문가가 직접 답변해드립니다."
+    },
+    "title": [
+      "도입 고민부터",
+      "커스텀 솔루션 제안까지",
+      "전문가가 직접 답변해드립니다"
+    ],
+    "subCopy": {
+      "highlight": "맞춤형 솔루션 제안",
+      "rest": "을 위해 문의 폼을 작성해주시면",
+      "line2": "담당자가 빠르게 연락드릴게요"
+    },
+    "form": {
+      "connectTitle": "연락드릴 정보를 입력해 주세요",
+      "requiredLabel": "필수 입력",
+      "selectTitle": "문의하고 싶은 정보를 선택해 주세요",
+      "submitLabel": "문의하기",
+      "privacyNotice": {
+        "before": "귀하의 문의에 답변하기 위해 수집된 데이터의 ",
+        "link": "개인정보 처리방침",
+        "after": "에 동의합니다"
+      }
+    },
+    "fields": {
+      "company": {
+        "label": "회사명",
+        "placeholder": "회사명",
+        "errorMessage": "회사명을 입력해 주세요."
+      },
+      "name": {
+        "label": "성함",
+        "placeholder": "성함",
+        "errorMessage": "성함을 입력해 주세요."
+      },
+      "email": {
+        "label": "이메일",
+        "placeholder": "name@example.com",
+        "errorMessage": "이메일을 입력해 주세요."
+      },
+      "phone": {
+        "label": "전화번호",
+        "placeholder": "전화번호",
+        "errorMessage": ""
+      }
+    },
+    "interests": {
+      "vco": {
+        "group": "VCO",
+        "multipleLabel": "(복수선택 가능)",
+        "options": {
+          "bakery": "베이커리",
+          "catering": "급식",
+          "special-venue": "특수 입지(경기장/공연장/리조트)",
+          "etc": "기타"
+        }
+      },
+      "store": {
+        "group": "STORE",
+        "multipleLabel": "(복수선택 가능)",
+        "options": {
+          "standard-store": "STANDARD STORE",
+          "micro-store": "MICRO STORE"
+        }
+      }
+    },
+    "toast": {
+      "text": "간단한 솔루션 문의는 카카오톡 채널을 이용해 주세요",
+      "textShort": "카카오톡 채널로 문의하세요",
+      "buttonLabel": "빠른 상담하기"
+    },
+    "complete": {
+      "title": "문의 주셔서 정말 감사합니다",
+      "subCopy": {
+        "before": "내용을 확인하고 ",
+        "highlight": "평균 2~3일 이내",
+        "after": " 담당자가 연락드리겠습니다"
+      },
+      "buttonLabel": "계속 둘러보기"
+    }
   }
 }

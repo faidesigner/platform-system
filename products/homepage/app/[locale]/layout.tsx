@@ -37,8 +37,7 @@ const OG_LOCALE: Record<string, string> = {
   ja: "ja_JP",
 };
 
-// 로케일별 색인 정책: 현재 본문이 한국어뿐이라 ko만 색인하고
-// en·ja는 noindex(번역 완료 시 해제). 미번역 페이지의 중복 색인 방지.
+// 로케일별 색인 정책: ko/en/ja 모두 번역 완료 → 전 로케일 색인 허용.
 export async function generateMetadata({
   params,
 }: {
@@ -46,7 +45,6 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const s = getSeo(locale);
-  const indexable = locale === routing.defaultLocale; // ko
   return {
     metadataBase: new URL(siteConfig.url),
     // FAI 브랜드 파비콘 세트(app/favicon.ico + public PNG/Apple/PWA manifest).
@@ -86,7 +84,7 @@ export async function generateMetadata({
         "x-default": "/ko/",
       },
     },
-    robots: { index: indexable, follow: true },
+    robots: { index: true, follow: true },
   };
 }
 
