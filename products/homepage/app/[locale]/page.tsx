@@ -1,6 +1,4 @@
-import type { Metadata } from "next";
 import { setRequestLocale } from "next-intl/server";
-import { routing } from "@/i18n/routing";
 import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
 import type { LogoItem } from "@fai/ui";
@@ -24,17 +22,8 @@ const CUSTOMER_IMAGES: CustomerImage[] = [
 
 const PARTNER_LOGOS: LogoItem[] = clientLogos.map(({ src, name }) => ({ src, alt: name }));
 
-export async function generateMetadata({
-  params,
-}: {
-  params: Promise<{ locale: string }>;
-}): Promise<Metadata> {
-  const { locale } = await params;
-  // 홈 title은 루트 기본값(siteConfig.fullName) 유지, 기본 로케일에만 self-canonical 부여.
-  return locale === routing.defaultLocale
-    ? { alternates: { canonical: `/${locale}/` } }
-    : {};
-}
+// title/description/canonical/hreflang는 [locale]/layout.tsx의 generateMetadata에서
+// 로케일별로 일괄 제공한다(홈은 별도 오버라이드 불필요).
 
 export default async function HomePage({
   params,
