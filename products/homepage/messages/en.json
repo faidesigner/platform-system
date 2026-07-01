@@ -110,6 +110,7 @@
       "reviewsTitle": "Customer testimonials",
       "reviews": {
         "0": {
+          "category": "Bakery",
           "store": "Mannameal Bakery",
           "role": "General Manager, Song Ju-hee",
           "quote": {
@@ -125,6 +126,7 @@
           }
         },
         "1": {
+          "category": "Foodservice",
           "store": "Manager, large catering firm W",
           "role": "",
           "quote": {
@@ -140,6 +142,7 @@
           }
         },
         "2": {
+          "category": "Resort",
           "store": "Resort Manager, Niseko, Hokkaido, Japan",
           "role": "",
           "quote": {
@@ -230,23 +233,29 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "store": "Gasan Smart Store",
             "description": "Korea's first fully unmanned roadside-style convenience store\nAsia's first integrated load-cell technology"
           },
           "1": {
+            "store": "Self-operated store",
             "description": "Directly operated store\nKorea's first pay-later CX"
           },
           "2": {
+            "store": "CU Ansim Smart Store",
             "description": "KISA headquarters test store"
           },
           "3": {
+            "store": "\"Worker Shop\"",
             "description": "\"Shadow\" select shop"
           }
         },
         "micro": {
           "0": {
+            "store": "Euljiro branch",
             "description": "A 24/7, 16 sqm unmanned store\nlocated inside a fitness center"
           },
           "1": {
+            "store": "Hwagok branch",
             "description": "An ultra-compact 11.5 sqm unmanned store\nlocated inside a fitness center"
           }
         }

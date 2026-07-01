@@ -110,6 +110,7 @@
       "reviewsTitle": "고객사 도입 후기",
       "reviews": {
         "0": {
+          "category": "베이커리",
           "store": "만나밀 베이커리",
           "role": "총괄 매니저 송주희",
           "quote": {
@@ -125,6 +126,7 @@
           }
         },
         "1": {
+          "category": "급식",
           "store": "대형급식 W사 관리자",
           "role": "",
           "quote": {
@@ -140,6 +142,7 @@
           }
         },
         "2": {
+          "category": "리조트",
           "store": "일본 홋카이도 Niseko 리조트 매니저",
           "role": "",
           "quote": {
@@ -230,23 +233,29 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "store": "가산스마트점",
             "description": "국내 최초 로드샵형 완전 무인화 편의점\n아시아 최초 통합로드셀 기술 도입"
           },
           "1": {
+            "store": "자체 운영 매장",
             "description": "자체 운영 매장\n국내 최초 후결제 CX도입"
           },
           "2": {
+            "store": "CU 안심스마트점포",
             "description": "KISA 본원 테스트 점포"
           },
           "3": {
+            "store": "\"Worker Shop\"",
             "description": "\"Shadow\" 편집샵"
           }
         },
         "micro": {
           "0": {
+            "store": "을지로점",
             "description": "피트니스 센터 내 위치한\n24/7운영의 5평 규모 무인매장"
           },
           "1": {
+            "store": "화곡점",
             "description": "피트니스 센터 내 위치한\n3.5평 규모 초소형 무인매장"
           }
         }

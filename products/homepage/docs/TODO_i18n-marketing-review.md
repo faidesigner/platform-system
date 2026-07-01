@@ -137,3 +137,30 @@ CTA 버튼은 `common.cta.requestDemo` 재사용(신규 키 없음). 원본 `<br
 
 ### 미배선(잔존 UI 텍스트) — 별도 결정 필요
 - 접근성 텍스트(aria-label "이전"/"다음"/"이전 케이스"/"다음 케이스", 리뷰 이미지 alt `${store} 전경`)는 Phase 3 필드 범위(공용 common 네임스페이스) 밖이라 현행 한국어 유지. 공용 a11y 키(common.a11y.*)로 별도 처리 권장 — 현재 en/ja 페이지에서도 한국어로 렌더됨(비가시 접근성 텍스트).
+
+## Phase 3 오염 수정 (2026-07-01) — Playwright 스윕으로 발견된 누락 필드
+
+Phase 3에서 en/ja에 한국어 원문이 그대로 렌더되던 2개 필드를 추가 번역·배선함. `products.visionCheckout.reviews.<i>.category`, `products.unmannedStore.caseStudies.{standard,micro}.<i>.store`.
+
+### products.visionCheckout.reviews[].category (설명 태그 — 번역 대상)
+| index | ko | en (초벌) | ja (초벌) |
+|-------|----|-----------|-----------|
+| 0 | 베이커리 | Bakery | ベーカリー |
+| 1 | 급식 | Foodservice | 給食 |
+| 2 | 리조트 | Resort | リゾート |
+
+### products.unmannedStore.caseStudies.standard[].store — **고유 지점명 포함, 마케팅/현지화 검수 필요**
+| index | ko | en (초벌 — 로마자 표기) | ja (초벌 — 로마자 표기) | 비고 |
+|-------|----|--------------------------|--------------------------|------|
+| 0 | 가산스마트점 | Gasan Smart Store | 加山スマート店 | 고유 지점명 — 공식 영문/일문 표기 확인 필요 |
+| 1 | 자체 운영 매장 | Self-operated store | 自社運営店舗 | 순수 설명어 — 번역 확정 |
+| 2 | CU 안심스마트점포 | CU Ansim Smart Store | CU アンシムスマート店舗 | 고유 지점명(CU 브랜드 공식 영문 표기 "Ansim Smart Store" 확인 필요) |
+| 3 | "Worker Shop" | "Worker Shop" (원문 유지) | "Worker Shop" (원문 유지) | 이미 영문 브랜드명 |
+
+### products.unmannedStore.caseStudies.micro[].store — **고유 지점명, 마케팅/현지화 검수 필요**
+| index | ko | en (초벌 — 로마자 표기) | ja (초벌 — 로마자 표기) | 비고 |
+|-------|----|--------------------------|--------------------------|------|
+| 0 | 을지로점 | Euljiro branch | 乙支路店 | 고유 지점명 — 로마자/한자 표기 확인 필요 |
+| 1 | 화곡점 | Hwagok branch | 禾谷店 | 고유 지점명 — 로마자/한자 표기 확인 필요 |
+
+**검수 포인트:** 위 4개 고유 지점명(가산스마트점/CU 안심스마트점포/을지로점/화곡점)의 en/ja 표기는 초벌 로마자·한자 번역이며, 실제 고객사(GS25, CU, PX24)의 공식 영문/일문 브랜드 표기와 일치하는지 마케팅팀 확인 전까지는 확정 아님.

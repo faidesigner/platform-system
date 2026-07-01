@@ -85,6 +85,7 @@ export default async function ProductDetailPage({
 
   const reviews = product.reviews.map((r, i) => ({
     ...r,
+    category: t(`reviews.${i}.category`),
     store: t(`reviews.${i}.store`),
     role: t(`reviews.${i}.role`),
     quote: r.quote.map((seg, k) => ({
@@ -122,6 +123,7 @@ export default async function ProductDetailPage({
       key,
       list.map((cs, i) => ({
         ...cs,
+        store: t(`caseStudies.${key}.${i}.store`),
         description: t(`caseStudies.${key}.${i}.description`),
       })),
     ]),

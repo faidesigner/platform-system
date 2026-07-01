@@ -110,6 +110,7 @@
       "reviewsTitle": "お客様の導入事例",
       "reviews": {
         "0": {
+          "category": "ベーカリー",
           "store": "マンナミル・ベーカリー",
           "role": "統括マネージャー ソン・ジュヒ",
           "quote": {
@@ -125,6 +126,7 @@
           }
         },
         "1": {
+          "category": "給食",
           "store": "大手給食W社の管理者",
           "role": "",
           "quote": {
@@ -140,6 +142,7 @@
           }
         },
         "2": {
+          "category": "リゾート",
           "store": "日本 北海道 Niseko リゾートのマネージャー",
           "role": "",
           "quote": {
@@ -230,23 +233,29 @@
       "caseStudies": {
         "standard": {
           "0": {
+            "store": "加山スマート店",
             "description": "国内初のロードショップ型完全無人コンビニ\nアジア初の統合ロードセル技術を導入"
           },
           "1": {
+            "store": "自社運営店舗",
             "description": "自社運営店舗\n国内初の後払いCXを導入"
           },
           "2": {
+            "store": "CU アンシムスマート店舗",
             "description": "KISA本院のテスト店舗"
           },
           "3": {
+            "store": "\"Worker Shop\"",
             "description": "「Shadow」セレクトショップ"
           }
         },
         "micro": {
           "0": {
+            "store": "乙支路店",
             "description": "フィットネスセンター内に位置する\n24時間営業・約16平米規模の無人店舗"
           },
           "1": {
+            "store": "禾谷店",
             "description": "フィットネスセンター内に位置する\n約11.5平米規模の超小型無人店舗"
           }
         }
