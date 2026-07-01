@@ -39,7 +39,8 @@ export default function NavigationBarBridge() {
   };
 
   const handleLocaleChange = (code: string) => {
-    router.push(pathname, { locale: code });
+    // scroll:false → 언어 전환 시 최상단 이동/리로드 없이 현재 화면 유지
+    router.push(pathname, { locale: code, scroll: false });
   };
 
   return (

@@ -9,6 +9,10 @@ import { ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 const trackEvent = vi.fn();
 vi.mock("@/lib/analytics/track", () => ({ trackEvent: (...a: unknown[]) => trackEvent(...a) }));
 vi.mock("next/navigation", () => ({ useRouter: () => ({ push: vi.fn() }) }));
+// SmoothScroll(lenisRef 경유 import)이 @/i18n/navigation → next-intl createNavigation을
+// 끌어오는데, next-intl 내부의 bare `next/navigation` import를 vitest가 해석하지 못한다.
+// 테스트 대상과 무관하므로 usePathname만 스텁으로 대체.
+vi.mock("@/i18n/navigation", () => ({ usePathname: () => "/contact", useRouter: () => ({ push: vi.fn() }) }));
 // SVGR 임포트(.svg → 컴포넌트)는 Next 빌드 전용 변환이라 Vite/jsdom에서 해석 불가 —
 // 테스트 대상과 무관한 순수 아이콘이므로 최소 스텁으로 대체.
 vi.mock("@fai/ui/components/common/Icon/IcRequiredDot", () => ({
