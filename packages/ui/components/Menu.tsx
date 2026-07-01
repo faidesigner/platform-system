@@ -50,6 +50,11 @@ export interface MenuItem {
    * 소비자가 pathname을 비교한 뒤 전달.
    */
   active?:      boolean;
+  /**
+   * 클릭 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * 네비게이션(Link/외부 a)은 그대로 유지되며 콜백은 부가적으로 실행된다.
+   */
+  onClick?:     () => void;
 }
 
 export interface MenuSection {
@@ -243,14 +248,14 @@ function MenuItemEl({ item, size, textColor, hoverBg, hoverText }: MenuItemElPro
 
   if (item.external) {
     return (
-      <a href={item.href} target="_blank" rel="noopener noreferrer" {...commonProps}>
+      <a href={item.href} target="_blank" rel="noopener noreferrer" onClick={item.onClick} {...commonProps}>
         {inner}
       </a>
     );
   }
 
   return (
-    <Link href={item.href} {...commonProps}>
+    <Link href={item.href} onClick={item.onClick} {...commonProps}>
       {inner}
     </Link>
   );
