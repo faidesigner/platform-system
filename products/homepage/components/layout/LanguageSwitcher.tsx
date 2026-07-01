@@ -13,7 +13,7 @@ import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
 const LANGUAGES = [
   { code: 'ko', label: 'KO' },
   { code: 'en', label: 'EN' },
-  { code: 'jp', label: 'JP' },
+  { code: 'ja', label: 'JP' },
 ] as const;
 
 /* ──────────────────────────────────────────

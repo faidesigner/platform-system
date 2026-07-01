@@ -16,6 +16,62 @@ import type {
   ContactConfig,
 } from "./types";
 
+/* ──────────────────────────────────────────
+   로케일별 SEO 메타데이터 (단일 소스)
+   - 홈 <title> = 검색제목, 서브페이지 템플릿은 "%s | Fainders.AI"
+   - keywords는 배열(Next Metadata API 규격)
+   - en/ja 검색제목·키워드, ja ogTitle은 Notion 미기재분을 합리적으로 완성한 값
+────────────────────────────────────────── */
+export type Locale = "ko" | "en" | "ja";
+
+export interface SeoEntry {
+  title: string;
+  description: string;
+  keywords: string[];
+  ogTitle: string;
+  ogDescription: string;
+}
+
+export const seo: Record<Locale, SeoEntry> = {
+  ko: {
+    title: "파인더스에이아이 | AI 무인 결제 솔루션 | 리테일 무인화 솔루션",
+    description:
+      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
+    keywords: ["파인더스에이아이", "무인 결제 솔루션", "AI", "키오스크", "무인매장", "리테일", "리테일테크"],
+    ogTitle: "파인더스에이아이 | 리테일 무인화 솔루션",
+    ogDescription:
+      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
+  },
+  en: {
+    // TODO(marketing): Notion 미확정, 검수 필요
+    title: "Fainders.AI | Autonomous Store & Self-Checkout Solution",
+    description:
+      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
+    // TODO(marketing): Notion 미확정, 검수 필요
+    keywords: ["Fainders.AI", "autonomous store", "AI-powered retail", "self-checkout", "unmanned store", "retail tech"],
+    ogTitle: "Fainders.AI | Autonomous Store Solution",
+    ogDescription:
+      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
+  },
+  ja: {
+    // TODO(marketing): Notion 미확정, 검수 필요
+    title: "Fainders.AI | AI無人決済・無人店舗ソリューション",
+    description:
+      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
+    // TODO(marketing): Notion 미확정, 검수 필요
+    keywords: ["Fainders.AI", "無人店舗", "無人決済", "AI", "キオスク", "リテール", "リテールテック"],
+    // TODO(marketing): Notion 미확정, 검수 필요
+    ogTitle: "Fainders.AI | 無人店舗ソリューション",
+    ogDescription:
+      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
+  },
+};
+
+/** 로케일별 SEO 엔트리 반환. 알 수 없는 로케일은 ko로 폴백. */
+export function getSeo(locale: string): SeoEntry {
+  return seo[locale as Locale] ?? seo.ko;
+}
+
 export const clientLogos = [
   { id: "samsung-welstory", name: "Samsung Welstory", src: "/logos/logo-samsung-welstory-white.png" },
   { id: "gs-retail",        name: "GS Retail",        src: "/logos/logo-gs-retail-white.png" },
@@ -31,8 +87,9 @@ export const siteConfig = {
   name: "FAI",
   fullName: "FAI | Fainders AI",
   url: "https://www.fainders.ai",
-  description: "AI 기반 솔루션으로 비즈니스의 미래를 함께 만들어갑니다.",
-  keywords: ["AI", "인공지능", "솔루션", "FAI", "Fainders"],
+  // backward-compat: 메타데이터는 seo.* 맵이 단일 소스. 아래 값은 seo.ko를 가리킨다.
+  description: seo.ko.description,
+  keywords: seo.ko.keywords,
 
   nav: [
     { label: "서비스", href: "/services" },
