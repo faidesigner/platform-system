@@ -46,6 +46,15 @@ export default async function MediaPage({
     thumbnailAlt: t(`news.items.${i}.thumbnailAlt`),
   }));
 
+  // Stibee 리싱크로 title(ko)이 재동기화되는 원문이라, id로 키를 매핑한 오버라이드로 번역을 얹는다.
+  // 미번역 id는 t.has가 false → 원문(ko) 그대로 노출(로케일 간 동일 동작 보장).
+  const letters = letterData.letters.map((l) => ({
+    ...l,
+    title: t.has(`retailTechLetter.letterTitles.${l.id}`)
+      ? t(`retailTechLetter.letterTitles.${l.id}`)
+      : l.title,
+  }));
+
   return (
     <main>
       <MediaShowcaseSection
@@ -75,7 +84,7 @@ export default async function MediaPage({
         ctaLabel={t("retailTechLetter.ctaLabel")}
         moreLabel={tCommon("more")}
         url={siteConfig.retailTechLetter.url}
-        letters={letterData.letters}
+        letters={letters}
       />
     </main>
   );

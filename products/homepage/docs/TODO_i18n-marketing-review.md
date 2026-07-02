@@ -357,3 +357,35 @@ Phase 3에서 지적됐던 "aria-label 이전/다음이 en/ja에서도 한국어
 - `app/[locale]/layout.tsx`: `robots.index`를 로케일 무관 `true`로 전환(기존엔 `locale === defaultLocale`로 ko만 색인).
 - `app/sitemap.ts`: `INDEXED_LOCALE="ko"` 단일값 제거, `routing.locales`(ko/en/ja) 전체를 순회해 로케일별 URL 생성.
 - 전제: Phase 1~7 번역이 완료되어 en/ja 본문에 한국어 잔존이 없다는 가정하에 전환. 위 Phase 5 항목(YouTube/Stibee 동기화 콘텐츠 미번역)은 여전히 미해결 상태로 en/ja에 한국어 원문이 일부 노출되므로, **완전한 "en/ja 한국어 잔존 0" 달성 전 색인 전환의 SEO 리스크**(다국어 사이트에서 미번역 콘텐츠 노출 시 품질 신호 저하 가능)를 마케팅/SEO 담당자와 재확인 권장.
+
+---
+
+## Phase 8 — 인명 로마자화 + Retail Tech Letter 목록 제목 번역 (2026-07-02)
+
+Phase 4에서 "이번 스코프에서 로마자 변환하지 않고 한글 그대로 유지"로 남겨뒀던 인명을 en/ja에서 로마자 표기로 전환(`about.management.members.<i>.name`, `about.people.cards.<i>.name`, `footer.ceoValue` 신규 키). ja는 en과 동일한 로마자 표기 재사용(일본어 가나 음역 대신 영문 표기 선택 — 브랜드 가이드 확인 필요). 함께 `aboutConfig.management.members[].photo.alt` / `aboutConfig.people.cards[].image.alt`에 하드코딩돼 있던 한글 이름도 번역된 이름으로 재조합해 en/ja alt 텍스트의 한글 잔존을 제거함(기존 Phase 4 "스코프 제외" 항목 중 인명 관련 부분 해소 — `hero.image.alt`는 인명이 아니라서 이번 스코프 밖, 미해결로 유지).
+
+### 인명 로마자 표기 — **전원 초벌(best-effort), 네이티브/본인 확인 전까지 미확정**
+| 한글 | en/ja 표기 | 비고 |
+|------|-----------|------|
+| 함명원 | Myungwon Ham | CEO — Management + Footer(ceoValue)에서 사용 |
+| 왕민권 | Minkwon Wang | CEO — Management + People + Footer(ceoValue)에서 사용 |
+| 홍석범 | Sukbum Hong | CTO — Management + People에서 사용 |
+| 이현규 | Hyunkyu Lee | CSO — Management에서만 사용 |
+| 박성빈 | Sungbin Park | BE 개발 — People에서만 사용, **로마자 표기 확정 근거 없음(추정)** |
+| 이지민 | Jimin Lee | CEO(Fainders.AI Japan) — People에서만 사용, **로마자 표기 확정 근거 없음(추정)** |
+
+**검수 포인트:**
+- 6명 모두 여권/명함 등 공식 로마자 표기 확인 필요(성명 로마자 표기는 개인마다 관행이 다름 — 예: "Hong Sukbum" vs "Sukbum Hong" 성/이름 순서, "Wang" vs "Wang(g)" 등).
+- 특히 박성빈·이지민은 Management(임원진) 목록에 없어 참고할 기존 영문 표기가 없었던 완전 추정치 — 본인 확인 필수.
+- ja는 가나 음역(예: ハム・ミョンウォン) 대신 영문 로마자를 그대로 재사용했음. 일본어권 사용자 가독성·브랜드 가이드 관점에서 가나 음역이 필요한지 별도 확인 필요.
+- `footer.ceoValue`(en/ja: "Myungwon Ham · Minkwon Wang")의 구분자는 ko 원문의 "ㆍ"(가운뎃점) 대신 국제적으로 통용되는 " · "(중점)을 사용 — 표기 통일성 검토 필요.
+
+### media.retailTechLetter.letterTitles.1~31 — Stibee 레터 목록 제목 번역(오버라이드 맵)
+`config/retail-tech-letter.json`은 Stibee API 리싱크 시마다 재생성되는 외부 동기화 데이터라 `title`(ko) 자체는 건드리지 않고, id로 매핑하는 `media.retailTechLetter.letterTitles.<id>` 오버라이드 키를 신규 추가(ko/en/ja 31개씩, 총 93개 키). `app/[locale]/media/page.tsx`에서 `t.has()`로 존재 여부를 확인해 있으면 번역을 얹고, 없으면(향후 리싱크로 신규 id 추가 시) ko 원문을 그대로 노출 — 로케일 간 동작이 통일됨(신규 레터는 번역 전까지 3개 로케일 모두 한국어로 보임).
+
+**전체 31개 en/ja 초벌 번역 — 마케팅/PR 검수 필수(외부 발행된 실제 뉴스레터 제목의 재번역이므로 오역·뉘앙스 차이가 그대로 노출됨):**
+- 고유명사는 유지: Fainders.AI/FAI/VCO/PX24, 세븐일레븐→7-Eleven, 아마존고→Amazon Go, 창이공항→Changi Airport, NRF, AVITA, 뚜쥬루→Toujours.
+- `[리테일 테크 레터]` 프리픽스는 en `[Retail Tech Letter]`, ja `[リテールテックレター]`로 통일 번역.
+- id 31/27/26/20/15/14/8/4의 ko 원문에 사용된 유니코드 특수 따옴표(‘’/“”)와 id 20의 이중 공백 오탈자는 원본(`config/retail-tech-letter.json`)과 **바이트 단위로 동일하게** 보존함(최초 구현 시 직선 따옴표로 오기입했던 것을 재수정) — en/ja는 표준 따옴표(' " )로 정규화해 번역.
+- 31개 제목 목록·번역 전문은 `messages/{ko,en,ja}.json`의 `media.retailTechLetter.letterTitles` 참조(양이 많아 이 문서에는 요약만 기재).
+- **검수 포인트:** 언론 보도 헤드라인(Phase 5)과 마찬가지로 실제 발행된 뉴스레터 제목의 번역이므로 정확성·톤 검수가 특히 중요. id 30/15의 인용구("도입하지 않을 이유 없다"/"2025년, 무인 매장 확산 위한 글로벌 진출 원년")는 실제 인터뷰이 발언 의역 — 원문 발언 기록이 있다면 대조 권장.

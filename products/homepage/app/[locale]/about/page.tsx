@@ -49,18 +49,32 @@ export default async function AboutPage({
     caption: t(`investors.groups.${i}.caption`),
   }));
 
-  const managementMembers = aboutConfig.management.members.map((member, i) => ({
-    ...member,
-    education: member.education.map((_, j) => t(`management.members.${i}.education.${j}`)),
-    career: member.career.map((_, j) => t(`management.members.${i}.career.${j}`)),
-  }));
+  const managementMembers = aboutConfig.management.members.map((member, i) => {
+    const name = t(`management.members.${i}.name`);
+    return {
+      ...member,
+      name,
+      // photo.alt는 config에 "<한글 이름> <role>"로 고정돼 있어 name만 치환하면 인명 로케일이 깨짐 → 번역된 이름으로 재조합.
+      photo: { ...member.photo, alt: `${name} ${member.role}` },
+      education: member.education.map((_, j) => t(`management.members.${i}.education.${j}`)),
+      career: member.career.map((_, j) => t(`management.members.${i}.career.${j}`)),
+    };
+  });
 
-  const peopleCards = aboutConfig.people.cards.map((card, i) => ({
-    ...card,
-    title: t(`people.cards.${i}.title`),
-    role: t(`people.cards.${i}.role`),
-    interviewAriaLabel: t("people.interviewAriaLabel", { name: card.name }),
-  }));
+  const peopleCards = aboutConfig.people.cards.map((card, i) => {
+    const name = t(`people.cards.${i}.name`);
+    const interviewAriaLabel = t("people.interviewAriaLabel", { name });
+    return {
+      ...card,
+      name,
+      title: t(`people.cards.${i}.title`),
+      role: t(`people.cards.${i}.role`),
+      // image.alt는 config에 "<한글 이름> ... 인터뷰"로 고정돼 있어 로케일이 깨짐 → 카드 링크에 이미 붙는
+      // interviewAriaLabel(번역 완료)을 재사용해 대체(감싸는 <a>의 접근성 이름과 내용도 일치시킴).
+      image: { ...card.image, alt: interviewAriaLabel },
+      interviewAriaLabel,
+    };
+  });
 
   return (
     <main>

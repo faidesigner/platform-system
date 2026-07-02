@@ -73,6 +73,8 @@ export interface FooterLabels {
   email?:        string;
   privacy?:      string;
   cctv?:         string;
+  /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
+  ceoValue?:     string;
 }
 
 const DEFAULT_LABELS: Required<FooterLabels> = {
@@ -85,6 +87,7 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
   cctv:         '영상정보처리기기 운영 · 관리 방침',
+  ceoValue:     VALUES.ceo,
 };
 
 /* ── SNS 버튼 공용 ── */
@@ -165,7 +168,7 @@ export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
 
   const companyName = l.company;
   const row1Info = [
-    { title: l.ceo,     text: VALUES.ceo },
+    { title: l.ceo,     text: l.ceoValue },
     { title: l.tel,     text: VALUES.tel },
     { title: l.address, text: l.addressValue },
   ];

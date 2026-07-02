@@ -23,6 +23,7 @@
   },
   "footer": {
     "company": "Fainders.AI Inc.",
+    "ceoValue": "Myungwon Ham · Minkwon Wang",
     "addressValue": "13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul, Republic of Korea",
     "labels": {
       "ceo": "CEO",
@@ -365,6 +366,7 @@
       "title": "Management",
       "members": {
         "0": {
+          "name": "Myungwon Ham",
           "education": {
             "0": "Seoul Science High School",
             "1": "B.S. in Computer Science, KAIST",
@@ -376,6 +378,7 @@
           }
         },
         "1": {
+          "name": "Minkwon Wang",
           "education": {
             "0": "B.A. in Mathematics & Economics, Boston College",
             "1": "M.S. in ITM, KAIST"
@@ -386,6 +389,7 @@
           }
         },
         "2": {
+          "name": "Sukbum Hong",
           "education": {
             "0": "Seoul Science High School",
             "1": "B.S./Ph.D. in Electrical & Computer Engineering,\nSeoul National University"
@@ -396,6 +400,7 @@
           }
         },
         "3": {
+          "name": "Hyunkyu Lee",
           "education": {
             "0": "B.A. in Architectural Engineering, Yonsei University"
           },
@@ -412,18 +417,22 @@
       "cards": {
         "0": {
           "title": "Building technology that makes the world better with AI",
+          "name": "Sukbum Hong",
           "role": "CTO"
         },
         "1": {
           "title": "Working with people who solve problems all the way through, without avoiding them",
+          "name": "Minkwon Wang",
           "role": "CEO"
         },
         "2": {
           "title": "Thinking about the problem before the technology, the direction before the speed, the experience before the implementation",
+          "name": "Sungbin Park",
           "role": "BE Engineer"
         },
         "3": {
           "title": "Building a new future for Japan's retail market",
+          "name": "Jimin Lee",
           "role": "CEO"
         }
       },
@@ -539,7 +548,40 @@
     "retailTechLetter": {
       "title": "Retail Tech Letter",
       "description": "A newsletter covering retail technology trends and the latest news from Fainders.AI. Read past letters and subscribe.",
-      "ctaLabel": "Subscribe to the Letter"
+      "ctaLabel": "Subscribe to the Letter",
+      "letterTitles": {
+        "1": "[Retail Tech Letter] A Glimpse of the Future of Convenience Stores in Japan",
+        "2": "[Retail Tech Letter] Did Amazon Go Stores Really Grow by 50%?",
+        "3": "[Retail Tech Letter] 3 Outlooks for the Global Fully Unmanned Store Industry in 2024",
+        "4": "[Retail Tech Letter] At NRF 2024, Retailers Worldwide Focus on 'AI Unmanned Stores'",
+        "5": "[Retail Tech Letter] AI Unmanned Stores Expand — Why the UK Is Fast and Italy Is Slow",
+        "6": "[Retail Tech Letter] The Evolution of Vision AI Stores — Beyond the 2nd Generation to the 3rd",
+        "7": "[Retail Tech Letter] The Future of AI Unmanned Stores: Micro Stores",
+        "8": "[Retail Tech Letter] The Start of FAI's Entry into the Japanese Market — 'SUSHI TECH TOKYO 2024'",
+        "9": "[Retail Tech Letter] Global AI Unmanned Retail Market — A Strategic Analysis of Key Players",
+        "10": "[Retail Tech Letter] Introducing FAI's AI Micro Store, PX24",
+        "11": "[Retail Tech Letter] An Integrated AI Unmanned Store Solution the Offline Market Needs",
+        "12": "[Retail Tech Letter] The Present and Future of Store Automation in the Retail Industry",
+        "13": "[Retail Tech Letter] Fainders.AI Launches 'AI Self-Checkout'",
+        "14": "[Retail Tech Letter] 'AI Self-Checkout' — Confidence and Expectations for Next Year's Commercialization",
+        "15": "[Retail Tech Letter] Fainders.AI: \"2025, the Year We Go Global to Expand Unmanned Stores\"",
+        "16": "[Retail Tech Letter] Fainders.AI Opens Second 'PX24' AI Micro Store!",
+        "17": "[Retail Tech Letter] Fainders.AI Joins Japan's Largest Retail Tech Exhibition, Accelerating Local Expansion",
+        "18": "[Retail Tech Letter] First Milestone in Japan — FAI and AVITA Begin Collaborative PoC!",
+        "19": "[Retail Tech Letter] VCO's First PoC Records 99.1% Real-World Operating Accuracy!",
+        "20": "[Retail Tech Letter] Why Are Chinese Companies Interested in AI Self-Checkout?",
+        "21": "[Retail Tech Letter] Fainders.AI Opens Its First AI Unmanned Store in Singapore",
+        "22": "[Retail Tech Letter] One Month After the Changi Airport Demo, a Commercial Store Opens! Is the Client 7-Eleven?",
+        "23": "[Retail Tech Letter] VCO Expands Beyond Bakeries and Cafeterias — Now Into Japan!",
+        "24": "[Retail Tech Letter] In an Era of Shrinking Workforce, the Story of Fainders.AI's VCO",
+        "25": "[Retail Tech Letter] One Step Closer to Unmanned Bakeries! VCO's Opportunity at Seoul Cafe Show",
+        "26": "[Retail Tech Letter] From 'Possibility' to 'Proof' — How Was Fainders.AI's 2025?",
+        "27": "[Retail Tech Letter] In 2026, Retail Tech's Battleground Isn't 'Novelty' Anymore",
+        "28": "[Retail Tech Letter] FAI's Growing Presence in the Japanese Market — RetailTech Japan 2026",
+        "29": "[Retail Tech Letter] Pre-Series B Funding Secured, Strengthening Synergy with Retailers",
+        "30": "[Retail Tech Letter] Bakeries Using VCO Report 99% Satisfaction... \"No Reason Not to Adopt It\"",
+        "31": "[Retail Tech Letter] 'The Answer for Queuing Bakeries: AI Checkout' — Cheonan Toujours Case"
+      }
     }
   },
   "contact": {
