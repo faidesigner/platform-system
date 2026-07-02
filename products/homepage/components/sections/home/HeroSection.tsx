@@ -4,8 +4,10 @@ import { useRef, useState, useEffect } from "react";
 import { motion, useScroll } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { LogoMarquee, IcoTxtButton } from "@fai/ui";
 import type { LogoItem } from "@fai/ui";
+import { trackEvent } from "@/lib/analytics/track";
 
 interface HeroSectionProps {
   logos?: LogoItem[];
@@ -16,6 +18,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
   const [isExpanded, setIsExpanded] = useState(false);
   const params = useParams();
   const locale = typeof params?.locale === "string" ? params.locale : "";
+  const t = useTranslations("home.hero");
+  const tCommon = useTranslations("common");
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -35,8 +39,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         {/* 상단 카피 — 확장 전에만 표시 */}
         {!isExpanded && (
           <div className="absolute left-0 right-0 top-0 z-20 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
-            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">리테일의 미래</h2>
-            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">한발 먼저 시작하세요</h2>
+            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
+            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
           </div>
         )}
 
@@ -84,7 +88,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
                           isExpanded ? "translate-y-0 opacity-100" : "translate-y-[100%] opacity-0"
                         }`}
                       >
-                        No Staff, No Problem.
+                        {t("tagline")}
                       </span>
                     </span>
                   </p>
@@ -95,7 +99,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
                           isExpanded ? "translate-y-0 opacity-100" : "translate-y-[100%] opacity-0"
                         }`}
                       >
-                        Next-Gen AI Retail Automation
+                        {t("subtitle")}
                       </span>
                     </span>
                   </h2>
@@ -106,8 +110,11 @@ export default function HeroSection({ logos }: HeroSectionProps) {
                   }`}
                 >
                   <Link href={locale ? `/${locale}/products/vision-check-out` : "/products/vision-check-out"}>
-                    <IcoTxtButton variant="secondary" size="L" shape="round" className="shrink-0">
-                      자세히 알아보기
+                    <IcoTxtButton
+                      variant="secondary" size="L" shape="round" className="shrink-0"
+                      onClick={() => trackEvent("interest_click", { location: "home_hero", label: tCommon("cta.learnMore") })}
+                    >
+                      {tCommon("cta.learnMore")}
                     </IcoTxtButton>
                   </Link>
                 </div>

@@ -3,8 +3,11 @@ import * as React from "react";
 import { flushSync } from "react-dom";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 import { lenisRef } from "@/components/layout/SmoothScroll";
 import { siteConfig } from "@/config/site";
+import { trackEvent } from "@/lib/analytics/track";
+import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
 import { IcoTxtButton } from "@fai/ui/components/button/IcoTxtButton";
@@ -21,7 +24,12 @@ type FormState = {
 
 const EMPTY_STATE: FormState = { values: {}, interests: {}, errors: {} };
 
+// config interests 그룹 순서(VCO, STORE) → messages namespace 키 매핑.
+// 구조/option value는 config 유지, 표시 텍스트만 messages에서 로드.
+const INTEREST_GROUP_KEYS = ["vco", "store"] as const;
+
 export function ContactUsSection() {
+  const t = useTranslations("contact");
   const router = useRouter();
   const [state, setState] = React.useState<FormState>(EMPTY_STATE);
   const [submitted, setSubmitted] = React.useState(false);
@@ -38,11 +46,11 @@ export function ContactUsSection() {
   }, []);
 
   const validateField = (key: string, value: string): string => {
-    if (key === "company" && (!value || value.trim() === "")) return "회사명을 입력해주세요.";
-    if (key === "name" && (!value || value.trim() === "")) return "성함을 입력해 주세요.";
+    if (key === "company" && (!value || value.trim() === "")) return t("fields.company.errorMessage");
+    if (key === "name" && (!value || value.trim() === "")) return t("fields.name.errorMessage");
     if (key === "email") {
       const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
-      if (!value || !emailRegex.test(value)) return "이메일 형식을 확인해주세요.";
+      if (!value || !emailRegex.test(value)) return t("fields.email.errorMessage");
     }
     return "";
   };
@@ -57,21 +65,21 @@ export function ContactUsSection() {
   const toggleInterest = (value: string, checked: boolean) =>
     setState((s) => ({ ...s, interests: { ...s.interests, [value]: checked } }));
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
     const newErrors: Record<string, string> = {};
     const { company, name, email } = state.values;
 
     if (!company || company.trim() === "") {
-      newErrors.company = "회사명을 입력해주세요.";
+      newErrors.company = t("fields.company.errorMessage");
     }
     if (!name || name.trim() === "") {
-      newErrors.name = "성함을 입력해 주세요.";
+      newErrors.name = t("fields.name.errorMessage");
     }
     const emailRegex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
     if (!email || !emailRegex.test(email)) {
-      newErrors.email = "이메일 형식을 확인해주세요.";
+      newErrors.email = t("fields.email.errorMessage");
     }
 
     if (Object.keys(newErrors).length > 0) {
@@ -88,10 +96,27 @@ export function ContactUsSection() {
       return;
     }
 
-    const selectedInterests = Object.entries(state.interests)
-      .filter(([, v]) => v)
-      .map(([k]) => k);
-    console.log("[contact submit]", { ...state.values, interests: selectedInterests });
+    // 라이브 contact-us와 동일한 Zapier 웹훅 전송.
+    // 포맷 고정: Content-Type은 form-urlencoded, body는 JSON 문자열
+    // (application/json으로 보내면 Zap 필드 매핑이 비어 들어감).
+    const payload = buildContactPayload({
+      values: state.values,
+      interests: state.interests,
+      utm: parseUtm(typeof window !== "undefined" ? window.location.search : ""),
+      referrer: typeof document !== "undefined" ? document.referrer : "",
+    });
+    try {
+      await fetch(ZAPIER_CONTACT_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/x-www-form-urlencoded" },
+        body: JSON.stringify(payload),
+      });
+    } catch (err) {
+      // 전송 실패해도 사용자 UX는 완료 처리(라이브 동작 동일). 리드 유실만 경고 로그.
+      console.warn("[contact submit] Zapier 전송 실패:", err);
+    }
+
+    trackEvent("inquiry_complete", { location: "contact_form", label: "문의하기" });
     flushSync(() => { setSubmitted(true); });
     if (lenisRef.current) {
       lenisRef.current.scrollTo(0, { immediate: true });
@@ -152,12 +177,12 @@ export function ContactUsSection() {
           <div className="flex w-full flex-col items-center justify-center gap-[var(--spacing-3XL,40px)] text-center px-[var(--padding-XL)] min-[961px]:px-0">
             <div className="flex flex-col items-center gap-[var(--spacing-M,16px)]">
               <h2 className="text-[length:var(--font-size-28,28px)] leading-[var(--font-lineHeight-28,42px)] min-[769px]:text-[length:var(--font-size-36,36px)] min-[769px]:leading-[var(--font-lineHeight-36,54px)] font-bold text-[var(--color-text-inverse,#FFF)]">
-                {contact.complete.title}
+                {t("complete.title")}
               </h2>
               <p className="text-[length:var(--font-size-18,18px)] leading-[var(--font-lineHeight-18,27px)] min-[769px]:text-[length:var(--font-size-20,20px)] min-[769px]:leading-[var(--font-lineHeight-20,30px)] font-medium">
-                <span className="text-[var(--color-text-inverse,#FFF)]">{contact.complete.subCopy.before}</span>
-                <span className="text-[var(--fai-color-brand,#39DB1F)]">{contact.complete.subCopy.highlight}</span>
-                <span className="text-[var(--color-text-inverse,#FFF)]">{contact.complete.subCopy.after}</span>
+                <span className="text-[var(--color-text-inverse,#FFF)]">{t("complete.subCopy.before")}</span>
+                <span className="text-[var(--fai-color-brand,#39DB1F)]">{t("complete.subCopy.highlight")}</span>
+                <span className="text-[var(--color-text-inverse,#FFF)]">{t("complete.subCopy.after")}</span>
               </p>
             </div>
             <div className="dark">
@@ -169,7 +194,7 @@ export function ContactUsSection() {
                 className="w-[320px]"
                 onClick={handleContinue}
               >
-                {contact.complete.buttonLabel}
+                {t("complete.buttonLabel")}
               </IcoTxtButton>
             </div>
           </div>
@@ -187,22 +212,22 @@ export function ContactUsSection() {
                   className="self-stretch max-[420px]:text-[length:var(--font-size-20,20px)] text-[length:var(--font-size-28,28px)] desktop-s:text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-inverse"
                  
                 >
-                  {contact.title.map((line, idx) => (
+                  {(t.raw("title") as string[]).map((line, idx, arr) => (
                     <React.Fragment key={idx}>
                       {line}
-                      {idx < contact.title.length - 1 && <br />}
+                      {idx < arr.length - 1 && <br />}
                     </React.Fragment>
                   ))}
                 </h2>
                 <p
                   className="self-stretch max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]"
-                 
+
                 >
-                  <span className="text-brand-text">{contact.subCopy.highlight}</span>
+                  <span className="text-brand-text">{t("subCopy.highlight")}</span>
                   <span className="text-inverse">
-                    {contact.subCopy.rest}
+                    {t("subCopy.rest")}
                     <br />
-                    {contact.subCopy.line2}
+                    {t("subCopy.line2")}
                   </span>
                 </p>
               </div>
@@ -221,13 +246,13 @@ export function ContactUsSection() {
                     {/* title */}
                     <div className="flex justify-between items-end self-stretch w-full">
                       <p className="text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
-                        {contact.form.connectTitle}
+                        {t("form.connectTitle")}
                       </p>
                       {/* titleItems — 필수 입력 범례 */}
                       <div className="flex items-center p-[var(--padding-3XS,2px)] gap-[var(--spacing-2XS,4px)] rounded-[var(--cornerRadius-none,0)]">
                         <IcRequiredDot className="text-[var(--color-icon-optional-brand-primary)]" />
                         <span className="text-quaternary text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
-                          {contact.form.requiredLabel}
+                          {t("form.requiredLabel")}
                         </span>
                       </div>
                     </div>
@@ -237,8 +262,8 @@ export function ContactUsSection() {
                         <LineInput
                           key={field.key}
                           name={field.key}
-                          label={field.label}
-                          placeholder={field.placeholder}
+                          label={t(`fields.${field.key}.label`)}
+                          placeholder={t(`fields.${field.key}.placeholder`)}
                           type={field.type}
                           required={field.required}
                           maxLength={field.key === "phone" ? 16 : undefined}
@@ -263,21 +288,24 @@ export function ContactUsSection() {
                   {/* select: 관심 정보 */}
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch">
                     <p className="self-stretch text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
-                      {contact.form.selectTitle}
+                      {t("form.selectTitle")}
                     </p>
 
                     <div className="flex flex-col items-start gap-[var(--spacing-3XL,40px)] self-stretch">
                       <div className="flex flex-col items-start gap-[var(--spacing-3XL,40px)] self-stretch">
-                        {contact.interests.map((group) => (
+                        {contact.interests.map((group, groupIdx) => {
+                          // config 그룹 순서 → messages namespace 키. option value는 config 유지.
+                          const gk = INTEREST_GROUP_KEYS[groupIdx];
+                          return (
                           <div key={group.group} className="flex flex-col items-start gap-[var(--spacing-S,8px)] p-[var(--padding-none,0)] self-stretch">
 
                             {/* titleItem */}
                             <div className="flex items-center gap-[var(--spacing-S,8px)]">
                               <span className="text-secondary max-[420px]:text-[length:var(--font-size-14,14px)] text-[length:var(--font-size-18,18px)] font-medium leading-[var(--font-lineHeight-18,27px)]">
-                                {group.group}
+                                {t(`interests.${gk}.group`)}
                               </span>
                               <span className="text-quaternary max-[420px]:text-[length:var(--font-size-12,12px)] text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
-                                {group.multipleLabel}
+                                {t(`interests.${gk}.multipleLabel`)}
                               </span>
                             </div>
 
@@ -287,24 +315,25 @@ export function ContactUsSection() {
                                 <CheckboxField
                                   key={opt.value}
                                   value={opt.value}
-                                  label={opt.label}
+                                  label={t(`interests.${gk}.options.${opt.value}`)}
                                   checked={state.interests[opt.value] ?? false}
                                   onChange={(c) => toggleInterest(opt.value, c)}
                                 />
                               ))}
                             </div>
                           </div>
-                        ))}
+                          );
+                        })}
                       </div>
 
                       {/* textBox: 개인정보 처리방침 안내 */}
                       <div className="flex flex-1 justify-start items-start self-stretch text-quaternary text-[length:var(--w-caption-M-size,12px)] font-normal leading-[var(--w-caption-M-lineHeight,18px)] tracking-[var(--w-caption-M-letterSpacing,-0.1px)]">
                         <p>
-                          {contact.form.privacyNotice.before}
+                          {t("form.privacyNotice.before")}
                           <a href={contact.form.privacyNotice.href} target="_blank" rel="noopener noreferrer" className="underline decoration-solid">
-                            {contact.form.privacyNotice.link}
+                            {t("form.privacyNotice.link")}
                           </a>
-                          {contact.form.privacyNotice.after}
+                          {t("form.privacyNotice.after")}
                         </p>
                       </div>
                     </div>
@@ -318,9 +347,9 @@ export function ContactUsSection() {
                   size="XL"
                   shape="square"
                   className="w-full self-stretch"
-                 
+
                 >
-                  {contact.form.submitLabel}
+                  {t("form.submitLabel")}
                 </IcoTxtButton>
               </form>
             </div>
@@ -333,21 +362,22 @@ export function ContactUsSection() {
                   <CustomerSupportGraphic className="hidden tablet:block w-[40px] h-[40px] shrink-0" />
                   {/* ≥768px 텍스트 */}
                   <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
-                    {contact.toast.text}
+                    {t("toast.text")}
                   </p>
                   {/* 421px~767px 텍스트 */}
                   <p className="tablet:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
-                    카카오톡 채널로 문의하세요
+                    {t("toast.textShort")}
                   </p>
                 </div>
                 <a
                   href={contact.toast.kakaoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
                   className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
                 >
                   <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
-                    {contact.toast.buttonLabel}
+                    {t("toast.buttonLabel")}
                   </span>
                 </a>
               </div>
@@ -359,10 +389,11 @@ export function ContactUsSection() {
                 href={contact.toast.kakaoUrl}
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
                 className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)]"
               >
                 <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)]">
-                  {contact.toast.buttonLabel}
+                  {t("toast.buttonLabel")}
                 </span>
               </a>
             </div>

@@ -42,33 +42,66 @@ const SNS = [
   },
 ];
 
-const COMPANY_NAME = '(주) 파인더스에이아이';
+/* ── 실데이터 값(번역 대상 아님, address 제외) ── */
+const VALUES = {
+  ceo:     '함명원ㆍ왕민권',
+  tel:     '02-6191-0049',
+  address: '0662 서울특별시 서초구 강남대로51길 1, 511타워 13층',
+  bizNo:   '809-86-01657',
+  email:   'contact@fainders.ai',
+};
 
-const ROW1_INFO = [
-  { title: '대표이사', text: '함명원ㆍ왕민권' },
-  { title: '전화',     text: '02-6191-0049' },
-  { title: '주소',     text: '0662 서울특별시 서초구 강남대로51길 1, 511타워 13층' },
-];
+// 정책 문서(PDF) — 저장소에 자체 호스팅(public/document/). 상대경로라 환경 독립(프리뷰·PRD 모두 동작).
+// 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
+const POLICY_HREFS = {
+  privacy: '/document/privacy-policy.pdf',
+  cctv:    '/document/cctv-policy.pdf',
+};
 
-const ROW2_INFO = [
-  { title: '사업자등록번호', text: '809-86-01657' },
-  { title: '이메일 문의',    text: 'contact@fainders.ai' },
-];
+/**
+ * Footer 라벨 세트 — i18n 비결합(@fai/ui는 next-intl을 import하지 않음).
+ * 소비자(homepage FooterBridge)가 번역 문자열을 주입하며, 미지정 시 아래 한국어 기본값을 사용한다.
+ */
+export interface FooterLabels {
+  company?:      string;
+  ceo?:          string;
+  tel?:          string;
+  address?:      string;
+  /** 주소 실데이터 값(로케일별). 미지정 시 한국어 기본 주소 사용. */
+  addressValue?: string;
+  bizNo?:        string;
+  email?:        string;
+  privacy?:      string;
+  cctv?:         string;
+  /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
+  ceoValue?:     string;
+}
 
-const POLICIES = [
-  { label: '개인정보 처리방침', href: '/privacy' },
-  { label: '영상정보처리기기 운영 · 관리 방침', href: '/cctv-policy' },
-];
+const DEFAULT_LABELS: Required<FooterLabels> = {
+  company:      '(주) 파인더스에이아이',
+  ceo:          '대표이사',
+  tel:          '전화',
+  address:      '주소',
+  addressValue: VALUES.address,
+  bizNo:        '사업자등록번호',
+  email:        '이메일 문의',
+  privacy:      '개인정보 처리방침',
+  cctv:         '영상정보처리기기 운영 · 관리 방침',
+  ceoValue:     VALUES.ceo,
+};
 
 /* ── SNS 버튼 공용 ── */
-function SnsButtons() {
+function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void }) {
   return (
     <div className="flex items-start gap-s">
       {SNS.map((sns) => (
         <a
           key={sns.label}
           href={sns.href}
+          target="_blank"
+          rel="noopener noreferrer"
           aria-label={sns.label}
+          onClick={() => onSocialClick?.(sns.label)}
           className="flex flex-col items-center justify-center rounded-full p-[var(--padding-XS)] bg-filled-optional-brand-secondaryBtn"
         >
           <span className="flex items-center justify-center w-4 h-4">
@@ -82,14 +115,16 @@ function SnsButtons() {
   );
 }
 
+type PolicyItem = { label: string; href: string };
+
 /* ── 정책 링크 공용 ── */
-function PolicyLinks({ className }: { className?: string }) {
+function PolicyLinks({ policies, className }: { policies: PolicyItem[]; className?: string }) {
   return (
     <div className={`flex items-center gap-m ${className ?? ''}`}>
-      {POLICIES.map((p, i) => (
+      {policies.map((p, i) => (
         <span key={p.href} className="flex items-center gap-m">
           {i > 0 && <span className="text-border-secondary">|</span>}
-          <a href={p.href} className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
+          <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
             {p.label}
           </a>
         </span>
@@ -122,7 +157,30 @@ function InfoRow({ items, className }: { items: { title: string; text: string }[
 
 /* ── Component ── */
 
-export default function Footer() {
+interface FooterProps {
+  onSocialClick?: (label: string) => void;
+  /** 회사정보·정책 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값 사용. */
+  labels?: FooterLabels;
+}
+
+export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
+  const l = { ...DEFAULT_LABELS, ...labels };
+
+  const companyName = l.company;
+  const row1Info = [
+    { title: l.ceo,     text: l.ceoValue },
+    { title: l.tel,     text: VALUES.tel },
+    { title: l.address, text: l.addressValue },
+  ];
+  const row2Info = [
+    { title: l.bizNo, text: VALUES.bizNo },
+    { title: l.email, text: VALUES.email },
+  ];
+  const policies: PolicyItem[] = [
+    { label: l.privacy, href: POLICY_HREFS.privacy },
+    { label: l.cctv,    href: POLICY_HREFS.cctv },
+  ];
+
   return (
     <footer className="relative w-full bg-bg-200">
 
@@ -141,7 +199,7 @@ export default function Footer() {
           {/* logoArea */}
           <div className="flex flex-col items-start justify-between self-stretch gap-6">
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
-            <SnsButtons />
+            <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
           {/* contentsArea */}
@@ -149,11 +207,11 @@ export default function Footer() {
             <div className="flex flex-col items-start w-[718px] max-w-full gap-[var(--size-48)]">
               <div className="flex flex-col gap-[var(--spacing-MS)]">
                 <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                  {COMPANY_NAME}
+                  {companyName}
                 </p>
                 <div className="flex flex-row justify-between items-start gap-[var(--size-80)] self-stretch">
-                  <InfoRow items={ROW1_INFO} />
-                  <InfoRow items={ROW2_INFO} className="w-[256px]" />
+                  <InfoRow items={row1Info} />
+                  <InfoRow items={row2Info} className="w-[256px]" />
                 </div>
               </div>
             </div>
@@ -163,7 +221,7 @@ export default function Footer() {
 
         {/* 데스크톱 정책 링크 */}
         <div className="fai-footer__desktop-policies px-[var(--padding-8XL)] pb-4xl">
-          <PolicyLinks />
+          <PolicyLinks policies={policies} />
         </div>
 
         {/* =====================================================
@@ -177,7 +235,7 @@ export default function Footer() {
               <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             </div>
             <div className="fai-footer__socials">
-              <SnsButtons />
+              <SnsButtons onSocialClick={onSocialClick} />
             </div>
           </div>
 
@@ -187,10 +245,10 @@ export default function Footer() {
             {/* companyInfo */}
             <div className="fai-footer__info flex flex-col items-start gap-[var(--spacing-MS,12px)]">
               <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                {COMPANY_NAME}
+                {companyName}
               </p>
               <div className="flex flex-col gap-[var(--spacing-MS,12px)] w-full">
-                {[...ROW1_INFO, ...ROW2_INFO].map((item) => (
+                {[...row1Info, ...row2Info].map((item) => (
                   <div key={item.title} className="flex items-start">
                     <div className="flex shrink-0 w-[92px]">
                       <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
@@ -209,10 +267,10 @@ export default function Footer() {
 
             {/* policies */}
             <div className="fai-footer__policies flex justify-end items-center gap-[var(--spacing-MS,12px)]">
-              {POLICIES.map((p, i) => (
+              {policies.map((p, i) => (
                 <span key={p.href} className="flex items-center gap-m">
                   {i > 0 && <span className="text-border-secondary">|</span>}
-                  <a href={p.href} className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
+                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
                     {p.label}
                   </a>
                 </span>

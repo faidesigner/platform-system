@@ -1,9 +1,11 @@
 import Image from "next/image";
-import { aboutConfig } from "@/config/site";
+import type { InvestorGroup } from "@/config/types";
 
-export function AboutLogos() {
-  const { groups } = aboutConfig.investors;
+interface AboutLogosProps {
+  groups: InvestorGroup[];
+}
 
+export function AboutLogos({ groups }: AboutLogosProps) {
   return (
     <section className="w-full bg-surface">
       <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">

@@ -2,10 +2,8 @@
 
 import { useState } from "react";
 import Image from "next/image";
-import { siteConfig } from "@/config/site";
+import type { MediaItem } from "@/config/types";
 import { IcoTxtButton, Label } from "@fai/ui";
-
-type MediaItem = (typeof siteConfig.media.items)[number];
 
 /* ── Card ────────────────────────────────────────────── */
 function MediaCard({ item }: { item: MediaItem }) {
@@ -119,17 +117,22 @@ export function MediaCardSkeleton() {
 }
 
 /* ── Section ─────────────────────────────────────────── */
-export default function MediaNewsSection() {
-  const { media } = siteConfig;
+interface MediaNewsSectionProps {
+  title: string;
+  moreLabel: string;
+  items: MediaItem[];
+}
+
+export default function MediaNewsSection({ title, moreLabel, items }: MediaNewsSectionProps) {
   const [visibleCount, setVisibleCount] = useState(6);
 
-  if (!media.items.length) return null;
+  if (!items.length) return null;
 
   const handleMoreClick = () => {
-    setVisibleCount((prev) => Math.min(prev + 6, media.items.length));
+    setVisibleCount((prev) => Math.min(prev + 6, items.length));
   };
 
-  const hasMore = visibleCount < media.items.length;
+  const hasMore = visibleCount < items.length;
 
   return (
     <section className="w-full bg-surface">
@@ -146,7 +149,7 @@ export default function MediaNewsSection() {
       <h2
         className="text-title-l desktop:text-title-xl font-bold text-primary"
       >
-        {media.title}
+        {title}
       </h2>
 
       {/* cardSection */}
@@ -160,7 +163,7 @@ export default function MediaNewsSection() {
             desktop:gap-x-[var(--spacing-5XL,80px)] desktop:gap-y-[var(--spacing-5XL,80px)]
           "
         >
-          {media.items.slice(0, visibleCount).map((item, idx) => (
+          {items.slice(0, visibleCount).map((item, idx) => (
             <MediaCard key={`${item.date}-${idx}`} item={item} />
           ))}
         </div>
@@ -184,7 +187,7 @@ export default function MediaNewsSection() {
               </svg>
             }
           >
-            {media.moreLabel}
+            {moreLabel}
           </IcoTxtButton>
         )}
       </div>

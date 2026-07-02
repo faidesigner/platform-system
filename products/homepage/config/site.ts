@@ -16,6 +16,62 @@ import type {
   ContactConfig,
 } from "./types";
 
+/* ──────────────────────────────────────────
+   로케일별 SEO 메타데이터 (단일 소스)
+   - 홈 <title> = 검색제목, 서브페이지 템플릿은 "%s | Fainders.AI"
+   - keywords는 배열(Next Metadata API 규격)
+   - en/ja 검색제목·키워드, ja ogTitle은 Notion 미기재분을 합리적으로 완성한 값
+────────────────────────────────────────── */
+export type Locale = "ko" | "en" | "ja";
+
+export interface SeoEntry {
+  title: string;
+  description: string;
+  keywords: string[];
+  ogTitle: string;
+  ogDescription: string;
+}
+
+export const seo: Record<Locale, SeoEntry> = {
+  ko: {
+    title: "파인더스에이아이 | AI 무인 결제 솔루션 | 리테일 무인화 솔루션",
+    description:
+      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
+    keywords: ["파인더스에이아이", "무인 결제 솔루션", "AI", "키오스크", "무인매장", "리테일", "리테일테크"],
+    ogTitle: "파인더스에이아이 | 리테일 무인화 솔루션",
+    ogDescription:
+      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
+  },
+  en: {
+    // TODO(marketing): Notion 미확정, 검수 필요
+    title: "Fainders.AI | Autonomous Store & Self-Checkout Solution",
+    description:
+      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
+    // TODO(marketing): Notion 미확정, 검수 필요
+    keywords: ["Fainders.AI", "autonomous store", "AI-powered retail", "self-checkout", "unmanned store", "retail tech"],
+    ogTitle: "Fainders.AI | Autonomous Store Solution",
+    ogDescription:
+      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
+  },
+  ja: {
+    // TODO(marketing): Notion 미확정, 검수 필요
+    title: "Fainders.AI | AI無人決済・無人店舗ソリューション",
+    description:
+      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
+    // TODO(marketing): Notion 미확정, 검수 필요
+    keywords: ["Fainders.AI", "無人店舗", "無人決済", "AI", "キオスク", "リテール", "リテールテック"],
+    // TODO(marketing): Notion 미확정, 검수 필요
+    ogTitle: "Fainders.AI | 無人店舗ソリューション",
+    ogDescription:
+      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
+  },
+};
+
+/** 로케일별 SEO 엔트리 반환. 알 수 없는 로케일은 ko로 폴백. */
+export function getSeo(locale: string): SeoEntry {
+  return seo[locale as Locale] ?? seo.ko;
+}
+
 export const clientLogos = [
   { id: "samsung-welstory", name: "Samsung Welstory", src: "/logos/logo-samsung-welstory-white.png" },
   { id: "gs-retail",        name: "GS Retail",        src: "/logos/logo-gs-retail-white.png" },
@@ -29,10 +85,10 @@ export const clientLogos = [
 
 export const siteConfig = {
   name: "FAI",
-  fullName: "FAI | Fainders AI",
-  url: "https://fainders.ai",
-  description: "AI 기반 솔루션으로 비즈니스의 미래를 함께 만들어갑니다.",
-  keywords: ["AI", "인공지능", "솔루션", "FAI", "Fainders"],
+  url: "https://www.fainders.ai",
+  // backward-compat: 메타데이터는 seo.* 맵이 단일 소스. 아래 값은 seo.ko를 가리킨다.
+  description: seo.ko.description,
+  keywords: seo.ko.keywords,
 
   nav: [
     { label: "서비스", href: "/services" },
@@ -55,19 +111,19 @@ export const siteConfig = {
         {
           title: "빈틈없이 스캔하는\n14대의 AI 카메라",
           description: "국내 유일 멀티뷰 3D 인식 기술을 적용했어요",
-          image: "/images/products/vco/vco-feature-camera.png",
+          image: "/images/products/vco/vco-feature-camera.webp",
           imagePosition: "bottom",
         },
         {
           title: "장비 교체없이\n기존 POS 그대로",
           description: "사용 중인 POS 그대로 사용할 수 있어요",
-          image: "/images/products/vco/vco-feature-pos.png",
+          image: "/images/products/vco/vco-feature-pos.webp",
           imagePosition: "bottom",
         },
         {
           title: "오차없이 정확한 99.9% 인식률",
           description: "타사 대비 월등한 성능으로 1초면 스캔 완료되는 압도적인 속도로 처리해요",
-          image: "/images/products/vco/vco-feature-accuracy-2.png",
+          image: "/images/products/vco/vco-feature-accuracy-2.webp",
           imagePosition: "right",
         },
       ],
@@ -131,9 +187,9 @@ export const siteConfig = {
       industriesTitle: "주요 적용 산업",
       industriesDescription: "짧은 시간에 많은 사람이 몰리는 공간에서 바코드 없는 물건도 빠르게 결제할 수 있어요",
       industries: [
-        { label: "Bakery&Cafe",       image: "/images/products/industries/vco-industry-bakery-cafe.png" },
-        { label: "Cafeteria&Canteen", image: "/images/products/industries/vco-industry-cafeteria-canteen.png" },
-        { label: "Hospitality",       image: "/images/products/industries/vco-industry-hospitality.png" },
+        { label: "Bakery&Cafe",       image: "/images/products/industries/vco-industry-bakery-cafe.webp" },
+        { label: "Cafeteria&Canteen", image: "/images/products/industries/vco-industry-cafeteria-canteen.webp" },
+        { label: "Hospitality",       image: "/images/products/industries/vco-industry-hospitality.webp" },
       ],
       reviewsTitle: "고객사 도입 후기",
       reviews: [
@@ -141,6 +197,7 @@ export const siteConfig = {
           category: "베이커리",
           categoryColorVar: "--color-text-tag-category-yellow",
           iconBgVar: "--color-filled-tag-category-yellow-secondary",
+          iconColorVar: "--color-icon-tag-category-yellow",
           icon: "bakery",
           store: "만나밀 베이커리",
           role: "총괄 매니저 송주희",
@@ -156,6 +213,7 @@ export const siteConfig = {
           category: "급식",
           categoryColorVar: "--color-text-basic-positive",
           iconBgVar: "--color-filled-basic-positive-secondary",
+          iconColorVar: "--color-icon-tag-category-mint",
           icon: "cafeteria",
           store: "대형급식 W사 관리자",
           role: "",
@@ -170,6 +228,7 @@ export const siteConfig = {
           category: "리조트",
           categoryColorVar: "--color-text-tag-category-grape",
           iconBgVar: "--color-filled-tag-category-grape-secondary",
+          iconColorVar: "--color-icon-tag-category-grape",
           icon: "resort",
           store: "일본 홋카이도 Niseko 리조트 매니저",
           role: "",
@@ -193,7 +252,7 @@ export const siteConfig = {
       label: "UNMANNED STORE",
       heroType: "image",
       heroVideo: "",
-      heroImage: "/images/products/unmanned-store/store-hero.png",
+      heroImage: "/images/products/unmanned-store/store-hero.webp",
       heroSubtitle: "세상에서 가장 경제적인 무인 매장 솔루션",
       heroTitle: "What is WALK-THROUGH?",
       ctaLabel: "",
@@ -234,9 +293,9 @@ export const siteConfig = {
           description: "어떤 형태의 매장에도 적용이 가능한, 높은 자유도를 바탕으로\n편의점, 소형 슈퍼마켓, 편집샵 등에 적용해 보세요",
           sectionTitle: "Walk-through는 무엇이 다를까요?",
           cards: [
-            { title: "간편한 고객 경험", description: "결제줄 없이, 바코드 인식도 없이, 가장 간편한 고객 경험을 제공합니다.", image: "/images/products/unmanned-store/us-standard-experience.png", wide: false },
-            { title: "검증된 정확도",   description: "실제 운영 중인 매장들에서 검증된 우수한 정확도를 바탕으로 새로운 매장을 시작해보세요",    image: "/images/products/unmanned-store/us-standard-accuracy.png",   wide: false },
-            { title: "운영 효율성 증대", description: "오프라인도 온라인처럼 매장 내 데이터를 활용해 최적의 운영 방향성을 결정하세요",          image: "/images/products/unmanned-store/us-standard-efficiency.png", wide: true, objectPosition: "-0.033px -533.12px" },
+            { title: "간편한 고객 경험", description: "결제줄 없이, 바코드 인식도 없이, 가장 간편한 고객 경험을 제공합니다.", image: "/images/products/unmanned-store/us-standard-experience.webp", wide: false },
+            { title: "검증된 정확도",   description: "실제 운영 중인 매장들에서 검증된 우수한 정확도를 바탕으로 새로운 매장을 시작해보세요",    image: "/images/products/unmanned-store/us-standard-accuracy.webp",   wide: false },
+            { title: "운영 효율성 증대", description: "오프라인도 온라인처럼 매장 내 데이터를 활용해 최적의 운영 방향성을 결정하세요",          image: "/images/products/unmanned-store/us-standard-efficiency.webp", wide: true, objectPosition: "-0.033px -533.12px" },
           ],
         },
         {
@@ -338,9 +397,9 @@ export const siteConfig = {
         after:     " 담당자가 연락드리겠습니다",
       },
       buttonLabel:     "계속 둘러보기",
-      backgroundAsset: "/images/contact/bg-gradation-confirm-n.png",
+      backgroundAsset: "/images/contact/bg-gradation-confirm-n.webp",
     },
-    backgroundAsset: "/images/contact/bg-gradation-n.png",
+    backgroundAsset: "/images/contact/bg-gradation-n.webp",
   } satisfies ContactConfig,
 
   media: {
@@ -366,7 +425,7 @@ export const siteConfig = {
         href:         "https://economist.co.kr/article/view/ecn202601130028",
       },
       {
-        thumbnail:    "/images/news/singapore-7eleven.png",
+        thumbnail:    "/images/news/singapore-7eleven.webp",
         thumbnailAlt: "파인더스에이아이, 싱가포르 세븐일레븐에 AI 완전 무인 편의점 구현",
         tags:         ["Unmanned", "Global"],
         date:         "2025-12-24",
@@ -429,7 +488,7 @@ export const siteConfig = {
         href:         "https://daily.hankooki.com/news/articleView.html?idxno=1114016",
       },
       {
-        thumbnail:    "/images/news/baby-unicorn.png",
+        thumbnail:    "/images/news/baby-unicorn.webp",
         thumbnailAlt: "파인더스AI, 중기부 '아기유니콘' 선정",
         tags:         ["Award", "Government"],
         date:         "2024-06-27",
@@ -464,15 +523,6 @@ export const siteConfig = {
         description:  "AI기반 오프라인 유통매장 무인화 기술을 개발하는 '파인더스에이아이'가 끌림벤처스로부터 6억원 시드 투자를 유치했다.",
         href:         "https://www.joongang.co.kr/article/24105042",
       },
-      {
-        thumbnail:    "MISSING_FROM_DESIGN",
-        thumbnailAlt: "",
-        tags:         ["Test"],
-        date:         "2024-01-01",
-        title:        "[빈 이미지 폴백 UI 확인용 카드]",
-        description:  "썸네일 이미지가 없는 경우 Empty Image Fallback UI가 정상 렌더링되는지 확인합니다.",
-        href:         "#",
-      },
     ] as MediaItem[],
   },
 
@@ -505,13 +555,10 @@ export const siteConfig = {
   } satisfies MediaShowcaseConfig,
   retailTechLetter: {
     title: "Retail Tech Letter",
-    embed: {
-      type: "iframe" as "iframe" | "script",
-      src: "https://faindersai.stibee.com/",
-      height: 608,
-      scriptSrc: "MISSING_FROM_DESIGN",
-      mountId: "retail-tech-letter-form",
-    },
+    description:
+      "리테일 기술 트렌드와 파인더스에이아이의 최신 소식을 정리한 뉴스레터입니다. 지난 레터를 읽어보고 구독해보세요.",
+    ctaLabel: "레터 구독하기",
+    url: "https://faindersai.stibee.com/subscribe",
   } satisfies RetailTechLetterConfig,
 } satisfies SiteConfig;
 
@@ -533,7 +580,7 @@ export const aboutConfig = {
     eyebrow: "리테일 혁신",
     title: ["고객이 리테일의 본질에", "집중할 수 있도록"],
     image: {
-      src: "/images/about/about-hero.png",
+      src: "/images/about/about-hero.webp",
       alt: "Fainders.AI 오피스 전경",
     },
   },
@@ -596,7 +643,7 @@ export const aboutConfig = {
         id: "ham",
         role: "CEO",
         name: "함명원",
-        photo: { src: "/images/about/member-ceo-ham.png", alt: "함명원 CEO" },
+        photo: { src: "/images/about/member-ceo-ham.webp", alt: "함명원 CEO" },
         education: ["서울과학고", "KAIST 전산학 학사", "UCLA 컴퓨터공학 석사"],
         career: ["전 삼성전자", "전 프라이피 CTO (Co-founder)"],
       },
@@ -604,7 +651,7 @@ export const aboutConfig = {
         id: "wang",
         role: "CEO",
         name: "왕민권",
-        photo: { src: "/images/about/member-ceo-wang.png", alt: "왕민권 CEO" },
+        photo: { src: "/images/about/member-ceo-wang.webp", alt: "왕민권 CEO" },
         education: ["Boston Coll. 수학, 경제학 학사", "KAIST ITM 석사"],
         career: ["전 Funded 창업(CEO)&매각", "전 위메프 NBE TF"],
       },
@@ -612,7 +659,7 @@ export const aboutConfig = {
         id: "hong",
         role: "CTO",
         name: "홍석범",
-        photo: { src: "/images/about/member-cto-hong.png", alt: "홍석범 CTO" },
+        photo: { src: "/images/about/member-cto-hong.webp", alt: "홍석범 CTO" },
         education: ["서울과학고", "서울대학교 전기컴퓨터공학\n학사/박사(Ph.D)"],
         career: ["전 삼성전자", "전 프라이피 CTO (Co-founder)"],
       },
@@ -620,7 +667,7 @@ export const aboutConfig = {
         id: "lee",
         role: "CSO",
         name: "이현규",
-        photo: { src: "/images/about/member-cso-lee.png", alt: "이현규 CSO" },
+        photo: { src: "/images/about/member-cso-lee.webp", alt: "이현규 CSO" },
         education: ["연세대학교 건축공학 학사"],
         career: ["전 나이스평가정보 사업기획단", "전 BCG 컨설턴트"],
       },

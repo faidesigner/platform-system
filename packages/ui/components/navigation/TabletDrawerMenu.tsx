@@ -5,6 +5,7 @@ import Link from 'next/link';
 import { useParams } from 'next/navigation';
 import { productMenu } from '@/config/site';
 import { DrawerMenu, DrawerListItem } from './DrawerPrimitives';
+import type { NavItem } from './MegaNavMenu';
 
 /* ---------------- 하위 아코디언 스타일 및 컴포넌트 ---------------- */
 const subLayerWrapperStyle: React.CSSProperties = {
@@ -107,7 +108,46 @@ function ArrowUpRightIcon() {
 }
 
 /* ---------------- Tablet Drawer 메인 컨텐츠 ---------------- */
-export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
+
+/**
+ * 드로어 nav 라벨 세트 — i18n 비결합(@fai/ui는 next-intl을 import하지 않음).
+ * 소비자(homepage 브릿지)가 번역 문자열을 주입하며, 미지정 값은 한국어 기본값을 사용한다.
+ */
+export interface DrawerLabels {
+  products?: string;
+  about?:    string;
+  media?:    string;
+  careers?:  string;
+  contact?:  string;
+}
+
+const DEFAULT_DRAWER_LABELS: Required<DrawerLabels> = {
+  products: '제품',
+  about:    '회사소개',
+  media:    '미디어',
+  careers:  '채용',
+  contact:  '문의하기',
+};
+
+export interface TabletDrawerMenuProps {
+  onNavigate?: () => void;
+  /**
+   * 최상위 nav 항목 활성화(클릭) 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * 데스크톱 MegaNavMenu의 onItemClick과 동일한 계약: 외부 링크(채용)·제품 하위 항목은 호출되지 않는다.
+   * 제품은 아코디언 헤더(토글) 클릭 시 1회 호출된다.
+   */
+  onItemClick?: (item: NavItem) => void;
+  /**
+   * 문의하기 CTA 클릭 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * 기존 라우팅(/contact 이동) 동작 및 onNavigate(드로어 닫힘)는 그대로 유지되며 콜백이 함께 호출된다.
+   */
+  onContactClick?: () => void;
+  /** nav 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값. */
+  labels?: DrawerLabels;
+}
+
+export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick, labels }: TabletDrawerMenuProps) {
+  const l = { ...DEFAULT_DRAWER_LABELS, ...labels };
   const [productOpen, setProductOpen] = useState(false);
   const params  = useParams();
   const locale  = typeof params?.locale === 'string' ? params.locale : '';
@@ -116,10 +156,13 @@ export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
 
   return (
     <DrawerMenu>
-      {/* 1. 제품 — 확장형 아코디언 */}
+      {/* 1. 제품 — 확장형 아코디언 (하위 항목은 계측 대상 아님 — 데스크톱과 동일) */}
       <DrawerListItem
-        label="제품"
-        onClick={() => setProductOpen((v) => !v)}
+        label={l.products}
+        onClick={() => {
+          if (!productOpen) onItemClick?.({ label: l.products, href: '/products' });
+          setProductOpen((v) => !v);
+        }}
         rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
       >
         {productOpen && (
@@ -132,20 +175,32 @@ export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
       </DrawerListItem>
 
       {/* 2. 일반 내부 링크 */}
-      <DrawerListItem label="회사소개" href={lhref('/about')}  onClick={onNavigate} />
-      <DrawerListItem label="미디어"   href={lhref('/media')}  onClick={onNavigate} />
-
-      {/* 3. 채용 — 외부 링크 ↗ */}
       <DrawerListItem
-        label="채용"
+        label={l.about}
+        href={lhref('/about')}
+        onClick={() => { onNavigate?.(); onItemClick?.({ label: l.about, href: '/about' }); }}
+      />
+      <DrawerListItem
+        label={l.media}
+        href={lhref('/media')}
+        onClick={() => { onNavigate?.(); onItemClick?.({ label: l.media, href: '/media' }); }}
+      />
+
+      {/* 3. 채용 — 외부 링크 ↗ (계측 대상 아님) */}
+      <DrawerListItem
+        label={l.careers}
         href="https://faindersai.career.greetinghr.com/ko/home"
         isExternal={true}
         onClick={onNavigate}
         rightIcon={<ArrowUpRightIcon />}
       />
 
-      {/* 4. 문의하기 — 내부 링크 */}
-      <DrawerListItem label="문의하기" href={lhref('/contact')} onClick={onNavigate} />
+      {/* 4. 문의하기 — 내부 링크 (리드 CTA) */}
+      <DrawerListItem
+        label={l.contact}
+        href={lhref('/contact')}
+        onClick={() => { onNavigate?.(); onContactClick?.(); }}
+      />
     </DrawerMenu>
   );
 }

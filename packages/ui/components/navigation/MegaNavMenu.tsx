@@ -51,6 +51,12 @@ export interface NavItem {
 export interface MegaNavMenuProps {
   isTransparent: boolean;
   navItems:      readonly NavItem[];
+  /**
+   * 최상위 nav 항목 활성화(클릭) 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * 외부 링크(item.external === true, 예: 채용)는 호출되지 않는다.
+   * 드롭다운(제품)은 트리거 클릭 시, 일반 항목은 Link 클릭 시 각각 호출된다.
+   */
+  onItemClick?: (item: NavItem) => void;
 }
 
 /**
@@ -71,7 +77,7 @@ function cn(...c: (string | undefined | null | false)[]) {
    Component
 ────────────────────────────────────────── */
 
-export default function MegaNavMenu({ isTransparent, navItems }: MegaNavMenuProps) {
+export default function MegaNavMenu({ isTransparent, navItems, onItemClick }: MegaNavMenuProps) {
   const pathname = usePathname();
   const params   = useParams();
   const locale   = typeof params?.locale === "string" ? params.locale : "";
@@ -141,6 +147,7 @@ export default function MegaNavMenu({ isTransparent, navItems }: MegaNavMenuProp
           const triggerBtn = (open: boolean) => (
             <button
               type="button"
+              onClick={() => onItemClick?.(item)}
               className={cn(
                 "h-3xl flex justify-center items-center px-m rounded-fai-s",
                 "transition-colors duration-200 cursor-pointer",
@@ -218,9 +225,10 @@ export default function MegaNavMenu({ isTransparent, navItems }: MegaNavMenuProp
             externalNavItems.push(item);
           } else {
             regularMenuItems.push({
-              label:  item.label,
-              href:   lhref(item.href),
-              active: isItemActive(item.href, false),
+              label:   item.label,
+              href:    lhref(item.href),
+              active:  isItemActive(item.href, false),
+              onClick: () => onItemClick?.(item),
             });
           }
         });

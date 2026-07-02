@@ -1,3 +1,4 @@
+import { setRequestLocale, getTranslations } from "next-intl/server";
 import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
 import type { LogoItem } from "@fai/ui";
@@ -21,13 +22,23 @@ const CUSTOMER_IMAGES: CustomerImage[] = [
 
 const PARTNER_LOGOS: LogoItem[] = clientLogos.map(({ src, name }) => ({ src, alt: name }));
 
-export default function HomePage() {
+// title/description/canonical/hreflang는 [locale]/layout.tsx의 generateMetadata에서
+// 로케일별로 일괄 제공한다(홈은 별도 오버라이드 불필요).
+
+export default async function HomePage({
+  params,
+}: {
+  params: Promise<{ locale: string }>;
+}) {
+  const { locale } = await params;
+  setRequestLocale(locale);
+  const t = await getTranslations("home.imageSection");
   return (
     <>
       <HeroSection logos={PARTNER_LOGOS} />
       <ImageSection
-        src="/images/main/imageSection-hero-2.png"
-        alt="FAI Platform Fullscreen Overview"
+        src="/images/main/imageSection-hero-2.webp"
+        alt={t("alt")}
         priority
       />
       <WhyFaiSection />

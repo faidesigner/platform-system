@@ -2,6 +2,41 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.5.0] - 2026-07-01
+
+### ✨ Added
+
+#### GA4 버튼 클릭 이벤트 계측
+- 3종 커스텀 이벤트 `interest_click`(관심) / `lead_acquisition_click`(잠재) / `inquiry_complete`(문의완료)를 12개 지점(네비·홈·제품·미디어·푸터·문의, 데스크톱+모바일)에 계측
+- 공통 파라미터 `location`/`label`, gtag 접점은 `lib/analytics/track.ts` 단일 소스
+- 공용 `@fai/ui`는 분석 비종속(제네릭 콜백 prop), GA 명칭은 homepage 브릿지에만
+- dataLayer 실측 검증 10/10 통과
+
+#### 문의 폼 Zapier 전송 연동
+- `ContactUsSection` 제출 시 라이브 `contact-us`와 동일한 Zapier 웹훅으로 전송 (`lib/contact/payload.ts`)
+- 관심사 → `solution[]`, 세부 항목 → `content` 자동 생성, `utm_*`/`referrer` 캡처
+- 포맷: form-urlencoded + JSON.stringify body (Zap 매핑 호환). 실전 전송 5건 200/success 검증
+
+#### 로케일별 SEO 메타데이터
+- `config/site.ts` `seo` 맵(ko/en/ja) → title/description/keywords/OG를 `[locale]/layout.tsx`에서 로케일별 생성
+- `<html lang>` 로케일별, hreflang(ko/en/ja + x-default=ko), OG 이미지 1200×630
+
+#### 테스트 인프라
+- vitest + @testing-library/react + jsdom 도입, 순수 로직·문의 폼 흐름 테스트
+
+### 🔄 Changed
+
+- **일본어 로케일 코드 `jp` → `ja`** (ISO 639-1 준수, 국가코드 오용 교정). `/jp/*` 경로 제거
+- 루트 레이아웃을 `app/[locale]/layout.tsx`로 병합(로케일별 `<html lang>`), `app/layout.tsx` 제거
+- `@fai/ui` NavigationBar·MegaNavMenu·Menu·Footer·TabletDrawerMenu에 옵셔널 분석 콜백 prop 추가(하위 호환)
+
+### 🐛 Fixed
+
+- `trackEvent` SSR no-op 가드 — 정적 export 프리렌더 시 `window` 미존재 크래시 방지
+- `CtaBanner` "도입 문의하기" CTA가 로케일 누락으로 404 → locale-aware 라우팅
+- `@fai/ui` Footer SNS 링크에 `target="_blank"`/`rel` 추가(새 탭)
+- 죽은 코드 정리: 로컬 `Footer.tsx`·고아 `ScrollTopButton.tsx`·미사용 `siteConfig.fullName` 제거
+
 ## [3.4.2] - 2026-06-24
 
 ### 🐛 Fixed

@@ -3,6 +3,7 @@
 import { useEffect, useState } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "@fai/ui";
+import { trackEvent } from "@/lib/analytics/track";
 
 interface ProductHeroProps {
   subtitle: string;
@@ -94,7 +95,10 @@ export default function ProductHero({
                 size="L"
                 shape="round"
                 className="shrink-0"
-                onClick={() => router.push(lhref("/contact"))}
+                onClick={() => {
+                  trackEvent("lead_acquisition_click", { location: "product_hero", label: ctaLabel });
+                  router.push(lhref("/contact"));
+                }}
               >
                 {ctaLabel}
               </IcoTxtButton>

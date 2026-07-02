@@ -14,17 +14,30 @@
 "use client";
 
 import Image from 'next/image';
-import { useRouter } from 'next/navigation';
+import { useTranslations } from 'next-intl';
+import { useRouter } from '@/i18n/navigation';
 import { IcoTxtButton } from '@fai/ui';
+import { trackEvent } from '@/lib/analytics/track';
+import type { GaLocation } from '@/lib/analytics/events';
 
-export function CtaBanner() {
+export function CtaBanner({
+  location = 'home_cta_banner',
+}: {
+  location?: Extract<GaLocation, 'home_cta_banner' | 'product_cta_banner'>;
+}) {
   const router = useRouter();
+  const t = useTranslations('home.ctaBanner');
+  const tCommon = useTranslations('common');
+  const handleCta = () => {
+    trackEvent('lead_acquisition_click', { location, label: tCommon('cta.requestDemo') });
+    router.push('/contact');
+  };
 
   return (
     <section className="relative left-1/2 right-1/2 flex w-screen -mx-[50vw] justify-center overflow-hidden">
       {/* Layer 1: 배경 이미지 */}
       <Image
-        src="/images/main/cta-banner-gradation.png"
+        src="/images/main/cta-banner-gradation.webp"
         alt=""
         fill
         priority
@@ -45,7 +58,7 @@ export function CtaBanner() {
       {/* Layer 3: 콘텐츠 — dark 컨텍스트 주입 (배너 배경 항상 어두움) */}
       <div className="dark relative z-10 flex flex-col items-center min-[961px]:flex-row min-[961px]:items-center justify-center gap-l min-[961px]:gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
         <h2 className="flex-1 text-center min-[961px]:text-left text-title-s min-[961px]:text-title-m desktop:text-title-l font-bold text-text-inverse">
-          지금 매장에 도입하고<br className="min-[769px]:hidden" /> 최대 효율을 경험을 해보세요
+          {t('titleLine1')}<br className="min-[769px]:hidden" /> {t('titleLine2')}
         </h2>
 
         {/* > 420px: XL */}
@@ -55,9 +68,9 @@ export function CtaBanner() {
           shape="square"
           className="shrink-0 max-[420px]:hidden"
           style={{ textAlign: 'center' }}
-          onClick={() => router.push('/contact')}
+          onClick={handleCta}
         >
-          도입 문의하기
+          {tCommon('cta.requestDemo')}
         </IcoTxtButton>
         {/* ≤ 420px: L (한 단계 축소) */}
         <IcoTxtButton
@@ -66,9 +79,9 @@ export function CtaBanner() {
           shape="square"
           className="shrink-0 min-[421px]:hidden"
           style={{ textAlign: 'center' }}
-          onClick={() => router.push('/contact')}
+          onClick={handleCta}
         >
-          도입 문의하기
+          {tCommon('cta.requestDemo')}
         </IcoTxtButton>
       </div>
     </section>

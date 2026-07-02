@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import type { ReactNode } from "react";
+import { trackEvent } from "@/lib/analytics/track";
 
 interface HeroShellProps {
   subtitle: string;
@@ -36,6 +37,7 @@ export default function HeroShell({ subtitle, title, ctaLabel, children }: HeroS
         {ctaLabel && (
           <Link
             href={lhref("/contact")}
+            onClick={() => trackEvent("lead_acquisition_click", { location: "product_hero", label: ctaLabel })}
             className="mt-3xl shrink-0 rounded-fai-circle bg-fill-soft px-l py-s text-body-s font-medium text-primary transition-colors duration-200 hover:bg-fill-faint"
           >
             {ctaLabel}

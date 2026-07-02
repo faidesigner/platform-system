@@ -12,6 +12,7 @@ interface Review {
   category: string;
   categoryColorVar: string;
   iconBgVar: string;
+  iconColorVar: string;
   icon: ReviewIconKey;
   store: string;
   role: string;
@@ -123,7 +124,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
               <div className="flex flex-col items-start gap-l self-stretch">
                 <span
                   className="flex shrink-0 items-center justify-center rounded-full p-ms"
-                  style={{ backgroundColor: `var(${review.iconBgVar})` }}
+                  style={{ backgroundColor: `var(${review.iconBgVar})`, color: `var(${review.iconColorVar})` }}
                 >
                   <ReviewIcon name={review.icon} />
                 </span>

@@ -8,7 +8,7 @@ import { usePathname, useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "./button/IcoTxtButton";
 import { ChevronDown } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
-import { TabletDrawerMenu } from "./navigation/TabletDrawerMenu";
+import { TabletDrawerMenu, type DrawerLabels } from "./navigation/TabletDrawerMenu";
 import { Drawer } from "./ui/Drawer";
 
 /* ──────────────────────────────────────────
@@ -52,6 +52,20 @@ interface NavigationBarProps {
    * 미지정 시 packages/ui 내부 NAV_ITEMS 사용.
    */
   navItems?: readonly NavItem[];
+  /**
+   * 최상위 nav 항목 활성화(클릭) 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * MegaNavMenu로 그대로 전달된다. 외부 링크(채용)는 호출되지 않는다.
+   */
+  onItemClick?: (item: NavItem) => void;
+  /**
+   * 문의하기 CTA 클릭 시 호출되는 콜백 (analytics 등 소비자 계측용).
+   * 기존 라우팅(/contact 이동) 동작은 그대로 유지되며 콜백이 선행 호출된다.
+   */
+  onContactClick?: () => void;
+  /** 데스크톱 문의하기 CTA 텍스트(번역 주입용). 미지정 시 한국어 기본값. */
+  contactLabel?: string;
+  /** 태블릿·모바일 드로어 라벨(번역 주입용). 미지정 값은 한국어 기본값. */
+  drawerLabels?: DrawerLabels;
 }
 
 /* ──────────────────────────────────────────
@@ -62,6 +76,10 @@ export default function NavigationBar({
   desktopLangSwitcher,
   mobileLangSwitcher,
   navItems: navItemsProp,
+  onItemClick,
+  onContactClick,
+  contactLabel = "문의하기",
+  drawerLabels,
 }: NavigationBarProps = {}) {
   const navItems = navItemsProp ?? NAV_ITEMS;
   const pathname = usePathname();
@@ -69,9 +87,9 @@ export default function NavigationBar({
   const locale   = typeof params?.locale === "string" ? params.locale : "";
   const router   = useRouter();
 
-  const isHome          = /^\/(ko|en|jp)\/?$/.test(pathname);
-  const isProductDetail = /^\/(ko|en|jp)\/products\/[^/]+\/?$/.test(pathname);
-  const isMedia         = /^\/(ko|en|jp)\/media\/?$/.test(pathname);
+  const isHome          = /^\/(ko|en|ja)\/?$/.test(pathname);
+  const isProductDetail = /^\/(ko|en|ja)\/products\/[^/]+\/?$/.test(pathname);
+  const isMedia         = /^\/(ko|en|ja)\/media\/?$/.test(pathname);
 
   const [isTransparent, setIsTransparent] = useState(!isHome && !isMedia);
   const [langOpen, setLangOpen] = useState(false);
@@ -168,7 +186,7 @@ export default function NavigationBar({
 
           {/* ── 데스크톱 메뉴 (961px+) ── */}
           <div className="hidden desktop-s:flex items-center">
-            <MegaNavMenu isTransparent={effectiveTransparent} navItems={navItems} />
+            <MegaNavMenu isTransparent={effectiveTransparent} navItems={navItems} onItemClick={onItemClick} />
           </div>
 
           {/* ── 우측 액션 ── */}
@@ -230,9 +248,9 @@ export default function NavigationBar({
                 variant="primary"
                 shape="square"
                 size="L"
-                onClick={() => router.push(lhref("/contact"))}
+                onClick={() => { onContactClick?.(); router.push(lhref("/contact")); }}
               >
-                문의하기
+                {contactLabel}
               </IcoTxtButton>
             </span>
 
@@ -276,7 +294,12 @@ export default function NavigationBar({
           드로어 — 960px 이하 공용 (모바일·태블릿)
       ════════════════════════════════════ */}
       <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <TabletDrawerMenu onNavigate={() => setDrawerOpen(false)} />
+        <TabletDrawerMenu
+          onNavigate={() => setDrawerOpen(false)}
+          onItemClick={onItemClick}
+          onContactClick={onContactClick}
+          labels={drawerLabels}
+        />
       </Drawer>
     </>
   );

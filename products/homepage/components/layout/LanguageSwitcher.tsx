@@ -13,7 +13,7 @@ import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
 const LANGUAGES = [
   { code: 'ko', label: 'KO' },
   { code: 'en', label: 'EN' },
-  { code: 'jp', label: 'JP' },
+  { code: 'ja', label: 'JP' },
 ] as const;
 
 /* ──────────────────────────────────────────
@@ -119,7 +119,8 @@ export default function LanguageSwitcher({
   /** next-intl locale 전환 — 경로 보존 */
   const handleSelect = (code: string) => {
     if (code === locale) { setOpen(false); return; }
-    router.push(pathname, { locale: code });
+    // scroll:false → 언어 전환 시 최상단 이동/리로드 없이 현재 화면 유지
+    router.push(pathname, { locale: code, scroll: false });
     setOpen(false);
   };
 

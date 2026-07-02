@@ -3,13 +3,29 @@
 import { useRef, useEffect } from "react";
 import Image from "next/image";
 import { IconButton } from "@fai/ui";
-import { aboutConfig } from "@/config/site";
+import type { PeopleCard } from "@/config/types";
 
 // 카드 폭(720) + gap(24) = 744 — ProductReviews와 동일한 1카드 단위 스크롤
 const SCROLL_STEP = 744;
 
-export function AboutPeople() {
-  const { title, subtitle, cards } = aboutConfig.people;
+/** 카드별로 치환 완료된 interview aria-label을 포함한 렌더용 카드 데이터 */
+type AboutPeopleCard = PeopleCard & { interviewAriaLabel: string };
+
+interface AboutPeopleProps {
+  title: string;
+  subtitle: string;
+  cards: AboutPeopleCard[];
+  a11yPrev: string;
+  a11yNext: string;
+}
+
+export function AboutPeople({
+  title,
+  subtitle,
+  cards,
+  a11yPrev,
+  a11yNext,
+}: AboutPeopleProps) {
   const scrollRef = useRef<HTMLDivElement>(null);
 
   const scrollByStep = (dir: 1 | -1) => {
@@ -43,8 +59,8 @@ export function AboutPeople() {
           <p className="text-body-l desktop:text-body-xl text-tertiary">{subtitle}</p>
         </div>
         <div className="flex shrink-0 gap-ms max-[420px]:hidden">
-          <IconButton size="L" icon="arrowshapeLeft"  aria-label="이전" onClick={() => scrollByStep(-1)} />
-          <IconButton size="L" icon="arrowshapeRight" aria-label="다음" onClick={() => scrollByStep(1)}  />
+          <IconButton size="L" icon="arrowshapeLeft"  aria-label={a11yPrev} onClick={() => scrollByStep(-1)} />
+          <IconButton size="L" icon="arrowshapeRight" aria-label={a11yNext} onClick={() => scrollByStep(1)}  />
         </div>
       </div>
 
@@ -61,7 +77,7 @@ export function AboutPeople() {
             key={card.id}
             href={card.href}
             onClick={saveScroll}
-            aria-label={`${card.name} 직무 인터뷰 보기`}
+            aria-label={card.interviewAriaLabel}
             className="block shrink-0 snap-start cursor-pointer"
           >
             <article className="flex flex-col gap-3xl">

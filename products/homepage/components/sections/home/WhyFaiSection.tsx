@@ -24,6 +24,7 @@
 
 import { useState } from 'react';
 import { motion } from 'framer-motion';
+import { useTranslations } from 'next-intl';
 
 const scrollFadeInUp = {
   initial: { opacity: 0, y: 100, filter: 'blur(12px)' },
@@ -47,26 +48,14 @@ export interface WhyFaiSectionProps {
 }
 
 /* ──────────────────────────────────────────
-   Default data
+   Default assets — 텍스트는 messages(home.whyFai.items.N)에서, 구조/영상만 여기 유지
 ────────────────────────────────────────── */
 
-const DEFAULT_ITEMS: WhyFaiItem[] = [
-  {
-    title: '멈춤 없이 매끄러운 결제',
-    description: '바코드 스캔 없이 쓱 올려두면 결제가 끝나요\n쾌적한 결제 경험이 우리 매장의 매출을 바꿔요',
-    videoSrc: '/videos/home/home-why-fai-loop-1.mp4',
-  },
-  {
-    title: '최소 인력으로 최대 효율을',
-    description: '단순 계산 업무는 똑똑한 AI에 맡기고, 사장님은 더 가치 있는 매장 관리에 집중하세요',
-    videoSrc: '/videos/home/home-why-fai-loop-2.mp4',
-  },
-  {
-    title: '막힘없는 고객 경험',
-    description: '대기 시간이 줄어든 만큼 기분 좋게 매장을 나선 손님들은 이곳을 다시 찾게 될 거예요',
-    videoSrc: '/videos/home/home-why-fai-loop-3.mp4',
-  },
-];
+const DEFAULT_VIDEO_SRCS = [
+  '/videos/home/home-why-fai-loop-1.mp4',
+  '/videos/home/home-why-fai-loop-2.mp4',
+  '/videos/home/home-why-fai-loop-3.mp4',
+] as const;
 
 /* ──────────────────────────────────────────
    Sub-component: WhyFaiCard
@@ -119,10 +108,22 @@ function WhyFaiCard({ item, index }: { item: WhyFaiItem; index: number }) {
 ────────────────────────────────────────── */
 
 export default function WhyFaiSection({
-  headline    = 'Why FAI',
-  subheadline = '멈춤 없이, 인건비 추가 없이, 대기줄 없이\n효율적인 매장 운영을 할 수 있습니다.',
-  items       = DEFAULT_ITEMS,
+  headline,
+  subheadline,
+  items,
 }: WhyFaiSectionProps) {
+  const t = useTranslations('home.whyFai');
+  const resolvedHeadline = headline ?? t('headline');
+  // subheadline은 원본 컴포넌트에서도 JSX에 미노출인 레거시 prop — 하위호환을 위해 계약만 유지.
+  void (subheadline ?? t('subheadline'));
+  const resolvedItems: WhyFaiItem[] =
+    items ??
+    DEFAULT_VIDEO_SRCS.map((videoSrc, i) => ({
+      title: t(`items.${i}.title`),
+      description: t(`items.${i}.description`),
+      videoSrc,
+    }));
+
   return (
     <section className="w-full bg-sand-filled-primary">
       <div className="w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
@@ -130,13 +131,13 @@ export default function WhyFaiSection({
         {/* ── 헤더 ── */}
         <header className="pb-3xl flex flex-col items-start gap-m">
           <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary text-left whitespace-pre-line">
-            {headline}
+            {resolvedHeadline}
           </h2>
         </header>
 
         {/* ── 카드 그리드 ── */}
         <ul className="flex flex-col gap-xl tablet:flex-row tablet:items-stretch">
-          {items.map((item, i) => (
+          {resolvedItems.map((item, i) => (
             <WhyFaiCard key={item.title} item={item} index={i} />
           ))}
         </ul>
