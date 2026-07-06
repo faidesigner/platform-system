@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import GlobeIcon from '@fai/ui/components/common/Icon/GlobeIcon';
 import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
+import { markLocaleSwitchScroll } from '@/lib/localeScroll';
 
 /* ──────────────────────────────────────────
    상수
@@ -119,7 +120,10 @@ export default function LanguageSwitcher({
   /** next-intl locale 전환 — 경로 보존 */
   const handleSelect = (code: string) => {
     if (code === locale) { setOpen(false); return; }
-    // scroll:false → 언어 전환 시 최상단 이동/리로드 없이 현재 화면 유지
+    // 언어 전환은 [locale] 루트 세그먼트 변경 → SmoothScroll 리마운트로 최상단 이동됨.
+    // 현재 위치를 저장해 두면 SmoothScroll가 새 마운트에서 복원한다(HOM-9).
+    // scroll:false는 Next 자체 스크롤 리셋만 억제(리로드 방지)한다.
+    markLocaleSwitchScroll();
     router.push(pathname, { locale: code, scroll: false });
     setOpen(false);
   };
