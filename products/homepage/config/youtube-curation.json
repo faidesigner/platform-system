@@ -1,6 +1,14 @@
 {
   "exclude": [],
   "pinned": [],
-  "manual": [],
+  "manual": [
+    {
+      "videoId": "DSTIFkS5Nw8",
+      "title": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
+      "description": "Fainders.AI는 컴퓨터 비전(Computer Vision)과 인공지능(AI) 기술을 활용해 매장 무인화 솔루션을 개발합니다.",
+      "thumbnailAlt": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
+      "href": "https://www.youtube.com/watch?v=DSTIFkS5Nw8"
+    }
+  ],
   "limit": null
 }
