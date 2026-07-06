@@ -1,7 +1,28 @@
 {
   "channelId": "UCZpwr96t6EkDKMurSPL11bQ",
-  "fetchedAt": "2026-06-30T10:31:08.778Z",
+  "fetchedAt": "2026-07-06T13:47:47.886Z",
   "videos": [
+    {
+      "videoId": "hPLD6RDw64M",
+      "title": "VCO 챌린지 [ep1. AI는 얼마나 빠를까?]",
+      "description": "이 많은 빵들 다 결제하는데 과연 얼마나 걸릴까요??🍞🥐🥖🥨 올려놓기만 하면 결제가 끝나는 마법의 기술을 만나고 왔어요⚡",
+      "thumbnailAlt": "VCO 챌린지 [ep1. AI는 얼마나 빠를까?]",
+      "href": "https://www.youtube.com/watch?v=hPLD6RDw64M"
+    },
+    {
+      "videoId": "EAJYPdhpTAo",
+      "title": "VCO 빵지순례 [ep1. 한상민 과자점]",
+      "description": "인천 검단 주민들의 찐 로컬 맛집이라는 한상민과자점에 빵지순례 다녀왔어요🍞🥖\n슥 둘러봐도 빵 종류가 어마어마해서 고르는데 힘들었어요😋\n눈 돌아가는 빵 종류에 한 번 반하고 스마트한 결제에 두 번 반한 이곳은?\n\n📍 한상민과자점 신검단중앙역점",
+      "thumbnailAlt": "VCO 빵지순례 [ep1. 한상민 과자점]",
+      "href": "https://www.youtube.com/watch?v=EAJYPdhpTAo"
+    },
+    {
+      "videoId": "M44Ig8m4BfU",
+      "title": "파인더스에이아이 VCO 현장 도입 사례ㅣ천안 뚜쥬루과자점, 일본 훗카이도 니세코 리조트",
+      "description": "파인더스에이아이의 AI 무인 결제 솔루션 VCO. \n베이커리, 리조트 등 다양한 분야에서 활약하며 새로운 리테일 경험을 제공합니다.\n\n⑴99.7% 결제 정확도\n오차 없는 완벽한 비전 AI: 복잡하게 겹친 빵과 상품도 1초 만에 정확하게 인식하여 로스(Loss)를 원천 차단합니다.\n\n⑵고객 대기시간 75% 감소\n이탈을 막는 초고속 결제: 바코드를 찾고 찍을 필요 없이 쟁반째 올리기만 하면 결제가 끝납니다.\n\n⑶매출 15% 증가\n피크타임 회전율 극대화: 가장 바쁜 시간대 결제 병목 현상을 해소하여 놓치고 있던 추가 매출을 온전히 확보합니다.",
+      "thumbnailAlt": "파인더스에이아이 VCO 현장 도입 사례ㅣ천안 뚜쥬루과자점, 일본 훗카이도 니세코 리조트",
+      "href": "https://www.youtube.com/watch?v=M44Ig8m4BfU"
+    },
     {
       "videoId": "U12evbt9Aoo",
       "title": "ファインダーズAI(Fainders AI)｜ベーカリーAIセルフレジ VCOの使い方",
