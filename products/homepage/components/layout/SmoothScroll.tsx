@@ -3,6 +3,7 @@
 import { useEffect } from 'react';
 import { usePathname } from '@/i18n/navigation';
 import Lenis from 'lenis';
+import { consumeLocaleSwitchScroll } from '@/lib/localeScroll';
 
 export const lenisRef: { current: Lenis | null } = { current: null };
 
@@ -10,8 +11,9 @@ export const lenisRef: { current: Lenis | null } = { current: null };
 const HEADER_OFFSET = 64;
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  // next-intl usePathname은 로케일 비종속(/products/vco) → 언어 전환 시 값이 그대로라
-  // 아래 스크롤 초기화 이펙트가 트리거되지 않아 현재 스크롤 위치가 보존된다.
+  // next-intl usePathname은 로케일 비종속(/products/vco). 단, 언어 전환은 [locale]
+  // 루트 세그먼트를 바꿔 이 컴포넌트를 리마운트시키므로 아래 이펙트가 마운트 시 실행된다
+  // → 그 경우엔 저장된 스크롤 위치를 복원한다(consumeLocaleSwitchScroll).
   const pathname = usePathname();
 
   useEffect(() => {
@@ -38,13 +40,34 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   }, []);
 
   // 라우트 전환 시 스크롤 포커싱:
+  //  - 언어 전환 리마운트면 저장된 위치 복원(최상단 이동 방지) — HOM-9
   //  - URL 해시(#product-reviews 등)가 있으면 해당 섹션으로
   //  - 없으면 무조건 최상단으로 (이전 페이지 스크롤 위치 영향 제거)
   useEffect(() => {
-    const toTop = () => {
-      if (lenisRef.current) lenisRef.current.scrollTo(0, { immediate: true });
-      else window.scrollTo(0, 0);
+    const scrollTo = (y: number) => {
+      if (lenisRef.current) lenisRef.current.scrollTo(y, { immediate: true });
+      else window.scrollTo(0, y);
     };
+    const toTop = () => scrollTo(0);
+
+    // 언어 전환으로 SmoothScroll가 리마운트된 경우: 전환 직전 위치로 복원한다.
+    // 새 로케일은 카피 길이가 달라 문서 높이가 다르므로, 목표 지점까지 스크롤
+    // 가능해질 때까지(=콘텐츠가 채워질 때까지) 몇 프레임 재시도 후 복원한다.
+    const savedY = consumeLocaleSwitchScroll();
+    if (savedY !== null) {
+      let restoreTries = 0;
+      const restore = () => {
+        const maxY = document.documentElement.scrollHeight - window.innerHeight;
+        if (maxY >= savedY || restoreTries++ >= 10) {
+          lenisRef.current?.resize();
+          scrollTo(Math.min(savedY, Math.max(0, maxY)));
+          return;
+        }
+        requestAnimationFrame(restore);
+      };
+      requestAnimationFrame(restore);
+      return;
+    }
 
     const hash = typeof window !== 'undefined' ? window.location.hash : '';
     if (!hash) {
