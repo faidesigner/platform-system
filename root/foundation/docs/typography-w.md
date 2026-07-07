@@ -20,7 +20,7 @@
 | --- | --- |
 | KO | `@theme` 기본값 |
 | EN | `html[lang='en']` 오버라이드 |
-| JP | `html[lang='ja']` 오버라이드 (M PLUS 2 폰트) |
+| JP | `html[lang='jp']` 오버라이드 (M PLUS 2 폰트) |
 
 ---
 

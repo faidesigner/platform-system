@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 const LOCALES = [
   { code: 'ko', label: 'KR' },
   { code: 'en', label: 'EN' },
-  { code: 'ja', label: 'JP' },
+  { code: 'jp', label: 'JP' },
 ] as const;
 
 /* ---------------- 구분선 컴포넌트 ---------------- */

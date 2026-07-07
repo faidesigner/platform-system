@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IcoTxtButton, Label } from "@fai/ui";
+import { IcoTxtButton } from "@fai/ui";
 
 // scripts/sync-stibee.mjs가 Stibee API에서 생성하는 레터 목록 항목 shape(config/retail-tech-letter.json).
 interface Letter {
@@ -10,37 +10,12 @@ interface Letter {
   previewText: string;
   publishedAt: string;
   url: string;
-  thumbnailUrl?: string;
-  issueLabel?: string;
 }
-
-// 한글 순서수 → 아라비아 숫자 (예: "서른다섯번째" → "35")
-const TENS: Record<string, number> = {
-  "열": 10, "스물": 20, "스무": 20, "서른": 30, "마흔": 40,
-  "쉰": 50, "예순": 60, "일흔": 70, "여든": 80, "아흔": 90,
-};
-const ONES: Record<string, number> = {
-  "하나": 1, "한": 1, "첫": 1, "둘": 2, "두": 2,
-  "셋": 3, "세": 3, "넷": 4, "네": 4, "다섯": 5,
-  "여섯": 6, "일곱": 7, "여덟": 8, "아홉": 9,
-};
-const koreanOrdinalToNum = (korean: string): string => {
-  const text = korean.replace(/(번째|째)$/, "");
-  for (const [tw, tv] of Object.entries(TENS)) {
-    if (text.startsWith(tw)) {
-      const rest = text.slice(tw.length);
-      if (!rest) return String(tv);
-      if (ONES[rest] !== undefined) return String(tv + ONES[rest]);
-    }
-  }
-  if (ONES[text] !== undefined) return String(ONES[text]);
-  return korean; // 변환 불가 시 원문 반환
-};
 
 // "2026-06-25T11:00:..." → "2026. 6. 25."
 const fmtDate = (iso: string) => {
   const [y, m, d] = (iso || "").slice(0, 10).split("-");
-  return y && m && d ? `${y}. ${Number(m)}. ${Number(d)}` : "";
+  return y && m && d ? `${y}. ${Number(m)}. ${Number(d)}.` : "";
 };
 
 const PAGE = 6; // 처음 6개, 더보기 클릭마다 +6
@@ -76,11 +51,11 @@ export default function RetailTechLetterSection({
       <div className="flex flex-col items-start max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pt-[var(--padding-5XL,80px)] pb-[var(--padding-7-xl,120px)] gap-[var(--spacing-3XL,40px)]">
         {/* 헤더: 제목 + 구독하기 */}
         <div className="flex w-full flex-col items-start justify-between gap-l min-[641px]:flex-row min-[641px]:items-center">
-          <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
+          <h2 className="text-title-l desktop:text-title-xl font-bold text-primary">
             {title}
           </h2>
           <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block shrink-0">
-            <IcoTxtButton variant="secondary" size="L" shape="square">
+            <IcoTxtButton variant="primary" size="L" shape="square">
               {ctaLabel}
             </IcoTxtButton>
           </a>
@@ -88,37 +63,21 @@ export default function RetailTechLetterSection({
 
         {/* 지난 뉴스레터 목록 + 더보기 */}
         <div className="flex w-full flex-col items-center gap-[var(--spacing-4XL,56px)]">
-          <ul className="w-full flex flex-col gap-[var(--spacing-S,8px)]">
+          <ul className="w-full border-t border-subtle">
             {letters.slice(0, visibleCount).map((letter) => (
-              <li key={letter.id} className="border-b border-[var(--color-border-tertiary,#E4E6E7)]">
+              <li key={letter.id} className="border-b border-subtle">
                 <a
                   href={letter.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-[var(--spacing-XL,24px)] py-[var(--spacing-M,16px)] transition-opacity hover:opacity-60"
+                  className="flex flex-col gap-xs py-xl transition-opacity hover:opacity-60"
                 >
-                  <div className="flex flex-col gap-xs flex-1 min-w-0">
-                    <Label shape="square" size="S" className="self-start !text-caption-m !text-text-basic-tertiary !font-semibold !px-[var(--padding-S,8px)]">ISSUE NO.{letter.issueLabel ? koreanOrdinalToNum(letter.issueLabel) : letter.id}</Label>
-                    <h3 className="line-clamp-2 text-body-l font-semibold text-text-basic-primary">
-                      {letter.title}
-                    </h3>
-                    <time dateTime={letter.publishedAt} className="text-body-xs leading-[1.25rem] font-normal text-text-basic-secondary">
-                      {fmtDate(letter.publishedAt)}
-                    </time>
-                  </div>
-                  {letter.thumbnailUrl && (() => {
-                    const issueNum = letter.issueLabel ? Number(koreanOrdinalToNum(letter.issueLabel)) : Number(letter.id);
-                    const thumbBg = issueNum >= 1 && issueNum <= 6 ? "var(--color-bg-200)" : "var(--color-filled-basic-primary)";
-                    return (
-                      <div className="relative shrink-0 w-[160px] aspect-video overflow-hidden rounded-fai-s p-[var(--padding-S,8px)]" style={{ background: thumbBg }}>
-                        <img
-                          src={letter.thumbnailUrl}
-                          alt=""
-                          className="absolute inset-0 w-full h-full object-contain"
-                        />
-                      </div>
-                    );
-                  })()}
+                  <h3 className="text-body-l desktop:text-body-xl font-medium text-text-basic-primary">
+                    {letter.title}
+                  </h3>
+                  <time dateTime={letter.publishedAt} className="text-body-s font-normal text-text-basic-tertiary">
+                    {fmtDate(letter.publishedAt)}
+                  </time>
                 </a>
               </li>
             ))}
