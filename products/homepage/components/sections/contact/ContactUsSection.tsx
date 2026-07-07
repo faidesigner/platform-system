@@ -176,13 +176,13 @@ export function ContactUsSection() {
           /* ───────── 제출 완료 화면 — form + toast 완전 대체 ───────── */
           <div className="flex w-full flex-col items-center justify-center gap-[var(--spacing-3XL,40px)] text-center px-[var(--padding-XL)] min-[961px]:px-0">
             <div className="flex flex-col items-center gap-[var(--spacing-M,16px)]">
-              <h2 className="text-[length:var(--font-size-28,28px)] leading-[var(--font-lineHeight-28,42px)] min-[769px]:text-[length:var(--font-size-36,36px)] min-[769px]:leading-[var(--font-lineHeight-36,54px)] font-bold text-[var(--color-text-inverse,#FFF)]">
+              <h2 className="text-title-m min-[769px]:text-title-l font-bold text-text-inverse">
                 {t("complete.title")}
               </h2>
-              <p className="text-[length:var(--font-size-18,18px)] leading-[var(--font-lineHeight-18,27px)] min-[769px]:text-[length:var(--font-size-20,20px)] min-[769px]:leading-[var(--font-lineHeight-20,30px)] font-medium">
-                <span className="text-[var(--color-text-inverse,#FFF)]">{t("complete.subCopy.before")}</span>
-                <span className="text-[var(--fai-color-brand,#39DB1F)]">{t("complete.subCopy.highlight")}</span>
-                <span className="text-[var(--color-text-inverse,#FFF)]">{t("complete.subCopy.after")}</span>
+              <p className="text-body-l min-[769px]:text-body-xl font-medium">
+                <span className="text-text-inverse">{t("complete.subCopy.before")}</span>
+                <span className="text-brand-text">{t("complete.subCopy.highlight")}</span>
+                <span className="text-text-inverse">{t("complete.subCopy.after")}</span>
               </p>
             </div>
             <div className="dark">
@@ -209,7 +209,7 @@ export function ContactUsSection() {
               {/* titleSection */}
               <div className="flex flex-1 flex-col items-start gap-[var(--spacing-XL,24px)] min-w-0">
                 <h2
-                  className="self-stretch max-[420px]:text-[length:var(--font-size-20,20px)] text-[length:var(--font-size-28,28px)] desktop-s:text-[length:var(--font-size-36,36px)] font-bold leading-[var(--font-lineHeight-36,54px)] text-inverse"
+                  className="self-stretch max-[420px]:text-body-xl text-title-m desktop-s:text-title-l font-bold leading-[var(--w-title-L-lineHeight,3.375rem)] text-inverse"
                  
                 >
                   {(t.raw("title") as string[]).map((line, idx, arr) => (
@@ -220,7 +220,7 @@ export function ContactUsSection() {
                   ))}
                 </h2>
                 <p
-                  className="self-stretch max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-medium leading-[var(--font-lineHeight-20,30px)]"
+                  className="self-stretch max-[420px]:text-body text-body-l desktop-s:text-body-xl font-medium leading-[var(--w-text-XL-lineHeight,1.875rem)]"
 
                 >
                   <span className="text-brand-text">{t("subCopy.highlight")}</span>
@@ -245,13 +245,13 @@ export function ContactUsSection() {
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch w-full">
                     {/* title */}
                     <div className="flex justify-between items-end self-stretch w-full">
-                      <p className="text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
+                      <p className="text-secondary max-[420px]:text-body text-body-xl font-bold">
                         {t("form.connectTitle")}
                       </p>
                       {/* titleItems — 필수 입력 범례 */}
                       <div className="flex items-center p-[var(--padding-3XS,2px)] gap-[var(--spacing-2XS,4px)] rounded-[var(--cornerRadius-none,0)]">
                         <IcRequiredDot className="text-[var(--color-icon-optional-brand-primary)]" />
-                        <span className="text-quaternary text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
+                        <span className="text-quaternary text-body-s font-medium">
                           {t("form.requiredLabel")}
                         </span>
                       </div>
@@ -287,7 +287,7 @@ export function ContactUsSection() {
 
                   {/* select: 관심 정보 */}
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch">
-                    <p className="self-stretch text-secondary max-[420px]:text-[length:var(--font-size-16,16px)] text-[length:var(--font-size-20,20px)] font-bold leading-[var(--font-lineHeight-20,30px)]">
+                    <p className="self-stretch text-secondary max-[420px]:text-body text-body-xl font-bold">
                       {t("form.selectTitle")}
                     </p>
 
@@ -301,10 +301,10 @@ export function ContactUsSection() {
 
                             {/* titleItem */}
                             <div className="flex items-center gap-[var(--spacing-S,8px)]">
-                              <span className="text-secondary max-[420px]:text-[length:var(--font-size-14,14px)] text-[length:var(--font-size-18,18px)] font-medium leading-[var(--font-lineHeight-18,27px)]">
+                              <span className="text-secondary max-[420px]:text-body-s text-body-l font-medium">
                                 {t(`interests.${gk}.group`)}
                               </span>
-                              <span className="text-quaternary max-[420px]:text-[length:var(--font-size-12,12px)] text-[length:var(--font-size-14,14px)] font-medium leading-[var(--font-lineHeight-14,21px)]">
+                              <span className="text-quaternary max-[420px]:text-caption-m text-body-s font-medium">
                                 {t(`interests.${gk}.multipleLabel`)}
                               </span>
                             </div>
@@ -327,7 +327,7 @@ export function ContactUsSection() {
                       </div>
 
                       {/* textBox: 개인정보 처리방침 안내 */}
-                      <div className="flex flex-1 justify-start items-start self-stretch text-quaternary text-[length:var(--w-caption-M-size,12px)] font-normal leading-[var(--w-caption-M-lineHeight,18px)] tracking-[var(--w-caption-M-letterSpacing,-0.1px)]">
+                      <div className="flex flex-1 justify-start items-start self-stretch text-quaternary text-caption-m font-normal">
                         <p>
                           {t("form.privacyNotice.before")}
                           <a href={contact.form.privacyNotice.href} target="_blank" rel="noopener noreferrer" className="underline decoration-solid">
@@ -356,16 +356,16 @@ export function ContactUsSection() {
 
             {/* toast — ≥421px */}
             <div className="hidden min-[421px]:block dark self-stretch">
-              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth,#2C2D30)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
+              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
                   {/* 아이콘: ≥768px에서만 표시 */}
                   <CustomerSupportGraphic className="hidden tablet:block w-[40px] h-[40px] shrink-0" />
                   {/* ≥768px 텍스트 */}
-                  <p className="hidden tablet:block text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-18,18px)] desktop-s:text-[length:var(--font-size-20,20px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                  <p className="hidden tablet:block text-center text-text-basic-primary text-body-l desktop-s:text-body-xl font-semibold leading-[var(--w-text-XL-lineHeight,1.875rem)]">
                     {t("toast.text")}
                   </p>
                   {/* 421px~767px 텍스트 */}
-                  <p className="tablet:hidden text-center text-[var(--color-text-basic-primary,#FFF)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)] tracking-[var(--font-letterSpacing-0,0)]">
+                  <p className="tablet:hidden text-center text-text-basic-primary text-body font-semibold leading-[var(--w-text-XL-lineHeight,1.875rem)]">
                     {t("toast.textShort")}
                   </p>
                 </div>
@@ -374,9 +374,9 @@ export function ContactUsSection() {
                   target="_blank"
                   rel="noopener noreferrer"
                   onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
-                  className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
+                  className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
                 >
-                  <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-14,14px)] desktop-s:text-[length:var(--m-text-XL-size,16px)] font-semibold leading-[var(--m-text-XL-lineHeight,24px)] tracking-[var(--m-text-XL-letterSpacing,0)]">
+                  <span className="text-center text-[var(--color-text-optional-brand-primaryBtn)] text-body-s desktop-s:text-body font-semibold leading-[var(--w-text-M-lineHeight,1.5rem)]">
                     {t("toast.buttonLabel")}
                   </span>
                 </a>
@@ -390,9 +390,9 @@ export function ContactUsSection() {
                 target="_blank"
                 rel="noopener noreferrer"
                 onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
-                className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn,#39DB1F)] py-[var(--padding-MS,12px)]"
+                className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn)] py-[var(--padding-MS,12px)]"
               >
-                <span className="text-center text-[var(--color-text-optional-brand-primaryBtn,#1F2023)] text-[length:var(--font-size-16,16px)] font-semibold leading-[var(--font-lineHeight-20,30px)]">
+                <span className="text-center text-[var(--color-text-optional-brand-primaryBtn)] text-body font-semibold leading-[var(--w-text-XL-lineHeight,1.875rem)]">
                   {t("toast.buttonLabel")}
                 </span>
               </a>
