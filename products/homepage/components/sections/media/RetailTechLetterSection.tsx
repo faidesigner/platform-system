@@ -90,7 +90,7 @@ export default function RetailTechLetterSection({
         <div className="flex w-full flex-col items-center gap-[var(--spacing-4XL,56px)]">
           <ul className="w-full flex flex-col gap-[var(--spacing-S,8px)]">
             {letters.slice(0, visibleCount).map((letter) => (
-              <li key={letter.id} className="border-b border-border-tertiary">
+              <li key={letter.id} className="border-b border-[var(--color-border-tertiary,#E4E6E7)]">
                 <a
                   href={letter.url}
                   target="_blank"
