@@ -44,7 +44,7 @@ export function ImageSection({
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover object-bottom"
+          className="object-cover object-bottom desktop:object-center"
         />
       </div>
     </section>

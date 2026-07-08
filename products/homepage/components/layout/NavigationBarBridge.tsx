@@ -5,6 +5,7 @@ import type { NavItem, DrawerLabels } from '@fai/ui';
 import { useTranslations } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import HomepageLangSwitcher from '@/components/layout/LanguageSwitcher';
+import { saveLocaleScroll } from '@/lib/localeScroll';
 import ProductMegaMenu from '@/components/ui/ProductMegaMenu';
 import { trackEvent } from '@/lib/analytics/track';
 
@@ -39,7 +40,8 @@ export default function NavigationBarBridge() {
   };
 
   const handleLocaleChange = (code: string) => {
-    // scroll:false → 언어 전환 시 최상단 이동/리로드 없이 현재 화면 유지
+    // 전환 직전 scrollY 저장 → SmoothScroll 리마운트 후 복원
+    saveLocaleScroll();
     router.push(pathname, { locale: code, scroll: false });
   };
 

@@ -5,6 +5,7 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import GlobeIcon from '@fai/ui/components/common/Icon/GlobeIcon';
 import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
+import { saveLocaleScroll } from '@/lib/localeScroll';
 
 /* ──────────────────────────────────────────
    상수
@@ -76,7 +77,7 @@ const labelStyle: React.CSSProperties = {
   width: '29px',
   color: 'var(--color-text-basic-secondary)',
   textAlign: 'center',
-  fontFamily: 'var(--font-family-Pretendard, Pretendard)',
+  fontFamily: 'var(--w-font-family)',
   fontSize: 'var(--font-size-16, 16px)',
   fontStyle: 'normal',
   fontWeight: 600,
@@ -116,10 +117,11 @@ export default function LanguageSwitcher({
   const currentLabel =
     LANGUAGES.find((l) => l.code === locale)?.label ?? locale.toUpperCase();
 
-  /** next-intl locale 전환 — 경로 보존 */
+  /** next-intl locale 전환 — 경로 보존 + 스크롤 위치 보존 */
   const handleSelect = (code: string) => {
     if (code === locale) { setOpen(false); return; }
-    // scroll:false → 언어 전환 시 최상단 이동/리로드 없이 현재 화면 유지
+    // 전환 직전 현재 scrollY를 sessionStorage에 저장 → SmoothScroll 리마운트 후 복원
+    saveLocaleScroll();
     router.push(pathname, { locale: code, scroll: false });
     setOpen(false);
   };

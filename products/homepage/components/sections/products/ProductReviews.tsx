@@ -35,7 +35,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
   if (!reviews || reviews.length === 0) return null;
 
   return (
-    <section id="product-reviews" className="flex w-full flex-col items-center gap-4xl py-5xl bg-bg-100">
+    <section id="product-reviews" className="flex w-full flex-col items-center gap-4xl pt-3xl min-[769px]:pt-5xl pb-3xl min-[769px]:pb-5xl bg-bg-100">
       {/* 타이틀 + 버튼 */}
       <div className="flex w-full max-w-[1440px] items-end justify-between gap-ms px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
         <h2 className="text-title-m tablet:text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
@@ -71,11 +71,9 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
             width: auto !important;
           }
           .fai-review-image {
-            width: 507px !important;
-            height: 380px !important;
-            flex: none !important;
-            min-width: unset !important;
-            aspect-ratio: unset !important;
+            flex: 1 !important;
+            min-width: 0 !important;
+            aspect-ratio: 613 / 460 !important;
           }
         }
         @media (max-width: 768px) {
@@ -103,7 +101,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
           }
           .fai-review-image {
             width: 100% !important;
-            height: 231px !important;
+            aspect-ratio: 613 / 460 !important;
             order: 2 !important;
           }
         }
@@ -140,11 +138,11 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
                 <p className="fai-review-store text-body desktop:text-body-l font-bold text-text-basic-secondary">
                   {review.store}
                   {review.role && (
-                    <span style={{ padding: "0 8px", color: "var(--fai-color-quaternary)" }}>|</span>
+                    <span style={{ padding: "0 var(--fai-space-s)", color: "var(--fai-color-quaternary)" }}>|</span>
                   )}
                   {review.role}
                 </p>
-                <p className="fai-review-quote w-[432px] text-body-xl font-normal text-tertiary">
+                <p className="fai-review-quote w-[432px] text-body-xl font-normal text-text-basic-tertiary">
                   {review.quote.map((seg, j) =>
                     seg.emphasis ? (
                       <span

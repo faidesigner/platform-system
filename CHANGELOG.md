@@ -2,6 +2,94 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-08
+
+### ✨ Added
+
+#### localeScroll (products/homepage)
+- `lib/localeScroll.ts` 신규 생성 — 로케일 전환 시 스크롤 위치 sessionStorage 저장/복원 유틸
+- `peekLocaleScroll` (read-only) / `clearLocaleScroll` (rAF 콜백 내 삭제) 분리로 React StrictMode 이중 실행 대응
+
+### 🔄 Changed
+
+#### SmoothScroll (products/homepage)
+- 로케일 전환 시 sessionStorage에 저장된 scrollY 복원 로직 추가
+- popstate(뒤로/앞으로) 감지 후 브라우저 복원 위치로 Lenis 내부 상태 동기화
+
+#### LanguageSwitcher / NavigationBarBridge (products/homepage)
+- 로케일 전환 직전 `saveLocaleScroll()` 호출 추가
+
+#### globals.css (products/homepage)
+- `--color-filled-basic-fourth` 토큰 추가: `:root` light(`--color-gray-30`), `.dark` dark(`--color-gray-800`)
+
+#### ProductReviews (products/homepage)
+- 리뷰 슬라이더 카드 이미지 ≤960px: 고정 크기 → `flex:1 + aspect-ratio:613/460` 비율 대응
+
+#### ProductFeatures (products/homepage)
+- Card 0·1 모바일 레이아웃(텍스트 상단 / 이미지 하단) 적용 범위 `≤420px` → `≤768px` 확장
+- Card 1 이미지 영역 background-position 우측 정렬(`100%`)
+- Card 2 description `whitespace-pre-line` 적용, 줄바꿈 추가
+
+#### ImageSection (products/homepage)
+- 데스크탑(≥1440px) `object-bottom` → `object-center` 이미지 중앙 정렬
+
+#### StoreTypes (products/homepage)
+- 카드 그리드 `≤768px` 1열 레이아웃 적용 (`max-[768px]:grid-cols-1`)
+- wide 카드 `col-span-1` 적용 범위 `≤420px` → `≤768px`
+- wide 카드 이미지 `≤768px` `object-position: center` 오버라이드 (`.fai-storetype-wide-img`)
+- 카드 높이 `≤768px` 520px, `≤420px` 460px (`fai-storetype-card` style 블록)
+
+### 🐛 Fixed
+
+#### LanguageSwitcher / NavigationBar (@fai/ui)
+- 모바일 언어 전환 로케일 코드 `jp` → `ja` 수정 (잘못된 `/jp/` 라우팅 → 404 버그)
+- NavigationBar 내부 fallback switcher `LANGUAGES` 배열 `'JP'` → `'JA'`
+- `root/foundation/docs/typography-w.md` `html[lang='jp']` → `html[lang='ja']`
+
+#### products/[slug]/page.tsx (products/homepage)
+- `generateStaticParams` `slug`만 반환하던 문제 수정 → `locale × slug` 전체 조합 반환
+- Next.js 16 `output: export` 환경에서 `/ko|en|ja/products/*` 404 발생하던 버그 해결
+
+### 🔄 Changed
+
+#### Foundation 토큰 규칙 준수
+
+- **Footer** (`@fai/ui`): `text-[13px] leading-[20px]` → `text-body-xs leading-[1.25rem]`
+- **ContactUsSection** (products/homepage): `--font-size-*` / `--font-lineHeight-*` / `--m-text-*` 프리미티브 토큰 → `--w-*` web 토큰 교체, hex fallback 제거
+- **RetailTechLetterSection** (products/homepage): `border-[var(--color-border-tertiary,#E4E6E7)]` 복원, `#EDF2F5` → `var(--color-bg-200)`, hex fallback 제거
+
+---
+
+## [3.6.0] - 2026-07-06
+
+### 🔄 Changed
+
+#### ProductFeatures (products/homepage)
+- Card 0·1·2 데스크탑(>960px) 내부 패딩 `--size-48` → `--padding-3-xl` (40px)
+- 960px 이하 Card 0·1·2 패딩 `--padding-2-xl` (32px) 적용
+- Card 2 960px 이하 레이아웃: flex-row (텍스트 좌 / 이미지 우 50%) 사이드바이사이드 배치
+- Card 2 420px 이하 레이아웃: flex-column 스택, `flex-direction` 및 `flex` 리셋 버그 수정
+- Card 2 데스크탑 높이 `tablet:h-[430px]` 유지
+
+#### StoreEffects (products/homepage)
+- 아코디언 리스트 트리거 방식 변경: 호버·클릭 제거 → IntersectionObserver 스크롤 기반 단독 제어
+- 아이템 뷰포트 진입 시 인덱스 오름차순 큐 → 350ms 간격 순차 오픈
+- 1회 열린 아이템 영구 고정 (닫힘 없음), observer disconnect
+
+#### CtaBanner (products/homepage)
+- 모바일 이중 버튼 버그 수정: `max-[420px]:hidden` / `min-[421px]:hidden` 임의 브레이크포인트 제거 → 단일 XL 버튼으로 통합
+
+#### MegaMenuPanel (@fai/ui)
+- 메가메뉴 이미지 영역 그라데이션 오버레이 제거
+
+#### ShowcaseSection (products/homepage)
+- 썸네일 자동 전환 속도 5000ms → 3500ms
+- 텍스트 패널 타이틀 영역 `min-h` 고정 (모바일 112px / 데스크탑 136px) — 영상 전환 시 위치 흔들림 방지
+- 영상 전환 슬라이드 애니메이션 추가: 구 이미지 좌측 이탈 + 신 이미지 우측 진입 (400ms ease-in-out)
+- `animating` deps 버그 수정: StrictMode cleanup으로 타이머 취소 후 `animating` 영구 고착 방지
+
+---
+
 ## [3.5.0] - 2026-07-01
 
 ### ✨ Added
