@@ -209,7 +209,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
       </div>
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단) */}
-      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none">
+      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
 
         {/* 슬라이드 키프레임 */}
         <style>{`
