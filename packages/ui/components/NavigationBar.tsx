@@ -35,7 +35,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   },
 ];
 
-const LANGUAGES = ["KO", "EN", "JP"] as const;
+const LANGUAGES = ["KO", "EN", "JA"] as const;
 type Language = (typeof LANGUAGES)[number];
 
 /* ──────────────────────────────────────────
@@ -96,6 +96,8 @@ export default function NavigationBar({
   const [lang,     setLang]     = useState<Language>("KO");
   // 960px 이하 공용 드로어
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // 스크롤 100px 초과 + 투명 구간일 때 그림자 활성화 (navShadow)
+  const [hasShadow, setHasShadow] = useState(false);
 
   /** 라우트 변경 시 드로어 닫기 + 뷰포트 상단 이동 */
   useEffect(() => {
@@ -116,13 +118,18 @@ export default function NavigationBar({
     const update = () => {
       const y = window.scrollY;
       if (isHome) {
-        setIsTransparent(y >= 1 && y <= threshold);
+        const inTransparentZone = y >= 1 && y <= threshold;
+        setIsTransparent(inTransparentZone);
+        setHasShadow(inTransparentZone && y > 100);
       } else if (isProductDetail) {
         setIsTransparent(y < window.innerHeight);
+        setHasShadow(false);
       } else if (isMedia) {
         setIsTransparent(false);
+        setHasShadow(false);
       } else {
         setIsTransparent(y < 1);
+        setHasShadow(false);
       }
     };
 
@@ -167,8 +174,9 @@ export default function NavigationBar({
       <header
         className={[
           "fixed top-0 left-0 z-50 w-full h-16",
-          "transition-colors duration-300 ease-in-out",
+          "transition-all duration-300 ease-in-out",
           effectiveTransparent ? "dark bg-transparent" : "bg-surface",
+          hasShadow && !drawerOpen ? "shadow-M" : "",
         ].join(" ")}
       >
         <nav className="w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
@@ -213,7 +221,7 @@ export default function NavigationBar({
                   ].join(" ")}
                   aria-label="언어 선택"
                 >
-                  <span className="text-[16px] leading-[24px] font-semibold">{lang}</span>
+                  <span className="text-body font-semibold">{lang}</span>
                   <ChevronDown
                     className={`h-m w-m transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`}
                     aria-hidden

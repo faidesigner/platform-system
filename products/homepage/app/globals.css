@@ -470,6 +470,7 @@ html.dark, .dark {
 body {
   background: var(--fai-bg-surface);
   color: var(--fai-color-primary);
+  font-family: var(--w-font-family);
 }
 
 /* Scrollbar */

@@ -78,10 +78,10 @@ const labelStyle: React.CSSProperties = {
   color: 'var(--color-text-basic-secondary)',
   textAlign: 'center',
   fontFamily: 'var(--w-font-family)',
-  fontSize: 'var(--font-size-16, 16px)',
+  fontSize: 'var(--w-text-M-size)',
   fontStyle: 'normal',
   fontWeight: 600,
-  lineHeight: 'var(--font-lineHeight-16, 24px)',
+  lineHeight: 'var(--w-text-M-lineHeight)',
   letterSpacing: 'var(--font-letterSpacing-0, 0)',
 };
 

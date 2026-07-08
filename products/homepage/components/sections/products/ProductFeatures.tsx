@@ -33,12 +33,13 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
         }
         @media (max-width: 960px) {
           .fai-card-01 {
+            height: 640px !important;
             padding: var(--padding-2-xl, 32px) !important;
           }
           .fai-card-2-container {
             display: flex !important;
             flex-direction: row !important;
-            height: 427px !important;
+            height: auto !important;
             padding: 0 !important;
             align-items: stretch !important;
             overflow: hidden !important;
@@ -57,7 +58,8 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             position: relative !important;
             flex: 0 0 50% !important;
             width: auto !important;
-            height: 100% !important;
+            height: auto !important;
+            aspect-ratio: 456 / 633 !important;
             bottom: auto !important;
             right: auto !important;
             margin-top: 0 !important;
@@ -78,11 +80,12 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             padding: var(--padding-XL, 24px) !important;
             flex: none !important;
           }
-          /* ── Card 0 · 1 이미지 영역 ── */
+          /* ── Card 0 · 1 이미지 영역 (421px ~ 768px: 비율 유지) ── */
           .fai-card-image-area {
             display: flex !important;
+            flex: none !important;
             width: 100% !important;
-            height: 291px !important;
+            aspect-ratio: 420 / 291 !important;
           }
           .fai-card-0 .fai-card-image-area {
             background: var(--fai-card-img) transparent -24.218px -79.348px / 172.102% 146.742% no-repeat !important;
@@ -106,10 +109,30 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             position: relative !important;
             flex: none !important;
             width: 100% !important;
-            height: 291px !important;
+            aspect-ratio: 420 / 291 !important;
             margin-top: 0 !important;
             border-radius: 0 !important;
             background: var(--fai-card-2-img) transparent -0.25px -0.108px / 139.315% 118.879% no-repeat !important;
+          }
+        }
+        @media (max-width: 420px) {
+          /* ── Card 0 · 1 래퍼 (≤420px: 고정 435px) ── */
+          .fai-card-01 {
+            height: 435px !important;
+          }
+          /* ── Card 0 · 1 이미지 영역 (≤420px: 고정 291px) ── */
+          .fai-card-image-area {
+            aspect-ratio: auto !important;
+            height: 291px !important;
+          }
+          /* ── Card 2 래퍼 (≤420px: 고정 435px) ── */
+          .fai-card-2-container {
+            height: 435px !important;
+          }
+          /* ── Card 2 이미지 영역 (≤420px: 고정 291px) ── */
+          .fai-card-2-image {
+            aspect-ratio: auto !important;
+            height: 291px !important;
           }
         }
       `}} />

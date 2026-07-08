@@ -136,7 +136,7 @@ export async function EfficiencySection({ pinDuration = '200vh' }: EfficiencySec
                       <div className="text-body tablet:text-body-l desktop:text-body-xl self-stretch font-base font-semibold text-text-basic-inverse tracking-normal">
                         {stat.label}
                         {stat.labelCaption && (
-                          <span className="font-base font-normal text-text-basic-inverse-secondary tracking-normal text-[length:var(--font-size-14,14px)]">
+                          <span className="font-base font-normal text-text-basic-inverse-secondary tracking-normal text-body-s">
                             {' '}{stat.labelCaption}
                           </span>
                         )}

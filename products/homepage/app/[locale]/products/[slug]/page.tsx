@@ -22,7 +22,9 @@ const SLUG_NS: Record<ProductSlug, string> = {
 }
 
 export function generateStaticParams() {
-  return PRODUCT_SLUGS.map((slug) => ({ slug }))
+  return routing.locales.flatMap((locale) =>
+    PRODUCT_SLUGS.map((slug) => ({ locale, slug }))
+  )
 }
 
 export async function generateMetadata({

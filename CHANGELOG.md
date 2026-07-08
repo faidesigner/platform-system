@@ -2,6 +2,60 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-08 (2)
+
+### 🐛 Fixed
+
+#### revert 누락 항목 재적용 (packages/ui, products/homepage)
+- `packages/ui/components/Footer.tsx`: `text-[13px] leading-[20px]` → `text-body-xs leading-[1.25rem]` (4곳)
+- `packages/ui/components/NavigationBar.tsx`: `JP` → `JA`, hasShadow 스크롤 로직, `transition-all`, `shadow-M`, lang span `text-body`
+- `packages/ui/components/navigation/LanguageSwitcher.tsx`: locale `jp` → `ja`, font-size/lineHeight CSS vars
+- `products/homepage/app/[locale]/products/[slug]/page.tsx`: `generateStaticParams` locale×slug 전체 조합 복원
+- `products/homepage/components/sections/contact/ContactUsSection.tsx`: color 토큰 hex fallback 제거, semantic 토큰 교체
+
+#### Foundation 토큰 규칙 위반 수정 (products/homepage, packages/ui)
+- `ContactUsSection.tsx`: `--font-size-*` / `--font-lineHeight-*` 13곳 → Tailwind 텍스트 토큰 교체
+- `ProductReviews.tsx`: CSS-in-JS `--font-size-*` → `--w-text-*-size` / `--w-text-*-lineHeight`
+- `LanguageSwitcher.tsx` (homepage): inline style font 토큰 교체
+- `NewsSection.tsx`: `text-[length:var(--font-size-15)]` → `text-body-ms` (2곳)
+- `EfficiencySection.tsx`: `text-[length:var(--font-size-14)]` → `text-body-s`
+- `globals.css`: `body { font-family: var(--w-font-family) }` 추가 — ja 로케일 폰트 전환
+- `tailwind.config.ts`: `fontFamily.base: ['var(--w-font-family)']` 적용
+
+#### BenefitGraphic 아이콘 반응형 사이즈 (packages/ui, root/assets)
+- `staffing.svg` / `checkout-flow.svg` / `profitability.svg`: `width="40" height="40"` 제거 → CSS className이 SVG viewport 완전 제어
+- `BenefitGraphic.tsx`: `width/height={undefined}` 핵 제거, `className={className}` 클린 방식 적용
+
+#### ProductFeatures 카드 반응형 높이 (products/homepage)
+- Card 0·1 `≤960px`: `height: 640px` 고정
+- Card 0·1 `≤768px`: `height: 435px`, 이미지 영역 분리
+- Card 0·1 `421px~768px`: 이미지 `aspect-ratio: 420/291` — 너비 비례 자동 높이
+- Card 0·1 `≤420px`: 카드 `435px`, 이미지 `291px` 고정
+- Card 2 `≤960px`: 컨테이너 `height: auto`, 이미지 `aspect-ratio: 456/633` — 960px 기준 633px
+- Card 2 `≤768px`: 컨테이너 `height: auto`, 이미지 `aspect-ratio: 420/291`
+- Card 2 `≤420px`: 카드 `435px`, 이미지 `291px` 고정
+
+## [Unreleased] - 2026-07-09
+
+### ✨ Added
+
+#### RetailTechLetter 썸네일 (products/homepage)
+- `config/retail-tech-letter.json` 전체 레터(31개)에 `thumbnailUrl` 필드 추가
+  - id 1–6: `https://img.stibee.com/98052_1696503402.png`
+  - id 7–31: `https://img.stibee.com/98052_1714470037.png`
+
+### 🐛 Fixed
+
+#### Foundation 문서 정합성 (root/foundation/docs)
+- `typography-w.md`: `html[lang='jp']` → `html[lang='ja']` 오타 수정
+- `typography.md`: `M PLUS 2 Variable` → `M PLUS 2` (Google Fonts 실제 font-family명 정정), `JP` → `JA`
+- `typography.json`: `'M PLUS 2 Variable'` → `'M PLUS 2', system-ui, sans-serif`
+- `color-global.md`: 구버전 → 상세 버전 (팔레트 표·size 스케일·사용 규칙·파일 구조 포함)
+- `color-semantic.md`: 구버전 → 상세 버전 (bg/color/border/sand 실제 토큰 값·다크모드·Tailwind 예시 포함)
+
+#### Foundation 문서 추가 (products/homepage/root/foundation/docs)
+- `typography.md`: ja 로케일 M PLUS 2 폰트 항목 추가
+
 ## [Unreleased] - 2026-07-08
 
 ### ✨ Added

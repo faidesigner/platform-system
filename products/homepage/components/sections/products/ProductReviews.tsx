@@ -59,13 +59,13 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
             gap: var(--spacing-3XL, 40px) !important;
           }
           .fai-review-text-area .fai-review-category {
-            font-size: var(--font-size-20, 20px) !important;
-            line-height: var(--font-lineHeight-20, 30px) !important;
+            font-size: var(--w-text-XL-size) !important;
+            line-height: var(--w-text-XL-lineHeight) !important;
           }
           .fai-review-text-area .fai-review-store,
           .fai-review-text-area .fai-review-quote {
-            font-size: var(--font-size-14, 14px) !important;
-            line-height: var(--font-lineHeight-14, 21px) !important;
+            font-size: var(--w-text-S-size) !important;
+            line-height: var(--w-text-S-lineHeight) !important;
           }
           .fai-review-text-area .fai-review-quote {
             width: auto !important;
@@ -91,13 +91,13 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
             gap: var(--spacing-2XL, 32px) !important;
           }
           .fai-review-text-area .fai-review-category {
-            font-size: var(--font-size-16, 16px) !important;
-            line-height: var(--font-lineHeight-16, 24px) !important;
+            font-size: var(--w-text-M-size) !important;
+            line-height: var(--w-text-M-lineHeight) !important;
           }
           .fai-review-text-area .fai-review-store,
           .fai-review-text-area .fai-review-quote {
-            font-size: var(--font-size-12, 12px) !important;
-            line-height: var(--font-lineHeight-12, 18px) !important;
+            font-size: var(--w-caption-M-size) !important;
+            line-height: var(--w-caption-M-lineHeight) !important;
           }
           .fai-review-image {
             width: 100% !important;
