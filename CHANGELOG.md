@@ -2,6 +2,29 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-08 (3)
+
+### 🔄 Changed
+
+#### ShowcaseSection (products/homepage)
+- 썸네일 자동 전환 속도 5000ms → 3500ms
+- 슬라이드 애니메이션: 구 이미지 좌측 이탈 + 신 이미지 우측 진입 (400ms ease-in-out)
+- `animating` StrictMode 버그 수정: cleanup에서 `animatingRef` 리셋으로 영구 고착 방지
+- 텍스트 패널·썸네일 패널 내부 패딩 `var(--padding-2-xl, 32px)` 토큰 적용
+- 유튜브 카드 ↔ 소셜 카드 간격 `var(--spacing-2XL, 32px)` 토큰 적용
+- 소셜 카드 간 간격 `var(--spacing-XL, 24px)` 토큰 적용
+- ProgressBar 굵기 `h-2xs`(4px) → `h-[3px]`
+
+#### StoreEffects (products/homepage)
+- 아코디언 트리거 호버·클릭 제거 → IntersectionObserver 스크롤 기반 단독 제어
+- 뷰포트 진입 시 인덱스 오름차순 큐 → 350ms 간격 순차 오픈, 1회 고정
+
+#### CtaBanner (products/homepage)
+- 이중 버튼(`max-[420px]:hidden` / `min-[421px]:hidden`) → 단일 XL 버튼으로 통합
+
+#### MegaMenuPanel (@fai/ui)
+- 이미지 영역 그라데이션 오버레이 제거
+
 ## [Unreleased] - 2026-07-08 (2)
 
 ### 🐛 Fixed

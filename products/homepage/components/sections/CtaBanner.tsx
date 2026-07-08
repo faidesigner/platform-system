@@ -61,23 +61,11 @@ export function CtaBanner({
           {t('titleLine1')}<br className="min-[769px]:hidden" /> {t('titleLine2')}
         </h2>
 
-        {/* > 420px: XL */}
         <IcoTxtButton
           variant="primary"
           size="XL"
           shape="square"
-          className="shrink-0 max-[420px]:hidden"
-          style={{ textAlign: 'center' }}
-          onClick={handleCta}
-        >
-          {tCommon('cta.requestDemo')}
-        </IcoTxtButton>
-        {/* ≤ 420px: L (한 단계 축소) */}
-        <IcoTxtButton
-          variant="primary"
-          size="L"
-          shape="square"
-          className="shrink-0 min-[421px]:hidden"
+          className="shrink-0"
           style={{ textAlign: 'center' }}
           onClick={handleCta}
         >

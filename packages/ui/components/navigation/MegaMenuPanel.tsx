@@ -154,7 +154,7 @@ function MenuItem({ item }: { item: MegaMenuItemData }) {
 
   const dynamicImageFrameStyle: CSSProperties = {
     ...baseImageFrameStyle,
-    backgroundImage:    `linear-gradient(180deg, rgba(9, 9, 11, 0.00) 0%, rgba(9, 9, 11, 0.50) 100%), url(${item.image})`,
+    backgroundImage:    `url(${item.image})`,
     backgroundPosition: item.bgStyle?.backgroundPosition ?? '50%',
     backgroundSize:     item.bgStyle?.backgroundSize     ?? 'cover',
     transform:          isHovered ? 'scale(1.03)' : 'scale(1)',
