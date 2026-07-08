@@ -31,7 +31,7 @@
 | 토큰 | 폰트 | 사용 언어 |
 | --- | --- | --- |
 | --font-family-pretendard | Pretendard Variable | KO / EN |
-| --font-family-m-plus-2 | M PLUS 2 Variable | JP |
+| --font-family-m-plus-2 | M PLUS 2 | JA |
 
 ---
 

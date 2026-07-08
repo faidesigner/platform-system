@@ -1,7 +1,7 @@
 {
   "family": {
     "pretendard": "'Pretendard Variable', system-ui, sans-serif",
-    "m-plus-2": "'M PLUS 2 Variable', sans-serif"
+    "m-plus-2": "'M PLUS 2', system-ui, sans-serif"
   },
   "weight": {
     "400": 400,

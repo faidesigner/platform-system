@@ -7,6 +7,7 @@
 | 역할 | 값 | 로드 방식 |
 |------|----|-----------|
 | 기본 (`base`) | Pretendard Variable | CDN — `pretendardvariable-dynamic-subset.min.css` (v1.3.9) |
+| ja 로케일 (`ja`) | M PLUS 2 | Google Fonts — `family=M+PLUS+2:wght@400;500;600;700` |
 
 폰트는 `globals.css`에서 `@import url(...)` 방식으로 로드됩니다.
 

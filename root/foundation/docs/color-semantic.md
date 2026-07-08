@@ -1,160 +1,147 @@
-# Color Semantic Guide
+# Color Semantic Tokens
 
-이 문서는 서비스의 의미론적 컬러 시스템을 정의합니다.
-실제 수치는 동일 폴더의 `color-semantic.json` 파일을 참조하세요.
+> **Layer 2 — 시맨틱 색상 데이터.** 컴포넌트가 참조하는 유일한 색상 변수.
+> 원시값은 [`color-global.json`](./color-global.json)을 alias로 참조합니다.
 
----
+## 개요
 
-## 규칙
+`color-semantic.json`은 역할(의미) 기반 색상 토큰입니다.
+라이트/다크 모드 모두 동일한 토큰 이름을 사용하며, 모드 전환 시 값만 달라집니다.
 
-- UI에 직접 사용하는 컬러는 반드시 이 토큰을 사용합니다.
-- `color-global.json`의 원시값을 직접 UI에 사용하지 않습니다.
-- 라이트/다크 모드 전환은 이 토큰으로 자동 처리됩니다. 모드별로 별도 값을 지정하지 않습니다.
-- 새로운 시맨틱 토큰이 필요한 경우, 기존 카테고리 구조 안에서 추가합니다.
-
----
-
-## 모드 구조
-
-| 모드 | 적용 방식 |
-| --- | --- |
-| light | 기본값 (`@theme`) |
-| dark | `.dark` 클래스 적용 시 자동 전환 |
+JSON 최상위 그룹은 `semantic`이며, 하위에 `bg`, `color`, `border` 카테고리가 있습니다.
+런타임에 쓰는 CSS 변수명·Tailwind 유틸리티 매핑은 **`app/globals.css`**와 **`tailwind.config.ts`**에 정의되어 있으며, 이 JSON의 각 키와 1:1로 대응되도록 유지합니다.
 
 ---
 
-## 카테고리 및 접두사
+## 카테고리
 
-### `bg-` — 배경색
+### `semantic.bg` — 배경 (Background)
 
-| 토큰 | 용도 |
-| --- | --- |
-| bg-100 | 기본 페이지 배경 |
-| bg-200 | 카드, 패널 배경 |
-| bg-300 | 인풋, 서브 영역 배경 |
-| bg-scrim | 모달 오버레이 |
-| bg-elevation100 | 떠있는 레이어 기본 |
-| bg-elevation200 | 떠있는 레이어 보조 |
-
----
-
-### `text-` — 텍스트색
-
-#### `text-basic-`
-
-| 토큰 | 용도 |
-| --- | --- |
-| text-basic-primary | 주요 본문 텍스트 |
-| text-basic-secondary | 보조 텍스트 |
-| text-basic-tertiary | 비활성, 힌트 텍스트 |
-| text-basic-fourth | 가장 약한 텍스트 |
-| text-basic-inverse | 반전 텍스트 (어두운 배경 위) |
-| text-basic-negative | 에러 텍스트 |
-| text-basic-warning | 경고 텍스트 |
-| text-basic-positive | 성공 텍스트 |
-| text-basic-Info | 정보 텍스트 |
-| text-basic-disabled | 비활성화 텍스트 |
-
-#### `text-optional-` — 브랜드 버튼/링크
-
-| 토큰 | 용도 |
-| --- | --- |
-| text-optional-brand-primaryBtn | 브랜드 Primary 버튼 텍스트 |
-| text-optional-brand-secondaryBtn | 브랜드 Secondary 버튼 텍스트 |
-| text-optional-brand-primary | 브랜드 강조 텍스트 |
-| text-optional-brand-secondary | 브랜드 보조 텍스트 |
-
-#### `text-tag-` — 카테고리 태그 텍스트
-
-yellow / green / indigo / purple / grape / gray 색상 계열 제공
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `surface` | `semantic.bg.surface` | white | gray-900 | 페이지 기본 배경 |
+| `surface-alt` | `semantic.bg.surface-alt` | gray-30 | gray-800 | 카드·패널 보조 배경 |
+| `surface-sunken` | `semantic.bg.surface-sunken` | gray-50 | gray-700 | 인풋·비활성 영역 눌린 배경 |
+| `surface-raised` | `semantic.bg.surface-raised` | white | gray-800 | 모달·드롭다운 부상 배경 |
+| `overlay` | `semantic.bg.overlay` | rgba(0,0,0,0.52) | rgba(0,0,0,0.35) | 스크림 (딤드) |
+| `overlay-strong` | `semantic.bg.overlay-strong` | rgba(0,0,0,0.74) | same | 스크림 강조 |
+| `overlay-max` | `semantic.bg.overlay-max` | rgba(0,0,0,0.87) | same | 스크림 최대 |
+| `brand` | `semantic.bg.brand` | green-500 | green-500 | 브랜드 기본 배경 |
+| `brand-subtle` | `semantic.bg.brand-subtle` | green-100 | green-300 | 브랜드 연한 배경 |
+| `fill-strong` | `semantic.bg.fill-strong` | gray-800 | gray-400 | 강조 버튼·배지 배경 |
+| `fill` | `semantic.bg.fill` | gray-500 | gray-500 | 보조 컴포넌트 배경 |
+| `fill-soft` | `semantic.bg.fill-soft` | gray-50 | gray-700 | 보조 버튼·태그 배경 |
+| `fill-faint` | `semantic.bg.fill-faint` | gray-30 | gray-800 | 호버·선택 영역 연한 배경 |
+| `fill-inverse` | `semantic.bg.fill-inverse` | white | gray-900 | 반전 배경 |
+| `fill-disabled` | `semantic.bg.fill-disabled` | gray-50 | gray-700 | 비활성 배경 |
+| `success` | `semantic.bg.success` | mint-50 | mint-900 | 성공 상태 배경 |
+| `warning` | `semantic.bg.warning` | orange-50 | orange-900 | 경고 상태 배경 |
+| `error` | `semantic.bg.error` | red-50 | red-900 | 오류 상태 배경 |
+| `info` | `semantic.bg.info` | blue-50 | blue-900 | 정보 상태 배경 |
 
 ---
 
-### `icon-` — 아이콘색
+### `semantic.color` — 텍스트 & 아이콘 (Content)
 
-`icon-basic-`, `icon-optional-`, `icon-tag-` 구조는 `text-` 카테고리와 동일합니다.
-아이콘에 텍스트 컬러 토큰을 혼용하지 않습니다.
-
----
-
-### `border-` — 테두리색
-
-| 토큰 | 용도 |
-| --- | --- |
-| border-primary | 주요 테두리 |
-| border-secondary | 보조 테두리 |
-| border-tertiary | 가장 약한 테두리 |
-| border-inverse | 반전 테두리 |
-| border-disabled | 비활성 테두리 |
-| border-negative | 에러 테두리 |
-| border-warning | 경고 테두리 |
-| border-positive | 성공 테두리 |
-| border-Info | 정보 테두리 |
-| border-brand-primary | 브랜드 주요 테두리 |
-| border-brand-secondary | 브랜드 보조 테두리 |
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `primary` | `semantic.color.primary` | gray-900 | white | 기본 본문 텍스트 |
+| `secondary` | `semantic.color.secondary` | gray-700 | gray-100 | 보조 텍스트 (레이블·설명) |
+| `tertiary` | `semantic.color.tertiary` | gray-500 | gray-200 | 힌트·플레이스홀더 |
+| `quaternary` | `semantic.color.quaternary` | gray-300 | gray-400 | 딤드·보조 캡션 |
+| `inverse` | `semantic.color.inverse` | white | white | 반전 텍스트 (어두운 배경 위) |
+| `inverse-subtle` | `semantic.color.inverse-subtle` | gray-100 | gray-600 | 반전 보조 텍스트 |
+| `disabled` | `semantic.color.disabled` | gray-100 | gray-600 | 비활성 텍스트 |
+| `brand` | `semantic.color.brand` | green-600 | green-500 | 브랜드 텍스트 |
+| `on-brand` | `semantic.color.on-brand` | white | gray-900 | 브랜드 배경 위 텍스트 |
+| `success` | `semantic.color.success` | mint-500 | mint-400 | 성공 상태 텍스트·아이콘 |
+| `warning` | `semantic.color.warning` | orange-500 | orange-400 | 경고 상태 텍스트·아이콘 |
+| `error` | `semantic.color.error` | red-500 | red-400 | 오류 상태 텍스트·아이콘 |
+| `info` | `semantic.color.info` | blue-500 | blue-400 | 정보 상태 텍스트·아이콘 |
 
 ---
 
-### `filled-` — 채움색 (배경이 아닌 컴포넌트 내부)
+### `semantic.border` — 테두리 (Border)
 
-#### `filled-basic-`
-
-버튼, 뱃지, 칩 등 컴포넌트의 채움색에 사용합니다.
-`primaryOp`, `inverseOp` 등 `Op` 접미사는 반투명 값입니다.
-
-#### `filled-optional-` — 브랜드 버튼 채움색
-
-#### `filled-tag-` — 카테고리 태그 채움색
-
-`-secondary` 접미사는 해당 컬러의 연한 배경 버전입니다.
-
-#### `filled-toast-`
-
-토스트 메시지 배경에만 사용합니다.
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `default` | `semantic.border.default` | gray-700 | gray-200 | 기본 테두리 |
+| `subtle` | `semantic.border.subtle` | gray-100 | gray-500 | 보조 테두리 |
+| `faint` | `semantic.border.faint` | gray-50 | gray-700 | 연한 구분선 |
+| `inverse` | `semantic.border.inverse` | white | white | 반전 테두리 |
+| `brand` | `semantic.border.brand` | green-500 | green-500 | 브랜드 테두리 |
+| `brand-subtle` | `semantic.border.brand-subtle` | green-300 | green-700 | 브랜드 보조 테두리 |
+| `disabled` | `semantic.border.disabled` | gray-30 | gray-700 | 비활성 테두리 |
+| `success` | `semantic.border.success` | mint-500 | mint-400 | 성공 상태 테두리 |
+| `warning` | `semantic.border.warning` | orange-500 | orange-400 | 경고 상태 테두리 |
+| `error` | `semantic.border.error` | red-500 | red-400 | 오류 상태 테두리 |
+| `info` | `semantic.border.info` | blue-500 | blue-400 | 정보 상태 테두리 |
 
 ---
 
-### `sand-` — 샌드 서피스 전용 토큰
+### `semantic.sand` — 샌드 서피스 (Sand)
 
 Sand 계열 배경 위 요소에 사용하는 전용 시맨틱 토큰입니다.
-`sand.filled` → `sand.text` → `sand.border` 순으로 위계가 적용되며, 라이트/다크에서 명도가 반전됩니다.
+라이트/다크에서 명도가 반전됩니다 (라이트: 옅음→진함 / 다크: 진함→옅음).
 
 #### `sand.filled` — 배경·면
 
-| 토큰 | 라이트 | 다크 | 설명 |
-| --- | --- | --- | --- |
-| sand.filled.primary | sand-50 | sand-900 | 연한 Sand 면 (surface 용도) |
-| sand.filled.secondary | sand-100 | sand-800 | 보조 Sand 면 |
-| sand.filled.tertiary | sand-200 | sand-700 | 진한 Sand 면 (card 용도) |
-| sand.filled.disabled | sand-400 | sand-500 | 비활성 Sand 면 |
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `sand-filled-primary` | `semantic.sand.filled.primary` | sand-50 | sand-900 | 연한 Sand 면 (surface 용도) |
+| `sand-filled-secondary` | `semantic.sand.filled.secondary` | sand-100 | sand-800 | 보조 Sand 면 |
+| `sand-filled-tertiary` | `semantic.sand.filled.tertiary` | sand-200 | sand-700 | 진한 Sand 면 (card 용도) |
+| `sand-filled-disabled` | `semantic.sand.filled.disabled` | sand-400 | sand-500 | 비활성 Sand 면 |
 
 #### `sand.text` — 텍스트 위계
 
-Sand 면 위에서 사용합니다. 라이트·다크 명도 반전.
-
-| 토큰 | 라이트 | 다크 | 설명 |
-| --- | --- | --- | --- |
-| sand.text.primary | sand-900 | sand-50 | 주요 텍스트 |
-| sand.text.secondary | sand-700 | sand-200 | 보조 텍스트 |
-| sand.text.tertiary | sand-600 | sand-400 | 힌트·캡션 |
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `sand-text-primary` | `semantic.sand.text.primary` | sand-900 | sand-50 | 주요 텍스트 |
+| `sand-text-secondary` | `semantic.sand.text.secondary` | sand-700 | sand-200 | 보조 텍스트 |
+| `sand-text-tertiary` | `semantic.sand.text.tertiary` | sand-600 | sand-400 | 힌트·캡션 |
 
 #### `sand.border` — 경계선
 
-| 토큰 | 라이트 | 다크 | 설명 |
-| --- | --- | --- | --- |
-| sand.border.primary | sand-700 | sand-300 | 주요 경계선 |
-| sand.border.secondary | sand-300 | sand-600 | 보조 경계선 |
+| 토큰 | JSON 경로 | 라이트 | 다크 | 설명 |
+|------|------------|--------|------|------|
+| `sand-border-primary` | `semantic.sand.border.primary` | sand-700 | sand-300 | 주요 경계선 |
+| `sand-border-secondary` | `semantic.sand.border.secondary` | sand-300 | sand-600 | 보조 경계선 |
+
+```tsx
+// Sand 면 배경
+<div className="bg-sand-filled-tertiary">
+  <p className="text-sand-text-primary">카드 제목</p>
+  <p className="text-sand-text-tertiary">보조 설명</p>
+  <div className="border border-sand-border-secondary" />
+</div>
+```
 
 ---
 
-### `interaction-` — 인터랙션 오버레이
+## Tailwind 사용 예시
 
-버튼, 리스트 등 인터랙티브 요소의 hover / focus / pressed 상태에 사용합니다.
+시맨틱 색상은 `tailwind.config.ts`에 매핑된 유틸리티로만 사용합니다. 클래스 이름은 설정 파일을 단일 출처로 삼습니다.
 
-| 강도 | 용도 |
-| --- | --- |
-| light | 약한 인터랙션 (카드, 배경 위 요소) |
-| normal | 일반 인터랙션 |
-| strong | 강한 인터랙션 (Primary 버튼 위) |
+```tsx
+// 배경
+<div className="bg-surface">...</div>
+<div className="bg-brand">...</div>
+<div className="bg-error-bg">...</div>
 
-각 강도별로 white / black / brand(FAI) 세 가지 계열을 제공합니다.
+// 텍스트
+<p className="text-primary">...</p>
+<span className="text-tertiary">...</span>
+<span className="text-error">오류 메시지</span>
+
+// 테두리
+<input className="border border-default focus:border-brand" />
+```
+
+## 다크 모드
+
+`<html>` 또는 루트 요소에 `dark` 클래스를 추가하면 `:where(.dark)` 블록이 활성화되어 동일 토큰이 다크 값으로 자동 전환됩니다.
+
+```html
+<html class="dark">
+```
