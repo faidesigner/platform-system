@@ -2,6 +2,24 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-08 (4)
+
+### 🔄 Changed
+
+#### HeroSection 스크롤 스냅 인터랙션 (products/homepage)
+- Lenis Snap 기반 2단계 스냅 방식 도입 (접힘↔펼침)
+- 섹션 높이 `h-[400vh]` → `h-[180vh]` 축소 (스냅 방식에 최적화)
+- `EXPANDED_STOP` 상수로 펼침 지점 비율 조절 가능 (기본값 0.5)
+- proximity 타입, 30% 거리 임계값, 1.4s duration, easeOutExpo 이징
+- `expandedRef` 사용으로 불필요한 리렌더 방지
+
+#### 스크롤 성능 최적화 (packages/ui)
+- `NavigationBar.tsx`: `transparentRef`/`shadowRef` 도입 — 스크롤 이벤트에서 상태 변경 시에만 setState 호출
+- `ScrollTopButton.tsx`: `visibleRef` 도입 — 스크롤 이벤트에서 상태 변경 시에만 setState 호출
+- 동작/디자인 100% 동일, 리렌더 빈도 최소화
+
+---
+
 ## [Unreleased] - 2026-07-08 (3)
 
 ### 🔄 Changed

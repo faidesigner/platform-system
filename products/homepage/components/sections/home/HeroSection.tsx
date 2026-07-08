@@ -5,13 +5,18 @@ import { motion, useScroll } from "framer-motion";
 import Link from "next/link";
 import { useParams } from "next/navigation";
 import { useTranslations } from "next-intl";
+import Snap from "lenis/snap";
 import { LogoMarquee, IcoTxtButton } from "@fai/ui";
 import type { LogoItem } from "@fai/ui";
 import { trackEvent } from "@/lib/analytics/track";
+import { lenisRef } from "@/components/layout/SmoothScroll";
 
 interface HeroSectionProps {
   logos?: LogoItem[];
 }
+
+/** 펼침 snap 지점 — Hero 스크롤 구간(range) 대비 비율. 조절 노브. */
+const EXPANDED_STOP = 0.5;
 
 export default function HeroSection({ logos }: HeroSectionProps) {
   const sectionRef = useRef<HTMLDivElement>(null);
@@ -26,14 +31,51 @@ export default function HeroSection({ logos }: HeroSectionProps) {
     offset: ["start start", "end end"],
   });
 
+  const expandedRef = useRef(false);
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
-      setIsExpanded(v >= 0.2);
+      const next = v >= 0.2;
+      if (next !== expandedRef.current) {
+        expandedRef.current = next;
+        setIsExpanded(next);
+      }
     });
   }, [scrollYProgress]);
 
+  /** Hero 내부 2단계 snap — 접힘(상단) ↔ 펼침(EXPANDED_STOP 지점) */
+  useEffect(() => {
+    let snap: Snap | null = null;
+    let raf = 0;
+    const build = () => {
+      const lenis = lenisRef.current;
+      const el = sectionRef.current;
+      if (!lenis || !el) {
+        raf = requestAnimationFrame(build);
+        return;
+      }
+      snap?.destroy();
+      snap = new Snap(lenis, {
+        type: "proximity",
+        distanceThreshold: "30%",
+        duration: 1.4,
+        easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+      });
+      const range = el.offsetHeight - window.innerHeight;
+      snap.add(el.offsetTop);
+      snap.add(el.offsetTop + range * EXPANDED_STOP);
+    };
+    raf = requestAnimationFrame(build);
+    const onResize = () => build();
+    window.addEventListener("resize", onResize, { passive: true });
+    return () => {
+      cancelAnimationFrame(raf);
+      window.removeEventListener("resize", onResize);
+      snap?.destroy();
+    };
+  }, []);
+
   return (
-    <section ref={sectionRef} className="relative h-[400vh] w-full">
+    <section ref={sectionRef} className="relative h-[180vh] w-full">
       <div className="sticky top-0 relative h-screen w-full overflow-hidden bg-surface">
 
         {/* 상단 카피 — 확장 전에만 표시 */}
@@ -136,7 +178,6 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         </motion.div>
 
       </div>
-      <div className="h-screen bg-transparent" />
     </section>
   );
 }

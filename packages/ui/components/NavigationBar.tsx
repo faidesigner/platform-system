@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useParams, useRouter } from "next/navigation";
@@ -111,25 +111,40 @@ export default function NavigationBar({
     return () => { document.body.style.overflow = ""; };
   }, [drawerOpen]);
 
-  /** 스크롤 감지 */
+  /** 스크롤 감지 — ref 비교로 불필요한 리렌더 방지 */
+  const transparentRef = useRef(!isHome && !isMedia);
+  const shadowRef = useRef(false);
+
   useEffect(() => {
     let threshold = window.innerHeight * 3;
 
     const update = () => {
       const y = window.scrollY;
+      let nextTransparent = transparentRef.current;
+      let nextShadow = shadowRef.current;
+
       if (isHome) {
         const inTransparentZone = y >= 1 && y <= threshold;
-        setIsTransparent(inTransparentZone);
-        setHasShadow(inTransparentZone && y > 100);
+        nextTransparent = inTransparentZone;
+        nextShadow = inTransparentZone && y > 100;
       } else if (isProductDetail) {
-        setIsTransparent(y < window.innerHeight);
-        setHasShadow(false);
+        nextTransparent = y < window.innerHeight;
+        nextShadow = false;
       } else if (isMedia) {
-        setIsTransparent(false);
-        setHasShadow(false);
+        nextTransparent = false;
+        nextShadow = false;
       } else {
-        setIsTransparent(y < 1);
-        setHasShadow(false);
+        nextTransparent = y < 1;
+        nextShadow = false;
+      }
+
+      if (nextTransparent !== transparentRef.current) {
+        transparentRef.current = nextTransparent;
+        setIsTransparent(nextTransparent);
+      }
+      if (nextShadow !== shadowRef.current) {
+        shadowRef.current = nextShadow;
+        setHasShadow(nextShadow);
       }
     };
 

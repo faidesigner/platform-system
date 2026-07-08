@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { motion } from 'framer-motion';
 import { IconButton } from './button/IconButton';
 
@@ -18,10 +18,15 @@ import { IconButton } from './button/IconButton';
 
 export function ScrollTopButton() {
   const [visible, setVisible] = useState(false);
+  const visibleRef = useRef(false);
 
   useEffect(() => {
     const handleScroll = () => {
-      setVisible(window.scrollY > 300);
+      const next = window.scrollY > 300;
+      if (next !== visibleRef.current) {
+        visibleRef.current = next;
+        setVisible(next);
+      }
     };
 
     handleScroll();
