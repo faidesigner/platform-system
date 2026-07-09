@@ -70,7 +70,7 @@ function MediaCard({ item }: { item: MediaItem }) {
             ))}
           </div>
           <span
-            className="whitespace-nowrap text-center text-[length:var(--font-size-15,15px)] font-normal leading-[var(--font-lineHeight-15,22px)] tracking-[var(--font-letterSpacing-0,0)] text-secondary"
+            className="whitespace-nowrap text-center text-body-ms font-normal text-secondary"
           >
             | {item.date}
           </span>
@@ -85,7 +85,7 @@ function MediaCard({ item }: { item: MediaItem }) {
 
         {/* description */}
         <p
-          className="text-[length:var(--font-size-15,15px)] font-normal leading-[var(--font-lineHeight-15,22px)] tracking-[var(--font-letterSpacing-0,0)] text-tertiary"
+          className="text-body-ms font-normal text-tertiary"
         >
           {item.description}
         </p>

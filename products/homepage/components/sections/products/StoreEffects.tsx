@@ -22,19 +22,13 @@ interface StoreEffectsProps {
 
 /* ── 메인 컴포넌트 ── */
 export default function StoreEffects({ title, cards, list }: StoreEffectsProps) {
-  const [hoveredIndex, setHoveredIndex] = useState<number | null>(null);
-  const [lockedIndex, setLockedIndex] = useState<number | null>(null);
   const [revealedIndices, setRevealedIndices] = useState<Set<number>>(new Set());
   const [cardsInView, setCardsInView] = useState(false);
   const cardsRef = useRef<HTMLDivElement>(null);
   const itemRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-  // 우선순위: 호버 > 클릭 잠금 > 뷰포트 노출 누적
-  const isExpanded = (i: number) => {
-    if (hoveredIndex !== null) return hoveredIndex === i;
-    if (lockedIndex !== null) return lockedIndex === i;
-    return revealedIndices.has(i);
-  };
+  // 뷰포트 진입 누적만으로 열림 결정 (호버·클릭 제거)
+  const isExpanded = (i: number) => revealedIndices.has(i);
 
   // 카드 영역이 뷰포트에 진입하면 cardsInView = true (1회)
   useEffect(() => {
@@ -53,19 +47,29 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
     return () => observer.disconnect();
   }, []);
 
-  // 각 리스트 항목이 뷰포트에 진입하면 revealedIndices에 누적 추가 (닫히지 않음)
+  // 뷰포트 진입 시 인덱스 오름차순 큐 → 350ms 간격 순차 오픈, 1회 고정
   useEffect(() => {
+    const pendingQueue: number[] = [];
+    let timer: ReturnType<typeof setTimeout> | null = null;
+
+    const processNext = () => {
+      if (pendingQueue.length === 0) { timer = null; return; }
+      const i = pendingQueue.shift()!;
+      setRevealedIndices(prev => { const next = new Set(prev); next.add(i); return next; });
+      timer = setTimeout(processNext, 350);
+    };
+
     const observers: IntersectionObserver[] = [];
     itemRefs.current.forEach((el, i) => {
       if (!el) return;
       const observer = new IntersectionObserver(
         ([entry]) => {
           if (entry.isIntersecting) {
-            setRevealedIndices(prev => {
-              const next = new Set(prev);
-              next.add(i);
-              return next;
-            });
+            if (!pendingQueue.includes(i)) {
+              const at = pendingQueue.findIndex(q => q > i);
+              at === -1 ? pendingQueue.push(i) : pendingQueue.splice(at, 0, i);
+            }
+            if (!timer) processNext();
             observer.disconnect();
           }
         },
@@ -74,7 +78,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
       observer.observe(el);
       observers.push(observer);
     });
-    return () => observers.forEach((obs) => obs.disconnect());
+    return () => { observers.forEach(obs => obs.disconnect()); if (timer) clearTimeout(timer); };
   }, [list.length]);
 
   if (!title && cards.length === 0 && list.length === 0) return null;
@@ -124,10 +128,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
             <div
               key={i}
               ref={(el) => { itemRefs.current[i] = el; }}
-              className="flex flex-col items-center self-stretch p-3xl desktop-s:p-4xl rounded-fai-m bg-fill-faint cursor-pointer transition-colors duration-300 hover:bg-surface-sunken"
-              onMouseEnter={() => setHoveredIndex(i)}
-              onMouseLeave={() => setHoveredIndex(null)}
-              onClick={() => setLockedIndex(lockedIndex === i ? null : i)}
+              className="flex flex-col items-center self-stretch p-3xl desktop-s:p-4xl rounded-fai-m bg-fill-faint"
             >
               <h4 className="text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-left w-full text-primary">
                 {item.title}

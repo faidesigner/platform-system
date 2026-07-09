@@ -6,7 +6,7 @@ import { useLocale } from 'next-intl';
 const LOCALES = [
   { code: 'ko', label: 'KR' },
   { code: 'en', label: 'EN' },
-  { code: 'jp', label: 'JP' },
+  { code: 'ja', label: 'JP' },
 ] as const;
 
 /* ---------------- 구분선 컴포넌트 ---------------- */
@@ -51,9 +51,9 @@ function LocaleButton({
     alignItems: 'flex-start',
     borderRadius: 'var(--cornerRadius-S, 8px)',
     fontFamily: 'var(--font-family-Pretendard, Pretendard)',
-    fontSize: 'var(--font-size-14, 14px)',
+    fontSize: 'var(--w-text-S-size)',
     fontStyle: 'normal',
-    lineHeight: 'var(--font-lineHeight-14, 21px)',
+    lineHeight: 'var(--w-text-S-lineHeight)',
     letterSpacing: 'var(--font-letterSpacing-0, 0)',
     background,
     border: 'none',

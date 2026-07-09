@@ -33,6 +33,15 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
   return (
     <section className="flex flex-col items-center w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pb-5xl gap-7xl desktop:max-w-[1440px] desktop:mx-auto">
+      <style dangerouslySetInnerHTML={{ __html: `
+        @media (max-width: 768px) {
+          .fai-storetype-wide-img { object-position: center center !important; }
+          .fai-storetype-card { height: 520px !important; }
+        }
+        @media (max-width: 420px) {
+          .fai-storetype-card { height: 460px !important; }
+        }
+      `}} />
 
       {/* ── 탭 + 설명 래퍼 ── */}
       <div className="flex flex-col items-center gap-[50px] self-stretch w-full">
@@ -44,8 +53,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
         {/* ── 중앙 설명 ── */}
         <div className="flex flex-col items-center gap-2xs self-stretch text-center w-full">
-          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
-          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
+          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-text-basic-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
+          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-text-basic-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
         </div>
       </div>
 
@@ -54,18 +63,18 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
         <div className="flex flex-col items-start gap-3xl self-stretch w-full">
 
           {/* ── 섹션 타이틀 ── */}
-          <h2 className="max-[420px]:text-body-l text-body-xl tablet:text-title-s desktop-s:text-title-m desktop:text-title-l font-bold text-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
+          <h2 className="max-[420px]:text-body-l text-body-xl tablet:text-title-s desktop-s:text-title-m desktop:text-title-l font-bold text-text-basic-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
 
           {/* ── 카드 그리드 ── */}
-          <div className="grid max-[420px]:grid-cols-1 grid-cols-2 gap-xl w-full">
+          <div className="grid max-[768px]:grid-cols-1 grid-cols-2 gap-xl w-full">
             {current.cards.map((card, i) => (
               <div
                 key={i}
-                className={`relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[420px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px] max-[960px]:h-[320px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px] max-[960px]:h-[540px]"}`}
+                className={`fai-storetype-card relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[768px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px] max-[960px]:h-[320px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px] max-[960px]:h-[540px]"}`}
               >
                 {/* 이미지 */}
                 {card.image && card.image !== "MISSING_FROM_DESIGN" ? (
-                  <Image src={card.image} alt={card.title} fill className="object-cover" style={{ objectPosition: card.objectPosition || "center" }} />
+                  <Image src={card.image} alt={card.title} fill className={`object-cover${card.wide ? " fai-storetype-wide-img" : ""}`} style={{ objectPosition: card.objectPosition || "center" }} />
                 ) : (
                   <div className="absolute inset-0 bg-filled-sand-tertiary" />
                 )}

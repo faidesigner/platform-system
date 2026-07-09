@@ -1,7 +1,7 @@
 "use client";
 
 import type { ReactNode } from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { usePathname, useParams, useRouter } from "next/navigation";
@@ -35,7 +35,7 @@ const NAV_ITEMS: readonly NavItem[] = [
   },
 ];
 
-const LANGUAGES = ["KO", "EN", "JP"] as const;
+const LANGUAGES = ["KO", "EN", "JA"] as const;
 type Language = (typeof LANGUAGES)[number];
 
 /* ──────────────────────────────────────────
@@ -96,6 +96,8 @@ export default function NavigationBar({
   const [lang,     setLang]     = useState<Language>("KO");
   // 960px 이하 공용 드로어
   const [drawerOpen, setDrawerOpen] = useState(false);
+  // 스크롤 100px 초과 + 투명 구간일 때 그림자 활성화 (navShadow)
+  const [hasShadow, setHasShadow] = useState(false);
 
   /** 라우트 변경 시 드로어 닫기 + 뷰포트 상단 이동 */
   useEffect(() => {
@@ -109,31 +111,60 @@ export default function NavigationBar({
     return () => { document.body.style.overflow = ""; };
   }, [drawerOpen]);
 
-  /** 스크롤 감지 */
+  /** 스크롤 감지 — ref 비교로 불필요한 리렌더 방지 */
+  const transparentRef = useRef(!isHome && !isMedia);
+  const shadowRef = useRef(false);
+  // hero 확장/복귀 이벤트로 홈 nav 투명 상태 관리
+  const heroExpandedRef = useRef(false);
+
   useEffect(() => {
     let threshold = window.innerHeight * 3;
 
     const update = () => {
       const y = window.scrollY;
+      let nextTransparent = transparentRef.current;
+      let nextShadow = shadowRef.current;
+
       if (isHome) {
-        setIsTransparent(y >= 1 && y <= threshold);
+        if (y < 1) heroExpandedRef.current = false;
+        const inTransparentZone = heroExpandedRef.current && y <= threshold;
+        nextTransparent = inTransparentZone;
+        nextShadow = false;
       } else if (isProductDetail) {
-        setIsTransparent(y < window.innerHeight);
+        nextTransparent = y < window.innerHeight;
+        nextShadow = false;
       } else if (isMedia) {
-        setIsTransparent(false);
+        nextTransparent = false;
+        nextShadow = false;
       } else {
-        setIsTransparent(y < 1);
+        nextTransparent = y < 1;
+        nextShadow = false;
+      }
+
+      if (nextTransparent !== transparentRef.current) {
+        transparentRef.current = nextTransparent;
+        setIsTransparent(nextTransparent);
+      }
+      if (nextShadow !== shadowRef.current) {
+        shadowRef.current = nextShadow;
+        setHasShadow(nextShadow);
       }
     };
 
     const handleResize = () => { threshold = window.innerHeight * 3; update(); };
+    const onHeroExpanded  = () => { heroExpandedRef.current = true;  update(); };
+    const onHeroCollapsed = () => { heroExpandedRef.current = false; update(); };
 
     update();
-    window.addEventListener("scroll",  update,        { passive: true });
-    window.addEventListener("resize",  handleResize,  { passive: true });
+    window.addEventListener("scroll",        update,          { passive: true });
+    window.addEventListener("resize",        handleResize,    { passive: true });
+    window.addEventListener("hero:expanded",  onHeroExpanded);
+    window.addEventListener("hero:collapsed", onHeroCollapsed);
     return () => {
-      window.removeEventListener("scroll",  update);
-      window.removeEventListener("resize",  handleResize);
+      window.removeEventListener("scroll",        update);
+      window.removeEventListener("resize",        handleResize);
+      window.removeEventListener("hero:expanded",  onHeroExpanded);
+      window.removeEventListener("hero:collapsed", onHeroCollapsed);
     };
   }, [isHome, isProductDetail, isMedia]);
 
@@ -167,11 +198,18 @@ export default function NavigationBar({
       <header
         className={[
           "fixed top-0 left-0 z-50 w-full h-16",
-          "transition-colors duration-300 ease-in-out",
-          effectiveTransparent ? "dark bg-transparent" : "bg-surface",
+          effectiveTransparent ? "dark" : "",
+          hasShadow && !drawerOpen ? "shadow-M" : "",
         ].join(" ")}
       >
-        <nav className="w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
+        {/* 배경 레이어 — opacity 크로스페이드로 부드러운 전환 */}
+        <div
+          className={[
+            "absolute inset-0 bg-surface transition-opacity duration-700 ease-out",
+            effectiveTransparent ? "opacity-0" : "opacity-100",
+          ].join(" ")}
+        />
+        <nav className="relative w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
 
           {/* ── 로고 ── */}
           <Link href={lhref("/")} className="shrink-0">
@@ -213,7 +251,7 @@ export default function NavigationBar({
                   ].join(" ")}
                   aria-label="언어 선택"
                 >
-                  <span className="text-[16px] leading-[24px] font-semibold">{lang}</span>
+                  <span className="text-body font-semibold">{lang}</span>
                   <ChevronDown
                     className={`h-m w-m transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`}
                     aria-hidden

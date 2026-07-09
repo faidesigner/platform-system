@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import Image from "next/image";
 import { IcoTxtButton, IconButton, ProgressBar } from "@fai/ui";
 import SocialIcon from "@fai/ui/components/common/Icon/SocialIcon";
@@ -79,30 +79,56 @@ interface YoutubeCardProps {
 }
 
 function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps) {
-  const DURATION = 5000;
+  const DURATION = 3500;
+  const ANIM_MS = 400;
   const [index, setIndex] = useState(0);
+  const [animating, setAnimating] = useState(false);
+  const [nextIdx, setNextIdx] = useState<number | null>(null);
+  const animatingRef = useRef(false);
 
+  // 자동 전환 타이머
   useEffect(() => {
     if (videos.length <= 1) return;
-    const timer = setTimeout(
-      () => setIndex((i) => (i + 1) % videos.length),
-      DURATION,
-    );
+    const timer = setTimeout(() => {
+      startSlide((index + 1) % videos.length);
+    }, DURATION);
     return () => clearTimeout(timer);
   }, [index, videos.length]);
+
+  // 슬라이드 완료 처리 — StrictMode cleanup에서 animatingRef 리셋해 영구 고착 방지
+  useEffect(() => {
+    if (!animating || nextIdx === null) return;
+    const t = setTimeout(() => {
+      setIndex(nextIdx);
+      setNextIdx(null);
+      setAnimating(false);
+      animatingRef.current = false;
+    }, ANIM_MS);
+    return () => {
+      clearTimeout(t);
+      animatingRef.current = false;
+    };
+  }, [animating, nextIdx]);
+
+  const startSlide = (newIdx: number) => {
+    if (animatingRef.current) return;
+    animatingRef.current = true;
+    setNextIdx(newIdx);
+    setAnimating(true);
+  };
+
+  const move = (dir: -1 | 1) =>
+    startSlide((index + dir + videos.length) % videos.length);
 
   if (!videos.length) return null;
 
   const current: YoutubeVideo = videos[index];
 
-  const move = (dir: -1 | 1) =>
-    setIndex((i) => (i + dir + videos.length) % videos.length);
-
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-fai-m min-[961px]:flex-row">
 
       {/* 좌: 텍스트 패널 — 960px 이하에서 order-2 (썸네일 아래) */}
-      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-3xl max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px]">
+      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-[var(--padding-2-xl,32px)] max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px]">
         <div className="flex flex-col justify-between items-start flex-1 self-stretch">
 
           {/* 상단: 채널 아이콘 + 캐러셀 화살표 */}
@@ -158,6 +184,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
           <div className="flex flex-col items-start self-stretch gap-4xl">
             {/* textBox */}
             <div className="flex flex-col items-start self-stretch gap-m">
+              {/* min-h 고정 — 영상 전환 시 위치 흔들림 방지 */}
               <h3 className="line-clamp-2 text-body-xl desktop:text-title-s font-bold text-text-basic-primary">
                 {current.title}
               </h3>
@@ -181,15 +208,38 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         </div>
       </div>
 
-      {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단), h-[472px] */}
-      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-3xl min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none">
-        <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
+      {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단) */}
+      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
+
+        {/* 슬라이드 키프레임 */}
+        <style>{`
+          @keyframes fai-slide-out-left { from { transform: translateX(0) } to { transform: translateX(-100%) } }
+          @keyframes fai-slide-in-right { from { transform: translateX(100%) } to { transform: translateX(0) } }
+        `}</style>
+
+        {/* 현재 이미지 — 애니메이션 시 좌측 이탈 */}
+        <div
+          className="absolute inset-0"
+          style={animating ? { animation: `fai-slide-out-left ${ANIM_MS}ms ease-in-out forwards` } : undefined}
+        >
+          <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
+        </div>
+
+        {/* 다음 이미지 — 애니메이션 시 우측 진입 */}
+        {animating && nextIdx !== null && (
+          <div
+            className="absolute inset-0"
+            style={{ animation: `fai-slide-in-right ${ANIM_MS}ms ease-in-out forwards` }}
+          >
+            <YoutubeThumb videoId={videos[nextIdx].videoId} alt={videos[nextIdx].thumbnailAlt} />
+          </div>
+        )}
 
         {/* progressBar */}
         <ProgressBar
           count={videos.length}
-          activeIndex={index}
-          onChange={setIndex}
+          activeIndex={animating && nextIdx !== null ? nextIdx : index}
+          onChange={startSlide}
           duration={DURATION}
           getAriaLabel={(i) => a11y.goToVideoTemplate.replace("{index}", String(i + 1))}
         />
@@ -298,11 +348,11 @@ export default function MediaShowcaseSection({
           {title}
         </h2>
 
-        <div className="flex w-full flex-col gap-l">
+        <div className="flex w-full flex-col gap-[var(--spacing-2XL,32px)]">
           <YoutubeCard channelLabel={channelLabel} ctaLabel={ctaLabel} videos={videos} a11y={a11y} />
 
           {socials.length > 0 && (
-            <div className="flex items-start self-stretch w-full flex-col gap-3xl min-[961px]:flex-row">
+            <div className="flex items-start self-stretch w-full flex-col gap-[var(--spacing-XL,24px)] min-[961px]:flex-row">
               {socials.map((social) => (
                 <SocialCard
                   key={social.label}

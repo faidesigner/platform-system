@@ -2,6 +2,207 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-09
+
+### 🔄 Changed
+
+#### HeroSection 네비 색상 전환 타이밍 개선 (products/homepage)
+- 비디오 박스 확장 애니메이션 90% 시점(540ms)에 네비 색상 전환 — 깜빡임 방지
+- `navTimerRef`로 타이머 관리, 복귀 시 즉시 취소 후 collapsed 발행
+
+#### NavigationBar 배경 전환 부드럽게 개선 (packages/ui)
+- 배경색 직접 전환 → **opacity 레이어 크로스페이드** 방식으로 변경
+- `duration-700 ease-out`으로 부드러운 페이드 인/아웃 적용
+- 투명 모드: 배경 레이어 `opacity-0`, 라이트 모드: `opacity-100`
+
+#### HeroSection Dim Overlay 연하게 조정 (products/homepage)
+- `rgba(0,0,0,0.4)` → `rgba(0,0,0,0.25)` (40% → 25%)
+
+---
+
+## [Unreleased] - 2026-07-08 (4)
+
+### 🔄 Changed
+
+#### HeroSection 스크롤 스냅 인터랙션 (products/homepage)
+- Lenis Snap 기반 2단계 스냅 방식 도입 (접힘↔펼침)
+- 섹션 높이 `h-[400vh]` → `h-[180vh]` 축소 (스냅 방식에 최적화)
+- `EXPANDED_STOP` 상수로 펼침 지점 비율 조절 가능 (기본값 0.5)
+- proximity 타입, 30% 거리 임계값, 1.4s duration, easeOutExpo 이징
+- `expandedRef` 사용으로 불필요한 리렌더 방지
+
+#### 스크롤 성능 최적화 (packages/ui)
+- `NavigationBar.tsx`: `transparentRef`/`shadowRef` 도입 — 스크롤 이벤트에서 상태 변경 시에만 setState 호출
+- `ScrollTopButton.tsx`: `visibleRef` 도입 — 스크롤 이벤트에서 상태 변경 시에만 setState 호출
+- 동작/디자인 100% 동일, 리렌더 빈도 최소화
+
+---
+
+## [Unreleased] - 2026-07-08 (3)
+
+### 🔄 Changed
+
+#### ShowcaseSection (products/homepage)
+- 썸네일 자동 전환 속도 5000ms → 3500ms
+- 슬라이드 애니메이션: 구 이미지 좌측 이탈 + 신 이미지 우측 진입 (400ms ease-in-out)
+- `animating` StrictMode 버그 수정: cleanup에서 `animatingRef` 리셋으로 영구 고착 방지
+- 텍스트 패널·썸네일 패널 내부 패딩 `var(--padding-2-xl, 32px)` 토큰 적용
+- 유튜브 카드 ↔ 소셜 카드 간격 `var(--spacing-2XL, 32px)` 토큰 적용
+- 소셜 카드 간 간격 `var(--spacing-XL, 24px)` 토큰 적용
+- ProgressBar 굵기 `h-2xs`(4px) → `h-[3px]`
+
+#### StoreEffects (products/homepage)
+- 아코디언 트리거 호버·클릭 제거 → IntersectionObserver 스크롤 기반 단독 제어
+- 뷰포트 진입 시 인덱스 오름차순 큐 → 350ms 간격 순차 오픈, 1회 고정
+
+#### CtaBanner (products/homepage)
+- 이중 버튼(`max-[420px]:hidden` / `min-[421px]:hidden`) → 단일 XL 버튼으로 통합
+
+#### MegaMenuPanel (@fai/ui)
+- 이미지 영역 그라데이션 오버레이 제거
+
+## [Unreleased] - 2026-07-08 (2)
+
+### 🐛 Fixed
+
+#### revert 누락 항목 재적용 (packages/ui, products/homepage)
+- `packages/ui/components/Footer.tsx`: `text-[13px] leading-[20px]` → `text-body-xs leading-[1.25rem]` (4곳)
+- `packages/ui/components/NavigationBar.tsx`: `JP` → `JA`, hasShadow 스크롤 로직, `transition-all`, `shadow-M`, lang span `text-body`
+- `packages/ui/components/navigation/LanguageSwitcher.tsx`: locale `jp` → `ja`, font-size/lineHeight CSS vars
+- `products/homepage/app/[locale]/products/[slug]/page.tsx`: `generateStaticParams` locale×slug 전체 조합 복원
+- `products/homepage/components/sections/contact/ContactUsSection.tsx`: color 토큰 hex fallback 제거, semantic 토큰 교체
+
+#### Foundation 토큰 규칙 위반 수정 (products/homepage, packages/ui)
+- `ContactUsSection.tsx`: `--font-size-*` / `--font-lineHeight-*` 13곳 → Tailwind 텍스트 토큰 교체
+- `ProductReviews.tsx`: CSS-in-JS `--font-size-*` → `--w-text-*-size` / `--w-text-*-lineHeight`
+- `LanguageSwitcher.tsx` (homepage): inline style font 토큰 교체
+- `NewsSection.tsx`: `text-[length:var(--font-size-15)]` → `text-body-ms` (2곳)
+- `EfficiencySection.tsx`: `text-[length:var(--font-size-14)]` → `text-body-s`
+- `globals.css`: `body { font-family: var(--w-font-family) }` 추가 — ja 로케일 폰트 전환
+- `tailwind.config.ts`: `fontFamily.base: ['var(--w-font-family)']` 적용
+
+#### BenefitGraphic 아이콘 반응형 사이즈 (packages/ui, root/assets)
+- `staffing.svg` / `checkout-flow.svg` / `profitability.svg`: `width="40" height="40"` 제거 → CSS className이 SVG viewport 완전 제어
+- `BenefitGraphic.tsx`: `width/height={undefined}` 핵 제거, `className={className}` 클린 방식 적용
+
+#### ProductFeatures 카드 반응형 높이 (products/homepage)
+- Card 0·1 `≤960px`: `height: 640px` 고정
+- Card 0·1 `≤768px`: `height: 435px`, 이미지 영역 분리
+- Card 0·1 `421px~768px`: 이미지 `aspect-ratio: 420/291` — 너비 비례 자동 높이
+- Card 0·1 `≤420px`: 카드 `435px`, 이미지 `291px` 고정
+- Card 2 `≤960px`: 컨테이너 `height: auto`, 이미지 `aspect-ratio: 456/633` — 960px 기준 633px
+- Card 2 `≤768px`: 컨테이너 `height: auto`, 이미지 `aspect-ratio: 420/291`
+- Card 2 `≤420px`: 카드 `435px`, 이미지 `291px` 고정
+
+## [Unreleased] - 2026-07-09
+
+### ✨ Added
+
+#### RetailTechLetter 썸네일 (products/homepage)
+- `config/retail-tech-letter.json` 전체 레터(31개)에 `thumbnailUrl` 필드 추가
+  - id 1–6: `https://img.stibee.com/98052_1696503402.png`
+  - id 7–31: `https://img.stibee.com/98052_1714470037.png`
+
+### 🐛 Fixed
+
+#### Foundation 문서 정합성 (root/foundation/docs)
+- `typography-w.md`: `html[lang='jp']` → `html[lang='ja']` 오타 수정
+- `typography.md`: `M PLUS 2 Variable` → `M PLUS 2` (Google Fonts 실제 font-family명 정정), `JP` → `JA`
+- `typography.json`: `'M PLUS 2 Variable'` → `'M PLUS 2', system-ui, sans-serif`
+- `color-global.md`: 구버전 → 상세 버전 (팔레트 표·size 스케일·사용 규칙·파일 구조 포함)
+- `color-semantic.md`: 구버전 → 상세 버전 (bg/color/border/sand 실제 토큰 값·다크모드·Tailwind 예시 포함)
+
+#### Foundation 문서 추가 (products/homepage/root/foundation/docs)
+- `typography.md`: ja 로케일 M PLUS 2 폰트 항목 추가
+
+## [Unreleased] - 2026-07-08
+
+### ✨ Added
+
+#### localeScroll (products/homepage)
+- `lib/localeScroll.ts` 신규 생성 — 로케일 전환 시 스크롤 위치 sessionStorage 저장/복원 유틸
+- `peekLocaleScroll` (read-only) / `clearLocaleScroll` (rAF 콜백 내 삭제) 분리로 React StrictMode 이중 실행 대응
+
+### 🔄 Changed
+
+#### SmoothScroll (products/homepage)
+- 로케일 전환 시 sessionStorage에 저장된 scrollY 복원 로직 추가
+- popstate(뒤로/앞으로) 감지 후 브라우저 복원 위치로 Lenis 내부 상태 동기화
+
+#### LanguageSwitcher / NavigationBarBridge (products/homepage)
+- 로케일 전환 직전 `saveLocaleScroll()` 호출 추가
+
+#### globals.css (products/homepage)
+- `--color-filled-basic-fourth` 토큰 추가: `:root` light(`--color-gray-30`), `.dark` dark(`--color-gray-800`)
+
+#### ProductReviews (products/homepage)
+- 리뷰 슬라이더 카드 이미지 ≤960px: 고정 크기 → `flex:1 + aspect-ratio:613/460` 비율 대응
+
+#### ProductFeatures (products/homepage)
+- Card 0·1 모바일 레이아웃(텍스트 상단 / 이미지 하단) 적용 범위 `≤420px` → `≤768px` 확장
+- Card 1 이미지 영역 background-position 우측 정렬(`100%`)
+- Card 2 description `whitespace-pre-line` 적용, 줄바꿈 추가
+
+#### ImageSection (products/homepage)
+- 데스크탑(≥1440px) `object-bottom` → `object-center` 이미지 중앙 정렬
+
+#### StoreTypes (products/homepage)
+- 카드 그리드 `≤768px` 1열 레이아웃 적용 (`max-[768px]:grid-cols-1`)
+- wide 카드 `col-span-1` 적용 범위 `≤420px` → `≤768px`
+- wide 카드 이미지 `≤768px` `object-position: center` 오버라이드 (`.fai-storetype-wide-img`)
+- 카드 높이 `≤768px` 520px, `≤420px` 460px (`fai-storetype-card` style 블록)
+
+### 🐛 Fixed
+
+#### LanguageSwitcher / NavigationBar (@fai/ui)
+- 모바일 언어 전환 로케일 코드 `jp` → `ja` 수정 (잘못된 `/jp/` 라우팅 → 404 버그)
+- NavigationBar 내부 fallback switcher `LANGUAGES` 배열 `'JP'` → `'JA'`
+- `root/foundation/docs/typography-w.md` `html[lang='jp']` → `html[lang='ja']`
+
+#### products/[slug]/page.tsx (products/homepage)
+- `generateStaticParams` `slug`만 반환하던 문제 수정 → `locale × slug` 전체 조합 반환
+- Next.js 16 `output: export` 환경에서 `/ko|en|ja/products/*` 404 발생하던 버그 해결
+
+### 🔄 Changed
+
+#### Foundation 토큰 규칙 준수
+
+- **Footer** (`@fai/ui`): `text-[13px] leading-[20px]` → `text-body-xs leading-[1.25rem]`
+- **ContactUsSection** (products/homepage): `--font-size-*` / `--font-lineHeight-*` / `--m-text-*` 프리미티브 토큰 → `--w-*` web 토큰 교체, hex fallback 제거
+- **RetailTechLetterSection** (products/homepage): `border-[var(--color-border-tertiary,#E4E6E7)]` 복원, `#EDF2F5` → `var(--color-bg-200)`, hex fallback 제거
+
+---
+
+## [3.6.0] - 2026-07-06
+
+### 🔄 Changed
+
+#### ProductFeatures (products/homepage)
+- Card 0·1·2 데스크탑(>960px) 내부 패딩 `--size-48` → `--padding-3-xl` (40px)
+- 960px 이하 Card 0·1·2 패딩 `--padding-2-xl` (32px) 적용
+- Card 2 960px 이하 레이아웃: flex-row (텍스트 좌 / 이미지 우 50%) 사이드바이사이드 배치
+- Card 2 420px 이하 레이아웃: flex-column 스택, `flex-direction` 및 `flex` 리셋 버그 수정
+- Card 2 데스크탑 높이 `tablet:h-[430px]` 유지
+
+#### StoreEffects (products/homepage)
+- 아코디언 리스트 트리거 방식 변경: 호버·클릭 제거 → IntersectionObserver 스크롤 기반 단독 제어
+- 아이템 뷰포트 진입 시 인덱스 오름차순 큐 → 350ms 간격 순차 오픈
+- 1회 열린 아이템 영구 고정 (닫힘 없음), observer disconnect
+
+#### CtaBanner (products/homepage)
+- 모바일 이중 버튼 버그 수정: `max-[420px]:hidden` / `min-[421px]:hidden` 임의 브레이크포인트 제거 → 단일 XL 버튼으로 통합
+
+#### MegaMenuPanel (@fai/ui)
+- 메가메뉴 이미지 영역 그라데이션 오버레이 제거
+
+#### ShowcaseSection (products/homepage)
+- 썸네일 자동 전환 속도 5000ms → 3500ms
+- 텍스트 패널 타이틀 영역 `min-h` 고정 (모바일 112px / 데스크탑 136px) — 영상 전환 시 위치 흔들림 방지
+- 영상 전환 슬라이드 애니메이션 추가: 구 이미지 좌측 이탈 + 신 이미지 우측 진입 (400ms ease-in-out)
+- `animating` deps 버그 수정: StrictMode cleanup으로 타이머 취소 후 `animating` 영구 고착 방지
+
+---
+
 ## [3.5.0] - 2026-07-01
 
 ### ✨ Added

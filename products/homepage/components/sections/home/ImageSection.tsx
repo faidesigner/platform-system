@@ -35,10 +35,10 @@ export function ImageSection({
        * sticky top-0  → 뷰포트 상단 고정
        * h-dvh         → 뷰포트 전체 높이
        * w-full        → 뷰포트 전체 폭
-       * object-cover object-center → 꽉 채움, 중앙 기준 정렬
-       *   제품(키오스크)이 세로 중앙에 있어, 광폭 화면에서 넘치는 만큼을
-       *   위쪽 여백·아래쪽 바닥에서 균등하게 잘라 제품 상단(화면 문구)이 보이도록 한다.
-       *   (기존 object-bottom은 광폭에서 제품 상단이 잘리는 문제가 있었음)
+       * object-cover object-bottom desktop:object-center
+       *   - 기본(모바일·태블릿): object-bottom — 세로 비율에서 바닥 기준 정렬이 자연스러움
+       *   - desktop(≥1440px): object-center — 광폭에서 object-bottom은 제품 상단(화면 문구)이
+       *     잘리므로, 넘치는 만큼을 상·하 균등 분배해 제품 상단이 보이도록 중앙 정렬로 전환한다.
        */}
       <div className="sticky top-0 w-full h-dvh overflow-hidden">
         <Image
@@ -47,7 +47,7 @@ export function ImageSection({
           fill
           priority={priority}
           sizes="100vw"
-          className="object-cover object-center"
+          className="object-cover object-bottom desktop:object-center"
         />
       </div>
     </section>

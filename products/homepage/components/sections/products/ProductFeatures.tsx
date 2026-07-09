@@ -20,41 +20,124 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
   if (!features || features.length === 0) return null;
 
   return (
-    <section className="w-full max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col gap-2xl pt-7xl pb-5xl">
-      {/* ── Card 2 모바일 전용 정밀 수치 CSS ── */}
+    <section className="w-full max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col gap-2xl pt-3xl min-[769px]:pt-7xl pb-3xl min-[769px]:pb-5xl">
+      {/* ── Card 0·2 모바일 전용 정밀 수치 CSS ── */}
       <style dangerouslySetInnerHTML={{ __html: `
-        @media (max-width: 768px) {
+        @media (min-width: 961px) {
+          .fai-card-01 {
+            padding: var(--padding-3-xl, 40px) !important;
+          }
+          .fai-card-2-container {
+            padding: var(--padding-3-xl, 40px) !important;
+          }
+        }
+        @media (max-width: 960px) {
+          .fai-card-01 {
+            height: 640px !important;
+            padding: var(--padding-2-xl, 32px) !important;
+          }
           .fai-card-2-container {
             display: flex !important;
-            height: 680px !important;
-            flex-direction: column !important;
-            align-items: flex-end !important;
-            position: relative !important;
+            flex-direction: row !important;
+            height: auto !important;
+            padding: 0 !important;
+            align-items: stretch !important;
             overflow: hidden !important;
           }
           .fai-card-2-textarea {
             display: flex !important;
-            padding: 0 !important;
+            flex: 1 !important;
             flex-direction: column !important;
             align-items: flex-start !important;
-            flex: 1 0 0 !important;
-            align-self: stretch !important;
+            padding: var(--padding-2-xl, 32px) !important;
+            align-self: auto !important;
             z-index: 10 !important;
           }
           .fai-card-2-image {
             display: flex !important;
-            width: 720px !important;
-            height: 480px !important;
-            position: absolute !important;
-            bottom: 0 !important;
-            left: 0 !important;
-            border-radius: 0 var(--cornerRadius-M, 16px) var(--cornerRadius-M, 16px) 0 !important;
-            background: var(--fai-card-2-img) transparent 130.209px -0.112px / 118.715% 118.773% no-repeat !important;
+            position: relative !important;
+            flex: 0 0 50% !important;
+            width: auto !important;
+            height: auto !important;
+            aspect-ratio: 456 / 633 !important;
+            bottom: auto !important;
+            right: auto !important;
+            margin-top: 0 !important;
+            border-radius: var(--cornerRadius-M, 16px) 0 0 var(--cornerRadius-M, 16px) !important;
+            background: var(--fai-card-2-img) transparent 18.13% 6.6% / 160.074% 121.661% no-repeat !important;
+          }
+        }
+        @media (max-width: 768px) {
+          /* ── Card 0 · 1 래퍼 ── */
+          .fai-card-01 {
+            width: 100% !important;
+            height: auto !important;
+            padding: 0 !important;
+            background-image: none !important;
+          }
+          /* ── Card 0 · 1 텍스트 영역 ── */
+          .fai-card-text-area {
+            padding: var(--padding-XL, 24px) !important;
+            flex: none !important;
+          }
+          /* ── Card 0 · 1 이미지 영역 (421px ~ 768px: 비율 유지) ── */
+          .fai-card-image-area {
+            display: flex !important;
+            flex: none !important;
+            width: 100% !important;
+            aspect-ratio: 420 / 291 !important;
+          }
+          .fai-card-0 .fai-card-image-area {
+            background: var(--fai-card-img) transparent -24.218px -79.348px / 172.102% 146.742% no-repeat !important;
+          }
+          .fai-card-1 .fai-card-image-area {
+            background: var(--fai-card-img) transparent 100% -115.723px / 89.644% 171.81% no-repeat !important;
+          }
+          .fai-card-2-container {
+            width: 100% !important;
+            height: auto !important;
+            padding: 0 !important;
+            flex-direction: column !important;
+            align-items: flex-start !important;
+            overflow: hidden !important;
+          }
+          .fai-card-2-textarea {
+            padding: var(--padding-XL, 24px) !important;
+            flex: none !important;
+          }
+          .fai-card-2-image {
+            position: relative !important;
+            flex: none !important;
+            width: 100% !important;
+            aspect-ratio: 420 / 291 !important;
+            margin-top: 0 !important;
+            border-radius: 0 !important;
+            background: var(--fai-card-2-img) transparent -0.25px -0.108px / 139.315% 118.879% no-repeat !important;
+          }
+        }
+        @media (max-width: 420px) {
+          /* ── Card 0 · 1 래퍼 (≤420px: 고정 435px) ── */
+          .fai-card-01 {
+            height: 435px !important;
+          }
+          /* ── Card 0 · 1 이미지 영역 (≤420px: 고정 291px) ── */
+          .fai-card-image-area {
+            aspect-ratio: auto !important;
+            height: 291px !important;
+          }
+          /* ── Card 2 래퍼 (≤420px: 고정 435px) ── */
+          .fai-card-2-container {
+            height: 435px !important;
+          }
+          /* ── Card 2 이미지 영역 (≤420px: 고정 291px) ── */
+          .fai-card-2-image {
+            aspect-ratio: auto !important;
+            height: 291px !important;
           }
         }
       `}} />
 
-      <h2 className="text-title-m desktop:text-title-l font-bold text-primary">{title}</h2>
+      <h2 className="text-title-m desktop:text-title-l font-bold text-text-basic-primary">{title}</h2>
 
       <div className="grid grid-cols-1 gap-xl tablet:grid-cols-2">
         {features.map((feature, i) => {
@@ -65,20 +148,24 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             return (
               <article
                 key={i}
-                className="relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary"
+                className={`fai-card-01${i === 0 ? " fai-card-0" : " fai-card-1"} relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary`}
                 style={{
+                  '--fai-card-img': `url(${feature.image})`,
                   backgroundImage: `url(${feature.image})`,
                   backgroundPosition: position,
                   backgroundSize: size,
                   backgroundRepeat: "no-repeat",
-                }}
+                } as React.CSSProperties}
               >
-                <h3 className="relative z-10 whitespace-pre-line max-[420px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
-                  {feature.title}
-                </h3>
-                <p className="relative z-10 self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
-                  {feature.description}
-                </p>
+                <div className="fai-card-text-area w-full flex flex-col gap-[10px]">
+                  <h3 className="relative z-10 whitespace-pre-line text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
+                    {feature.title}
+                  </h3>
+                  <p className="relative z-10 self-stretch text-body desktop:text-body-l font-normal text-text-basic-tertiary">
+                    {feature.description}
+                  </p>
+                </div>
+                <div className="fai-card-image-area hidden" />
               </article>
             );
           }
@@ -95,13 +182,13 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
                 <h3 className="whitespace-pre-line self-stretch max-[420px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
                   {feature.title}
                 </h3>
-                <p className="self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
+                <p className="whitespace-pre-line self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
                   {feature.description}
                 </p>
               </div>
               {/* 이미지 영역 — 모바일: absolute bottom / 태블릿+: absolute right */}
               <div
-                className="fai-card-2-image relative tablet:absolute tablet:right-0 tablet:top-0 w-full tablet:w-[43%] h-[240px] tablet:h-full mt-l tablet:mt-0 overflow-hidden"
+                className="fai-card-2-image relative tablet:absolute tablet:right-0 tablet:top-0 w-full tablet:w-[43%] h-9xl tablet:h-full mt-l tablet:mt-0 overflow-hidden"
                 style={{
                   borderRadius: "0 var(--fai-radius-m) var(--fai-radius-m) 0",
                   backgroundImage: `url(${feature.image})`,

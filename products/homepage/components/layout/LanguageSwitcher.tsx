@@ -77,11 +77,11 @@ const labelStyle: React.CSSProperties = {
   width: '29px',
   color: 'var(--color-text-basic-secondary)',
   textAlign: 'center',
-  fontFamily: 'var(--font-family-Pretendard, Pretendard)',
-  fontSize: 'var(--font-size-16, 16px)',
+  fontFamily: 'var(--w-font-family)',
+  fontSize: 'var(--w-text-M-size)',
   fontStyle: 'normal',
   fontWeight: 600,
-  lineHeight: 'var(--font-lineHeight-16, 24px)',
+  lineHeight: 'var(--w-text-M-lineHeight)',
   letterSpacing: 'var(--font-letterSpacing-0, 0)',
 };
 
@@ -117,7 +117,7 @@ export default function LanguageSwitcher({
   const currentLabel =
     LANGUAGES.find((l) => l.code === locale)?.label ?? locale.toUpperCase();
 
-  /** next-intl locale 전환 — 경로 보존 */
+  /** next-intl locale 전환 — 경로 보존 + 스크롤 위치 보존 */
   const handleSelect = (code: string) => {
     if (code === locale) { setOpen(false); return; }
     // 언어 전환은 [locale] 루트 세그먼트 변경 → SmoothScroll 리마운트로 최상단 이동됨.

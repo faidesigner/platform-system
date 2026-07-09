@@ -130,13 +130,13 @@ export default function Footer() {
                       <div key={item.title} className="flex items-center">
                         {/* titleSet */}
                         <div className="flex flex-col items-start gap-s w-[92px] shrink-0">
-                          <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                          <span className="text-body-xs font-normal text-text-basic-primary leading-[1.25rem]">
                             {item.title}
                           </span>
                         </div>
                         {/* textSet */}
                         <div className="flex flex-col items-start gap-s w-[286px]">
-                          <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                          <span className="text-body-xs font-normal text-text-basic-primary leading-[1.25rem]">
                             {item.text}
                           </span>
                         </div>
@@ -150,13 +150,13 @@ export default function Footer() {
                       <div key={item.title} className="flex items-center">
                         {/* titleSet */}
                         <div className="flex flex-col items-start gap-s w-[92px] shrink-0">
-                          <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                          <span className="text-body-xs font-normal text-text-basic-primary leading-[1.25rem]">
                             {item.title}
                           </span>
                         </div>
                         {/* textSet */}
                         <div className="flex flex-col items-start gap-s w-[286px]">
-                          <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                          <span className="text-body-xs font-normal text-text-basic-primary leading-[1.25rem]">
                             {item.text}
                           </span>
                         </div>

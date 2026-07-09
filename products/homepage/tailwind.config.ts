@@ -287,15 +287,7 @@ const config: Config = {
          font-base
          ------------------------------------------------------- */
       fontFamily: {
-        base: [
-          'Pretendard Variable',
-          'Pretendard',
-          '-apple-system',
-          'BlinkMacSystemFont',
-          'system-ui',
-          'Roboto',
-          'sans-serif',
-        ],
+        base: ['var(--w-font-family)'], /* 로케일별 활성 폰트 — globals.css html[lang] 재정의 */
       },
 
       /* -------------------------------------------------------
