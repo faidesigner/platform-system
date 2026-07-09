@@ -2,6 +2,24 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-09
+
+### 🔄 Changed
+
+#### HeroSection 네비 색상 전환 타이밍 개선 (products/homepage)
+- 비디오 박스 확장 애니메이션 90% 시점(540ms)에 네비 색상 전환 — 깜빡임 방지
+- `navTimerRef`로 타이머 관리, 복귀 시 즉시 취소 후 collapsed 발행
+
+#### NavigationBar 배경 전환 부드럽게 개선 (packages/ui)
+- 배경색 직접 전환 → **opacity 레이어 크로스페이드** 방식으로 변경
+- `duration-700 ease-out`으로 부드러운 페이드 인/아웃 적용
+- 투명 모드: 배경 레이어 `opacity-0`, 라이트 모드: `opacity-100`
+
+#### HeroSection Dim Overlay 연하게 조정 (products/homepage)
+- `rgba(0,0,0,0.4)` → `rgba(0,0,0,0.25)` (40% → 25%)
+
+---
+
 ## [Unreleased] - 2026-07-08 (4)
 
 ### 🔄 Changed

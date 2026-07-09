@@ -114,6 +114,8 @@ export default function NavigationBar({
   /** 스크롤 감지 — ref 비교로 불필요한 리렌더 방지 */
   const transparentRef = useRef(!isHome && !isMedia);
   const shadowRef = useRef(false);
+  // hero 확장/복귀 이벤트로 홈 nav 투명 상태 관리
+  const heroExpandedRef = useRef(false);
 
   useEffect(() => {
     let threshold = window.innerHeight * 3;
@@ -124,9 +126,10 @@ export default function NavigationBar({
       let nextShadow = shadowRef.current;
 
       if (isHome) {
-        const inTransparentZone = y >= 1 && y <= threshold;
+        if (y < 1) heroExpandedRef.current = false;
+        const inTransparentZone = heroExpandedRef.current && y <= threshold;
         nextTransparent = inTransparentZone;
-        nextShadow = inTransparentZone && y > 100;
+        nextShadow = false;
       } else if (isProductDetail) {
         nextTransparent = y < window.innerHeight;
         nextShadow = false;
@@ -149,13 +152,19 @@ export default function NavigationBar({
     };
 
     const handleResize = () => { threshold = window.innerHeight * 3; update(); };
+    const onHeroExpanded  = () => { heroExpandedRef.current = true;  update(); };
+    const onHeroCollapsed = () => { heroExpandedRef.current = false; update(); };
 
     update();
-    window.addEventListener("scroll",  update,        { passive: true });
-    window.addEventListener("resize",  handleResize,  { passive: true });
+    window.addEventListener("scroll",        update,          { passive: true });
+    window.addEventListener("resize",        handleResize,    { passive: true });
+    window.addEventListener("hero:expanded",  onHeroExpanded);
+    window.addEventListener("hero:collapsed", onHeroCollapsed);
     return () => {
-      window.removeEventListener("scroll",  update);
-      window.removeEventListener("resize",  handleResize);
+      window.removeEventListener("scroll",        update);
+      window.removeEventListener("resize",        handleResize);
+      window.removeEventListener("hero:expanded",  onHeroExpanded);
+      window.removeEventListener("hero:collapsed", onHeroCollapsed);
     };
   }, [isHome, isProductDetail, isMedia]);
 
@@ -189,12 +198,18 @@ export default function NavigationBar({
       <header
         className={[
           "fixed top-0 left-0 z-50 w-full h-16",
-          "transition-all duration-300 ease-in-out",
-          effectiveTransparent ? "dark bg-transparent" : "bg-surface",
+          effectiveTransparent ? "dark" : "",
           hasShadow && !drawerOpen ? "shadow-M" : "",
         ].join(" ")}
       >
-        <nav className="w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
+        {/* 배경 레이어 — opacity 크로스페이드로 부드러운 전환 */}
+        <div
+          className={[
+            "absolute inset-0 bg-surface transition-opacity duration-700 ease-out",
+            effectiveTransparent ? "opacity-0" : "opacity-100",
+          ].join(" ")}
+        />
+        <nav className="relative w-full flex h-full items-center justify-between px-l tablet:px-xl desktop:px-[var(--padding-8-xl,150px)]">
 
           {/* ── 로고 ── */}
           <Link href={lhref("/")} className="shrink-0">

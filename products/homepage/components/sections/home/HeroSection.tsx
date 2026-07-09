@@ -32,15 +32,38 @@ export default function HeroSection({ logos }: HeroSectionProps) {
   });
 
   const expandedRef = useRef(false);
+  const navExpandedRef = useRef(false);
+  const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
+      // 히어로 확장 상태
       const next = v >= 0.2;
       if (next !== expandedRef.current) {
         expandedRef.current = next;
         setIsExpanded(next);
+
+        // nav 전환 — 비디오 박스 확장 애니메이션 90% 시점(540ms)에 색상 전환
+        if (next && !navExpandedRef.current) {
+          navTimerRef.current = setTimeout(() => {
+            navExpandedRef.current = true;
+            window.dispatchEvent(new CustomEvent("hero:expanded"));
+          }, 540);
+        } else if (!next && navExpandedRef.current) {
+          if (navTimerRef.current) clearTimeout(navTimerRef.current);
+          navExpandedRef.current = false;
+          window.dispatchEvent(new CustomEvent("hero:collapsed"));
+        }
       }
     });
   }, [scrollYProgress]);
+
+  // cleanup
+  useEffect(() => {
+    return () => {
+      if (navTimerRef.current) clearTimeout(navTimerRef.current);
+    };
+  }, []);
 
   /** Hero 내부 2단계 snap — 접힘(상단) ↔ 펼침(EXPANDED_STOP 지점) */
   useEffect(() => {
@@ -112,7 +135,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
           {/* z-10: Dim Overlay */}
           <div
             aria-hidden="true"
-            className={`absolute inset-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.4)_0%,rgba(0,0,0,0.4)_100%)] transition-opacity duration-1000 ease-in-out z-10 ${
+            className={`absolute inset-0 w-full h-full bg-[linear-gradient(0deg,rgba(0,0,0,0.25)_0%,rgba(0,0,0,0.25)_100%)] transition-opacity duration-1000 ease-in-out z-10 ${
               isExpanded ? "opacity-100" : "opacity-0 pointer-events-none"
             }`}
           />
