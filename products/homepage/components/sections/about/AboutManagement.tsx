@@ -43,15 +43,17 @@ function ManagementCard({ member }: { member: ManagementMember }) {
         </div>
       </div>
 
-      {/* [label]: 그린 점 + 학력/divider/경력 */}
-      <div className="flex shrink-0 items-start gap-s pb-l">
+      {/* [label]: 그린 점 + 학력/divider/경력
+          모바일(flex-col)에선 w-full+min-w-0으로 뷰포트 폭에 맞춰 줄바꿈(영문 가로 오버플로우 방지),
+          tablet+(flex-row)에선 썸네일 옆 고정폭 유지 위해 shrink-0. */}
+      <div className="flex w-full tablet:w-auto min-w-0 items-start gap-s pb-l tablet:shrink-0">
         {/* [ico]: 그린 점 16×16 — bg-brand 사각형 임시 구현 */}
         <div className="flex flex-col items-end self-stretch py-2xs">
           <span className="size-m shrink-0 bg-brand" aria-hidden />
         </div>
 
         {/* [textSection] */}
-        <div className="flex shrink-0 flex-col items-start gap-s">
+        <div className="flex min-w-0 flex-col items-start gap-s tablet:shrink-0">
           <div className="self-stretch text-body font-normal text-secondary">
             {member.education.map((line, i) => (
               <p key={i} className="whitespace-pre-line">{line}</p>
