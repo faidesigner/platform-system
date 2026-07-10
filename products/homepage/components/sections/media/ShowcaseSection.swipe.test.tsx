@@ -77,4 +77,37 @@ describe("ShowcaseSection 모바일 스와이프 (HOM-33)", () => {
     swipe([200, 180]); // dx=-20 → 무시
     expect(screen.getByText("VIDEO_A")).toBeInTheDocument();
   });
+
+  // 인라인 style 속성만 검사(<style> 블록의 keyframe 정의 텍스트와 혼동 방지).
+  function inlineAnimStyles(container: HTMLElement) {
+    return Array.from(container.querySelectorAll("div"))
+      .map((d) => d.getAttribute("style") || "")
+      .filter((s) => s.includes("animation"));
+  }
+
+  it("다음(← 스와이프)은 정방향 애니메이션(slide-in-right)", () => {
+    const { container } = renderSection();
+    const img = screen.getAllByRole("img")[0];
+    act(() => {
+      fireEvent.touchStart(img, { touches: [{ clientX: 300 }] });
+      fireEvent.touchEnd(img, { changedTouches: [{ clientX: 100 }] }); // dx=-200 → next
+    });
+    const styles = inlineAnimStyles(container);
+    expect(styles.some((s) => s.includes("fai-slide-in-right"))).toBe(true);
+    expect(styles.some((s) => s.includes("fai-slide-out-left"))).toBe(true);
+    act(() => vi.advanceTimersByTime(400));
+  });
+
+  it("이전(→ 스와이프)은 반대 방향 애니메이션(slide-in-left / slide-out-right)", () => {
+    const { container } = renderSection();
+    const img = screen.getAllByRole("img")[0];
+    act(() => {
+      fireEvent.touchStart(img, { touches: [{ clientX: 100 }] });
+      fireEvent.touchEnd(img, { changedTouches: [{ clientX: 300 }] }); // dx=+200 → prev
+    });
+    const styles = inlineAnimStyles(container);
+    expect(styles.some((s) => s.includes("fai-slide-in-left"))).toBe(true);
+    expect(styles.some((s) => s.includes("fai-slide-out-right"))).toBe(true);
+    act(() => vi.advanceTimersByTime(400));
+  });
 });

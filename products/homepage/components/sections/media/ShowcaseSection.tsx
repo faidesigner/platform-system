@@ -84,6 +84,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   const [index, setIndex] = useState(0);
   const [animating, setAnimating] = useState(false);
   const [nextIdx, setNextIdx] = useState<number | null>(null);
+  const [dir, setDir] = useState<1 | -1>(1); // 마지막 전환 방향(1=다음, -1=이전) — 슬라이드 애니메이션 방향 결정
   const animatingRef = useRef(false);
   const touchStartX = useRef<number | null>(null);
 
@@ -111,15 +112,16 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
     };
   }, [animating, nextIdx]);
 
-  const startSlide = (newIdx: number) => {
+  const startSlide = (newIdx: number, direction: 1 | -1 = 1) => {
     if (animatingRef.current) return;
     animatingRef.current = true;
+    setDir(direction);
     setNextIdx(newIdx);
     setAnimating(true);
   };
 
-  const move = (dir: -1 | 1) =>
-    startSlide((index + dir + videos.length) % videos.length);
+  const move = (d: -1 | 1) =>
+    startSlide((index + d + videos.length) % videos.length, d);
 
   /* 모바일 좌우 스와이프 — 데스크톱 화살표 버튼을 대체하는 터치 제스처(HOM-33).
      세로 스크롤을 막지 않도록 preventDefault 없이 touchend delta만 판정. */
@@ -137,6 +139,9 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   if (!videos.length) return null;
 
   const current: YoutubeVideo = videos[index];
+  // 이동 방향에 맞춰 슬라이드 애니메이션 방향을 반전(이전 이동은 반대 방향으로 자연스럽게).
+  const outAnim = dir === 1 ? 'fai-slide-out-left' : 'fai-slide-out-right';
+  const inAnim = dir === 1 ? 'fai-slide-in-right' : 'fai-slide-in-left';
 
   return (
     <div className="flex w-full flex-col overflow-hidden rounded-fai-m min-[961px]:flex-row">
@@ -231,14 +236,16 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
         {/* 슬라이드 키프레임 */}
         <style>{`
-          @keyframes fai-slide-out-left { from { transform: translateX(0) } to { transform: translateX(-100%) } }
-          @keyframes fai-slide-in-right { from { transform: translateX(100%) } to { transform: translateX(0) } }
+          @keyframes fai-slide-out-left  { from { transform: translateX(0) }     to { transform: translateX(-100%) } }
+          @keyframes fai-slide-in-right  { from { transform: translateX(100%) }  to { transform: translateX(0) } }
+          @keyframes fai-slide-out-right { from { transform: translateX(0) }     to { transform: translateX(100%) } }
+          @keyframes fai-slide-in-left   { from { transform: translateX(-100%) } to { transform: translateX(0) } }
         `}</style>
 
-        {/* 현재 이미지 — 애니메이션 시 좌측 이탈 */}
+        {/* 현재 이미지 — 애니메이션 시 이동 방향으로 이탈 */}
         <div
           className="absolute inset-0"
-          style={animating ? { animation: `fai-slide-out-left ${ANIM_MS}ms ease-in-out forwards` } : undefined}
+          style={animating ? { animation: `${outAnim} ${ANIM_MS}ms ease-in-out forwards` } : undefined}
         >
           <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
         </div>
@@ -247,7 +254,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         {animating && nextIdx !== null && (
           <div
             className="absolute inset-0"
-            style={{ animation: `fai-slide-in-right ${ANIM_MS}ms ease-in-out forwards` }}
+            style={{ animation: `${inAnim} ${ANIM_MS}ms ease-in-out forwards` }}
           >
             <YoutubeThumb videoId={videos[nextIdx].videoId} alt={videos[nextIdx].thumbnailAlt} />
           </div>
@@ -257,7 +264,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         <ProgressBar
           count={videos.length}
           activeIndex={animating && nextIdx !== null ? nextIdx : index}
-          onChange={startSlide}
+          onChange={(i) => startSlide(i, i >= index ? 1 : -1)}
           duration={DURATION}
           getAriaLabel={(i) => a11y.goToVideoTemplate.replace("{index}", String(i + 1))}
         />
