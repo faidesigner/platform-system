@@ -1,7 +1,21 @@
 {
   "channelId": "UCZpwr96t6EkDKMurSPL11bQ",
-  "fetchedAt": "2026-07-06T13:47:47.886Z",
+  "fetchedAt": "2026-07-10T14:29:34.134Z",
   "videos": [
+    {
+      "videoId": "6mdVuqYxWI8",
+      "title": "AI는 똑같이 생긴 다른 빵을 구별 할 수 있을까(ep2. 틀린그림찾기 아티제편) #파인더스에이아이 #아티제 #빵지순례 #소금빵맛집 #튀김소보루 #빵맛집 #트렌드쇼츠  #트렌드",
+      "description": "",
+      "thumbnailAlt": "AI는 똑같이 생긴 다른 빵을 구별 할 수 있을까(ep2. 틀린그림찾기 아티제편) #파인더스에이아이 #아티제 #빵지순례 #소금빵맛집 #튀김소보루 #빵맛집 #트렌드쇼츠  #트렌드",
+      "href": "https://www.youtube.com/watch?v=6mdVuqYxWI8"
+    },
+    {
+      "videoId": "SQVWhX_U3f4",
+      "title": "AI는 망고 케이크를 구별할 수 있을까?(ep1. 틀린그림찾기 뚜쥬루 망고케이크)  #트렌드 #빵집투어 #빵순이 #빵지순례 #ai #파인더스에이아이 #뚜쥬루",
+      "description": "",
+      "thumbnailAlt": "AI는 망고 케이크를 구별할 수 있을까?(ep1. 틀린그림찾기 뚜쥬루 망고케이크)  #트렌드 #빵집투어 #빵순이 #빵지순례 #ai #파인더스에이아이 #뚜쥬루",
+      "href": "https://www.youtube.com/watch?v=SQVWhX_U3f4"
+    },
     {
       "videoId": "hPLD6RDw64M",
       "title": "VCO 챌린지 [ep1. AI는 얼마나 빠를까?]",
@@ -26,14 +40,14 @@
     {
       "videoId": "U12evbt9Aoo",
       "title": "ファインダーズAI(Fainders AI)｜ベーカリーAIセルフレジ VCOの使い方",
-      "description": "",
+      "description": "ベーカリーAIセルフレジ VCOの使い方",
       "thumbnailAlt": "ファインダーズAI(Fainders AI)｜ベーカリーAIセルフレジ VCOの使い方",
       "href": "https://www.youtube.com/watch?v=U12evbt9Aoo"
     },
     {
       "videoId": "20XzJavnjyY",
       "title": "파인더스에이아이ㅣAI 무인 매장 Super Swift",
-      "description": "",
+      "description": "아직도 줄 서서 바코드 하나씩 찍으세요? \n결제 대기도, 바코드 스캔도 없는 새로운 쇼핑 패러다임, 차세대 AI 무인 매장을 소개합니다.\n리테일 테크가 바꿀 유통의 미래를 지금 영상으로 만나보세요.",
       "thumbnailAlt": "파인더스에이아이ㅣAI 무인 매장 Super Swift",
       "href": "https://www.youtube.com/watch?v=20XzJavnjyY"
     },
@@ -68,44 +82,30 @@
     {
       "videoId": "NZf1qo6LS8w",
       "title": "파인더스에이아이ㅣ베이커리 AI 무인 자동 계산대 VCO 사용법",
-      "description": "",
+      "description": "베이커리와 공산품, 구분 없는 결제의 시작. \n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.",
       "thumbnailAlt": "파인더스에이아이ㅣ베이커리 AI 무인 자동 계산대 VCO 사용법",
       "href": "https://www.youtube.com/watch?v=NZf1qo6LS8w"
     },
     {
       "videoId": "fSzG6pXZx-w",
       "title": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
-      "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale",
+      "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale.",
       "thumbnailAlt": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
       "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w"
     },
     {
       "videoId": "Qon4TWeBsdQ",
       "title": "VCO(Vision Check-out) 베이커리 소개 영상",
-      "description": "",
+      "description": "베이커리와 공산품, 구분 없는 결제의 시작. \n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.\n\n⑴ 유사 상품 99% 정확한 인식\n⑵ 다각도 인식으로 더 정확한 판단\n⑶ 오류 발생 시 고객이 빠르게 해결 가능한 결제 경험",
       "thumbnailAlt": "VCO(Vision Check-out) 베이커리 소개 영상",
       "href": "https://www.youtube.com/watch?v=Qon4TWeBsdQ"
     },
     {
       "videoId": "OetI0X56u3k",
       "title": "파인더스에이아이ㅣAI 무인 자동 계산대 VCO(Vision Check-out) 소개",
-      "description": "",
+      "description": "구내식당에서 상품을 자유롭게 고르고 계산대에 올려놓기만 하면 결제 완료.\n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.",
       "thumbnailAlt": "파인더스에이아이ㅣAI 무인 자동 계산대 VCO(Vision Check-out) 소개",
       "href": "https://www.youtube.com/watch?v=OetI0X56u3k"
-    },
-    {
-      "videoId": "lLDFJ-3rs2U",
-      "title": "[Intro] Fainders.AI's unmanned stores",
-      "description": "Hey guys!\n\nWe are Fainders.AI  :)\nCome take a look at our AI-powered checkout-free stores!",
-      "thumbnailAlt": "[Intro] Fainders.AI's unmanned stores",
-      "href": "https://www.youtube.com/watch?v=lLDFJ-3rs2U"
-    },
-    {
-      "videoId": "VJSlS3ujdEo",
-      "title": "Super Swift store powered by Fainders.AI",
-      "description": "Fainders.AI debuts an unmanned flagship store powered by computer vision AI in Seoul",
-      "thumbnailAlt": "Super Swift store powered by Fainders.AI",
-      "href": "https://www.youtube.com/watch?v=VJSlS3ujdEo"
     },
     {
       "videoId": "DSTIFkS5Nw8",
