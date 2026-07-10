@@ -85,6 +85,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   const [animating, setAnimating] = useState(false);
   const [nextIdx, setNextIdx] = useState<number | null>(null);
   const animatingRef = useRef(false);
+  const touchStartX = useRef<number | null>(null);
 
   // 자동 전환 타이머
   useEffect(() => {
@@ -120,6 +121,19 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   const move = (dir: -1 | 1) =>
     startSlide((index + dir + videos.length) % videos.length);
 
+  /* 모바일 좌우 스와이프 — 데스크톱 화살표 버튼을 대체하는 터치 제스처(HOM-33).
+     세로 스크롤을 막지 않도록 preventDefault 없이 touchend delta만 판정. */
+  const onTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const onTouchEnd = (e: React.TouchEvent) => {
+    if (touchStartX.current === null || videos.length <= 1) return;
+    const dx = e.changedTouches[0].clientX - touchStartX.current;
+    touchStartX.current = null;
+    if (Math.abs(dx) < 40) return;      // 임계값 미만은 탭·미세 이동으로 무시
+    move(dx < 0 ? 1 : -1);              // ← 스와이프 = 다음, → 스와이프 = 이전
+  };
+
   if (!videos.length) return null;
 
   const current: YoutubeVideo = videos[index];
@@ -143,7 +157,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
             </div>
 
             {videos.length > 1 && (
-              <div className="flex items-start justify-end gap-ms">
+              <div className="flex items-start justify-end gap-ms max-[960px]:hidden">
                 <IconButton
                   variant="assistive"
                   size="M"
@@ -209,7 +223,10 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
       </div>
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단) */}
-      <div className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
+      <div
+        onTouchStart={onTouchStart}
+        onTouchEnd={onTouchEnd}
+        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
 
         {/* 슬라이드 키프레임 */}
         <style>{`
