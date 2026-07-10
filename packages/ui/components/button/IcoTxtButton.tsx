@@ -25,19 +25,19 @@ const sizeMap = {
   L: {
     padding:    "px-[var(--padding-M,16px)] py-[var(--padding-S,8px)]",
     contentGap: "gap-[var(--spacing-2XS,4px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-L-size,15px)] font-semibold leading-[var(--m-text-L-lineHeight,22px)]",
+    font:       "font-[family-name:var(--font-family-Pretendard,sans-serif)] text-[var(--m-text-L-size,15px)] font-semibold leading-[var(--m-text-L-lineHeight,22px)]",
     iconSize:   "w-[16px] h-[16px]",
   },
   M: {
     padding:    "px-[var(--padding-S,8px)] py-[var(--padding-XS,6px)]",
     contentGap: "gap-[var(--spacing-3XS,2px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-S-size,13px)] font-semibold leading-[var(--m-text-S-lineHeight,20px)]",
+    font:       "font-[family-name:var(--font-family-Pretendard,sans-serif)] text-[var(--m-text-S-size,13px)] font-semibold leading-[var(--m-text-S-lineHeight,20px)]",
     iconSize:   "w-[16px] h-[16px]",
   },
   S: {
     padding:    "px-[var(--padding-XS,6px)] py-[var(--padding-XXS,4px)]",
     contentGap: "gap-[var(--spacing-3XS,2px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-XS-size,12px)] font-semibold leading-[var(--m-text-XS-lineHeight,18px)]",
+    font:       "font-[family-name:var(--font-family-Pretendard,sans-serif)] text-[var(--m-text-XS-size,12px)] font-semibold leading-[var(--m-text-XS-lineHeight,18px)]",
     iconSize:   "w-[14px] h-[14px]",
   },
 };

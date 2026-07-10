@@ -22,6 +22,9 @@ const config: Config = {
     './config/**/*.{ts,tsx}',
     './root/components/**/*.{ts,tsx,js,jsx}',
     '../../packages/ui/components/**/*.{ts,tsx,js,jsx}',
+    // 테스트 파일은 스캔에서 제외 — 주석/정규식 속 클래스 리터럴이 프로덕션 CSS로 새는 것 방지.
+    '!./**/*.{test,spec}.{ts,tsx,js,jsx}',
+    '!../../packages/ui/**/*.{test,spec}.{ts,tsx,js,jsx}',
   ],
 
   darkMode: 'class', // <html class="dark"> 로 전환
