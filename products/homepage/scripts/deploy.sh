@@ -43,6 +43,10 @@ OUT="$HERE/out"
 echo "▶ 빌드..."
 ( cd "$REPO_ROOT" && pnpm --filter fai-homepage build )
 
+# 모바일 가로 오버플로우 게이트 — 오버플로우 시 배포 중단(About EN 햄버거 사라짐 류 재발 방지).
+echo "▶ 모바일 가로 오버플로우 검사..."
+( cd "$HERE" && node scripts/check-mobile-overflow.mjs )
+
 # noindex 주입(프리뷰 색인 방지)
 if [ "$NOINDEX" = "true" ]; then
   echo "▶ noindex 메타 주입..."
