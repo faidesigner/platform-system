@@ -226,6 +226,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
       <div
         onTouchStart={onTouchStart}
         onTouchEnd={onTouchEnd}
+        style={{ touchAction: 'pan-y' }}
         className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
 
         {/* 슬라이드 키프레임 */}
