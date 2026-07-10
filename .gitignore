@@ -60,3 +60,4 @@ node_modules/
 
 # git worktrees (repo 내부 보관)
 .worktrees/
+.playwright-mcp/
