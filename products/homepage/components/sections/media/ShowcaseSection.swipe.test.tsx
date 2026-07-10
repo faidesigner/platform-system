@@ -78,6 +78,15 @@ describe("ShowcaseSection 모바일 스와이프 (HOM-33)", () => {
     expect(screen.getByText("VIDEO_A")).toBeInTheDocument();
   });
 
+  it("텍스트 패널(제목)에서 스와이프해도 전환 — 카드 전체가 스와이프 surface", () => {
+    renderSection();
+    const title = screen.getByText("VIDEO_A"); // 이미지가 아닌 텍스트 영역
+    fireEvent.touchStart(title, { touches: [{ clientX: 300 }] });
+    fireEvent.touchEnd(title, { changedTouches: [{ clientX: 100 }] }); // dx=-200 → next
+    act(() => vi.advanceTimersByTime(400));
+    expect(screen.getByText("VIDEO_B")).toBeInTheDocument();
+  });
+
   // 인라인 style 속성만 검사(<style> 블록의 keyframe 정의 텍스트와 혼동 방지).
   function inlineAnimStyles(container: HTMLElement) {
     return Array.from(container.querySelectorAll("div"))

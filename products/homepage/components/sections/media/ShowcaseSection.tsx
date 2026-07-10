@@ -144,7 +144,12 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   const inAnim = dir === 1 ? 'fai-slide-in-right' : 'fai-slide-in-left';
 
   return (
-    <div className="flex w-full flex-col overflow-hidden rounded-fai-m min-[961px]:flex-row">
+    <div
+      onTouchStart={onTouchStart}
+      onTouchEnd={onTouchEnd}
+      style={{ touchAction: 'pan-y' }}
+      className="flex w-full flex-col overflow-hidden rounded-fai-m min-[961px]:flex-row"
+    >
 
       {/* 좌: 텍스트 패널 — 960px 이하에서 order-2 (썸네일 아래) */}
       <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-[var(--padding-2-xl,32px)] max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px]">
@@ -227,11 +232,8 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         </div>
       </div>
 
-      {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단) */}
+      {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단). 스와이프는 카드 전체에서 처리. */}
       <div
-        onTouchStart={onTouchStart}
-        onTouchEnd={onTouchEnd}
-        style={{ touchAction: 'pan-y' }}
         className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
 
         {/* 슬라이드 키프레임 */}
