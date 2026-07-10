@@ -352,7 +352,7 @@ export default function MediaShowcaseSection({
           <YoutubeCard channelLabel={channelLabel} ctaLabel={ctaLabel} videos={videos} a11y={a11y} />
 
           {socials.length > 0 && (
-            <div className="flex items-start self-stretch w-full flex-col gap-[var(--spacing-XL,24px)] min-[961px]:flex-row">
+            <div className="flex items-start self-stretch w-full flex-col gap-[var(--spacing-2XL,32px)] min-[961px]:flex-row min-[961px]:gap-[var(--spacing-XL,24px)]">
               {socials.map((social) => (
                 <SocialCard
                   key={social.label}
