@@ -1,6 +1,6 @@
 "use client";
 
-import { useRef, useEffect } from "react";
+import { useRef } from "react";
 import Image from "next/image";
 import { IconButton } from "@fai/ui";
 import type { PeopleCard } from "@/config/types";
@@ -32,23 +32,8 @@ export function AboutPeople({
     scrollRef.current?.scrollBy({ left: SCROLL_STEP * dir, behavior: "smooth" });
   };
 
-  const SCROLL_KEY = "aboutPeopleScrollY";
-
-  // 뒤로가기 복귀 시 저장된 스크롤 위치 복원
-  useEffect(() => {
-    const saved = sessionStorage.getItem(SCROLL_KEY);
-    if (saved === null) return;
-    sessionStorage.removeItem(SCROLL_KEY);
-    const y = parseInt(saved, 10);
-    // setTimeout(0): Next.js hydration 후 scroll reset이 완료된 다음 실행
-    const id = setTimeout(() => window.scrollTo({ top: y, behavior: "instant" }), 0);
-    return () => clearTimeout(id);
-  }, []);
-
-  const saveScroll = () => {
-    sessionStorage.setItem(SCROLL_KEY, String(window.scrollY));
-  };
-
+  // 카드 링크는 외부 URL(인터뷰 페이지)이라 클릭 시 전체 문서 리로드가 일어난다.
+  // 뒤로가기 복귀(back_forward) 시 스크롤 복원은 SmoothScroll의 마운트 경로가 전담한다.
   return (
     <section className="w-full bg-surface py-5xl">
 
@@ -76,7 +61,6 @@ export function AboutPeople({
           <a
             key={card.id}
             href={card.href}
-            onClick={saveScroll}
             aria-label={card.interviewAriaLabel}
             className="block shrink-0 snap-start cursor-pointer"
           >

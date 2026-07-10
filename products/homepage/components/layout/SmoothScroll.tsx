@@ -1,24 +1,62 @@
 'use client';
 
-import { useEffect } from 'react';
+import { useEffect, useRef } from 'react';
 import { usePathname } from '@/i18n/navigation';
 import Lenis from 'lenis';
 import { consumeLocaleSwitchScroll } from '@/lib/localeScroll';
+import {
+  saveScrollPosition,
+  readScrollPosition,
+  classifyPop,
+  decideScrollAction,
+  clampScrollY,
+  retryDone,
+  applyScroll,
+} from '@/lib/scrollPositions';
 
 export const lenisRef: { current: Lenis | null } = { current: null };
 
 // 고정 헤더(h-16 = 64px) 높이만큼 앵커 스크롤 오프셋 보정.
 const HEADER_OFFSET = 64;
+// SSG 하이드레이션·이미지 로드로 문서 높이가 뒤늦게 커지는 경우 대비 rAF 재시도 상한.
+const RESTORE_MAX_TRIES = 10;
+
+/** pathname + search + hash 전체 URL(스크롤 위치 키·pop 대상 판정용). */
+const fullUrl = () =>
+  window.location.pathname + window.location.search + window.location.hash;
+
+/** 문서의 내비게이션 타입('navigate' | 'reload' | 'back_forward' | undefined). */
+const navigationType = (): string | undefined =>
+  (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  // next-intl usePathname은 로케일 비종속(/products/vco). 단, 언어 전환은 [locale]
-  // 루트 세그먼트를 바꿔 이 컴포넌트를 리마운트시키므로 아래 이펙트가 마운트 시 실행된다
-  // → 그 경우엔 저장된 스크롤 위치를 복원한다(consumeLocaleSwitchScroll).
+  // next-intl usePathname은 로케일 비종속(/products/vco). 언어 전환은 [locale] 루트
+  // 세그먼트를 바꿔 이 컴포넌트를 리마운트시키므로 아래 이펙트가 마운트 시 실행된다.
   const pathname = usePathname();
 
+  // 스크롤 이펙트가 마지막으로 처리한 전체 URL / 경로변경 pop이 지정한 복원 대상 URL.
+  const handledUrlRef = useRef<string | null>(null);
+  const pendingPopUrlRef = useRef<string | null>(null);
+  const firstRunRef = useRef(true);
+
+  /** 콘텐츠 높이가 목표에 도달할 때까지 rAF 재시도 후 복원(도달 가능 최댓값으로 클램프). */
+  const restoreScroll = (y: number) => {
+    let tries = 0;
+    const step = () => {
+      const maxY = document.documentElement.scrollHeight - window.innerHeight;
+      if (retryDone(maxY, y, tries++, RESTORE_MAX_TRIES)) {
+        applyScroll(clampScrollY(y, maxY), lenisRef.current, window);
+        return;
+      }
+      requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  };
+
+  // Lenis 스무스 스크롤 초기화.
   useEffect(() => {
     const lenis = new Lenis({
-      duration: 1.6,       // 스크롤 지속 시간 (길수록 천천히)
+      duration: 1.6,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)), // easeOutExpo
       smoothWheel: true,
     });
@@ -39,46 +77,84 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
   }, []);
 
-  // 라우트 전환 시 스크롤 포커싱:
-  //  - 언어 전환 리마운트면 저장된 위치 복원(최상단 이동 방지) — HOM-9
-  //  - URL 해시(#product-reviews 등)가 있으면 해당 섹션으로
-  //  - 없으면 무조건 최상단으로 (이전 페이지 스크롤 위치 영향 제거)
+  // 뒤로/앞으로(SPA) 복원 배선 + 스크롤 위치 저장 — 마운트 시 1회 등록.
   useEffect(() => {
-    const scrollTo = (y: number) => {
-      if (lenisRef.current) lenisRef.current.scrollTo(y, { immediate: true });
-      else window.scrollTo(0, y);
+    // 브라우저 기본 복원을 끄고 직접 제어(항상 최상단으로 튀는 것 방지).
+    history.scrollRestoration = 'manual';
+
+    const onPop = () => {
+      const target = fullUrl();
+      if (
+        handledUrlRef.current !== null &&
+        classifyPop(target, handledUrlRef.current) === 'hash-only'
+      ) {
+        // 해시 전용 pop은 pathname이 안 바뀌어 [pathname] 이펙트가 안 돈다 → 리스너가 직접 복원.
+        restoreScroll(readScrollPosition(target) ?? 0);
+      } else {
+        // 경로 변경 pop → [pathname] 이펙트가 pendingPop 일치로 복원 처리.
+        pendingPopUrlRef.current = target;
+      }
     };
-    const toTop = () => scrollTo(0);
+    window.addEventListener('popstate', onPop);
 
-    // 언어 전환으로 SmoothScroll가 리마운트된 경우: 전환 직전 위치로 복원한다.
-    // 새 로케일은 카피 길이가 달라 문서 높이가 다르므로, 목표 지점까지 스크롤
-    // 가능해질 때까지(=콘텐츠가 채워질 때까지) 몇 프레임 재시도 후 복원한다.
-    const savedY = consumeLocaleSwitchScroll();
-    if (savedY !== null) {
-      let restoreTries = 0;
-      const restore = () => {
-        const maxY = document.documentElement.scrollHeight - window.innerHeight;
-        if (maxY >= savedY || restoreTries++ >= 10) {
-          lenisRef.current?.resize();
-          scrollTo(Math.min(savedY, Math.max(0, maxY)));
-          return;
-        }
-        requestAnimationFrame(restore);
-      };
-      requestAnimationFrame(restore);
+    // 스크롤 위치 저장(rAF 스로틀). window.scrollY 기준(Lenis도 네이티브 스크롤 사용).
+    let ticking = false;
+    const onScroll = () => {
+      if (ticking) return;
+      ticking = true;
+      requestAnimationFrame(() => {
+        saveScrollPosition(fullUrl(), window.scrollY);
+        ticking = false;
+      });
+    };
+    window.addEventListener('scroll', onScroll, { passive: true });
+
+    return () => {
+      window.removeEventListener('popstate', onPop);
+      window.removeEventListener('scroll', onScroll);
+    };
+  }, []);
+
+  // 라우트 전환 시 스크롤 포커싱 결정(순수 판정 → 부수효과 실행).
+  //  - 첫 마운트 back/forward(문서 리로드 왕복 복귀 포함) → 저장 위치 복원
+  //  - 경로변경 pop(뒤로/앞으로) → 저장 위치 복원
+  //  - 언어 전환 리마운트 → 저장 위치 복원(HOM-9)
+  //  - 해시 앵커 → 해당 섹션 / 그 외 → 최상단
+  useEffect(() => {
+    const target = fullUrl();
+    handledUrlRef.current = target;
+
+    const isFirstRun = firstRunRef.current;
+    firstRunRef.current = false;
+
+    const pendingPopMatches = pendingPopUrlRef.current === target;
+    if (pendingPopMatches) pendingPopUrlRef.current = null;
+
+    const localeY = consumeLocaleSwitchScroll();
+    const hash = window.location.hash;
+
+    const action = decideScrollAction({
+      isFirstRun,
+      navType: navigationType(),
+      pendingPopMatches,
+      localeY,
+      hash,
+      savedY: readScrollPosition(target),
+    });
+
+    if (action.type === 'restore') {
+      restoreScroll(action.y);
+      return;
+    }
+    if (action.type === 'top') {
+      applyScroll(0, lenisRef.current, window);
       return;
     }
 
-    const hash = typeof window !== 'undefined' ? window.location.hash : '';
-    if (!hash) {
-      toTop();
-      return;
-    }
-
-    // 해시 타겟이 마운트될 때까지 잠깐 재시도 후 스크롤.
+    // action.type === 'anchor' — 해시 타겟이 마운트될 때까지 잠깐 재시도 후 스크롤.
     let tries = 0;
     const tryHash = () => {
-      const el = document.querySelector(hash) as HTMLElement | null;
+      const el = document.querySelector(action.hash) as HTMLElement | null;
       if (el) {
         lenisRef.current?.resize();
         if (lenisRef.current) {
@@ -89,7 +165,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
         return;
       }
       if (tries++ < 10) setTimeout(tryHash, 60);
-      else toTop();
+      else applyScroll(0, lenisRef.current, window);
     };
     requestAnimationFrame(tryHash);
   }, [pathname]);
