@@ -10,7 +10,7 @@
  *   node scripts/sync-stibee.mjs
  * 그 뒤 변경된 JSON을 커밋하고 빌드/배포하면 반영.
  */
-import { writeFile } from "node:fs/promises";
+import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const LIST_ID = "285432"; // 리테일 테크 레터 발행 목록
@@ -18,6 +18,21 @@ const PUBLICATION = "https://faindersai.stibee.com";
 const API = `https://page.stibee.com/api/v1.0/lists/${LIST_ID}/contents`;
 const OUT = path.resolve(process.cwd(), "config/retail-tech-letter.json");
 const LIMIT = null; // 노출 개수 제한(숫자). null이면 전체
+
+// 썸네일은 Stibee API가 제공하지 않아 config JSON에 수동 입력돼 있다.
+// 기존 JSON에서 id→thumbnailUrl 을 읽어, 재동기화 시 덮어쓰기로 사라지지 않도록 보존한다.
+async function readExistingThumbs(file) {
+  try {
+    const prev = JSON.parse(await readFile(file, "utf8"));
+    const map = {};
+    for (const l of prev.letters || []) {
+      if (l.thumbnailUrl) map[String(l.id)] = l.thumbnailUrl;
+    }
+    return map;
+  } catch {
+    return {}; // 파일 없음/파싱 실패 → 보존할 썸네일 없음
+  }
+}
 
 async function run() {
   const res = await fetch(API, { headers: { "User-Agent": "fai-homepage-sync" } });
@@ -39,6 +54,12 @@ async function run() {
     .sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
 
   if (LIMIT && Number.isFinite(LIMIT)) letters = letters.slice(0, LIMIT);
+
+  // 썸네일 보존 머지 — API가 thumbnailUrl을 주지 않으므로 기존 수동 입력분을 id로 이어붙인다.
+  const prevThumbs = await readExistingThumbs(OUT);
+  letters = letters.map((l) =>
+    prevThumbs[l.id] ? { ...l, thumbnailUrl: prevThumbs[l.id] } : l,
+  );
 
   await writeFile(
     OUT,

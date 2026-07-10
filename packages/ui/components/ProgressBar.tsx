@@ -30,7 +30,7 @@ export function ProgressBar({
           key={i}
           type="button"
           onClick={() => onChange(i)}
-          className="relative flex-1 h-[3px] rounded-fai-s bg-quaternary overflow-hidden cursor-pointer"
+          className="relative flex-1 h-2xs rounded-fai-s bg-quaternary overflow-hidden cursor-pointer"
           aria-label={getAriaLabel ? getAriaLabel(i) : `스텝 ${i + 1}로 이동`}
         >
           {i <= activeIndex && (

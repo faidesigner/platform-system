@@ -11,31 +11,7 @@ interface Letter {
   publishedAt: string;
   url: string;
   thumbnailUrl?: string;
-  issueLabel?: string;
 }
-
-// 한글 순서수 → 아라비아 숫자 (예: "서른다섯번째" → "35")
-const TENS: Record<string, number> = {
-  "열": 10, "스물": 20, "스무": 20, "서른": 30, "마흔": 40,
-  "쉰": 50, "예순": 60, "일흔": 70, "여든": 80, "아흔": 90,
-};
-const ONES: Record<string, number> = {
-  "하나": 1, "한": 1, "첫": 1, "둘": 2, "두": 2,
-  "셋": 3, "세": 3, "넷": 4, "네": 4, "다섯": 5,
-  "여섯": 6, "일곱": 7, "여덟": 8, "아홉": 9,
-};
-const koreanOrdinalToNum = (korean: string): string => {
-  const text = korean.replace(/(번째|째)$/, "");
-  for (const [tw, tv] of Object.entries(TENS)) {
-    if (text.startsWith(tw)) {
-      const rest = text.slice(tw.length);
-      if (!rest) return String(tv);
-      if (ONES[rest] !== undefined) return String(tv + ONES[rest]);
-    }
-  }
-  if (ONES[text] !== undefined) return String(ONES[text]);
-  return korean; // 변환 불가 시 원문 반환
-};
 
 // "2026-06-25T11:00:..." → "2026. 6. 25."
 const fmtDate = (iso: string) => {
@@ -90,7 +66,7 @@ export default function RetailTechLetterSection({
         <div className="flex w-full flex-col items-center gap-[var(--spacing-4XL,56px)]">
           <ul className="w-full flex flex-col gap-[var(--spacing-S,8px)]">
             {letters.slice(0, visibleCount).map((letter) => (
-              <li key={letter.id} className="border-b border-[var(--color-border-tertiary,#E4E6E7)]">
+              <li key={letter.id} className="border-b border-border-faint">
                 <a
                   href={letter.url}
                   target="_blank"
@@ -98,7 +74,7 @@ export default function RetailTechLetterSection({
                   className="flex items-center gap-[var(--spacing-XL,24px)] py-[var(--spacing-M,16px)] transition-opacity hover:opacity-60"
                 >
                   <div className="flex flex-col gap-xs flex-1 min-w-0">
-                    <Label shape="square" size="S" className="self-start !text-caption-m !text-text-basic-tertiary !font-semibold !px-[var(--padding-S,8px)]">ISSUE NO.{letter.issueLabel ? koreanOrdinalToNum(letter.issueLabel) : letter.id}</Label>
+                    <Label shape="square" size="S" className="self-start !text-caption-m !text-text-basic-tertiary !font-semibold !px-[var(--padding-S,8px)]">ISSUE NO.{letter.id}</Label>
                     <h3 className="line-clamp-2 text-body-l font-semibold text-text-basic-primary">
                       {letter.title}
                     </h3>
@@ -107,7 +83,7 @@ export default function RetailTechLetterSection({
                     </time>
                   </div>
                   {letter.thumbnailUrl && (() => {
-                    const issueNum = letter.issueLabel ? Number(koreanOrdinalToNum(letter.issueLabel)) : Number(letter.id);
+                    const issueNum = Number(letter.id);
                     const thumbBg = issueNum >= 1 && issueNum <= 6 ? "var(--color-bg-200)" : "var(--color-filled-basic-primary)";
                     return (
                       <div className="relative shrink-0 w-[160px] aspect-video overflow-hidden rounded-fai-s p-[var(--padding-S,8px)]" style={{ background: thumbBg }}>
