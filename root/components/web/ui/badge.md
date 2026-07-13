@@ -63,7 +63,7 @@
   "variants": {
     "neutral": {
       "default": {
-        "bg-color": "{color.filled.basic.secondary}",
+        "bg-color": "{color.filled.basic.tertiary}",
         "text-color": "{color.text.basic.primary}"
       }
     },

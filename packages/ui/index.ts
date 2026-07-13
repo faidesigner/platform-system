@@ -63,3 +63,11 @@ export type { ToastProps } from './components/Toast';
 export { DrawerMenu, DrawerListItem, DefaultListIcon } from './components/navigation/DrawerPrimitives';
 export type { DrawerListItemProps } from './components/navigation/DrawerPrimitives';
 export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';
+
+/* ── Status & Navigation (badge.md / banner.md / breadcrumbs.md 스펙 구현) ── */
+export { Badge } from './components/Badge';
+export type { BadgeProps, BadgeVariant, BadgeSemanticVariant, BadgeCategoryVariant } from './components/Badge';
+export { Banner } from './components/Banner';
+export type { BannerProps, BannerStatus, BannerContainer } from './components/Banner';
+export { Breadcrumbs, BreadcrumbItem } from './components/Breadcrumbs';
+export type { BreadcrumbsProps, BreadcrumbItemProps, BreadcrumbsVariant } from './components/Breadcrumbs';
