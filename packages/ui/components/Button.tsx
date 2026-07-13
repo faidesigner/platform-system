@@ -111,9 +111,10 @@ function getToneClasses(tone: ButtonTone, impact: boolean) {
   switch (tone) {
     case "primary":
       return cn(
-        "bg-[var(--color-filled-optional-brand-primaryBtn)] text-inverse border border-border-faint",
-        "hover:bg-fill hover:border-border-subtle",
-        "active:bg-fill-soft active:text-primary active:border-border-subtle"
+        // outline 없음 — 치수 유지를 위해 transparent border 사용
+        "bg-[var(--color-filled-optional-brand-primaryBtn)] text-inverse border border-transparent",
+        "hover:bg-fill",
+        "active:bg-fill-soft active:text-primary"
       );
     case "secondary":
       return cn(

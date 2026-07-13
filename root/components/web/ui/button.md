@@ -37,7 +37,7 @@
       "default": {
         "bg-color": "{color.filled.basic.primary}",
         "text-color": "{color.text.basic.inverse}",
-        "border": "{color.border.tertiary}"
+        "border": "none"
       },
       "disabled": {
         "bg-color": "{color.filled.basic.disabled}",
