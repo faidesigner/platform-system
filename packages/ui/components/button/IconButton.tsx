@@ -9,6 +9,30 @@ export interface IconButtonProps
   shape?: "square" | "circle";
   isImpact?: boolean;
   icon: "arrowshapeLeft" | "arrowshapeRight" | "arrowshapeUp" | React.ReactNode;
+  /**
+   * 접근성 라벨 (aria-label). 아이콘 전용 버튼은 보이는 텍스트가 없으므로
+   * 스크린리더를 위해 반드시 지정할 것. 구체적으로: "삭제"보다 "대화 삭제".
+   */
+  label?: string;
+  /** hover 툴팁 (title 속성). 아이콘만으로 의미가 애매할 때 권장 */
+  tooltip?: string;
+  /** 스피너 표시 + disabled + aria-busy @default false */
+  loading?: boolean;
+  /**
+   * 비동기 클릭 액션 — pending 동안 자동 로딩, fire-once (재클릭 무시).
+   * 동기 클릭은 onClick 사용.
+   */
+  clickAction?: (
+    e: React.MouseEvent<HTMLButtonElement>
+  ) => void | Promise<void>;
+  /** 제공 시 링크로 렌더. disabled/loading이면 button 유지 */
+  href?: string;
+  /** href 렌더 컴포넌트 (Next.js Link 등) @default 'a' */
+  as?: React.ElementType;
+  /** 링크 target — href 제공 시에만 적용 */
+  target?: string;
+  /** 링크 rel — href 제공 시에만 적용 */
+  rel?: string;
 }
 
 /* ── 공통 베이스 (radius 제외) ── */
@@ -76,7 +100,61 @@ const iconSizeMap: Record<"XL" | "L" | "M" | "S", string> = {
 };
 
 export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
-  ({ variant = "tertiary", size = "L", shape = "circle", isImpact = false, icon, className, ...props }, ref) => {
+  (
+    {
+      variant = "tertiary",
+      size = "L",
+      shape = "circle",
+      isImpact = false,
+      icon,
+      label,
+      tooltip,
+      loading = false,
+      clickAction,
+      href,
+      as: LinkComponent = "a",
+      target,
+      rel,
+      className,
+      type,
+      onClick,
+      ...props
+    },
+    ref
+  ) => {
+    const [isPending, setIsPending] = React.useState(false);
+    const actionInFlightRef = React.useRef(false);
+    const mountedRef = React.useRef(true);
+
+    React.useEffect(() => {
+      mountedRef.current = true;
+      return () => {
+        mountedRef.current = false;
+      };
+    }, []);
+
+    const effectiveLoading = loading || isPending;
+    const trulyDisabled = Boolean(props.disabled || effectiveLoading);
+
+    const handleClick = (e: React.MouseEvent<HTMLButtonElement>) => {
+      // fire-once: in-flight 중 재클릭 무시
+      if (trulyDisabled || actionInFlightRef.current) {
+        e.preventDefault();
+        return;
+      }
+      onClick?.(e);
+      if (clickAction && !e.defaultPrevented) {
+        const result = clickAction(e);
+        if (result instanceof Promise) {
+          actionInFlightRef.current = true;
+          setIsPending(true);
+          result.finally(() => {
+            actionInFlightRef.current = false;
+            if (mountedRef.current) setIsPending(false);
+          });
+        }
+      }
+    };
 
     const radiusClasses = shape === "square"
       ? "rounded-[var(--cornerRadius-S,8px)] after:rounded-[var(--cornerRadius-S,8px)]"
@@ -94,13 +172,67 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
       .filter(Boolean)
       .join(" ");
 
+    const spinner = (
+      <span
+        aria-hidden="true"
+        className="inline-block w-[60%] h-[60%] rounded-[var(--cornerRadius-circle,999px)] border border-current border-t-transparent animate-spin"
+      />
+    );
+
+    // href 제공 + 인터랙션 가능 → 링크로 렌더 (disabled 링크는 안티패턴이라 button 유지)
+    if (href != null && !trulyDisabled) {
+      return (
+        <LinkComponent
+          href={href}
+          target={target}
+          rel={rel}
+          title={tooltip}
+          aria-label={label}
+          onClick={onClick as React.MouseEventHandler<HTMLElement> | undefined}
+          className={`${classes} no-underline`}
+          data-impact={isImpact}
+        >
+          <IconSlot icon={icon} iconSize={iconSize} />
+        </LinkComponent>
+      );
+    }
+
     return (
       <button
         ref={ref}
         className={classes}
         data-impact={isImpact}
+        type={type ?? "button"}
+        disabled={trulyDisabled}
+        aria-busy={effectiveLoading || undefined}
+        aria-label={label}
+        title={tooltip}
+        onClick={handleClick}
         {...props}
       >
+        {effectiveLoading ? (
+          <div className={`relative flex items-center justify-center ${iconSize}`}>
+            {spinner}
+          </div>
+        ) : (
+          <IconSlot icon={icon} iconSize={iconSize} />
+        )}
+      </button>
+    );
+  },
+);
+IconButton.displayName = "IconButton";
+
+/* ── 아이콘 슬롯 (기존 렌더 로직 그대로 분리) ── */
+function IconSlot({
+  icon,
+  iconSize,
+}: {
+  icon: IconButtonProps["icon"];
+  iconSize: string;
+}) {
+  return (
+      <>
         <div className={`relative flex items-center justify-center ${iconSize}`}>
           {typeof icon !== "string" ? (
             icon
@@ -203,8 +335,6 @@ export const IconButton = React.forwardRef<HTMLButtonElement, IconButtonProps>(
 
           </>)}
         </div>
-      </button>
-    );
-  },
-);
-IconButton.displayName = "IconButton";
+      </>
+  );
+}
