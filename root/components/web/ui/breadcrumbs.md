@@ -12,8 +12,8 @@
 
 | variant | 설명 | typography |
 |---|---|---|
-| default *(기본)* | 표준 텍스트 스타일 | body 사이즈 |
-| supporting | 밀도 높은 UI(어드민 패널, 사이드바)용 작은 보조 스타일 | supporting 사이즈 |
+| default *(기본)* | 표준 텍스트 스타일 | `w/text/S` (14px) |
+| supporting | 밀도 높은 UI(어드민 패널, 사이드바)용 작은 보조 스타일 | `w/caption/M` (12px) |
 
 ## 3. ⚡ Interaction & State
 - **Link (기본)**: `href` 있는 항목은 링크로 렌더. hover 시 underline (`@media (hover: hover)` 조건), cursor pointer
@@ -60,21 +60,21 @@
     "default": {
       "link": {
         "text-color": "{color.text.basic.secondary}",
-        "typography": "body"
+        "typography": "{w.text.S}"
       },
       "current": {
         "text-color": "{color.text.basic.primary}",
-        "typography": "body"
+        "typography": "{w.text.S}"
       }
     },
     "supporting": {
       "link": {
         "text-color": "{color.text.basic.secondary}",
-        "typography": "supporting"
+        "typography": "{w.caption.M}"
       },
       "current": {
         "text-color": "{color.text.basic.secondary}",
-        "typography": "supporting"
+        "typography": "{w.caption.M}"
       }
     }
   },

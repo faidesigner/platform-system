@@ -44,7 +44,7 @@
 - **padding**: 상하 0 / 좌우 `{size.8}`
 - **gap**: `{size.4}` (icon–label 간격)
 - **radius**: `rounded-circle` (pill 형태)
-- **typography**: supporting 사이즈 + medium weight
+- **typography**: `w/caption/M` (12px) + medium — 서체는 typography-w 스케일만 사용
 - **Label**: 필수. 1~2단어 유지. HTML 태그는 `<span>`
 - **Icon**: 선택. leading 위치만 허용, 반드시 텍스트 라벨과 함께 사용
 

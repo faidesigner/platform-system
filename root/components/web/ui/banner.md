@@ -35,8 +35,8 @@
 - **Header**: `flex`, `align-items: flex-start` (description 없이 액션만 있으면 center), gap `{size.8}`, padding 상하 `{size.12}` / 좌우 `{size.16}`
 - **Content**: padding 상하 `{size.12}` / 좌우 `{size.16}`, 좌·우·하단 border, 카드 배경. card 컨테이너일 때 하단 radius만 적용 (Header는 상단 radius만)
 - **Icon**: 헤더 좌측 고정. status별 기본 아이콘(info/warning/error/success), `icon` prop으로 교체 가능
-- **Title**: 필수. label 사이즈 + semibold, 기본 텍스트 컬러. 짧고 스캔 가능하게 ("Payment failed" ⭕ / 긴 설명문 ❌)
-- **Description**: 선택. supporting 사이즈 + regular, secondary 텍스트 컬러
+- **Title**: 필수. `w/text/S` (14px) + semibold, 기본 텍스트 컬러. 짧고 스캔 가능하게 ("Payment failed" ⭕ / 긴 설명문 ❌)
+- **Description**: 선택. `w/caption/M` (12px) + regular, secondary 텍스트 컬러
 - **End 영역**: endContent(액션 버튼) → expand 토글 → dismiss 버튼 순서, gap `{size.8}`
 
 ## 5. 🧩 Props (API)
