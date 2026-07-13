@@ -71,3 +71,5 @@ export { Banner } from './components/Banner';
 export type { BannerProps, BannerStatus, BannerContainer } from './components/Banner';
 export { Breadcrumbs, BreadcrumbItem } from './components/Breadcrumbs';
 export type { BreadcrumbsProps, BreadcrumbItemProps, BreadcrumbsVariant } from './components/Breadcrumbs';
+export { ButtonGroup } from './components/ButtonGroup';
+export type { ButtonGroupProps, ButtonGroupOrientation } from './components/ButtonGroup';
