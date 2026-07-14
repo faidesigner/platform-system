@@ -8,7 +8,8 @@ type ButtonTone =
   | "secondary"
   | "tertiary"
   | "assistive"
-  | "brandAssistive";
+  | "brandAssistive"
+  | "warning";
 type ButtonShape = "square" | "round";
 
 export type ButtonProps = Omit<
@@ -115,6 +116,13 @@ function getToneClasses(tone: ButtonTone, impact: boolean) {
         "bg-[var(--color-filled-optional-brand-primaryBtn)] text-inverse border border-transparent",
         "hover:bg-fill",
         "active:bg-fill-soft active:text-primary"
+      );
+    case "warning":
+      // 파괴적/경고 액션 전용 톤 (디자이너 확정 신설, foundation warning 계열)
+      return cn(
+        "bg-[var(--color-filled-basic-warning)] text-inverse border border-transparent",
+        "hover:bg-[var(--color-filled-basic-warning-secondary)] hover:text-[var(--color-text-basic-warning)]",
+        "active:bg-[var(--color-filled-basic-warning-secondary)] active:text-[var(--color-text-basic-warning)]"
       );
     case "secondary":
       return cn(

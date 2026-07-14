@@ -1,5 +1,5 @@
 # Overlay Surface Rules (오버레이 표면 규칙)
-**Status**: Draft — 총괄 디자이너 검토 대기
+**Status**: Active — 폭/z-index 확정(2026-07-14), 모션·다크 모드는 design-review.md 추적
 **적용 대상**: Popover, DateInput 팝오버, Dialog, AlertDialog, Dropdown, Tooltip 등 화면 위에 뜨는 모든 표면
 
 > 이 문서는 기존 파운데이션에 없던 규칙을 신규 정의한 것입니다.
@@ -39,25 +39,33 @@
 | 스크림 | 검정 52% | `{color.bg.scrim}` (#00000085 — 기존 토큰) |
 | 패딩 | 24px | `{size.24}` |
 
-### 다이얼로그 폭 (신규 정의 — 검토 필요 ⚠️)
+### 다이얼로그 폭 (디자이너 확정 ✅)
 
-| size | max-width | 용도 |
+| size | width (min~max) | 용도 |
 |---|---|---|
-| s | 400px | 확인/알림 (AlertDialog 기본) |
-| m *(default)* | 560px | 일반 폼, 콘텐츠 |
-| l | 720px | 복잡한 콘텐츠, 미리보기 |
+| s | 400~480px | 확인/알림 (AlertDialog 기본) |
+| m *(default)* | 560~640px | 일반 폼, 콘텐츠 |
+| l | 720~800px | 복잡한 콘텐츠, 미리보기 |
+| xl | 960px | 대형 콘텐츠 |
 
 - 모바일(<768px)에서는 좌우 `{size.20}` 여백을 남기고 풀폭
 
-## 4. z-index 스케일 (신규 정의 — 검토 필요 ⚠️)
+## 4. z-index 스케일 (디자이너 확정 ✅ — 파운데이션 승격)
 
-기존 시스템에 z-index 토큰이 없어 신규 제안:
+`root/foundation/z-index.json`으로 파운데이션에 정의됨. 상세는 `root/foundation/docs/z-index.md` 참조.
 
-| 이름 | 값 | 용도 |
-|---|---|---|
-| z-popover | 50 | Level 1 표면 |
-| z-dialog | 100 | Level 2 표면 + 스크림 |
-| z-toast | 150 | 토스트 (항상 최상위) |
+| 토큰 | 값 |
+|---|---|
+| --z-base | 0 |
+| --z-sticky-header | 100 |
+| --z-dropdown | 200 |
+| --z-popover | 300 |
+| --z-tooltip | 400 |
+| --z-drawer | 500 |
+| --z-dialog | 600 |
+| --z-toast | 700 |
+| --z-loading-overlay | 800 |
+| --z-global-alert | 900 |
 
 ## 5. 동작 규칙
 
@@ -69,9 +77,8 @@
 | 포커스 | 트리거 유지 | 표면 안으로 이동 + 트랩, 닫히면 트리거로 복귀 |
 | ARIA | `role="dialog"` 비모달 | `role="dialog"` 또는 `alertdialog` + `aria-modal="true"` |
 
-## 6. 미결 사항 (디자이너 확정 필요)
+## 6. 미결 사항 (design-review.md에서 추적)
 
-1. **다이얼로그 폭 3단계(400/560/720)** — 수치 확정 필요
-2. **z-index 값(50/100/150)** — 기존 코드(NavigationBar 등)의 z-index와 충돌 여부 확인 필요
-3. **등장 모션** — 파운데이션 motion 토큰(motion.css)과 연결한 등장/퇴장 애니메이션 (페이드? 스케일? duration?) — 현재 미정의, 1차 구현은 모션 없이
-4. **다크 모드** — 스크림·그림자 다크 값 (현재 라이트 기준만)
+1. **등장 모션** — 파운데이션 motion 토큰(duration/ease) 기반 오버레이 모션 값 미정, 1차 구현은 모션 없이
+2. **다크 모드** — 그림자(effects) 다크 값 부재 (스크림은 다크 값 존재)
+3. **z-index 마이그레이션** — 기존 컴포넌트 하드코딩 교체 + index.css import (머지 후)

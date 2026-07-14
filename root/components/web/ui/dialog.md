@@ -13,13 +13,14 @@
 
 ## 2. ⚡ Variants
 
-| size | max-width | 용도 |
+| size | width (min~max) | 용도 |
 |---|---|---|
-| s | 400px | 확인/알림 (AlertDialog 고정) |
-| m *(default)* | 560px | 일반 폼·콘텐츠 |
-| l | 720px | 복잡한 콘텐츠·미리보기 |
+| s | 400~480px | 확인/알림 (AlertDialog 고정) |
+| m *(default)* | 560~640px | 일반 폼·콘텐츠 |
+| l | 720~800px | 복잡한 콘텐츠·미리보기 |
+| xl | 960px | 대형 콘텐츠 |
 
-> ⚠️ 폭 3단계 수치는 overlay-rules.md 미결 항목 — 디자이너 확정 대기
+> 디자이너 확정(2026-07-14). 모바일에서는 min-width 해제(풀폭-여백)
 
 ## 3. ⚡ Interaction & State
 - **열림/닫힘**: 제어형(isOpen/onOpenChange). Dialog는 스크림 클릭·Escape 닫힘 허용(`dismissable`, 기본 true), **AlertDialog는 불가** — 명시적 선택 강제
@@ -40,7 +41,7 @@
 | prop | type | default | 설명 |
 |---|---|---|---|
 | isOpen / onOpenChange | – | 필수 | 제어형 상태 |
-| size | s \| m \| l | `'m'` | 폭 |
+| size | s \| m \| l \| xl | `'m'` | 폭 |
 | dismissable | boolean | `true` | 스크림/Escape 닫기 |
 | label | string | – | aria-label (Header 없을 때 필수) |
 | role | 'dialog' \| 'alertdialog' | `'dialog'` | |
@@ -61,7 +62,7 @@
 | title / description | string | 필수 | 무엇이 일어나는지 명시 |
 | actionLabel | string | 필수 | 동작 명시 ("삭제하기") |
 | cancelLabel | string | `'취소'` | |
-| actionTone | 'negative' \| 'primary' | `'negative'` | ⚠️ negative는 규칙 미확정 오버라이드 |
+| actionTone | 'warning' \| 'primary' | `'warning'` | Button warning 톤 (디자이너 확정 신설) |
 | isActionLoading | boolean | `false` | 액션 진행 중 |
 | onAction | () => void | 필수 | |
 
@@ -83,12 +84,8 @@
     "max-height": "85vh"
   },
   "scrim": "{color.bg.scrim}",
-  "z-index": "z-dialog(100) — overlay-rules 미결",
-  "alert-action-negative": {
-    "bg-color": "{color.filled.basic.negative}",
-    "text-color": "{color.text.basic.inverse}",
-    "_description": "⚠️ Button 시스템 톤 아님 — destructive 톤 신설 여부 디자이너 결정 필요"
-  }
+  "z-index": "{z-index.dialog}", 
+  "alert-action": "Button warning 톤 사용 (button.md 참조)"
 }
 ```
 

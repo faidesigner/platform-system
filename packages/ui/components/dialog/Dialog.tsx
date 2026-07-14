@@ -2,7 +2,7 @@
 
 import * as React from "react";
 
-export type DialogSize = "s" | "m" | "l";
+export type DialogSize = "s" | "m" | "l" | "xl";
 
 export interface DialogProps {
   /** 열림 상태 (제어형, 필수) */
@@ -10,8 +10,8 @@ export interface DialogProps {
   /** 닫힘 요청 콜백 (스크림 클릭, Escape, 닫기 버튼) */
   onOpenChange: (isOpen: boolean) => void;
   /**
-   * 다이얼로그 폭 — overlay-rules.md Level 2
-   * s=400px(확인/알림) / m=560px(일반) / l=720px(복잡한 콘텐츠)
+   * 다이얼로그 폭 — overlay-rules.md Level 2 (디자이너 확정)
+   * s=400~480 / m=560~640 / l=720~800 / xl=960
    * @default 'm'
    */
   size?: DialogSize;
@@ -29,10 +29,12 @@ function cn(...values: Array<string | undefined | null | false>) {
   return values.filter(Boolean).join(" ");
 }
 
+/* 폭 규칙(디자이너 확정): min~max 범위, 모바일에서는 min 해제(풀폭 - 여백) */
 const SIZE_CLASSES: Record<DialogSize, string> = {
-  s: "max-w-[400px]",
-  m: "max-w-[560px]",
-  l: "max-w-[720px]",
+  s: "tablet:min-w-[400px] max-w-[480px]",
+  m: "tablet:min-w-[560px] max-w-[640px]",
+  l: "tablet:min-w-[720px] max-w-[800px]",
+  xl: "max-w-[960px]",
 };
 
 const FOCUSABLE =
@@ -111,7 +113,7 @@ export function Dialog({
   /* fixed 포지셔닝으로 뷰포트 전체 커버 — transform이 걸린 조상 아래에서 사용 금지 */
   return (
     <div
-      className="fixed inset-0 z-[100] flex items-center justify-center"
+      className="fixed inset-0 z-[var(--z-dialog,600)] flex items-center justify-center"
       onKeyDown={handleKeyDown}
     >
       {/* 스크림 — 기존 bg.scrim 토큰 */}

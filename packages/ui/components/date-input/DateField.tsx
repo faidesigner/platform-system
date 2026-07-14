@@ -173,7 +173,7 @@ export function DateFieldShell({
           role="dialog"
           aria-label={label}
           className={cnDate(
-            "absolute top-full left-0 z-50 mt-2xs",
+            "absolute top-full left-0 z-[var(--z-popover,300)] mt-2xs",
             "rounded-fai-m border border-border-tertiary bg-[var(--color-bg-100)] shadow-M"
           )}
         >

@@ -1,0 +1,16 @@
+/* z-index.json 기반 — sync-tokens.js 통합 전까지 수동 관리 */
+/* ⚠️ index.css에 @import './z-index.css'; 추가 필요 (codex 작업과 충돌 방지 위해 머지 후 진행) */
+
+@theme {
+  /* Z-Index Scale — 화면 위 요소의 쌓임 순서 */
+  --z-base: 0;
+  --z-sticky-header: 100;
+  --z-dropdown: 200;
+  --z-popover: 300;
+  --z-tooltip: 400;
+  --z-drawer: 500;
+  --z-dialog: 600;
+  --z-toast: 700;
+  --z-loading-overlay: 800;
+  --z-global-alert: 900;
+}

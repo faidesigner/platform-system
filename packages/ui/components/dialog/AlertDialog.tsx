@@ -4,7 +4,7 @@ import * as React from "react";
 import { Dialog } from "./Dialog";
 import { Button } from "../button/Button";
 
-export type AlertDialogActionTone = "negative" | "primary";
+export type AlertDialogActionTone = "warning" | "primary";
 
 export interface AlertDialogProps {
   /** 열림 상태 (제어형, 필수) */
@@ -19,9 +19,8 @@ export interface AlertDialogProps {
   /** 확인(액션) 버튼 라벨 (필수) — "삭제하기"처럼 동작을 명시 */
   actionLabel: string;
   /**
-   * 액션 버튼 톤 — 파괴적 액션은 negative(기본)
-   * ⚠️ negative는 Button 시스템 톤이 아닌 AlertDialog 전용 오버라이드 (규칙 미확정)
-   * @default 'negative'
+   * 액션 버튼 톤 — 파괴적 액션은 warning(기본, Button 시스템 톤)
+   * @default 'warning'
    */
   actionTone?: AlertDialogActionTone;
   /** 액션 진행 중 로딩 @default false */
@@ -49,7 +48,7 @@ export function AlertDialog({
   description,
   cancelLabel = "취소",
   actionLabel,
-  actionTone = "negative",
+  actionTone = "warning",
   isActionLoading = false,
   onAction,
 }: AlertDialogProps) {
@@ -77,16 +76,7 @@ export function AlertDialog({
         >
           {cancelLabel}
         </Button>
-        <Button
-          tone="primary"
-          loading={isActionLoading}
-          onClick={onAction}
-          className={
-            actionTone === "negative"
-              ? "!bg-[var(--color-filled-basic-negative)] !text-[var(--color-text-basic-inverse)] !border-transparent"
-              : undefined
-          }
-        >
+        <Button tone={actionTone} loading={isActionLoading} onClick={onAction}>
           {actionLabel}
         </Button>
       </div>
