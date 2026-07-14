@@ -1,0 +1,64 @@
+# File Input Specification
+**Status**: Draft
+
+> 폼 공통 규칙(라벨 + required 빨간 * + 설명/에러)은 date-input.md와 동일.
+> **드롭존 dashed 보더는 신규 패턴 ✱** — 박스형 트리거의 파생 (디자이너 검토 대상)
+
+## 1. 🎯 Definition & Usage
+- **목적**: 파일 선택·업로드 입력 (드래그&드롭 + 클릭)
+- **사용처**: 첨부 파일, 이미지 업로드, 문서 제출 폼
+- **사용 금지**: 업로드 진행률/서버 상태 표시는 상위에서 (이 컴포넌트는 선택까지만)
+
+## 2. ⚡ Variants
+
+| mode | 형태 |
+|---|---|
+| dropzone *(default)* | 세로형 드롭 영역 — dashed 보더 ✱, 아이콘+안내 문구 |
+| input | 한 줄 박스형 (h 40px) — 폼 인라인 배치 |
+
+| 트리거 상태 | 스타일 |
+|---|---|
+| default | border-secondary (dropzone은 dashed) |
+| hover | border-primary |
+| dragover | border-brand + fill-faint 배경 |
+| error | border-negative + 에러 메시지 |
+| disabled | fill-disabled + disabled 텍스트 |
+
+## 3. ⚡ Interaction & State
+- **선택**: 클릭 → 네이티브 파일 피커 / 드래그&드롭 (disabled 시 차단)
+- **검증**: `maxSize`(파일당)·`maxFiles` 초과는 내부에서 거부 + 에러 메시지(`role="alert"`). 같은 파일 재선택 허용
+- **파일 목록**: 이름(truncate) + 크기 + 개별 제거(X) 버튼. multiple이면 기존 목록에 추가
+- **접근성**: 네이티브 `input[type=file]`(sr-only) 기반, 라벨 연결
+
+## 4. 📐 Layout & Content Rules
+- **dropzone**: 상하 padding `{size.24}`, 업로드 아이콘 20px + 안내 문구(tertiary)
+- **파일 항목**: fill-faint 배경 + radius 8, padding `{size.12}`×`{size.4}`
+- **description**: 허용 형식·최대 용량 안내 권장 ("PDF, 10MB 이하")
+
+## 5. 🧩 Props (API)
+
+| prop | type | default | 설명 |
+|---|---|---|---|
+| label | string | 필수 | 라벨 (labelHidden 가능) |
+| value / onChange | File \| File[] \| null | 필수 | 제어형 |
+| accept | string | – | 허용 형식 |
+| multiple | boolean | `false` | 복수 선택 |
+| maxSize | number(byte) | – | 파일당 최대 크기 |
+| maxFiles | number | – | 최대 개수 (multiple) |
+| mode | 'dropzone' \| 'input' | `'dropzone'` | 형태 |
+| placeholder / description / required / disabled / error / errorMessage | – | – | 폼 공통 |
+
+## 6. 🎨 Token Mapping
+```json
+{
+  "component": "FileInput",
+  "trigger": "date-input.md 박스형 규칙 + dropzone은 border-style dashed ✱",
+  "dragover": { "border": "{color.border.brand-primary}", "bg-color": "{color.filled.basic.primaryOp-secondary}" },
+  "file-item": { "bg-color": "{color.filled.basic.primaryOp-secondary}", "radius": "rounded-8px", "size-text": "{w.caption.M} tertiary" }
+}
+```
+
+## 7. ✅ Best Practices
+- description에 허용 형식과 용량 한도를 미리 안내 — 실패 후 알림보다 사전 안내
+- 이미지 전용이면 accept="image/*"로 피커 단계에서 제한
+- 업로드 자체(진행률·재시도)는 별도 레이어 — 이 컴포넌트는 "선택"까지만 담당
