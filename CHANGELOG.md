@@ -2,6 +2,39 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-14
+
+### 🔄 Changed
+
+#### HeroSection 클라이언트 로고 롤링 (products/homepage)
+- 7-Eleven, Tokyu Land 로고 제거
+
+#### ShowcaseSection 모바일 대응 (products/homepage)
+- 420px 이하 텍스트·썸네일 패널 내부 패딩 `var(--padding-XL, 24px)` 적용
+- ProgressBar 절대좌표 위치 수정 — 내부 패딩 기준에 맞게 wrapper div로 분리
+
+#### ProductFeatures 모바일 수정 (products/homepage)
+- 768px 이하 상단 카드 2개 우하단 `border-bottom-right-radius: var(--cornerRadius-M, 16px)` 복원
+- 420px 이하 상단·하단 카드 높이 `auto`로 수정 — 이미지 잘림 방지
+
+#### NewsSection 콘텐츠 업데이트 (products/homepage)
+- 4번째 기사 카드 제거 및 i18n 키 재번호 (ko/en/ja)
+- 6번째 기사 링크 → 닛케이 기사 URL, 썸네일 → `nikkei-hfx-2026.jpg`
+
+#### ProductReviews 리조트 카드 (products/homepage)
+- 3번째 카드(일본 닛세코 리조트) 문구 교체 — "AI 도입 이후 계산 속도 약 2~3배 향상"
+- 이미지 `vco-review-resort.jpg` → `vco-review-resort-final.webp`
+
+### ✨ Added
+
+#### ProgressBar barClassName prop (packages/ui)
+- 개별 바 높이를 인스턴스별로 오버라이드할 수 있는 `barClassName` prop 추가
+
+#### ja.json 신규 추가 (products/homepage)
+- 일본어 로케일 메시지 파일 `ja.json` 추가 (기존 `jp.json` 대체)
+
+---
+
 ## [Unreleased] - 2026-07-09
 
 ### 🔄 Changed
