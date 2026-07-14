@@ -25,6 +25,7 @@
 ## 3. ⚡ Interaction & State
 - **열림/닫힘**: 제어형(isOpen/onOpenChange). Dialog는 스크림 클릭·Escape 닫힘 허용(`dismissable`, 기본 true), **AlertDialog는 불가** — 명시적 선택 강제
 - **스크롤**: 열리면 body 스크롤 잠금, 패널 내부만 스크롤 (max-height 85vh)
+- **렌더링**: react-dom 포털로 body 직속 렌더 — 조상 transform/overflow 영향 없음. SSR hydration 안전(마운트 후 렌더)
 - **포커스**: 열리면 패널 안 첫 포커스 요소로 이동 + Tab 트랩(순환), 닫히면 트리거로 복귀. AlertDialog는 취소 버튼이 첫 포커스(덜 위험한 쪽)
 - **접근성**: `role="dialog"`/`"alertdialog"` + `aria-modal="true"`, 라벨은 label prop 또는 DialogHeader title
 - **AlertDialog 액션**: `isActionLoading`으로 진행 중 표시, 완료 후 닫기는 호출자 책임

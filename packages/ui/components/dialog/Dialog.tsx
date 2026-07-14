@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { createPortal } from "react-dom";
 
 export type DialogSize = "s" | "m" | "l" | "xl";
 
@@ -66,6 +67,10 @@ export function Dialog({
   const panelRef = React.useRef<HTMLDivElement>(null);
   const previousFocusRef = React.useRef<HTMLElement | null>(null);
 
+  /* SSR/hydration 안전장치 — 마운트 후에만 포털 렌더 (서버·클라 첫 렌더 일치) */
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => setMounted(true), []);
+
   /* 배경 스크롤 잠금 + 포커스 이동/복귀 */
   React.useEffect(() => {
     if (!isOpen) return;
@@ -108,10 +113,10 @@ export function Dialog({
     }
   };
 
-  if (!isOpen) return null;
+  if (!mounted || !isOpen) return null;
 
-  /* fixed 포지셔닝으로 뷰포트 전체 커버 — transform이 걸린 조상 아래에서 사용 금지 */
-  return (
+  /* 포털로 body 직속 렌더 — 조상의 transform/overflow와 무관하게 항상 최상위 */
+  return createPortal(
     <div
       className="fixed inset-0 z-[var(--z-dialog,600)] flex items-center justify-center"
       onKeyDown={handleKeyDown}
@@ -139,7 +144,8 @@ export function Dialog({
       >
         {children}
       </div>
-    </div>
+    </div>,
+    document.body
   );
 }
 
