@@ -52,7 +52,7 @@
 | 2026-07-14 | 오버레이 표면 2단계 | overlay-rules.md Level 1/2 채택 |
 | 2026-07-14 | 다이얼로그 폭 | s 400~480 / m 560~640(기본) / l 720~800 / xl 960 |
 | 2026-07-14 | z-index 스케일 | 파운데이션 신설: base 0 ~ global-alert 900 (100 단위) |
-| 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 (foundation warning 계열) |
+| 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 — 색상 negative(red) 계열, hover는 interaction.light.white 오버레이 (솔리드 배경 선례 준수) |
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
 | 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
 | 2026-07-14 | 모션 규칙 | foundation motion에 instant 티어 신설(min 100/기본 150/max 200ms) — 마이크로 인터랙션용. 모든 명시 duration은 motion 토큰 사용, 신규 컴포넌트 일괄 적용 |

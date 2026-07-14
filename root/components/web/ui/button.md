@@ -15,7 +15,7 @@
 | tertiary | 약한 액션 |
 | assistive | 보조 정보성 |
 | brandAssistive | 브랜드 강조 |
-| warning | 파괴적/경고 액션 (오렌지 솔리드) — AlertDialog 확인 버튼 기본 |
+| warning | 파괴적/경고 액션 (레드 솔리드) — AlertDialog 확인 버튼 기본 |
 
 | size | height | typography |
 |---|---|---|
@@ -82,15 +82,13 @@
     },
     "warning": {
       "default": {
-        "bg-color": "{color.filled.basic.warning}",
+        "bg-color": "{color.filled.basic.negative}",
         "text-color": "{color.text.basic.inverse}",
         "border": "none"
       },
-      "hover": {
-        "bg-color": "{color.filled.basic.warning-secondary}",
-        "text-color": "{color.text.basic.warning}"
-      },
-      "_description": "파괴적/경고 액션 전용 (디자이너 확정 2026-07-14 신설)"
+      "hover": { "overlay": "{color.interaction.light.white.hover}" },
+      "pressed": { "overlay": "{color.interaction.light.white.pressed}" },
+      "_description": "파괴적/경고 액션 전용. 색상 negative(red) 계열, hover는 솔리드 배경 선례(IconButton primary)와 동일한 interaction.light.white 오버레이 (디자이너 확정 2026-07-14)"
     },
     "impact": {
       "default": {
