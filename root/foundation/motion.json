@@ -1,0 +1,27 @@
+{
+  "duration": {
+    "instant": {
+      "min": "100ms",
+      "_": "150ms",
+      "max": "200ms"
+    },
+    "fast": {
+      "min": "130ms",
+      "_": "175ms",
+      "max": "230ms"
+    },
+    "medium": {
+      "min": "310ms",
+      "_": "410ms",
+      "max": "550ms"
+    },
+    "slow": {
+      "min": "730ms",
+      "_": "975ms",
+      "max": "1300ms"
+    }
+  },
+  "ease": {
+    "standard": "cubic-bezier(0.24, 1, 0.4, 1)"
+  }
+}

@@ -189,7 +189,7 @@ export function Banner({
                 <ChevronDown
                   size={16}
                   className={cn(
-                    "transition-transform duration-[var(--duration-fast,175ms)]",
+                    "transition-transform duration-[var(--duration-instant,150ms)]",
                     isExpanded && "rotate-180"
                   )}
                 />

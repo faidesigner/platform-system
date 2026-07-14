@@ -24,6 +24,7 @@
 - 기존 컴포넌트(NavigationBar, Header, Drawer, Toast 등)의 하드코딩 z-index를 신규 스케일로 교체 — 전수 조사 필요
 - `root/foundation/index.css`에 `@import './z-index.css';` 추가 — codex 작업 충돌 방지 위해 머지 후
 - `scripts/sync-tokens.js`에 z-index.json 통합 — 머지 후
+- motion.json/motion.css는 codex 브랜치도 작업 중 — 머지 시 add/add 충돌 예상, instant 티어 유지하며 병합할 것
 
 ### 4. spacing 하드코딩 → CSS 변수 전환 (보류 중)
 - tailwind.config.ts의 spacing 값이 하드코딩 사본 (px-s = '0.5rem' 등)
@@ -54,4 +55,4 @@
 | 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 (foundation warning 계열) |
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
 | 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
-| 2026-07-14 | 모션 규칙 | 명시적 duration은 foundation motion 토큰 사용 (duration-fast 175ms 등), 신규 컴포넌트 일괄 적용 |
+| 2026-07-14 | 모션 규칙 | foundation motion에 instant 티어 신설(min 100/기본 150/max 200ms) — 마이크로 인터랙션용. 모든 명시 duration은 motion 토큰 사용, 신규 컴포넌트 일괄 적용 |

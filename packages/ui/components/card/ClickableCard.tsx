@@ -30,7 +30,7 @@ export interface ClickableCardProps
 }
 
 const INTERACTIVE_CLASSES = cnCard(
-  "block w-full text-left cursor-pointer transition-all duration-[var(--duration-fast,175ms)]",
+  "block w-full text-left cursor-pointer transition-all duration-[var(--duration-instant,150ms)]",
   "hover:border-border-subtle hover:shadow-S",
   "active:shadow-XS",
   "focus-visible:outline-none focus-visible:border-border-brand"

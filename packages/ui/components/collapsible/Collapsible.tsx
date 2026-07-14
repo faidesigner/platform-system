@@ -77,7 +77,7 @@ export function Collapsible({
           aria-hidden="true"
           className={cn(
             "inline-flex shrink-0 items-center text-[var(--color-icon-basic-secondary)]",
-            "transition-transform duration-[var(--duration-fast,175ms)]",
+            "transition-transform duration-[var(--duration-instant-max,200ms)]",
             isOpen && "rotate-180"
           )}
         >
