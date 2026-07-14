@@ -2,6 +2,73 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-15
+
+### ✨ Added
+
+#### homepage-design SKILL.md 생성 (.claude/skills/homepage-design/)
+- 홈페이지 디자인/개발 패턴 가이드 스킬 파일 신규 생성
+- Foundation 토큰 계층, 브레이크포인트, 다크 모드, 그리드, GA 이벤트, i18n, 슬라이더 패턴 등 핵심 규칙 문서화
+- CHANGELOG 분석 기반 15개 항목 추가 반영
+
+#### ProductReviews ja 전용 4번째 리뷰 카드 (products/homepage)
+- 일본어 로케일(`ja`) + `vision-check-out` 슬리그 조건 시 4번째 카드 동적 추가
+- 카드 스펙: cafeteria 아이콘, 민트 컬러(`--color-text-basic-positive`), 이미지 `vco-review-retail-hibinoma-final.webp`
+- 콘텐츠: Comma Store 직영점 (東京都江東区豊洲) — ja.json `visionCheckout.reviews.3` 키 추가
+
+### 🔄 Changed
+
+#### SmoothScroll top 스크롤 rAF 지연 (products/homepage)
+- `action.type === 'top'` 시 `applyScroll(0)` 호출을 `requestAnimationFrame`으로 감싸 비동기 실행
+- SPA 이동(`next dev`) 중 Lenis RAF 루프가 `immediate: true` scrollTo를 덮어쓰는 경합 방지
+- `restore`·`anchor` 케이스와 실행 방식 통일 — HOM-12·HOM-15-2 dev 환경 재발 수정
+
+#### ProductReviews 리뷰 섹션 타이틀 ja 수정 (products/homepage)
+- `ja.json` `visionCheckout.reviewsTitle` — `"お客様の導入事例"` → `"VCO導入・運用事例"`
+
+#### ProductReviews 슬라이더 우측 패딩 및 스냅 (products/homepage)
+- 마지막 카드 `snap-start` → `snap-end` + 컨테이너 `scroll-pr` 추가 — 스냅백 없이 우측 패딩 정상 표시
+- 컨테이너 `pr` 값을 `pl`과 동일한 breakpoint/토큰으로 적용 (`--padding-XL` / `--padding-8XL` / desktop calc)
+- 이미지 높이 `h-[420px]` 고정, `items-stretch` 통일
+
+#### AboutPeople 슬라이더 우측 패딩 및 스냅 (products/homepage)
+- ProductReviews와 동일 조건 적용: `pr`/`scroll-pr` 추가, 마지막 카드 `snap-end`
+
+---
+
+## [Unreleased] - 2026-07-14
+
+### 🔄 Changed
+
+#### HeroSection 클라이언트 로고 롤링 (products/homepage)
+- 7-Eleven, Tokyu Land 로고 제거
+
+#### ShowcaseSection 모바일 대응 (products/homepage)
+- 420px 이하 텍스트·썸네일 패널 내부 패딩 `var(--padding-XL, 24px)` 적용
+- ProgressBar 절대좌표 위치 수정 — 내부 패딩 기준에 맞게 wrapper div로 분리
+
+#### ProductFeatures 모바일 수정 (products/homepage)
+- 768px 이하 상단 카드 2개 우하단 `border-bottom-right-radius: var(--cornerRadius-M, 16px)` 복원
+- 420px 이하 상단·하단 카드 높이 `auto`로 수정 — 이미지 잘림 방지
+
+#### NewsSection 콘텐츠 업데이트 (products/homepage)
+- 4번째 기사 카드 제거 및 i18n 키 재번호 (ko/en/ja)
+- 6번째 기사 링크 → 닛케이 기사 URL, 썸네일 → `nikkei-hfx-2026.jpg`
+
+#### ProductReviews 리조트 카드 (products/homepage)
+- 3번째 카드(일본 닛세코 리조트) 문구 교체 — "AI 도입 이후 계산 속도 약 2~3배 향상"
+- 이미지 `vco-review-resort.jpg` → `vco-review-resort-final.webp`
+
+### ✨ Added
+
+#### ProgressBar barClassName prop (packages/ui)
+- 개별 바 높이를 인스턴스별로 오버라이드할 수 있는 `barClassName` prop 추가
+
+#### ja.json 신규 추가 (products/homepage)
+- 일본어 로케일 메시지 파일 `ja.json` 추가 (기존 `jp.json` 대체)
+
+---
+
 ## [Unreleased] - 2026-07-09
 
 ### 🔄 Changed

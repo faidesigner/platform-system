@@ -82,7 +82,7 @@ export function AboutManagement({ title, members }: AboutManagementProps) {
     <section className="w-full bg-surface">
       <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] py-5xl">
         {/* title */}
-        <h2 className="text-title-l max-[420px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
+        <h2 className="text-title-l max-[421px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
 
         {/* cardGrid: 2×2, 행/열 gap 56 = 4xl */}
         <div className="mt-5xl grid grid-cols-1 laptop:grid-cols-2 gap-7xl justify-items-center laptop:justify-items-stretch">

@@ -22,7 +22,7 @@ export function LogoMarquee({
   tileOpacity = 10,
 }: LogoMarqueeProps) {
   return (
-    <Marquee speed={speed} gapClassName="gap-2xl" ariaLabel="협력사 로고">
+    <Marquee speed={speed} gapClassName="gap-5xl" ariaLabel="협력사 로고">
       {logos.map((logo, i) => (
         <li
           key={i}

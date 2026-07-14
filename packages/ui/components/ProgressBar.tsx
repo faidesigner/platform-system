@@ -12,6 +12,8 @@ export interface ProgressBarProps {
   /** 활성 바가 0% → 100% 채워지는 시간 (ms, 기본 4000) */
   duration?: number;
   className?: string;
+  /** 개별 바(button) 에 추가할 클래스 (높이 등 재정의 시 사용) */
+  barClassName?: string;
 }
 
 export function ProgressBar({
@@ -21,6 +23,7 @@ export function ProgressBar({
   getAriaLabel,
   duration = 4000,
   className = "",
+  barClassName = "",
 }: ProgressBarProps) {
   return (
     <div className={`relative z-10 flex items-start gap-2xs w-full self-stretch ${className}`}>
@@ -30,7 +33,7 @@ export function ProgressBar({
           key={i}
           type="button"
           onClick={() => onChange(i)}
-          className="relative flex-1 h-2xs rounded-fai-s bg-quaternary overflow-hidden cursor-pointer"
+          className={`relative flex-1 h-2xs rounded-fai-s bg-quaternary overflow-hidden cursor-pointer ${barClassName}`}
           aria-label={getAriaLabel ? getAriaLabel(i) : `스텝 ${i + 1}로 이동`}
         >
           {i <= activeIndex && (

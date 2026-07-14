@@ -14,7 +14,7 @@ export function AboutPartners({ title, description, logoRows }: AboutPartnersPro
       <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex flex-col desktop:flex-row items-start gap-3xl desktop:gap-4xl py-5xl desktop:py-6xl">
         {/* titleSection: 세로 gap 12 = ms */}
         <div className="flex w-full desktop:w-[368px] shrink-0 flex-col gap-ms text-left">
-          <h2 className="text-title-l max-[420px]:text-title-m desktop:text-title-xl font-bold text-primary">
+          <h2 className="text-title-l max-[421px]:text-title-m desktop:text-title-xl font-bold text-primary">
             {title}
           </h2>
           <p className="text-body-l desktop:text-body-xl text-tertiary">

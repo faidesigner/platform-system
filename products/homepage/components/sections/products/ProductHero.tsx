@@ -70,7 +70,7 @@ export default function ProductHero({
                 </span>
               </span>
             </p>
-            <h1 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold text-text-basic-inverse">
+            <h1 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold text-text-basic-inverse">
               <span className="block overflow-hidden relative">
                 <span
                   className={`block transition-all duration-1000 delay-500 ease-[cubic-bezier(0.25,1,0.5,1)] transform ${

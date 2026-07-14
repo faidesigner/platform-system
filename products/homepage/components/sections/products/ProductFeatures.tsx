@@ -86,6 +86,7 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             flex: none !important;
             width: 100% !important;
             aspect-ratio: 420 / 291 !important;
+            border-bottom-right-radius: var(--cornerRadius-M, 16px) !important;
           }
           .fai-card-0 .fai-card-image-area {
             background: var(--fai-card-img) transparent -24.218px -79.348px / 172.102% 146.742% no-repeat !important;
@@ -116,18 +117,18 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
           }
         }
         @media (max-width: 420px) {
-          /* ── Card 0 · 1 래퍼 (≤420px: 고정 435px) ── */
+          /* ── Card 0 · 1 래퍼 (≤420px: 콘텐츠 높이 자동) ── */
           .fai-card-01 {
-            height: 435px !important;
+            height: auto !important;
           }
           /* ── Card 0 · 1 이미지 영역 (≤420px: 고정 291px) ── */
           .fai-card-image-area {
             aspect-ratio: auto !important;
             height: 291px !important;
           }
-          /* ── Card 2 래퍼 (≤420px: 고정 435px) ── */
+          /* ── Card 2 래퍼 (≤420px: 콘텐츠 높이 자동) ── */
           .fai-card-2-container {
-            height: 435px !important;
+            height: auto !important;
           }
           /* ── Card 2 이미지 영역 (≤420px: 고정 291px) ── */
           .fai-card-2-image {
@@ -179,10 +180,10 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             >
               {/* 텍스트 영역 */}
               <div className="fai-card-2-textarea relative z-10 flex flex-col gap-[10px] w-full tablet:w-[57%] tablet:pr-xl">
-                <h3 className="whitespace-pre-line self-stretch max-[420px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
+                <h3 className="whitespace-pre-line self-stretch max-[421px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
                   {feature.title}
                 </h3>
-                <p className="whitespace-pre-line self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
+                <p className="whitespace-pre-line self-stretch max-[421px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
                   {feature.description}
                 </p>
               </div>

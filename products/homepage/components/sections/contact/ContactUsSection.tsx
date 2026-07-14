@@ -209,7 +209,7 @@ export function ContactUsSection() {
               {/* titleSection */}
               <div className="flex flex-1 flex-col items-start gap-[var(--spacing-XL,24px)] min-w-0">
                 <h2
-                  className="self-stretch max-[420px]:text-body-xl text-title-m desktop-s:text-title-l font-bold leading-[var(--w-title-L-lineHeight,3.375rem)] text-inverse"
+                  className="self-stretch max-[421px]:text-body-xl text-title-m desktop-s:text-title-l font-bold leading-[var(--w-title-L-lineHeight,3.375rem)] text-inverse"
                  
                 >
                   {(t.raw("title") as string[]).map((line, idx, arr) => (
@@ -220,7 +220,7 @@ export function ContactUsSection() {
                   ))}
                 </h2>
                 <p
-                  className="self-stretch max-[420px]:text-body text-body-l desktop-s:text-body-xl font-medium leading-[var(--w-text-XL-lineHeight,1.875rem)]"
+                  className="self-stretch max-[421px]:text-body text-body-l desktop-s:text-body-xl font-medium leading-[var(--w-text-XL-lineHeight,1.875rem)]"
 
                 >
                   <span className="text-brand-text">{t("subCopy.highlight")}</span>
@@ -245,7 +245,7 @@ export function ContactUsSection() {
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch w-full">
                     {/* title */}
                     <div className="flex justify-between items-end self-stretch w-full">
-                      <p className="text-secondary max-[420px]:text-body text-body-xl font-bold">
+                      <p className="text-secondary max-[421px]:text-body text-body-xl font-bold">
                         {t("form.connectTitle")}
                       </p>
                       {/* titleItems — 필수 입력 범례 */}
@@ -287,7 +287,7 @@ export function ContactUsSection() {
 
                   {/* select: 관심 정보 */}
                   <div className="flex flex-col items-start gap-[var(--spacing-XL,24px)] self-stretch">
-                    <p className="self-stretch text-secondary max-[420px]:text-body text-body-xl font-bold">
+                    <p className="self-stretch text-secondary max-[421px]:text-body text-body-xl font-bold">
                       {t("form.selectTitle")}
                     </p>
 
@@ -301,10 +301,10 @@ export function ContactUsSection() {
 
                             {/* titleItem */}
                             <div className="flex items-center gap-[var(--spacing-S,8px)]">
-                              <span className="text-secondary max-[420px]:text-body-s text-body-l font-medium">
+                              <span className="text-secondary max-[421px]:text-body-s text-body-l font-medium">
                                 {t(`interests.${gk}.group`)}
                               </span>
-                              <span className="text-quaternary max-[420px]:text-caption-m text-body-s font-medium">
+                              <span className="text-quaternary max-[421px]:text-caption-m text-body-s font-medium">
                                 {t(`interests.${gk}.multipleLabel`)}
                               </span>
                             </div>
