@@ -53,16 +53,17 @@ export function AboutPeople({
       <div
         ref={scrollRef}
         className="mt-4xl flex snap-x snap-mandatory gap-xl overflow-x-auto scroll-smooth
-          pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] min-[1440px]:pl-[calc(((100vw-1440px)/2)+var(--padding-8XL))] pr-0
+          pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] min-[1440px]:pl-[calc(((100vw-1440px)/2)+var(--padding-8XL))] pr-[var(--padding-XL)] min-[961px]:pr-[var(--padding-8XL)] min-[1440px]:pr-[calc(((100vw-1440px)/2)+var(--padding-8XL))]
           scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] min-[1440px]:scroll-pl-[calc(((100vw-1440px)/2)+var(--padding-8XL))]
+          scroll-pr-[var(--padding-XL)] min-[961px]:scroll-pr-[var(--padding-8XL)] min-[1440px]:scroll-pr-[calc(((100vw-1440px)/2)+var(--padding-8XL))]
           [scrollbar-width:none] [&::-webkit-scrollbar]:hidden"
       >
-        {cards.map((card) => (
+        {cards.map((card, i) => (
           <a
             key={card.id}
             href={card.href}
             aria-label={card.interviewAriaLabel}
-            className="block shrink-0 snap-start cursor-pointer"
+            className={`block shrink-0 ${i === cards.length - 1 ? "snap-end" : "snap-start"} cursor-pointer`}
           >
             <article className="flex flex-col gap-3xl">
               {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}

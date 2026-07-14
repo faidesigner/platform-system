@@ -73,6 +73,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
           .fai-review-image {
             flex: 1 !important;
             min-width: 0 !important;
+            align-self: auto !important;
             aspect-ratio: 613 / 460 !important;
           }
         }
@@ -110,12 +111,12 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
       {/* 가로 슬라이더 — 패딩 배분형 Full-bleed */}
       <div
         ref={sliderRef}
-        className="flex w-full snap-x snap-mandatory items-start max-[768px]:items-stretch gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] desktop:pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] pr-0 scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] desktop:scroll-pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scrollbar-none"
+        className="flex w-full snap-x snap-mandatory items-stretch gap-[24px] overflow-x-auto pl-[var(--padding-XL)] min-[961px]:pl-[var(--padding-8XL)] desktop:pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] pr-[var(--padding-XL)] min-[961px]:pr-[var(--padding-8XL)] desktop:pr-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scroll-pl-[var(--padding-XL)] min-[961px]:scroll-pl-[var(--padding-8XL)] desktop:scroll-pl-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scroll-pr-[var(--padding-XL)] min-[961px]:scroll-pr-[var(--padding-8XL)] desktop:scroll-pr-[calc((100vw_-_1440px)_/_2_+_var(--padding-8XL))] scrollbar-none"
       >
         {reviews.map((review, i) => (
           <article
             key={i}
-            className="fai-review-card flex w-[1140px] shrink-0 snap-start flex-row items-end gap-2xl rounded-fai-xl py-3xl px-2xl bg-surface-alt"
+            className={`fai-review-card flex w-[1140px] shrink-0 ${i === reviews.length - 1 ? "snap-end" : "snap-start"} flex-row items-end gap-2xl rounded-fai-xl py-3xl px-2xl bg-surface-alt`}
           >
             {/* 좌: 텍스트 */}
             <div className="fai-review-text-area flex flex-col items-start self-stretch gap-5xl">
@@ -162,7 +163,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
 
             {/* 우: 이미지 613×460 + 그라데이션 오버레이 */}
             {review.icon === "bakery" ? (
-              <div className="fai-review-image relative flex flex-1 min-w-0 aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
+              <div className="fai-review-image relative flex flex-1 min-w-0 h-[420px] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
                 <Image
                   src={review.image}
                   alt={`${review.store} 전경`}
@@ -177,7 +178,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
                 />
               </div>
             ) : (
-              <div className="fai-review-image relative flex flex-1 min-w-0 aspect-[613/460] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
+              <div className="fai-review-image relative flex flex-1 min-w-0 h-[420px] flex-col items-start justify-end overflow-hidden rounded-fai-xl bg-fill-faint">
                 <Image
                   src={review.image}
                   alt={`${review.store} 전경`}

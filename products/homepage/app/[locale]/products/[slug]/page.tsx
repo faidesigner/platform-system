@@ -85,16 +85,29 @@ export default async function ProductDetailPage({
     label: t(`industries.${i}.label`),
   }))
 
-  const reviews = product.reviews.map((r, i) => ({
-    ...r,
-    category: t(`reviews.${i}.category`),
-    store: t(`reviews.${i}.store`),
-    role: t(`reviews.${i}.role`),
-    quote: r.quote.map((seg, k) => ({
-      ...seg,
-      text: t(`reviews.${i}.quote.${k}.text`),
+  const reviews = [
+    ...product.reviews.map((r, i) => ({
+      ...r,
+      category: t(`reviews.${i}.category`),
+      store: t(`reviews.${i}.store`),
+      role: t(`reviews.${i}.role`),
+      quote: r.quote.map((seg, k) => ({
+        ...seg,
+        text: t(`reviews.${i}.quote.${k}.text`),
+      })),
     })),
-  }))
+    ...(locale === 'ja' && slug === 'vision-check-out' ? [{
+      category: t('reviews.3.category'),
+      categoryColorVar: '--color-text-basic-positive',
+      iconBgVar: '--color-filled-basic-positive-secondary',
+      iconColorVar: '--color-icon-tag-category-mint',
+      icon: 'cafeteria' as const,
+      store: t('reviews.3.store'),
+      role: t('reviews.3.role'),
+      image: '/images/products/review/vco-review-retail-hibinoma-final.webp',
+      quote: [{ text: t('reviews.3.quote.0.text'), emphasis: false }],
+    }] : []),
+  ]
 
   const effectCards = product.effectCards.map((c, i) => ({
     ...c,
