@@ -6,6 +6,11 @@
 
 ### ✨ Added
 
+#### homepage-design SKILL.md 생성 (.claude/skills/homepage-design/)
+- 홈페이지 디자인/개발 패턴 가이드 스킬 파일 신규 생성
+- Foundation 토큰 계층, 브레이크포인트, 다크 모드, 그리드, GA 이벤트, i18n, 슬라이더 패턴 등 핵심 규칙 문서화
+- CHANGELOG 분석 기반 15개 항목 추가 반영
+
 #### ProductReviews ja 전용 4번째 리뷰 카드 (products/homepage)
 - 일본어 로케일(`ja`) + `vision-check-out` 슬리그 조건 시 4번째 카드 동적 추가
 - 카드 스펙: cafeteria 아이콘, 민트 컬러(`--color-text-basic-positive`), 이미지 `vco-review-retail-hibinoma-final.webp`
