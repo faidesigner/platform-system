@@ -153,13 +153,13 @@
           "role": "",
           "quote": {
             "0": {
-              "text": "\"Given a mountain resort's difficulty in hiring and retaining staff, adopting VCO eased our "
+              "text": "\"Since adopting AI, our staff no longer need to manually enter items by looking at products, greatly reducing employee stress. Checkout speed has also improved "
             },
             "1": {
-              "text": "hiring worries"
+              "text": "approximately 2–3 times"
             },
             "2": {
-              "text": ". Since it can even serve foreign customers, our workload has lightened.\""
+              "text": ", making a big difference on the floor.\""
             }
           }
         }
@@ -467,51 +467,46 @@
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store at 7-Eleven Singapore"
         },
         "3": {
-          "title": "Fainders.AI Supplies AI Self-Checkout to Major Resort Restaurant in Japan",
-          "description": "AI retail solution company Fainders.AI, through its Japan subsidiary, has supplied its AI self-checkout 'VCO' to a restaurant at a major ski resort in Niseko, Hokkaido, Japan.",
-          "thumbnailAlt": "Fainders.AI supplies AI self-checkout to major resort restaurant in Japan"
-        },
-        "4": {
           "title": "Tokyu Land and Partners Launch AI Self-Checkout PoC at 'NEST813' Restaurant in Niseko Tokyu Grand Hirafu",
           "description": "Tokyu Land Corporation, Tokyu Resorts & Stays, and Fainders.AI Japan have begun a PoC to introduce the AI self-checkout 'VISION CHECK-OUT' at the new restaurant 'NEST813.'",
           "thumbnailAlt": "Tokyu Land and partners launch AI self-checkout PoC at 'NEST813' restaurant in Niseko"
         },
-        "5": {
+        "4": {
           "title": "Fainders.AI Selected for Global Acceleration Program 'HFX'",
           "description": "AI store automation company Fainders.AI was selected for the global acceleration program 'Hokkaido F-Village X (HFX),' held in Hokkaido, Japan.",
           "thumbnailAlt": "Fainders.AI selected for global acceleration program 'HFX'"
         },
-        "6": {
+        "5": {
           "title": "Korean Retail AI Startup Opens PoC Store at Lifestyle Lab 'TOYONOMA'",
           "description": "At the lifestyle lab 'TOYONOMA' in Toyosu, Tokyo, Korean startup Fainders.AI has officially opened Japan's first PoC store featuring its next-generation AI self-checkout.",
           "thumbnailAlt": "Korean retail AI startup opens PoC store at lifestyle lab 'TOYONOMA'"
         },
-        "7": {
+        "6": {
           "title": "\"Pick Up and Walk Out, Payment Done\"... Fainders.AI Opens Second Unmanned Store",
           "description": "Fainders.AI announced it has opened its second AI unmanned micro store at the Spoany Hwagok branch and begun operations.",
           "thumbnailAlt": "Fainders.AI opens second unmanned store"
         },
-        "8": {
+        "7": {
           "title": "Fainders.AI Opens AI Unmanned Micro Store",
           "description": "Store automation AI startup Fainders.AI officially announced the opening of Korea's first AI unmanned micro store.",
           "thumbnailAlt": "Fainders.AI opens AI unmanned micro store"
         },
-        "9": {
+        "8": {
           "title": "Fainders.AI Selected as a 'Baby Unicorn' by the Ministry of SMEs, Accelerating Global Expansion",
           "description": "Fainders.AI has been selected this year as a 'Baby Unicorn' by Korea's Ministry of SMEs and Startups, a first for the AI unmanned store solution sector.",
           "thumbnailAlt": "Fainders.AI selected as a 'Baby Unicorn' by the Ministry of SMEs"
         },
-        "10": {
+        "9": {
           "title": "Fainders.AI Deploys Fully Unmanned AI Convenience Store with GS Retail",
           "description": "Store automation AI technology company Fainders.AI is supplying unmanned store technology to GS Retail's future-format convenience store, GS25 DX LAB Store No. 2.",
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store with GS Retail"
         },
-        "11": {
+        "10": {
           "title": "AI Unmanned Store Startup Fainders.AI Raises KRW 7.1B in Series A Funding",
           "description": "Fainders.AI, developer of AI unmanned store solutions, has successfully raised approximately KRW 7.1 billion in its Series A round.",
           "thumbnailAlt": "Fainders.AI raises KRW 7.1B in Series A funding"
         },
-        "12": {
+        "11": {
           "title": "AI Unmanned Store Startup Fainders.AI Raises KRW 600M in Seed Funding",
           "description": "Fainders.AI, developer of AI-based offline retail store automation technology, has raised KRW 600 million in seed funding from Kkeullim Ventures.",
           "thumbnailAlt": "Fainders.AI raises KRW 600M in seed funding"

@@ -152,7 +152,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
     >
 
       {/* 좌: 텍스트 패널 — 960px 이하에서 order-2 (썸네일 아래) */}
-      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-[var(--padding-2-xl,32px)] max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px]">
+      <div className="flex flex-1 min-w-0 items-center bg-fill-faint p-[var(--padding-2-xl,32px)] max-[960px]:order-2 max-[960px]:flex-none max-[960px]:min-h-[320px] max-[421px]:p-[var(--padding-XL)]">
         <div className="flex flex-col justify-between items-start flex-1 self-stretch">
 
           {/* 상단: 채널 아이콘 + 캐러셀 화살표 */}
@@ -234,7 +234,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단). 스와이프는 카드 전체에서 처리. */}
       <div
-        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto">
+        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[960px]:order-1 max-[960px]:aspect-[960/472] max-[960px]:rounded-t-fai-m max-[960px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto max-[421px]:p-[var(--padding-XL)]">
 
         {/* 슬라이드 키프레임 */}
         <style>{`
@@ -263,13 +263,16 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         )}
 
         {/* progressBar */}
-        <ProgressBar
-          count={videos.length}
-          activeIndex={animating && nextIdx !== null ? nextIdx : index}
-          onChange={(i) => startSlide(i, i >= index ? 1 : -1)}
-          duration={DURATION}
-          getAriaLabel={(i) => a11y.goToVideoTemplate.replace("{index}", String(i + 1))}
-        />
+        <div className="absolute top-[var(--padding-2-xl,32px)] left-[var(--padding-2-xl,32px)] right-[var(--padding-2-xl,32px)] max-[421px]:top-[var(--padding-XL)] max-[421px]:left-[var(--padding-XL)] max-[421px]:right-[var(--padding-XL)]">
+          <ProgressBar
+            count={videos.length}
+            activeIndex={animating && nextIdx !== null ? nextIdx : index}
+            onChange={(i) => startSlide(i, i >= index ? 1 : -1)}
+            duration={DURATION}
+            getAriaLabel={(i) => a11y.goToVideoTemplate.replace("{index}", String(i + 1))}
+            barClassName="h-[3px]"
+          />
+        </div>
       </div>
 
     </div>

@@ -78,8 +78,6 @@ export const clientLogos = [
   { id: "bgf-retail",       name: "BGF Retail",       src: "/logos/logo-bgf-retail-white.png" },
   { id: "spoany",           name: "SpoAny",            src: "/logos/logo-spoany-white.png" },
   { id: "changi",           name: "Changi Airport",    src: "/logos/logo-changi-white.png" },
-  { id: "7eleven",          name: "7-Eleven",          src: "/logos/logo-7-eleven-white.png" },
-  { id: "tokyu-land",       name: "Tokyu Land",        src: "/logos/logo-tokyu-land-white.png" },
   { id: "orange-planet",    name: "Orange Planet",     src: "/logos/logo-orange-planet-white-2.png" },
 ] satisfies ClientLogoItem[];
 
@@ -232,11 +230,11 @@ export const siteConfig = {
           icon: "resort",
           store: "일본 홋카이도 Niseko 리조트 매니저",
           role: "",
-          image: "/images/products/review/vco-review-resort.jpg",
+          image: "/images/products/review/vco-review-resort-final.webp",
           quote: [
-            { text: "\"산속 리조트 특성상 인력 채용과 유지가 어려운데, VCO 도입으로 " },
-            { text: "구인 걱정", emphasis: true },
-            { text: "을 덜었습니다. 외국인 고객까지 응대 가능하니 업무 부담이 적어졌어요.\"" },
+            { text: "\"AI 도입 이후 직원이 상품을 보며 계산을 입력하는 업무가 없어져 직원들의 스트레스가 크게 줄었습니다. 계산 속도도 " },
+            { text: "약 2~3배 향상", emphasis: true },
+            { text: "되어 현장에서 많은 도움이 되고 있습니다.\"" },
           ],
         },
       ],
@@ -434,15 +432,6 @@ export const siteConfig = {
         href:         "https://www.epnc.co.kr/news/articleView.html?idxno=320674",
       },
       {
-        thumbnail:    "/images/news/japan-niseko-vco.jpg",
-        thumbnailAlt: "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공",
-        tags:         ["VCO", "Japan"],
-        date:         "2025-12-18",
-        title:        "파인더스에이아이, 日 대형 리조트 레스토랑에 AI 셀프 계산대 제공",
-        description:  "AI 기반 리테일 솔루션 기업 파인더스에이아이는 일본 법인을 통해 일본 홋카이도 니세코 지역의 대형 스키 리조트 레스토랑에 AI 셀프 계산대 'VCO'를 제공했다.",
-        href:         "https://www.datanet.co.kr/news/articleView.html?idxno=208023",
-      },
-      {
         thumbnail:    "/images/news/tokyu-poc.jpg",
         thumbnailAlt: "도큐부동산 등, 니세코 도큐 그란 히라후 레스토랑 'NEST813'에서 AI 셀프 계산대 PoC 착수",
         tags:         ["VCO", "PoC"],
@@ -452,13 +441,13 @@ export const siteConfig = {
         href:         "https://www.nikkei.com/article/DGXZRSP700917_Y5A211C2000000/",
       },
       {
-        thumbnail:    "/images/news/hfx-acceleration.jpg",
+        thumbnail:    "/images/news/nikkei-hfx-2026.jpg",
         thumbnailAlt: "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정",
         tags:         ["Global", "Award"],
         date:         "2025-09-04",
         title:        "파인더스AI, 글로벌 액셀러레이션 프로그램 'HFX' 최종 선정",
         description:  "인공지능(AI) 매장 자동화 기업 파인더스에이아이는 일본 홋카이도에서 개최된 글로벌 액셀러레이션 프로그램 '홋카이도 F 빌리지 X(HFX)'에 최종 선정됐다.",
-        href:         "https://view.asiae.co.kr/article/2025090410225408652",
+        href:         "https://www.nikkei.com/article/DGXZQOFC259B90V20C26A2000000/",
       },
       {
         thumbnail:    "/images/news/toyonoma-poc.jpg",
