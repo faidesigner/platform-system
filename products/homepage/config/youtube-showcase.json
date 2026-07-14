@@ -1,12 +1,26 @@
 {
   "channelId": "UCZpwr96t6EkDKMurSPL11bQ",
-  "fetchedAt": "2026-07-10T14:29:34.134Z",
+  "fetchedAt": "2026-07-14T15:15:55.221Z",
   "videos": [
     {
+      "videoId": "K2ueKcophSc",
+      "title": "요즘빵집근황[빵순이들의 천국에 루시퍼의 등장이라...(더보기)]",
+      "description": "사장님이 없어도 빵을 사먹을 수 있다고⁉️\n비밀베이커리 예술의전당점에 갔다 올려만 놓으면 결제가 바로 끝나는 신기한 계산대를 만났어요👀🥐\n\n\n#파인더스에이아이 #ai #빵맛집 #ai도입 #비밀베이커리 #교대점",
+      "thumbnailAlt": "요즘빵집근황[빵순이들의 천국에 루시퍼의 등장이라...(더보기)]",
+      "href": "https://www.youtube.com/watch?v=K2ueKcophSc"
+    },
+    {
+      "videoId": "8_zRbYyScQQ",
+      "title": "VCO 빵지순례 [ep2.비밀베이커리 예술의 전당점]",
+      "description": "은근 맛집 찾기 힘든 예술의전당 근처😢 예술의전당 바로 앞에 있는 비밀베이커리에는 맛있는 빵이 가득해서 좋았어요🥯 줄 서지 않는 빠른 결제는 덤!\n\n\n\n#예술의전당 #파인더스에이아이 #빵맛집 #비밀베이커리 #교대맛집 #교대카페 #트렌드 #빵순이",
+      "thumbnailAlt": "VCO 빵지순례 [ep2.비밀베이커리 예술의 전당점]",
+      "href": "https://www.youtube.com/watch?v=8_zRbYyScQQ"
+    },
+    {
       "videoId": "6mdVuqYxWI8",
-      "title": "AI는 똑같이 생긴 다른 빵을 구별 할 수 있을까(ep2. 틀린그림찾기 아티제편) #파인더스에이아이 #아티제 #빵지순례 #소금빵맛집 #튀김소보루 #빵맛집 #트렌드쇼츠  #트렌드",
-      "description": "",
-      "thumbnailAlt": "AI는 똑같이 생긴 다른 빵을 구별 할 수 있을까(ep2. 틀린그림찾기 아티제편) #파인더스에이아이 #아티제 #빵지순례 #소금빵맛집 #튀김소보루 #빵맛집 #트렌드쇼츠  #트렌드",
+      "title": "틀린그림찾기(ep2.아티제)",
+      "description": "비슷하게 생겨도 결국 다 다른 맛이니까!!🥖\n우리 맘을 딱 알고, 정확하게 빵을 구별하는 AI스캐너 계산기\n\n\n\n#파인더스에이아이 #아티제 #빵지순례 #소금빵맛집 #튀김소보루 #빵맛집 #트렌드쇼츠  #트렌드",
+      "thumbnailAlt": "틀린그림찾기(ep2.아티제)",
       "href": "https://www.youtube.com/watch?v=6mdVuqYxWI8"
     },
     {
@@ -18,16 +32,16 @@
     },
     {
       "videoId": "hPLD6RDw64M",
-      "title": "VCO 챌린지 [ep1. AI는 얼마나 빠를까?]",
+      "title": "VCO 챌린지 [빵집 대기 시간을 줄여주는 마법의 기술]",
       "description": "이 많은 빵들 다 결제하는데 과연 얼마나 걸릴까요??🍞🥐🥖🥨 올려놓기만 하면 결제가 끝나는 마법의 기술을 만나고 왔어요⚡",
-      "thumbnailAlt": "VCO 챌린지 [ep1. AI는 얼마나 빠를까?]",
+      "thumbnailAlt": "VCO 챌린지 [빵집 대기 시간을 줄여주는 마법의 기술]",
       "href": "https://www.youtube.com/watch?v=hPLD6RDw64M"
     },
     {
       "videoId": "EAJYPdhpTAo",
-      "title": "VCO 빵지순례 [ep1. 한상민 과자점]",
+      "title": "VCO 빵지순례 [ep1. 한상민과자점 신검단중앙역점]",
       "description": "인천 검단 주민들의 찐 로컬 맛집이라는 한상민과자점에 빵지순례 다녀왔어요🍞🥖\n슥 둘러봐도 빵 종류가 어마어마해서 고르는데 힘들었어요😋\n눈 돌아가는 빵 종류에 한 번 반하고 스마트한 결제에 두 번 반한 이곳은?\n\n📍 한상민과자점 신검단중앙역점",
-      "thumbnailAlt": "VCO 빵지순례 [ep1. 한상민 과자점]",
+      "thumbnailAlt": "VCO 빵지순례 [ep1. 한상민과자점 신검단중앙역점]",
       "href": "https://www.youtube.com/watch?v=EAJYPdhpTAo"
     },
     {
@@ -94,6 +108,13 @@
       "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w"
     },
     {
+      "videoId": "DSTIFkS5Nw8",
+      "title": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
+      "description": "Fainders.AI는 컴퓨터 비전(Computer Vision)과 인공지능(AI) 기술을 활용해 매장 무인화 솔루션을 개발합니다.",
+      "thumbnailAlt": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
+      "href": "https://www.youtube.com/watch?v=DSTIFkS5Nw8"
+    },
+    {
       "videoId": "Qon4TWeBsdQ",
       "title": "VCO(Vision Check-out) 베이커리 소개 영상",
       "description": "베이커리와 공산품, 구분 없는 결제의 시작. \n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.\n\n⑴ 유사 상품 99% 정확한 인식\n⑵ 다각도 인식으로 더 정확한 판단\n⑶ 오류 발생 시 고객이 빠르게 해결 가능한 결제 경험",
@@ -106,13 +127,6 @@
       "description": "구내식당에서 상품을 자유롭게 고르고 계산대에 올려놓기만 하면 결제 완료.\n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.",
       "thumbnailAlt": "파인더스에이아이ㅣAI 무인 자동 계산대 VCO(Vision Check-out) 소개",
       "href": "https://www.youtube.com/watch?v=OetI0X56u3k"
-    },
-    {
-      "videoId": "DSTIFkS5Nw8",
-      "title": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
-      "description": "Fainders.AI는 컴퓨터 비전(Computer Vision)과 인공지능(AI) 기술을 활용해 매장 무인화 솔루션을 개발합니다.",
-      "thumbnailAlt": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
-      "href": "https://www.youtube.com/watch?v=DSTIFkS5Nw8"
     }
   ]
 }
