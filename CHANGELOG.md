@@ -18,6 +18,14 @@
 
 ### 🔄 Changed
 
+#### SmoothScroll top 스크롤 rAF 지연 (products/homepage)
+- `action.type === 'top'` 시 `applyScroll(0)` 호출을 `requestAnimationFrame`으로 감싸 비동기 실행
+- SPA 이동(`next dev`) 중 Lenis RAF 루프가 `immediate: true` scrollTo를 덮어쓰는 경합 방지
+- `restore`·`anchor` 케이스와 실행 방식 통일 — HOM-12·HOM-15-2 dev 환경 재발 수정
+
+#### ProductReviews 리뷰 섹션 타이틀 ja 수정 (products/homepage)
+- `ja.json` `visionCheckout.reviewsTitle` — `"お客様の導入事例"` → `"VCO導入・運用事例"`
+
 #### ProductReviews 슬라이더 우측 패딩 및 스냅 (products/homepage)
 - 마지막 카드 `snap-start` → `snap-end` + 컨테이너 `scroll-pr` 추가 — 스냅백 없이 우측 패딩 정상 표시
 - 컨테이너 `pr` 값을 `pl`과 동일한 breakpoint/토큰으로 적용 (`--padding-XL` / `--padding-8XL` / desktop calc)
