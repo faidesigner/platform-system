@@ -38,7 +38,15 @@
 - 구현: `filled.optional.brand-primaryBtn` / 의미상 후보: `filled.basic.primary` (해석값 동일 gray.800)
 - 토큰 네이밍 의도 정리 필요
 
-### 7. Dialog 모바일 오버플로 인지
+### 7. InputButton ↔ Field 결합 검토 (2026-07-14 분석)
+Astryx Field(라벨/설명/status 래퍼)에 InputButton을 넣는 시나리오 검증 결과:
+- ✅ 구조 호환: InputButton은 라벨 셸 없는 순수 트리거로 설계 — Field가 label(htmlFor→id)·description을 소유하는 모델과 맞음. id/aria-describedby passthrough 지원
+- ⚠️ **폼 패턴 이원화**: 기존 DateInput/FileInput은 라벨 내장형, InputButton은 셸 없는 신규 패턴 — Field 도입 시 기존 컴포넌트의 라벨 분리 리팩토링 필요 (결정 대기)
+- ⚠️ **status 전파 없음**: Field의 status(error)가 자식 보더에 자동 반영되지 않음 — error prop을 수동으로 함께 넘겨야 함 (Field 구현 시 컨텍스트 전파 설계 필요)
+- ⚠️ **에러 스트로크 두께 충돌**: Seed/InputButton은 2px, 기존 박스형(DateInput 등)은 1px — 통일 여부 결정 필요
+- ⚠️ **readonly 신규 상태**: 폼 공통 규칙에 없던 상태 (fill-disabled 배경 + primary 텍스트) — 다른 폼 컴포넌트로 확대 여부 결정 필요
+
+### 8. Dialog 모바일 오버플로 인지
 - 디자이너 확정으로 모바일에서도 min-width 유지 — 단 s(400px)도 모바일 브레이크포인트(390px)보다 커서 좁은 기기에서 가로 스크롤 발생 가능. 의도 확인만 남음
 
 ---

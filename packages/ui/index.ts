@@ -128,3 +128,5 @@ export { FileInput } from './components/FileInput';
 export type { FileInputProps, FileInputMode } from './components/FileInput';
 export { HoverCard } from './components/HoverCard';
 export type { HoverCardProps, HoverCardPlacement } from './components/HoverCard';
+export { InputButton } from './components/InputButton';
+export type { InputButtonProps, InputButtonSize } from './components/InputButton';
