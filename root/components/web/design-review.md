@@ -21,7 +21,7 @@
 - 파일 단위 공백(참고): color-brand.json, effects.json(그림자)은 다크 정의 자체가 없음
 
 ### 3. z-index 마이그레이션 (스케일 자체는 확정됨)
-- 기존 컴포넌트(NavigationBar, Header, Drawer, Toast 등)의 하드코딩 z-index를 신규 스케일로 교체 — 전수 조사 필요
+- 기존 컴포넌트의 하드코딩 z-index를 신규 스케일로 교체 — 확인된 대상: Dropdown.tsx(z-40 → --z-dropdown), HoverDropdown.tsx(z-50 → --z-dropdown), 그 외 NavigationBar/Header/Drawer/Toast 전수 조사 필요
 - `root/foundation/index.css`에 `@import './z-index.css';` 추가 — codex 작업 충돌 방지 위해 머지 후
 - `scripts/sync-tokens.js`에 z-index.json 통합 — 머지 후
 - motion.json/motion.css는 codex 브랜치도 작업 중 — 머지 시 add/add 충돌 예상, instant 티어 유지하며 병합할 것
