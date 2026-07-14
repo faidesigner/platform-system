@@ -1,9 +1,10 @@
 # Button Specification
-**Status**: Final
+**Status**: Review
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 사용자 액션을 유발하는 기본 인터랙션 컴포넌트
 - **사용처**: CTA, 폼 제출, 다이얼로그 액션
+- **사용 금지**: 페이지 이동만 하는 요소는 Link 사용 (버튼 모양이 필요하면 href prop으로 링크 렌더). 눌림 상태 유지가 필요하면 ToggleButton. 아이콘만 있는 버튼은 IconButton. 한 화면에 impact CTA는 1개만
 
 ## 2. ⚡ Variants
 
@@ -15,46 +16,28 @@
 | assistive | 보조 정보성 |
 | brandAssistive | 브랜드 강조 |
 
-| size | height |
-|---|---|
-| xl | py-m + px-xl |
-| l | h-3xl + px-l |
-| m | py-s + px-m |
-| s | py-2xs + px-ms |
+| size | height | typography |
+|---|---|---|
+| xl | py-m + px-xl | `w/text/M` |
+| l | h-3xl + px-l | `w/text/S` |
+| m | py-s + px-m | text/XS (13px) |
+| s | py-2xs + px-ms | `w/caption/M` |
 
-## 3. 📐 Layout & Content Rules
+## 3. ⚡ Interaction & State
+- **Hover / Active**: tone별 배경·테두리 전환 (Token Mapping 참조), `transition-colors`
+- **Focus**: `focus-visible` 시 brand 테두리 (numeric ring 유틸 사용 금지 — 시맨틱 border 토큰만)
+- **Disabled**: fill-disabled 배경 + disabled 텍스트/테두리, 클릭 차단, `cursor-not-allowed`
+- **Loading**: 스피너 + disabled + `aria-busy`. `clickAction`(비동기) 사용 시 pending 동안 자동 적용, fire-once(재클릭 무시)
+- **링크 렌더**: `href` 제공 시 `<a>`(또는 as 컴포넌트). 단 disabled/loading이면 `<button>` 유지 (disabled 링크는 접근성 안티패턴)
+- **접근성**: `type` 기본값 `"button"`(의도치 않은 폼 submit 방지), iconOnly는 `label`(aria-label) 필수
+
+## 4. 📐 Layout & Content Rules
 - **shape**: `square` (rounded-8px) / `round` (rounded-circle)
 - **impact**: true일 때 브랜드 컬러 강조 CTA
 - **loading**: spinner 표시 + disabled 처리
 - **icon**: leading icon 옵션
-
-## 4. 🎨 Token Mapping
-```json
-{
-  "component": "Button",
-  "variants": {
-    "primary": {
-      "default": {
-        "bg-color": "{color.filled.basic.primary}",
-        "text-color": "{color.text.basic.inverse}",
-        "border": "none"
-      },
-      "disabled": {
-        "bg-color": "{color.filled.basic.disabled}",
-        "text-color": "{color.text.basic.disabled}",
-        "border": "{color.border.disabled}"
-      }
-    },
-    "impact": {
-      "default": {
-        "bg-color": "{color.filled.optional.brand-primary}",
-        "text-color": "{color.text.optional.brand-primaryBtn}",
-        "border": "{color.border.brand-primary}"
-      }
-    }
-  }
-}
-```
+- **endContent**: 라벨 뒤 트레일링 슬롯 (배지, 셰브론) — 버튼 텍스트 컬러 상속, iconOnly면 무시
+- **iconOnly**: 정사각(aspect-square), 좌우 패딩 제거
 
 ## 5. 🧩 Props (API)
 
@@ -77,3 +60,40 @@
 | target / rel | string | – | href 제공 시에만 적용 |
 
 > loading·disabled 시 클릭 차단, `aria-busy` 부여. iconOnly는 `aria-label` 필수.
+
+## 6. 🎨 Token Mapping
+```json
+{
+  "component": "Button",
+  "variants": {
+    "primary": {
+      "default": {
+        "bg-color": "{color.filled.optional.brand-primaryBtn}",
+        "text-color": "{color.text.basic.inverse}",
+        "border": "none",
+        "_description": "구현 기준 토큰. filled.basic.primary와 해석값 동일(gray.800)"
+      },
+      "disabled": {
+        "bg-color": "{color.filled.basic.disabled}",
+        "text-color": "{color.text.basic.disabled}",
+        "border": "{color.border.disabled}"
+      }
+    },
+    "impact": {
+      "default": {
+        "bg-color": "{color.filled.optional.brand-primary}",
+        "text-color": "{color.text.optional.brand-secondaryBtn}",
+        "border": "{color.border.brand-primary}",
+        "_description": "텍스트는 gray.900 — green.500 배경 위 white는 대비 미달이라 구현 기준으로 확정"
+      }
+    }
+  }
+}
+```
+
+## 7. ✅ Best Practices
+- 라벨은 동사형으로 짧게 ("확인"보다 "저장하기") — 무엇이 일어나는지 명확하게
+- 한 화면에 primary/impact는 하나만, 나머지 액션은 secondary 이하 톤으로 위계 구성
+- 비동기 액션(저장/제출/결제)은 loading 수동 관리 대신 clickAction 사용 — 중복 클릭 자동 차단
+- 파괴적 액션(삭제 등)은 버튼만으로 실행하지 말고 확인 다이얼로그와 함께
+- iconOnly는 반드시 label + tooltip과 함께 (IconButton 스펙과 동일 규칙)
