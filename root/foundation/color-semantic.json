@@ -71,6 +71,7 @@
     "border": {
       "primary": "{color.gray.700}",
       "secondary": "{color.gray.100}",
+      "medium": "{color.gray.300}",
       "tertiary": "{color.gray.50}",
       "inverse": "{color.white}",
       "disabled": "{color.gray.30}",
@@ -194,18 +195,18 @@
     },
     "sand": {
       "filled": {
-        "primary":   "{color.sand.50}",
+        "primary": "{color.sand.50}",
         "secondary": "{color.sand.100}",
-        "tertiary":  "{color.sand.200}",
-        "disabled":  "{color.sand.400}"
+        "tertiary": "{color.sand.200}",
+        "disabled": "{color.sand.400}"
       },
       "text": {
-        "primary":   "{color.sand.900}",
+        "primary": "{color.sand.900}",
         "secondary": "{color.sand.700}",
-        "tertiary":  "{color.sand.600}"
+        "tertiary": "{color.sand.600}"
       },
       "border": {
-        "primary":   "{color.sand.700}",
+        "primary": "{color.sand.700}",
         "secondary": "{color.sand.300}"
       }
     }
@@ -282,6 +283,7 @@
     "border": {
       "primary": "{color.gray.200}",
       "secondary": "{color.gray.500}",
+      "medium": "{color.gray.400}",
       "tertiary": "{color.gray.700}",
       "inverse": "{color.white}",
       "disabled": "{color.gray.700}",
@@ -405,18 +407,18 @@
     },
     "sand": {
       "filled": {
-        "primary":   "{color.sand.900}",
+        "primary": "{color.sand.900}",
         "secondary": "{color.sand.800}",
-        "tertiary":  "{color.sand.700}",
-        "disabled":  "{color.sand.500}"
+        "tertiary": "{color.sand.700}",
+        "disabled": "{color.sand.500}"
       },
       "text": {
-        "primary":   "{color.sand.50}",
+        "primary": "{color.sand.50}",
         "secondary": "{color.sand.200}",
-        "tertiary":  "{color.sand.400}"
+        "tertiary": "{color.sand.400}"
       },
       "border": {
-        "primary":   "{color.sand.300}",
+        "primary": "{color.sand.300}",
         "secondary": "{color.sand.600}"
       }
     }
