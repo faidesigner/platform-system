@@ -147,7 +147,9 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       return;
     }
     if (action.type === 'top') {
-      applyScroll(0, lenisRef.current, window);
+      // rAF으로 지연: SPA 이동 시 Lenis RAF 루프가 immediate scrollTo를 덮어쓰는 현상 방지.
+      // production(static export)은 매 페이지가 fresh mount라 문제없으나 next dev에서 재발.
+      requestAnimationFrame(() => applyScroll(0, lenisRef.current, window));
       return;
     }
 
