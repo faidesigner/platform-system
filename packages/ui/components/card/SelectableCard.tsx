@@ -70,7 +70,7 @@ export function SelectableCard({
         CARD_BASE_CLASSES,
         CARD_VARIANT_CLASSES[variant],
         CARD_PADDING_CLASSES[padding],
-        "relative transition-all duration-150",
+        "relative transition-all duration-[var(--duration-fast,175ms)]",
         disabled
           ? "opacity-50 cursor-not-allowed"
           : cnCard(
@@ -89,7 +89,7 @@ export function SelectableCard({
         aria-hidden="true"
         className={cnCard(
           "absolute top-s right-s inline-flex items-center justify-center",
-          "w-l h-l rounded-fai-circle transition-opacity duration-150",
+          "w-l h-l rounded-fai-circle transition-opacity duration-[var(--duration-fast,175ms)]",
           "bg-[var(--color-filled-optional-brand-primary)] text-[var(--color-text-optional-brand-primaryBtn)]",
           selected ? "opacity-100" : "opacity-0"
         )}

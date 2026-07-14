@@ -20,7 +20,7 @@
 | l | 720~800px | 복잡한 콘텐츠·미리보기 |
 | xl | 960px | 대형 콘텐츠 |
 
-> 디자이너 확정(2026-07-14). 모바일에서는 min-width 해제(풀폭-여백)
+> 디자이너 확정(2026-07-14). 모바일에서도 min-width 유지
 
 ## 3. ⚡ Interaction & State
 - **열림/닫힘**: 제어형(isOpen/onOpenChange). Dialog는 스크림 클릭·Escape 닫힘 허용(`dismissable`, 기본 true), **AlertDialog는 불가** — 명시적 선택 강제

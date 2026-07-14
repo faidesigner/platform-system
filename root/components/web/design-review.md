@@ -12,12 +12,13 @@
 - 오버레이(팝오버/다이얼로그/토스트)에 어떤 모션(페이드? 스케일? 어떤 duration?)을 적용할지 미정
 - 현재 구현: 모션 없이 즉시 표시/제거
 
-### 2. 다크 모드 공백 (2026-07-14 감사 결과)
-- `color-brand.json` — 다크 값 없음
-- `effects.json`(그림자) — 다크 값 없음
-- `globals.css`의 `--fai-*` 별칭 계층 — 다크 오버라이드 부분적(7곳), 전수 확인 필요
-- 신규 컴포넌트 전체 — 라이트 기준으로만 구현/검증됨
-- ✅ 있는 것: color-semantic(dark.css), 스크림(bg.scrim 다크 값 존재)
+### 2. 다크 모드 공백 (2026-07-14 변수 대칭 감사 — 실사용 기준)
+신규 컴포넌트가 실제 사용하는 컬러 변수 83개를 다크 정의(dark.css + globals.css 다크 블록)와 대칭 확인한 결과, **다크 값이 없는 것은 3개뿐**:
+- `--fai-color-inverse` — Button primary/warning 텍스트 (라이트 white 고정)
+- `--fai-border-brand` — focus-visible 브랜드 테두리, SelectableCard 선택 테두리
+- `--color-border-brand` — ⚠️ **존재하지 않는 토큰명** (LineInput focus가 사용, fallback #39DB1F로만 동작 중. 정식명은 `--color-border-brand-primary`) → 다크 이전에 토큰명 정정 필요
+- 그 외 80개는 시맨틱 변수라 다크 자동 대응 ✅
+- 파일 단위 공백(참고): color-brand.json, effects.json(그림자)은 다크 정의 자체가 없음
 
 ### 3. z-index 마이그레이션 (스케일 자체는 확정됨)
 - 기존 컴포넌트(NavigationBar, Header, Drawer, Toast 등)의 하드코딩 z-index를 신규 스케일로 교체 — 전수 조사 필요
@@ -36,8 +37,8 @@
 - 구현: `filled.optional.brand-primaryBtn` / 의미상 후보: `filled.basic.primary` (해석값 동일 gray.800)
 - 토큰 네이밍 의도 정리 필요
 
-### 7. Dialog 모바일 반응형 검증
-- 폭 규칙(min-width)이 태블릿 이상에서만 적용되도록 구현 — 모바일 실기기 확인 필요
+### 7. Dialog 모바일 오버플로 인지
+- 디자이너 확정으로 모바일에서도 min-width 유지 — 단 s(400px)도 모바일 브레이크포인트(390px)보다 커서 좁은 기기에서 가로 스크롤 발생 가능. 의도 확인만 남음
 
 ---
 
@@ -52,3 +53,5 @@
 | 2026-07-14 | z-index 스케일 | 파운데이션 신설: base 0 ~ global-alert 900 (100 단위) |
 | 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 (foundation warning 계열) |
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
+| 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
+| 2026-07-14 | 모션 규칙 | 명시적 duration은 foundation motion 토큰 사용 (duration-fast 175ms 등), 신규 컴포넌트 일괄 적용 |

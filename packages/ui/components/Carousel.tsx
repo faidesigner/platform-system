@@ -60,7 +60,7 @@ function NavButton({
         "rounded-fai-circle",
         "bg-[var(--color-bg-100)] text-[var(--color-icon-basic-primary)]",
         "border border-border-secondary shadow-S",
-        "transition-opacity duration-150",
+        "transition-opacity duration-[var(--duration-fast,175ms)]",
         "hover:bg-fill-faint cursor-pointer",
         hidden ? "opacity-0 pointer-events-none" : "opacity-100"
       )}

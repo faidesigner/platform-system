@@ -29,11 +29,11 @@ function cn(...values: Array<string | undefined | null | false>) {
   return values.filter(Boolean).join(" ");
 }
 
-/* 폭 규칙(디자이너 확정): min~max 범위, 모바일에서는 min 해제(풀폭 - 여백) */
+/* 폭 규칙(디자이너 확정): min~max 범위 — 모바일에서도 min-width 유지 */
 const SIZE_CLASSES: Record<DialogSize, string> = {
-  s: "tablet:min-w-[400px] max-w-[480px]",
-  m: "tablet:min-w-[560px] max-w-[640px]",
-  l: "tablet:min-w-[720px] max-w-[800px]",
+  s: "min-w-[400px] max-w-[480px]",
+  m: "min-w-[560px] max-w-[640px]",
+  l: "min-w-[720px] max-w-[800px]",
   xl: "max-w-[960px]",
 };
 
