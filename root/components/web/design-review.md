@@ -38,8 +38,10 @@
 - 구현: `filled.optional.brand-primaryBtn` / 의미상 후보: `filled.basic.primary` (해석값 동일 gray.800)
 - 토큰 네이밍 의도 정리 필요
 
-### 7. FileInput 드롭존 dashed 보더 ✱ 신규 패턴
-- 박스형 폼 트리거의 파생으로 dashed border-secondary 드롭존 도입 (file-input.md) — 시스템에 없던 스타일, 시각 확정 필요
+### 7. FileInput 드롭존 dashed 보더 ✱ + 중간톤 보더 토큰 부재
+- dashed 보더를 border-secondary(gray.100)→border-primary(gray.700)로 상향 (secondary는 dashed에서 시인성 부족)
+- **근본 이슈**: 보더 토큰 그레이 스케일이 30/50/100 ↔ 700으로 점프 — 중간톤(gray.300~400급) 토큰이 없음. 드롭존·구분선 강조 등에서 반복될 문제 → 신규 토큰(예: border-medium) 신설 여부 결정 필요
+- dashed 렌더 특성: 1px dashed는 코너(radius 8px)에서 대시 간격이 브라우저별로 어긋남 — 시각 확인 권장, 필요시 2px 검토
 
 ### 8. Dialog 모바일 오버플로 인지
 - 디자이너 확정으로 모바일에서도 min-width 유지 — 단 s(400px)도 모바일 브레이크포인트(390px)보다 커서 좁은 기기에서 가로 스크롤 발생 가능. 의도 확인만 남음

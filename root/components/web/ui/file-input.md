@@ -18,8 +18,8 @@
 
 | 트리거 상태 | 스타일 |
 |---|---|
-| default | border-secondary (dropzone은 dashed) |
-| hover | border-primary |
+| default | input: border-secondary / dropzone: **border-primary dashed** (secondary는 dashed에서 시인성 부족) |
+| hover | input: border-primary / dropzone: fill-faint 배경 |
 | dragover | border-brand + fill-faint 배경 |
 | error | border-negative + 에러 메시지 |
 | disabled | fill-disabled + disabled 텍스트 |
@@ -52,7 +52,7 @@
 ```json
 {
   "component": "FileInput",
-  "trigger": "date-input.md 박스형 규칙 + dropzone은 border-style dashed ✱",
+  "trigger": "date-input.md 박스형 규칙. dropzone: {color.border.primary} dashed ✱ (중간톤 보더 토큰 부재로 primary 사용)",
   "dragover": { "border": "{color.border.brand-primary}", "bg-color": "{color.filled.basic.primaryOp-secondary}" },
   "file-item": { "bg-color": "{color.filled.basic.primaryOp-secondary}", "radius": "rounded-8px", "size-text": "{w.caption.M} tertiary" }
 }

@@ -177,7 +177,10 @@ export function FileInput({
               ? "border-[var(--color-border-negative)]"
               : isDragOver
                 ? "border-border-brand bg-fill-faint"
-                : "border-border-secondary hover:border-border-primary"
+                : mode === "dropzone"
+                  ? // dashed는 secondary(gray.100)가 흐릿해 primary로 상향 — 중간톤 보더 토큰 부재 이슈 (design-review 7)
+                    "border-[var(--color-border-primary)] hover:bg-fill-faint"
+                  : "border-border-secondary hover:border-border-primary"
         )}
       >
         <span
