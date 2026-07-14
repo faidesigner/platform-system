@@ -3,8 +3,11 @@
 import * as React from "react";
 
 /* ── Context — 항목 클릭 시 메뉴 닫기 ── */
+export type DropdownMenuSize = "s" | "m" | "l";
+
 export const DropdownMenuContext = React.createContext<{
   close: () => void;
+  size: DropdownMenuSize;
 } | null>(null);
 
 export type DropdownMenuPlacement = "bottom-start" | "bottom-end";
@@ -17,10 +20,12 @@ export interface DropdownMenuProps {
   trigger: (open: boolean, toggle: () => void) => React.ReactNode;
   /** 메뉴 접근성 라벨 (필수) */
   label: string;
-  /** DropdownMenuItem / Divider 목록 */
+  /** DropdownMenuWithItem / Divider 목록 */
   children: React.ReactNode;
   /** 패널 정렬 @default 'bottom-start' */
   placement?: DropdownMenuPlacement;
+  /** 항목 밀도 — 항목 패딩에 반영 @default 'm' */
+  size?: DropdownMenuSize;
   /** 열림 상태 변경 알림 (선택) */
   onOpenChange?: (isOpen: boolean) => void;
   className?: string;
@@ -46,10 +51,10 @@ function cn(...values: Array<string | undefined | null | false>) {
  * <DropdownMenu label="게시글 액션" trigger={(open, toggle) => (
  *   <IconButton icon="more" label="더보기" onClick={toggle} />
  * )}>
- *   <DropdownMenuItem label="수정" onClick={onEdit} />
- *   <DropdownMenuItem label="복제" onClick={onDuplicate} />
+ *   <DropdownMenuWithItem label="수정" onClick={onEdit} />
+ *   <DropdownMenuWithItem label="복제" onClick={onDuplicate} />
  *   <Divider />
- *   <DropdownMenuItem label="삭제" onClick={onDelete} />
+ *   <DropdownMenuWithItem label="삭제" onClick={onDelete} />
  * </DropdownMenu>
  */
 export function DropdownMenu({
@@ -57,6 +62,7 @@ export function DropdownMenu({
   label,
   children,
   placement = "bottom-start",
+  size = "m",
   onOpenChange,
   className,
 }: DropdownMenuProps) {
@@ -120,7 +126,7 @@ export function DropdownMenu({
     items[next]?.focus();
   };
 
-  const ctx = React.useMemo(() => ({ close }), [close]);
+  const ctx = React.useMemo(() => ({ close, size }), [close, size]);
 
   return (
     <DropdownMenuContext.Provider value={ctx}>

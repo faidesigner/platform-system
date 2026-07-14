@@ -119,6 +119,6 @@ export type { UseImperativeAlertDialogReturn, ImperativeAlertOptions } from './c
 export { Divider } from './components/Divider';
 export type { DividerProps, DividerVariant, DividerOrientation } from './components/Divider';
 export { DropdownMenu } from './components/dropdown-menu/DropdownMenu';
-export type { DropdownMenuProps, DropdownMenuPlacement } from './components/dropdown-menu/DropdownMenu';
-export { DropdownMenuItem } from './components/dropdown-menu/DropdownMenuItem';
-export type { DropdownMenuItemProps } from './components/dropdown-menu/DropdownMenuItem';
+export type { DropdownMenuProps, DropdownMenuPlacement, DropdownMenuSize } from './components/dropdown-menu/DropdownMenu';
+export { DropdownMenuWithItem } from './components/dropdown-menu/DropdownMenuWithItem';
+export type { DropdownMenuWithItemProps } from './components/dropdown-menu/DropdownMenuWithItem';

@@ -1,7 +1,7 @@
-# Dropdown Menu Specification
+# Dropdown Menu with Item Specification
 **Status**: Draft
 
-> DropdownMenu(컨테이너) + DropdownMenuItem(액션 항목) 2개를 한 파일에 정의.
+> DropdownMenu(컨테이너) + DropdownMenuWithItem(액션 항목) 2개를 한 파일에 정의.
 > 위치: `packages/ui/components/dropdown-menu/` · 표면은 **overlay-rules.md Level 1**
 
 ## ⚠️ 기존 Dropdown과의 역할 구분 (충돌 방지 규칙 — 필독)
@@ -26,6 +26,12 @@
 | bottom-start *(default)* | 트리거 좌측 기준 |
 | bottom-end | 트리거 우측 기준 (화면 우측 가장자리 트리거용) |
 
+| size (항목 밀도) | 항목 패딩 |
+|---|---|
+| s | `{size.4}` × `{size.8}` — 밀도 높은 툴바 |
+| m *(default)* | `{size.8}` × `{size.12}` |
+| l | `{size.12}` × `{size.12}` — 터치 친화 |
+
 ## 3. ⚡ Interaction & State
 - **열림/닫힘**: 트리거 클릭 토글, 바깥 클릭·Escape 닫힘 (overlay-rules Level 1)
 - **항목 실행**: 클릭 또는 Enter/Space → onClick 실행 후 메뉴 자동 닫힘
@@ -35,7 +41,8 @@
 
 ## 4. 📐 Layout & Content Rules
 - **패널**: min-width 200px, padding `{size.8}`, 트리거 아래 `{size.4}` — 표면은 Level 1(bg-100 + border-tertiary + radius 16 + shadow-M)
-- **항목**: 아이콘(선택) + 라벨 + 설명(선택) + endContent(선택), padding `{size.12}`×`{size.8}`, radius `rounded-8px`, `w/text/S`
+- **항목**: 아이콘(선택) + 라벨 + 설명(선택) + endContent(선택), padding은 size 표 참조, radius `rounded-8px`, `w/text/S`
+- **disabled**: opacity 50% 방식 (색 교체 아님)
 - **그룹 구분**: 항목 사이 `<Divider />` 사용 (divider.md)
 - **endContent**: 단축키 힌트·Badge 등 읽기 전용만 (버튼 중첩 금지)
 
@@ -46,11 +53,12 @@
 |---|---|---|---|
 | trigger | (open, toggle) => ReactNode | 필수 | 트리거 렌더 함수 (기존 Dropdown과 동일 컨벤션) |
 | label | string | 필수 | 메뉴 aria-label |
-| children | ReactNode | 필수 | DropdownMenuItem / Divider |
+| children | ReactNode | 필수 | DropdownMenuWithItem / Divider |
 | placement | 'bottom-start' \| 'bottom-end' | `'bottom-start'` | 패널 정렬 |
+| size | 's' \| 'm' \| 'l' | `'m'` | 항목 밀도 (컨텍스트로 전파) |
 | onOpenChange | (isOpen) => void | – | 열림 상태 알림 |
 
-### DropdownMenuItem
+### DropdownMenuWithItem
 | prop | type | default | 설명 |
 |---|---|---|---|
 | label | ReactNode | 필수 | 항목 라벨 |

@@ -86,9 +86,9 @@
         "text-color": "{color.text.basic.inverse}",
         "border": "none"
       },
-      "hover": { "overlay": "{color.interaction.light.white.hover}" },
-      "pressed": { "overlay": "{color.interaction.light.white.pressed}" },
-      "_description": "파괴적/경고 액션 전용. 색상 negative(red) 계열, hover는 솔리드 배경 선례(IconButton primary)와 동일한 interaction.light.white 오버레이 (디자이너 확정 2026-07-14)"
+      "hover": { "overlay": "{color.interaction.normal.white.hover}" },
+      "pressed": { "overlay": "{color.interaction.strong.white.pressed}" },
+      "_description": "파괴적/경고 액션 전용. 색상 negative(red) 계열, hover/focus는 interaction.normal, pressed는 interaction.strong 오버레이 — light 단계는 변화가 약해 상향 (디자이너 확정 2026-07-14)"
     },
     "impact": {
       "default": {

@@ -1,9 +1,9 @@
 "use client";
 
 import * as React from "react";
-import { DropdownMenuContext } from "./DropdownMenu";
+import { DropdownMenuContext, type DropdownMenuSize } from "./DropdownMenu";
 
-export interface DropdownMenuItemProps {
+export interface DropdownMenuWithItemProps {
   /** 항목 라벨 (필수) */
   label: React.ReactNode;
   /** 라벨 앞 아이콘 */
@@ -23,12 +23,20 @@ function cn(...values: Array<string | undefined | null | false>) {
   return values.filter(Boolean).join(" ");
 }
 
+/* 메뉴 size별 항목 패딩 */
+const ITEM_SIZE_CLASSES: Record<DropdownMenuSize, string> = {
+  s: "py-2xs px-s",
+  m: "py-s px-ms",
+  l: "py-ms px-ms",
+};
+
 /**
  * DropdownMenu의 개별 액션 항목 (role="menuitem").
  * 클릭 또는 Enter/Space로 실행되고 메뉴가 닫힌다.
- * 스펙: root/components/web/ui/dropdown-menu.md
+ * 패딩은 부모 DropdownMenu의 size(s/m/l)를 따른다.
+ * 스펙: root/components/web/ui/dropdown-menu-with-item.md
  */
-export function DropdownMenuItem({
+export function DropdownMenuWithItem({
   label,
   icon,
   description,
@@ -36,7 +44,7 @@ export function DropdownMenuItem({
   onClick,
   disabled = false,
   className,
-}: DropdownMenuItemProps) {
+}: DropdownMenuWithItemProps) {
   const menu = React.useContext(DropdownMenuContext);
 
   const run = () => {
@@ -58,10 +66,11 @@ export function DropdownMenuItem({
         }
       }}
       className={cn(
-        "flex items-center gap-s px-ms py-s rounded-fai-s",
+        "flex items-center gap-s rounded-fai-s",
+        ITEM_SIZE_CLASSES[menu?.size ?? "m"],
         "text-body-s outline-none",
         disabled
-          ? "text-[var(--color-text-basic-disabled)] cursor-not-allowed"
+          ? "opacity-50 cursor-not-allowed text-[var(--color-text-basic-primary)]"
           : cn(
               "text-[var(--color-text-basic-primary)] cursor-pointer",
               "hover:bg-fill-faint focus-visible:bg-fill-faint",
@@ -74,9 +83,7 @@ export function DropdownMenuItem({
         <span
           className={cn(
             "flex shrink-0 items-center",
-            disabled
-              ? "text-[var(--color-icon-basic-disabled)]"
-              : "text-[var(--color-icon-basic-secondary)]"
+            "text-[var(--color-icon-basic-secondary)]"
           )}
         >
           {icon}
@@ -88,9 +95,7 @@ export function DropdownMenuItem({
           <span
             className={cn(
               "text-caption-m",
-              disabled
-                ? "text-[var(--color-text-basic-disabled)]"
-                : "text-[var(--color-text-basic-tertiary)]"
+              "text-[var(--color-text-basic-tertiary)]"
             )}
           >
             {description}
@@ -106,4 +111,4 @@ export function DropdownMenuItem({
   );
 }
 
-export default DropdownMenuItem;
+export default DropdownMenuWithItem;

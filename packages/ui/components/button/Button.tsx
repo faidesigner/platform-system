@@ -119,12 +119,12 @@ function getToneClasses(tone: ButtonTone, impact: boolean) {
       );
     case "warning":
       // 파괴적/경고 액션 전용 톤 (디자이너 확정: 색상 negative/red 계열,
-      // hover는 솔리드 배경 선례(IconButton primary)와 동일하게 interaction.light.white 오버레이)
+      // 오버레이 강도: hover/focus는 interaction.normal, pressed는 interaction.strong — light는 변화가 약해 상향)
       return cn(
         "bg-[var(--color-filled-basic-negative)] text-inverse border border-transparent",
-        "hover:[background-image:linear-gradient(0deg,var(--color-interaction-light-white-hover),var(--color-interaction-light-white-hover))]",
-        "focus-visible:[background-image:linear-gradient(0deg,var(--color-interaction-light-white-focus),var(--color-interaction-light-white-focus))]",
-        "active:[background-image:linear-gradient(0deg,var(--color-interaction-light-white-pressed),var(--color-interaction-light-white-pressed))]"
+        "hover:[background-image:linear-gradient(0deg,var(--color-interaction-normal-white-hover),var(--color-interaction-normal-white-hover))]",
+        "focus-visible:[background-image:linear-gradient(0deg,var(--color-interaction-normal-white-focus),var(--color-interaction-normal-white-focus))]",
+        "active:[background-image:linear-gradient(0deg,var(--color-interaction-strong-white-pressed),var(--color-interaction-strong-white-pressed))]"
       );
     case "secondary":
       return cn(
