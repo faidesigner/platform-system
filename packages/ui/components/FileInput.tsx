@@ -169,7 +169,7 @@ export function FileInput({
           "flex items-center justify-center gap-s text-body-s transition-colors",
           "rounded-fai-s bg-[var(--color-bg-100)] cursor-pointer",
           mode === "dropzone"
-            ? "flex-col border border-dashed py-xl px-m"
+            ? "flex-col border-2 border-dashed py-xl px-m" // 2px — 1px dashed의 코너 렌더 이슈 회피 (디자이너 확정)
             : "h-3xl px-ms border",
           disabled
             ? "bg-fill-disabled text-[var(--color-text-basic-disabled)] border-border-disabled cursor-not-allowed"
@@ -178,8 +178,8 @@ export function FileInput({
               : isDragOver
                 ? "border-border-brand bg-fill-faint"
                 : mode === "dropzone"
-                  ? // dashed는 secondary(gray.100)가 흐릿해 primary로 상향 — 중간톤 보더 토큰 부재 이슈 (design-review 7)
-                    "border-[var(--color-border-primary)] hover:bg-fill-faint"
+                  ? // 중간톤 신규 토큰 border-medium (디자이너 확정 2026-07-14)
+                    "border-[var(--color-border-medium)] hover:bg-fill-faint"
                   : "border-border-secondary hover:border-border-primary"
         )}
       >

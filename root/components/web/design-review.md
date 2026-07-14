@@ -38,12 +38,7 @@
 - 구현: `filled.optional.brand-primaryBtn` / 의미상 후보: `filled.basic.primary` (해석값 동일 gray.800)
 - 토큰 네이밍 의도 정리 필요
 
-### 7. FileInput 드롭존 dashed 보더 ✱ + 중간톤 보더 토큰 부재
-- dashed 보더를 border-secondary(gray.100)→border-primary(gray.700)로 상향 (secondary는 dashed에서 시인성 부족)
-- **근본 이슈**: 보더 토큰 그레이 스케일이 30/50/100 ↔ 700으로 점프 — 중간톤(gray.300~400급) 토큰이 없음. 드롭존·구분선 강조 등에서 반복될 문제 → 신규 토큰(예: border-medium) 신설 여부 결정 필요
-- dashed 렌더 특성: 1px dashed는 코너(radius 8px)에서 대시 간격이 브라우저별로 어긋남 — 시각 확인 권장, 필요시 2px 검토
-
-### 8. Dialog 모바일 오버플로 인지
+### 7. Dialog 모바일 오버플로 인지
 - 디자이너 확정으로 모바일에서도 min-width 유지 — 단 s(400px)도 모바일 브레이크포인트(390px)보다 커서 좁은 기기에서 가로 스크롤 발생 가능. 의도 확인만 남음
 
 ---
@@ -60,4 +55,5 @@
 | 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 — 색상 negative(red) 계열, hover는 interaction.light.white 오버레이 (솔리드 배경 선례 준수) |
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
 | 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
+| 2026-07-14 | border-medium 토큰 신설 | 라이트 gray.300 / 다크 gray.400 — 드롭존 등 중간톤 보더용. 드롭존 dashed는 2px 확정 |
 | 2026-07-14 | 모션 규칙 | foundation motion에 instant 티어 신설(min 100/기본 150/max 200ms) — 마이크로 인터랙션용. 모든 명시 duration은 motion 토큰 사용, 신규 컴포넌트 일괄 적용 |

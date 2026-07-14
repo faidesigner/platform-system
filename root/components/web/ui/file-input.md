@@ -2,7 +2,7 @@
 **Status**: Draft
 
 > 폼 공통 규칙(라벨 + required 빨간 * + 설명/에러)은 date-input.md와 동일.
-> **드롭존 dashed 보더는 신규 패턴 ✱** — 박스형 트리거의 파생 (디자이너 검토 대상)
+> 드롭존 dashed 보더: **2px + `{color.border.medium}`** (디자이너 확정 2026-07-14 — 중간톤 토큰 신설)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 파일 선택·업로드 입력 (드래그&드롭 + 클릭)
@@ -18,7 +18,7 @@
 
 | 트리거 상태 | 스타일 |
 |---|---|
-| default | input: border-secondary / dropzone: **border-primary dashed** (secondary는 dashed에서 시인성 부족) |
+| default | input: border-secondary / dropzone: **border-medium 2px dashed** |
 | hover | input: border-primary / dropzone: fill-faint 배경 |
 | dragover | border-brand + fill-faint 배경 |
 | error | border-negative + 에러 메시지 |
@@ -52,7 +52,7 @@
 ```json
 {
   "component": "FileInput",
-  "trigger": "date-input.md 박스형 규칙. dropzone: {color.border.primary} dashed ✱ (중간톤 보더 토큰 부재로 primary 사용)",
+  "trigger": "date-input.md 박스형 규칙. dropzone: {color.border.medium} 2px dashed",
   "dragover": { "border": "{color.border.brand-primary}", "bg-color": "{color.filled.basic.primaryOp-secondary}" },
   "file-item": { "bg-color": "{color.filled.basic.primaryOp-secondary}", "radius": "rounded-8px", "size-text": "{w.caption.M} tertiary" }
 }
