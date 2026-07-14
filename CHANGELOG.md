@@ -2,6 +2,27 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-07-15
+
+### ✨ Added
+
+#### ProductReviews ja 전용 4번째 리뷰 카드 (products/homepage)
+- 일본어 로케일(`ja`) + `vision-check-out` 슬리그 조건 시 4번째 카드 동적 추가
+- 카드 스펙: cafeteria 아이콘, 민트 컬러(`--color-text-basic-positive`), 이미지 `vco-review-retail-hibinoma-final.webp`
+- 콘텐츠: Comma Store 직영점 (東京都江東区豊洲) — ja.json `visionCheckout.reviews.3` 키 추가
+
+### 🔄 Changed
+
+#### ProductReviews 슬라이더 우측 패딩 및 스냅 (products/homepage)
+- 마지막 카드 `snap-start` → `snap-end` + 컨테이너 `scroll-pr` 추가 — 스냅백 없이 우측 패딩 정상 표시
+- 컨테이너 `pr` 값을 `pl`과 동일한 breakpoint/토큰으로 적용 (`--padding-XL` / `--padding-8XL` / desktop calc)
+- 이미지 높이 `h-[420px]` 고정, `items-stretch` 통일
+
+#### AboutPeople 슬라이더 우측 패딩 및 스냅 (products/homepage)
+- ProductReviews와 동일 조건 적용: `pr`/`scroll-pr` 추가, 마지막 카드 `snap-end`
+
+---
+
 ## [Unreleased] - 2026-07-14
 
 ### 🔄 Changed
