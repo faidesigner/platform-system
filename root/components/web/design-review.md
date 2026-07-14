@@ -63,5 +63,5 @@ Astryx Field(라벨/설명/status 래퍼)에 InputButton을 넣는 시나리오 
 | 2026-07-14 | 파괴적 버튼 톤 | Button `warning` 톤 신설 — 색상 negative(red) 계열, hover는 interaction.light.white 오버레이 (솔리드 배경 선례 준수) |
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
 | 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
-| 2026-07-14 | border-medium 토큰 신설 | 라이트 gray.300 / 다크 gray.400 — 드롭존 등 중간톤 보더용. 드롭존 dashed는 2px 확정 |
+| 2026-07-14 | border-fourth 토큰 신설 | 라이트 gray.300 / 다크 gray.400 — 중간톤 보더, 주 용도 dashed(드롭존 2px 확정). text.basic.fourth와 네이밍 정합 |
 | 2026-07-14 | 모션 규칙 | foundation motion에 instant 티어 신설(min 100/기본 150/max 200ms) — 마이크로 인터랙션용. 모든 명시 duration은 motion 토큰 사용, 신규 컴포넌트 일괄 적용 |

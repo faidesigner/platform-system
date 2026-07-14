@@ -178,8 +178,8 @@ export function FileInput({
               : isDragOver
                 ? "border-border-brand bg-fill-faint"
                 : mode === "dropzone"
-                  ? // 중간톤 신규 토큰 border-medium (디자이너 확정 2026-07-14)
-                    "border-[var(--color-border-medium)] hover:bg-fill-faint"
+                  ? // 중간톤 토큰 border-fourth — dashed 용도 (디자이너 확정 2026-07-14)
+                    "border-[var(--color-border-fourth)] hover:bg-fill-faint"
                   : "border-border-secondary hover:border-border-primary"
         )}
       >

@@ -71,7 +71,7 @@
     "border": {
       "primary": "{color.gray.700}",
       "secondary": "{color.gray.100}",
-      "medium": "{color.gray.300}",
+      "fourth": "{color.gray.300}",
       "tertiary": "{color.gray.50}",
       "inverse": "{color.white}",
       "disabled": "{color.gray.30}",
@@ -283,7 +283,7 @@
     "border": {
       "primary": "{color.gray.200}",
       "secondary": "{color.gray.500}",
-      "medium": "{color.gray.400}",
+      "fourth": "{color.gray.400}",
       "tertiary": "{color.gray.700}",
       "inverse": "{color.white}",
       "disabled": "{color.gray.700}",
