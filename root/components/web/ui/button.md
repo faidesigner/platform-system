@@ -1,5 +1,5 @@
 # Button Specification
-**Status**: Review
+**Status**: Final
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 사용자 액션을 유발하는 기본 인터랙션 컴포넌트
@@ -84,7 +84,7 @@
         "bg-color": "{color.filled.optional.brand-primary}",
         "text-color": "{color.text.optional.brand-secondaryBtn}",
         "border": "{color.border.brand-primary}",
-        "_description": "텍스트는 gray.900 — green.500 배경 위 white는 대비 미달이라 구현 기준으로 확정"
+        "_description": "확정: 구현 기준 gray.900 고정(--fai-color-on-brand). 파운데이션 brand-primaryBtn(라이트 white/다크 gray.900)과 불일치하나 대비 문제로 구현 유지. 다크 모드 대응 시 재검토"
       }
     }
   }
