@@ -130,3 +130,5 @@ export { HoverCard } from './components/HoverCard';
 export type { HoverCardProps, HoverCardPlacement } from './components/HoverCard';
 export { InputButton } from './components/InputButton';
 export type { InputButtonProps, InputButtonSize } from './components/InputButton';
+export { Field, useField, FieldContext } from './components/field/Field';
+export type { FieldProps, FieldContextValue } from './components/field/Field';

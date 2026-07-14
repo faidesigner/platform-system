@@ -1,7 +1,7 @@
 # File Input Specification
 **Status**: Draft
 
-> 폼 공통 규칙(라벨 + required 빨간 * + 설명/에러)은 date-input.md와 동일.
+> 셸 없음(디자이너 확정): 라벨/설명은 **Field(field.md)**가 담당. 내부 검증 에러(maxSize/maxFiles)만 스스로 표시.
 > 드롭존 dashed 보더: **2px + `{color.border.fourth}`** (디자이너 확정 2026-07-14 — border-fourth: 중간톤·dashed 용도 토큰)
 
 ## 1. 🎯 Definition & Usage
@@ -21,7 +21,7 @@
 | default | input: border-secondary / dropzone: **border-fourth 2px dashed** |
 | hover | input: border-primary / dropzone: fill-faint 배경 |
 | dragover | border-brand + fill-faint 배경 |
-| error | border-negative + 에러 메시지 |
+| error | input 모드: negative 2px 스트로크 / dropzone: 2px dashed negative |
 | disabled | fill-disabled + disabled 텍스트 |
 
 ## 3. ⚡ Interaction & State
@@ -62,3 +62,4 @@
 - description에 허용 형식과 용량 한도를 미리 안내 — 실패 후 알림보다 사전 안내
 - 이미지 전용이면 accept="image/*"로 피커 단계에서 제한
 - 업로드 자체(진행률·재시도)는 별도 레이어 — 이 컴포넌트는 "선택"까지만 담당
+

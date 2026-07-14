@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import { useField } from "./field/Field";
 
 export type InputButtonSize = "large" | "medium";
 
@@ -73,13 +74,17 @@ export function InputButton({
   suffix,
   hasClear = false,
   onClear,
-  error = false,
+  error: errorProp = false,
   readOnly = false,
-  disabled,
+  disabled: disabledProp,
   className,
   onClick,
   ...rest
 }: InputButtonProps) {
+  /* Field 안에서는 id·aria-describedby·error·disabled를 컨텍스트로 이어받음 */
+  const field = useField();
+  const error = errorProp || (field?.error ?? false);
+  const disabled = disabledProp || (field?.disabled ?? false);
   const hasValue = value != null && value !== "";
   const interactive = !disabled && !readOnly;
   const sizeCls = SIZE_CLASSES[size];
@@ -87,7 +92,9 @@ export function InputButton({
   return (
     <button
       type="button"
-      aria-label={label}
+      id={field?.inputId}
+      aria-describedby={field?.describedById}
+      aria-label={field == null ? label : undefined}
       aria-haspopup="dialog"
       disabled={disabled}
       aria-readonly={readOnly || undefined}

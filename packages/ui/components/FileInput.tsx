@@ -1,21 +1,16 @@
 "use client";
 
 import * as React from "react";
+import { useField } from "./field/Field";
 
 export type FileInputMode = "dropzone" | "input";
 
 export interface FileInputProps {
-  /** 라벨 (필수 — 접근성) */
-  label: string;
-  labelHidden?: boolean;
-  /** 보조 설명 (허용 형식/용량 안내 권장) */
-  description?: string;
-  /** 필수 표시 (빨간 *) @default false */
-  required?: boolean;
+  /** 단독 사용 시 접근성 라벨 (Field 안에서는 생략) */
+  label?: string;
   disabled?: boolean;
-  /** 외부 검증 에러 */
+  /** 외부 검증 에러 — Field 컨텍스트가 있으면 그 값을 이어받음 */
   error?: boolean;
-  errorMessage?: string;
   /** 선택 파일 (제어형) — multiple이면 File[] */
   value: File | File[] | null;
   onChange: (files: File | File[] | null) => void;
@@ -51,8 +46,8 @@ const UploadIcon = (
 );
 
 /**
- * 파일 업로드 입력. dropzone(드래그&드롭 + 클릭, 기본) / input(한 줄) 두 모드.
- * 박스형 폼 트리거 규칙(date-input.md ✱)을 따르며, 드롭존은 dashed 보더 신규 패턴.
+ * 파일 업로드 입력 (셸 없음 — Field 방식). dropzone/input 두 모드.
+ * 라벨/설명은 Field가 담당하고, 내부 검증 에러(maxSize 등)만 스스로 표시.
  * maxSize/maxFiles 초과는 내부에서 걸러 에러 메시지로 표시한다.
  * 스펙: root/components/web/ui/file-input.md
  *
@@ -62,12 +57,8 @@ const UploadIcon = (
  */
 export function FileInput({
   label,
-  labelHidden = false,
-  description,
-  required = false,
-  disabled = false,
-  error = false,
-  errorMessage,
+  disabled: disabledProp = false,
+  error: errorProp = false,
   value,
   onChange,
   accept,
@@ -78,13 +69,15 @@ export function FileInput({
   mode = "dropzone",
   className,
 }: FileInputProps) {
+  const field = useField();
+  const disabled = disabledProp || (field?.disabled ?? false);
+  const error = errorProp || (field?.error ?? false);
   const inputRef = React.useRef<HTMLInputElement>(null);
   const [isDragOver, setIsDragOver] = React.useState(false);
   const [internalError, setInternalError] = React.useState<string | null>(null);
 
   const files: File[] = value == null ? [] : Array.isArray(value) ? value : [value];
   const hasError = error || internalError != null;
-  const shownError = errorMessage ?? internalError;
 
   const commit = (list: File[]) => {
     setInternalError(null);
@@ -130,28 +123,15 @@ export function FileInput({
 
   return (
     <div className={cn("inline-flex flex-col min-w-[280px]", className)}>
-      {/* 라벨 — 폼 공통 규칙 (required 빨간 *) */}
-      <span
-        className={cn(
-          "text-body-s font-medium text-[var(--color-text-basic-primary)] pb-2xs",
-          labelHidden && "sr-only"
-        )}
-      >
-        {label}
-        {required && (
-          <span aria-hidden="true" className="text-[var(--color-text-basic-negative)]">
-            {" *"}
-          </span>
-        )}
-      </span>
-
       <input
+        id={field?.inputId}
         ref={inputRef}
         type="file"
         accept={accept}
         multiple={multiple}
         disabled={disabled}
-        aria-label={label}
+        aria-label={field == null ? label : undefined}
+        aria-describedby={field?.describedById}
         className="sr-only"
         onChange={(e) => {
           commit(Array.from(e.target.files ?? []));
@@ -174,7 +154,9 @@ export function FileInput({
           disabled
             ? "bg-fill-disabled text-[var(--color-text-basic-disabled)] border-border-disabled cursor-not-allowed"
             : hasError
-              ? "border-[var(--color-border-negative)]"
+              ? mode === "dropzone"
+                ? "border-[var(--color-border-negative)]"
+                : "border-[var(--color-border-negative)] shadow-[inset_0_0_0_1px_var(--color-border-negative)]"
               : isDragOver
                 ? "border-border-brand bg-fill-faint"
                 : mode === "dropzone"
@@ -227,16 +209,12 @@ export function FileInput({
         </ul>
       )}
 
-      {/* 설명 / 에러 */}
-      {hasError && shownError != null ? (
+      {/* 내부 검증 에러(maxSize/maxFiles)만 여기서 표시 — 외부 설명/에러는 Field 담당 */}
+      {internalError != null && (
         <span role="alert" className="pt-2xs text-caption-m text-[var(--color-text-basic-negative)]">
-          {shownError}
+          {internalError}
         </span>
-      ) : description != null ? (
-        <span className="pt-2xs text-caption-m text-[var(--color-text-basic-tertiary)]">
-          {description}
-        </span>
-      ) : null}
+      )}
     </div>
   );
 }

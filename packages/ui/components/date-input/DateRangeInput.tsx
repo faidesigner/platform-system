@@ -10,14 +10,10 @@ export interface DateRangePreset {
 }
 
 export interface DateRangeInputProps {
-  /** 라벨 (필수 — 접근성) */
-  label: string;
-  labelHidden?: boolean;
-  description?: string;
-  required?: boolean;
+  /** 단독 사용 시 접근성 라벨 (Field 안에서는 생략) */
+  label?: string;
   disabled?: boolean;
   error?: boolean;
-  errorMessage?: string;
   /** 선택 기간 (제어형) */
   value: DateRange | null;
   /** start·end 모두 선택되면 팝오버 자동 닫힘 */
@@ -45,12 +41,8 @@ export interface DateRangeInputProps {
  */
 export function DateRangeInput({
   label,
-  labelHidden,
-  description,
-  required,
   disabled,
   error,
-  errorMessage,
   value,
   onChange,
   min,
@@ -82,12 +74,8 @@ export function DateRangeInput({
   return (
     <DateFieldShell
       label={label}
-      labelHidden={labelHidden}
-      description={description}
-      required={required}
       disabled={disabled}
       error={error}
-      errorMessage={errorMessage}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       displayValue={displayValue}

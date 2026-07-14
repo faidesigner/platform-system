@@ -2,7 +2,7 @@
 **Status**: Draft
 
 > 참조 구조: Seed Design input-button (치수/상태 모델) — 값은 전부 기존 foundation 토큰으로 매핑
-> 라벨/설명 셸 없음 — Field 계열 래퍼가 담당 (신규 패턴 ✱, 기존 DateInput류는 라벨 내장형)
+> 라벨/설명 셸 없음 — **Field(field.md)가 담당** (디자이너 확정: Field 방식 통일). Field 컨텍스트에서 id·error·disabled 자동 소비
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 입력 필드 형태의 버튼 — 직접 타이핑하지 않고 피커/선택창을 여는 트리거. 선택 완료 시 값이 표시됨
@@ -25,9 +25,9 @@
 | enabled | bg-100 + border-secondary 1px |
 | hover | border-primary |
 | pressed | interaction.light.black.pressed 오버레이 |
-| error | **negative 2px 스트로크** (1px border + 1px inset shadow — 레이아웃 무밀림) ✱ |
+| error | **negative 2px 스트로크** (1px border + 1px inset shadow — 무밀림). 폼 에러 공통 규칙으로 확정 |
 | disabled | fill-disabled + disabled 텍스트, 클릭 차단 |
-| readonly ✱ | fill-disabled 배경 + **primary 텍스트**, 클릭 차단 — 신규 상태 |
+| readonly | fill-disabled 배경 + **primary 텍스트**, 클릭 차단 — **input 계열 전용** (디자이너 확정: 다른 폼으로 확대 안 함) |
 
 - 클리어: 값 있을 때만, 클릭 시 onClear (트리거 클릭과 분리)
 - 접근성: `aria-haspopup="dialog"`, readonly는 `aria-readonly`, 클리어는 개별 버튼 롤
@@ -69,3 +69,4 @@
 - placeholder는 동작을 암시 ("지역 선택") — 라벨 대용 금지
 - 선택 UI가 닫힌 뒤 값이 즉시 반영되는지 확인 (value는 제어형)
 - readonly는 "볼 수 있지만 지금은 못 바꾸는" 값에만 — 영구히 못 바꾸면 일반 텍스트로
+

@@ -1,28 +1,29 @@
 "use client";
 
 import * as React from "react";
+import { useField } from "../field/Field";
 
-/** @internal DateInput 계열 공용 필드 셸 (라벨/설명/에러 + 트리거 + 팝오버) */
+/**
+ * @internal DateInput 계열 공용 트리거 + 팝오버 (셸 없음 — Field 방식 통일)
+ * 라벨/설명/에러 텍스트는 Field가 담당하고, 여기는 박스와 팝오버만 그린다.
+ * 트리거 시각은 input-button.md 규칙을 따른다 (에러 2px, pressed 오버레이).
+ */
 
 export function cnDate(...values: Array<string | undefined | null | false>) {
   return values.filter(Boolean).join(" ");
 }
 
 export interface DateFieldShellProps {
-  label: string;
-  labelHidden?: boolean;
-  description?: string;
-  required?: boolean;
+  /** 단독 사용 시 접근성 라벨 (Field 안에서는 생략 — htmlFor 연결) */
+  label?: string;
   disabled?: boolean;
   error?: boolean;
-  errorMessage?: string;
   /** 팝오버 열림 상태 */
   isOpen: boolean;
   onOpenChange: (open: boolean) => void;
   /** 트리거에 표시할 텍스트 (없으면 placeholder) */
   displayValue: string | null;
   placeholder: string;
-  /** 클리어 버튼 — 값이 있을 때만 표시 */
   hasClear?: boolean;
   onClear?: () => void;
   /** 팝오버 내용 (Calendar 등) */
@@ -39,12 +40,8 @@ const CalendarIcon = (
 
 export function DateFieldShell({
   label,
-  labelHidden = false,
-  description,
-  required = false,
-  disabled = false,
-  error = false,
-  errorMessage,
+  disabled: disabledProp,
+  error: errorProp,
   isOpen,
   onOpenChange,
   displayValue,
@@ -54,10 +51,13 @@ export function DateFieldShell({
   children,
   className,
 }: DateFieldShellProps) {
-  const rootRef = React.useRef<HTMLDivElement>(null);
-  const labelId = React.useId();
+  const field = useField();
+  const disabled = disabledProp || (field?.disabled ?? false);
+  const error = errorProp || (field?.error ?? false);
 
-  /* 바깥 클릭 / Escape로 팝오버 닫기 */
+  const rootRef = React.useRef<HTMLDivElement>(null);
+
+  /* 바깥 클릭 / Escape로 팝오버 닫기 (overlay-rules Level 1) */
   React.useEffect(() => {
     if (!isOpen) return;
     const onPointerDown = (e: PointerEvent) => {
@@ -75,103 +75,81 @@ export function DateFieldShell({
   }, [isOpen, onOpenChange]);
 
   return (
-    <div ref={rootRef} className={cnDate("relative inline-flex flex-col", className)}>
-      {/* 라벨 */}
-      <span
-        id={labelId}
+    <div ref={rootRef} className={cnDate("relative inline-flex", className)}>
+      {/* 트리거 — input-button.md 시각 규칙 */}
+      <button
+        type="button"
+        id={field?.inputId}
+        aria-describedby={field?.describedById}
+        disabled={disabled}
+        aria-haspopup="dialog"
+        aria-expanded={isOpen}
+        aria-label={field == null ? label : undefined}
+        onClick={() => onOpenChange(!isOpen)}
         className={cnDate(
-          "text-body-s font-medium text-[var(--color-text-basic-primary)] pb-2xs",
-          labelHidden && "sr-only"
+          "flex items-center gap-s h-3xl px-ms min-w-[220px] w-full",
+          "rounded-fai-s text-body-s text-left border",
+          "transition-colors duration-[var(--duration-instant,150ms)]",
+          disabled
+            ? "bg-fill-disabled text-[var(--color-text-basic-disabled)] border-border-disabled cursor-not-allowed"
+            : error
+              ? // 폼 에러 스트로크 2px 통일 (1px border + 1px inset shadow — 무밀림)
+                "bg-[var(--color-bg-100)] border-[var(--color-border-negative)] shadow-[inset_0_0_0_1px_var(--color-border-negative)] cursor-pointer"
+              : isOpen
+                ? "bg-[var(--color-bg-100)] border-border-brand cursor-pointer"
+                : cnDate(
+                    "bg-[var(--color-bg-100)] border-border-secondary cursor-pointer",
+                    "hover:border-border-primary",
+                    "active:[background-image:linear-gradient(0deg,var(--color-interaction-light-black-pressed),var(--color-interaction-light-black-pressed))]"
+                  )
         )}
       >
-        {label}
-        {required && (
-          <span aria-hidden="true" className="text-[var(--color-text-basic-negative)]">
-            {" *"}
-          </span>
-        )}
-      </span>
-
-      {/* 트리거 */}
-      <div className="flex items-center">
-        <button
-          type="button"
-          disabled={disabled}
-          aria-haspopup="dialog"
-          aria-expanded={isOpen}
-          aria-labelledby={labelId}
-          onClick={() => onOpenChange(!isOpen)}
+        <span
           className={cnDate(
-            "flex items-center gap-s h-3xl px-ms min-w-[220px]",
-            "rounded-fai-s border bg-[var(--color-bg-100)] text-body-s text-left",
-            "transition-colors cursor-pointer",
+            "shrink-0",
             disabled
-              ? "bg-fill-disabled text-[var(--color-text-basic-disabled)] border-border-disabled cursor-not-allowed"
-              : error
-                ? "border-[var(--color-border-negative)]"
-                : isOpen
-                  ? "border-border-brand"
-                  : "border-border-secondary hover:border-border-primary"
+              ? "text-[var(--color-icon-basic-disabled)]"
+              : "text-[var(--color-icon-basic-secondary)]"
           )}
         >
+          {CalendarIcon}
+        </span>
+        <span
+          className={cnDate(
+            "flex-1 min-w-0 truncate",
+            displayValue == null && "text-[var(--color-text-basic-tertiary)]"
+          )}
+        >
+          {displayValue ?? placeholder}
+        </span>
+        {hasClear && displayValue != null && !disabled && (
           <span
-            className={cnDate(
-              "shrink-0",
-              disabled
-                ? "text-[var(--color-icon-basic-disabled)]"
-                : "text-[var(--color-icon-basic-secondary)]"
-            )}
-          >
-            {CalendarIcon}
-          </span>
-          <span
-            className={cnDate(
-              "flex-1 min-w-0 truncate",
-              displayValue == null && "text-[var(--color-text-basic-tertiary)]"
-            )}
-          >
-            {displayValue ?? placeholder}
-          </span>
-          {hasClear && displayValue != null && !disabled && (
-            <span
-              role="button"
-              aria-label="지우기"
-              tabIndex={0}
-              onClick={(e) => {
+            role="button"
+            aria-label="지우기"
+            tabIndex={0}
+            onClick={(e) => {
+              e.stopPropagation();
+              onClear?.();
+            }}
+            onKeyDown={(e) => {
+              if (e.key === "Enter" || e.key === " ") {
+                e.preventDefault();
                 e.stopPropagation();
                 onClear?.();
-              }}
-              onKeyDown={(e) => {
-                if (e.key === "Enter" || e.key === " ") {
-                  e.preventDefault();
-                  e.stopPropagation();
-                  onClear?.();
-                }
-              }}
-              className="inline-flex shrink-0 items-center justify-center w-l h-l rounded-fai-circle text-[var(--color-icon-basic-tertiary)] hover:bg-fill-faint"
-            >
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
-            </span>
-          )}
-        </button>
-      </div>
+              }
+            }}
+            className="inline-flex shrink-0 items-center justify-center w-l h-l rounded-fai-circle text-[var(--color-icon-basic-tertiary)] hover:bg-fill-faint"
+          >
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
+          </span>
+        )}
+      </button>
 
-      {/* 설명 / 에러 */}
-      {error && errorMessage != null ? (
-        <span className="pt-2xs text-caption-m text-[var(--color-text-basic-negative)]">
-          {errorMessage}
-        </span>
-      ) : description != null ? (
-        <span className="pt-2xs text-caption-m text-[var(--color-text-basic-tertiary)]">
-          {description}
-        </span>
-      ) : null}
-
-      {/* 팝오버 */}
+      {/* 팝오버 — overlay-rules Level 1 */}
       {isOpen && !disabled && (
         <div
           role="dialog"
-          aria-label={label}
+          aria-label={label ?? "날짜 선택"}
           className={cnDate(
             "absolute top-full left-0 z-[var(--z-popover,300)] mt-2xs",
             "rounded-fai-m border border-border-tertiary bg-[var(--color-bg-100)] shadow-M"

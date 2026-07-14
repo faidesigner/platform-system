@@ -5,19 +5,11 @@ import { Calendar, type ISODateString } from "../Calendar";
 import { DateFieldShell } from "./DateField";
 
 export interface DateInputProps {
-  /** 라벨 (필수 — 접근성) */
-  label: string;
-  /** 라벨 시각 숨김 @default false */
-  labelHidden?: boolean;
-  /** 보조 설명 */
-  description?: string;
-  /** 필수 표시 (빨간 *) @default false */
-  required?: boolean;
-  /** @default false */
+  /** 단독 사용 시 접근성 라벨 (Field 안에서는 생략) */
+  label?: string;
+  /** @default false — Field 컨텍스트가 있으면 그 값을 이어받음 */
   disabled?: boolean;
-  /** 에러 상태 + 메시지 */
   error?: boolean;
-  errorMessage?: string;
   /** 선택 값 (제어형) */
   value?: ISODateString | null;
   /** 선택 콜백 — 선택 시 팝오버 자동 닫힘 */
@@ -37,21 +29,20 @@ export interface DateInputProps {
 }
 
 /**
- * 달력 팝오버로 단일 날짜를 선택하는 입력 필드.
- * 박스형 트리거(신규 폼 트리거 규칙) + Calendar 재사용.
+ * 달력 팝오버로 단일 날짜를 선택하는 입력 필드 (셸 없음 — Field 방식).
+ * 라벨/설명/에러 텍스트는 Field가 담당. 트리거 시각은 input-button.md 규칙.
  * 스펙: root/components/web/ui/date-input.md
+ *
+ * @example
+ * <Field label="예약일" required><DateInput value={d} onChange={setD} /></Field>
  *
  * @example
  * <DateInput label="예약일" value={date} onChange={setDate} min={today} />
  */
 export function DateInput({
   label,
-  labelHidden,
-  description,
-  required,
   disabled,
   error,
-  errorMessage,
   value = null,
   onChange,
   min,
@@ -75,12 +66,8 @@ export function DateInput({
   return (
     <DateFieldShell
       label={label}
-      labelHidden={labelHidden}
-      description={description}
-      required={required}
       disabled={disabled}
       error={error}
-      errorMessage={errorMessage}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       displayValue={displayValue}

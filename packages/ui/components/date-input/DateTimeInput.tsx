@@ -8,14 +8,10 @@ import { DateFieldShell, cnDate } from "./DateField";
 export type ISODateTimeString = string;
 
 export interface DateTimeInputProps {
-  /** 라벨 (필수 — 접근성) */
-  label: string;
-  labelHidden?: boolean;
-  description?: string;
-  required?: boolean;
+  /** 단독 사용 시 접근성 라벨 (Field 안에서는 생략) */
+  label?: string;
   disabled?: boolean;
   error?: boolean;
-  errorMessage?: string;
   /** 선택 값 (제어형) — 'YYYY-MM-DDTHH:mm' */
   value?: ISODateTimeString | null;
   onChange?: (value: ISODateTimeString | null) => void;
@@ -43,12 +39,8 @@ export interface DateTimeInputProps {
  */
 export function DateTimeInput({
   label,
-  labelHidden,
-  description,
-  required,
   disabled,
   error,
-  errorMessage,
   value = null,
   onChange,
   min,
@@ -96,12 +88,8 @@ export function DateTimeInput({
   return (
     <DateFieldShell
       label={label}
-      labelHidden={labelHidden}
-      description={description}
-      required={required}
       disabled={disabled}
       error={error}
-      errorMessage={errorMessage}
       isOpen={isOpen}
       onOpenChange={setIsOpen}
       displayValue={displayValue}

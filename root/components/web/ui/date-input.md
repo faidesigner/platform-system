@@ -11,17 +11,16 @@
 - **DateTimeInput**: 날짜 + 시간 목록 (회의 시작, 발행 시각)
 - **사용 금지**: 생년월일 등 먼 과거는 텍스트 입력 권장. 시간만 필요하면 TimeInput(추후) 사용
 
-## 2. ⚡ Variants — 폼 트리거 신규 규칙 ✱
+## 2. ⚡ Variants — 폼 트리거 규칙 (Field 방식 통일 후)
 
-> ✱ 총괄 디자이너 확정(2026-07): **날짜/셀렉트류 트리거는 박스형**, 자유 텍스트 입력은 기존 라인형(LineInput) 유지.
-> ✱ **required 표시는 빨간 별표(*)로 통일** — 기존 LineInput의 그린 도트도 이 규칙으로 교체.
+> 셸 없음(디자이너 확정 2026-07-14): 라벨/설명/에러 텍스트는 **Field(field.md)**가 담당. 트리거 시각은 **input-button.md** 규칙(에러 2px, pressed 오버레이 포함).
 
 | 트리거 상태 | 스타일 |
 |---|---|
 | default | border-secondary 1px + bg-100, radius `rounded-8px`, height `{size.40}` |
 | hover | border-primary |
 | open(focus) | border-brand |
-| error | border-negative + 하단 에러 메시지 |
+| error | negative 2px 스트로크 (Field 컨텍스트로 전파) |
 | disabled | fill-disabled + disabled 텍스트/테두리 |
 
 ## 3. ⚡ Interaction & State
@@ -85,3 +84,4 @@
 - 조회 필터에는 프리셋(오늘/최근 7일/최근 30일) 제공 권장
 - 시간 간격은 도메인에 맞게 (회의 15분, 예약 30분 등)
 - 라벨은 항상 제공, placeholder를 라벨 대용으로 쓰지 말 것
+

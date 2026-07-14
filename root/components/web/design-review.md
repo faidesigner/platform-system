@@ -38,13 +38,8 @@
 - 구현: `filled.optional.brand-primaryBtn` / 의미상 후보: `filled.basic.primary` (해석값 동일 gray.800)
 - 토큰 네이밍 의도 정리 필요
 
-### 7. InputButton ↔ Field 결합 검토 (2026-07-14 분석)
-Astryx Field(라벨/설명/status 래퍼)에 InputButton을 넣는 시나리오 검증 결과:
-- ✅ 구조 호환: InputButton은 라벨 셸 없는 순수 트리거로 설계 — Field가 label(htmlFor→id)·description을 소유하는 모델과 맞음. id/aria-describedby passthrough 지원
-- ⚠️ **폼 패턴 이원화**: 기존 DateInput/FileInput은 라벨 내장형, InputButton은 셸 없는 신규 패턴 — Field 도입 시 기존 컴포넌트의 라벨 분리 리팩토링 필요 (결정 대기)
-- ⚠️ **status 전파 없음**: Field의 status(error)가 자식 보더에 자동 반영되지 않음 — error prop을 수동으로 함께 넘겨야 함 (Field 구현 시 컨텍스트 전파 설계 필요)
-- ⚠️ **에러 스트로크 두께 충돌**: Seed/InputButton은 2px, 기존 박스형(DateInput 등)은 1px — 통일 여부 결정 필요
-- ⚠️ **readonly 신규 상태**: 폼 공통 규칙에 없던 상태 (fill-disabled 배경 + primary 텍스트) — 다른 폼 컴포넌트로 확대 여부 결정 필요
+### 7. 일반 보더 두께 (에러 외) — 의견 제시됨
+- 에러 스트로크 2px은 확정. **일반 보더(카드/버튼/입력 기본 상태)까지 2px 전환은 비추천 의견 제시** — 시각 무게 과다, 업계 관례(기본 1px + 에러/포커스만 2px)와 상이. 디자이너 최종 판단 대기
 
 ### 8. Dialog 모바일 오버플로 인지
 - 디자이너 확정으로 모바일에서도 min-width 유지 — 단 s(400px)도 모바일 브레이크포인트(390px)보다 커서 좁은 기기에서 가로 스크롤 발생 가능. 의도 확인만 남음
@@ -64,4 +59,7 @@ Astryx Field(라벨/설명/status 래퍼)에 InputButton을 넣는 시나리오 
 | 2026-07-14 | impact 텍스트 색 (라이트) | 구현 기준 gray.900 고정 |
 | 2026-07-14 | Dialog 모바일 폭 | min-width 모바일에서도 유지 |
 | 2026-07-14 | border-fourth 토큰 신설 | 라이트 gray.300 / 다크 gray.400 — 중간톤 보더, 주 용도 dashed(드롭존 2px 확정). text.basic.fourth와 네이밍 정합 |
+| 2026-07-14 | Field 방식 통일 | 라벨/설명/에러 텍스트는 Field 소유, input은 박스만. error/disabled는 컨텍스트 전파(자식이 스스로 렌더). DateInput 3종·FileInput·InputButton 리팩토링 완료 |
+| 2026-07-14 | 폼 에러 스트로크 | 2px 통일 (1px border + 1px inset shadow, 무밀림) — 모든 박스형 입력 |
+| 2026-07-14 | readonly 상태 | input 계열(InputButton) 전용 — 다른 폼 컴포넌트로 확대 안 함 |
 | 2026-07-14 | 모션 규칙 | foundation motion에 instant 티어 신설(min 100/기본 150/max 200ms) — 마이크로 인터랙션용. 모든 명시 duration은 motion 토큰 사용, 신규 컴포넌트 일괄 적용 |
