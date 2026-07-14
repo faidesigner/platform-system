@@ -180,10 +180,10 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             >
               {/* 텍스트 영역 */}
               <div className="fai-card-2-textarea relative z-10 flex flex-col gap-[10px] w-full tablet:w-[57%] tablet:pr-xl">
-                <h3 className="whitespace-pre-line self-stretch max-[420px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
+                <h3 className="whitespace-pre-line self-stretch max-[421px]:text-body-xl text-title-s desktop:text-title-m font-semibold text-text-basic-primary">
                   {feature.title}
                 </h3>
-                <p className="whitespace-pre-line self-stretch max-[420px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
+                <p className="whitespace-pre-line self-stretch max-[421px]:text-body-ms text-body desktop:text-body-l font-normal text-text-basic-tertiary">
                   {feature.description}
                 </p>
               </div>

@@ -12,7 +12,7 @@ export function AboutLogos({ groups }: AboutLogosProps) {
       <div className="flex w-full flex-col items-center gap-4xl rounded-fai-xl bg-sand-filled-primary px-l tablet:px-xl laptop:px-5xl py-4xl">
         {groups.map((group) => (
           <div key={group.id} className="flex flex-col items-center gap-3xl">
-            <p className="text-body-ms max-[420px]:text-body-s font-semibold text-quaternary">
+            <p className="text-body-ms max-[421px]:text-body-s font-semibold text-quaternary">
               {group.caption}
             </p>
 

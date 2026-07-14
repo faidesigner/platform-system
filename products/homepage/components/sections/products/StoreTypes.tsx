@@ -53,8 +53,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
         {/* ── 중앙 설명 ── */}
         <div className="flex flex-col items-center gap-2xs self-stretch text-center w-full">
-          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-text-basic-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
-          <p className="max-[420px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-text-basic-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
+          <p className="max-[421px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-text-basic-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
+          <p className="max-[421px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-text-basic-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
         </div>
       </div>
 
@@ -63,14 +63,14 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
         <div className="flex flex-col items-start gap-3xl self-stretch w-full">
 
           {/* ── 섹션 타이틀 ── */}
-          <h2 className="max-[420px]:text-body-l text-body-xl tablet:text-title-s desktop-s:text-title-m desktop:text-title-l font-bold text-text-basic-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
+          <h2 className="max-[421px]:text-body-l text-body-xl tablet:text-title-s desktop-s:text-title-m desktop:text-title-l font-bold text-text-basic-primary tracking-[0.3px] text-left">{current.sectionTitle}</h2>
 
           {/* ── 카드 그리드 ── */}
           <div className="grid max-[768px]:grid-cols-1 grid-cols-2 gap-xl w-full">
             {current.cards.map((card, i) => (
               <div
                 key={i}
-                className={`fai-storetype-card relative flex flex-col items-start max-[420px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[768px]:col-span-1 max-[420px]:h-[536px] col-span-2 h-auto tablet:h-[430px] max-[960px]:h-[320px]" : "col-span-1 max-[420px]:h-[536px] h-[520px] tablet:h-[640px] max-[960px]:h-[540px]"}`}
+                className={`fai-storetype-card relative flex flex-col items-start max-[421px]:p-xl max-[768px]:p-3xl p-[var(--size-48)] gap-[10px] rounded-fai-m bg-sand-200 overflow-hidden w-full ${card.wide ? "max-[768px]:col-span-1 max-[421px]:h-[536px] col-span-2 h-auto tablet:h-[430px] max-[961px]:h-[320px]" : "col-span-1 max-[421px]:h-[536px] h-[520px] tablet:h-[640px] max-[961px]:h-[540px]"}`}
               >
                 {/* 이미지 */}
                 {card.image && card.image !== "MISSING_FROM_DESIGN" ? (
@@ -87,8 +87,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
                 {/* 텍스트 — 좌상단 */}
                 <div className="relative z-20 flex flex-col items-start gap-m self-stretch">
-                  <h3 className="max-[420px]:text-body text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-inverse tracking-[0.3px] text-left">{card.title}</h3>
-                  <p className="max-[420px]:text-body-xs text-body-s tablet:text-body-ms desktop-s:text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch">{card.description}</p>
+                  <h3 className="max-[421px]:text-body text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-inverse tracking-[0.3px] text-left">{card.title}</h3>
+                  <p className="max-[421px]:text-body-xs text-body-s tablet:text-body-ms desktop-s:text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch">{card.description}</p>
                 </div>
               </div>
             ))}

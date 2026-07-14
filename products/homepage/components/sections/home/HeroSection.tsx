@@ -104,8 +104,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         {/* 상단 카피 — 확장 전에만 표시 */}
         {!isExpanded && (
           <div className="absolute left-0 right-0 top-0 z-20 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
-            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
-            <h2 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
+            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
+            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
           </div>
         )}
 

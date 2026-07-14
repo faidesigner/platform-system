@@ -40,10 +40,10 @@ export function AboutPeople({
       {/* titleSection + buttonSection: 나란히 배치 */}
       <div className="max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] flex items-end justify-between gap-ms">
         <div className="flex flex-col gap-ms">
-          <h2 className="text-title-l max-[420px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
+          <h2 className="text-title-l max-[421px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
           <p className="text-body-l desktop:text-body-xl text-tertiary">{subtitle}</p>
         </div>
-        <div className="flex shrink-0 gap-ms max-[420px]:hidden">
+        <div className="flex shrink-0 gap-ms max-[421px]:hidden">
           <IconButton size="L" icon="arrowshapeLeft"  aria-label={a11yPrev} onClick={() => scrollByStep(-1)} />
           <IconButton size="L" icon="arrowshapeRight" aria-label={a11yNext} onClick={() => scrollByStep(1)}  />
         </div>
@@ -66,7 +66,7 @@ export function AboutPeople({
           >
             <article className="flex flex-col gap-3xl">
               {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}
-              <div className="relative h-[400px] w-[720px] max-[960px]:h-[378px] max-[960px]:w-[680px] max-[420px]:h-[190px] max-[420px]:w-[342px] overflow-hidden rounded-fai-m">
+              <div className="relative h-[400px] w-[720px] max-[961px]:h-[378px] max-[961px]:w-[680px] max-[421px]:h-[190px] max-[421px]:w-[342px] overflow-hidden rounded-fai-m">
                 <Image
                   src={card.image.src}
                   alt={card.image.alt}
@@ -81,13 +81,13 @@ export function AboutPeople({
               </div>
 
               {/* textBox: 세로 gap-ms */}
-              <div className="flex w-[720px] max-[960px]:w-[680px] max-[420px]:w-[342px] flex-col gap-ms">
-                <h3 className="text-title-s max-[960px]:text-body-xl max-[420px]:text-body-l desktop:text-title-m font-bold text-primary">
+              <div className="flex w-[720px] max-[961px]:w-[680px] max-[421px]:w-[342px] flex-col gap-ms">
+                <h3 className="text-title-s max-[961px]:text-body-xl max-[421px]:text-body-l desktop:text-title-m font-bold text-primary">
                   {card.title}
                 </h3>
                 {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
                 <div className="flex items-center gap-ms">
-                  <p className="text-body max-[420px]:text-body-s desktop:text-body-l text-primary">
+                  <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
                     {card.name} ㅣ {card.role}
                   </p>
                   {/* 라벨: mint-400 배경 고정 승인, px-s */}

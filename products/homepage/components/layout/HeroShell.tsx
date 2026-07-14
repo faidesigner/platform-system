@@ -30,7 +30,7 @@ export default function HeroShell({ subtitle, title, ctaLabel, children }: HeroS
           <p className="text-title-s tablet:text-title-m font-semibold text-inverse">
             {subtitle}
           </p>
-          <h1 className="text-title-xl max-[420px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold text-inverse">
+          <h1 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold text-inverse">
             {title}
           </h1>
         </div>
