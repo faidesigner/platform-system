@@ -33,6 +33,7 @@ pnpm build && pnpm test        # 사전 게이트 (⚠️ pnpm lint 는 사전 �
 - Mac(ARM) 로컬 빌드 산출물을 그대로 올린다 — 서버 빌드 아님.
 
 ## 배포 후 검증
+- **최신여부(staleness) 대조 — 필수 첫 단계**: `curl -s <URL>/version.json` 의 `sha` 가 `git rev-parse HEAD` 와 일치하는지 확인. 불일치면 그 환경은 아직 옛 빌드 = QA 무의미. (develop 머지만 하고 dev 재배포를 빠뜨려 HOM-46/48이 프리뷰에 반영 안 된 채 QA로 넘어간 재발 방지책. `deploy.sh`가 마커를 남긴다.)
 - 프리뷰/실 URL의 `/ko` `/en` `/ja` 진입 확인(404 없음).
 - 푸터 정책 링크(개인정보/CCTV PDF) 열림.
 - GA: DevTools `window.dataLayer`에서 클릭 이벤트 발화.

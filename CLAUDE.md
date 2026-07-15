@@ -55,3 +55,11 @@ Always reuse existing tokens and components first.
 1. 버그가 순수 로직이 아니라 **실행 시점/부수효과**(rAF 지연, 이벤트 순서, async 경합 등)에 있으면, 순수 함수 테스트만으로는 재발을 못 막는다. 그 **부수효과 자체를 검증하는 회귀 테스트**를 반드시 추가해.
 2. 예: 스크롤 최상단 이동이 "동기 호출이 아니라 rAF로 지연"돼야 하면, `SmoothScroll.test.tsx`처럼 동기 호출 시 실패하도록 테스트를 짜라. (판정 로직 `decideScrollAction`만 테스트하면 "어떻게 적용하는가"의 회귀를 놓친다.)
 3. 정적 export여도 Next App Router는 SPA 소프트 내비게이션을 쓴다 — "production은 fresh mount라 안전"이라는 가정을 근거로 테스트/수정을 생략하지 마.
+
+[Rule: develop 머지 ≠ dev 배포 — QA 검증은 dev 프리뷰 재배포까지] (HOM-46/48 재발 사후분석 2026-07-16)
+배경: 7건(HOM-45/46/47/48/51/52/55)이 develop 병합(`ebb35b6`)까지 마치고 "❹ QA 요청"으로 올라왔지만, 병합 이후 `deploy.sh dev`가 실행되지 않아 **QA가 보는 dev 프리뷰엔 수정 전 상태가 그대로 서빙**되고 있었다. 위 [Fix Complete = develop 머지까지] 규칙의 다음 구멍이다.
+1. QA팀이 검증하는 대상은 develop 브랜치가 아니라 **dev CloudFront 프리뷰**(`d6hs8futv6rcu.cloudfront.net`)다. develop 머지 후 반드시 `cd products/homepage && ./scripts/deploy.sh dev` 를 실행해 프리뷰를 최신화한 뒤에만 "❹ QA 요청"으로 올려라.
+2. **staleness는 추측하지 말고 기계로 확인하라.** `deploy.sh`가 배포된 커밋을 `/version.json`으로 남긴다. QA 착수 전/검증 중 항상 대조:
+   `curl -s https://d6hs8futv6rcu.cloudfront.net/version.json` 의 `sha` ↔ `git rev-parse HEAD`(develop). 다르면 재배포부터.
+3. 카드 노트의 "Playwright PASS"가 **로컬/브랜치 빌드** 기준인지 **dev 배포본** 기준인지 구분해 적어라. 로컬 PASS는 dev 반영을 보장하지 않는다.
+4. dev 검증이 끝나도 그건 **프리뷰**일 뿐 — 실서비스(www.fainders.ai) 반영은 별도 `deploy.sh prd`다. "dev 검증 완료"를 "배포 완료"로 오인하지 마.

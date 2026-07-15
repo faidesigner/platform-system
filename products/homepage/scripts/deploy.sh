@@ -71,6 +71,26 @@ for rf in "${REQUIRED_FILES[@]}"; do
 done
 echo "▶ 필수 standalone 페이지 확인 OK (${#REQUIRED_FILES[@]}개)"
 
+# 배포 버전 마커 — 실제로 올라간 커밋을 /version.json 으로 남겨 staleness를 기계 검출.
+# (develop 머지만 하고 dev 재배포를 빠뜨려 수정이 프리뷰에 반영 안 된 채 QA로 넘어간
+#  HOM-45/46/47/48/51/52/55 재발을 구조적으로 막는다. QA는 아래 한 줄로 최신여부 확인:
+#    curl -s $PREVIEW_URL/version.json  vs  git rev-parse HEAD)
+echo "▶ 버전 마커 생성(out/version.json)..."
+DEPLOY_SHA="$(git -C "$REPO_ROOT" rev-parse HEAD)"
+DEPLOY_BRANCH="$(git -C "$REPO_ROOT" rev-parse --abbrev-ref HEAD)"
+if [ -n "$(git -C "$REPO_ROOT" status --porcelain)" ]; then DEPLOY_DIRTY="true"; else DEPLOY_DIRTY="false"; fi
+DEPLOY_TIME="$(date -u +%Y-%m-%dT%H:%M:%SZ)"
+cat > "$OUT/version.json" <<EOF
+{
+  "target": "$TARGET",
+  "sha": "$DEPLOY_SHA",
+  "branch": "$DEPLOY_BRANCH",
+  "dirty": $DEPLOY_DIRTY,
+  "deployedAt": "$DEPLOY_TIME"
+}
+EOF
+[ "$DEPLOY_DIRTY" = "true" ] && echo "  ⚠️  워킹트리 dirty 상태로 배포 — 커밋 안 된 변경이 섞여 있음."
+
 # S3 동기화 (_original 백업은 항상 제외)
 echo "▶ S3 업로드..."
 SYNC_ARGS=(--exclude "*_original*")
@@ -83,3 +103,5 @@ aws cloudfront create-invalidation --distribution-id "$CLOUDFRONT_ID" --paths "/
   --query "Invalidation.Status" --output text
 
 echo "✅ 배포 완료 → $PREVIEW_URL"
+echo "   배포 커밋: $DEPLOY_BRANCH @ ${DEPLOY_SHA:0:7}  (dirty=$DEPLOY_DIRTY)"
+echo "   최신여부 확인: curl -s $PREVIEW_URL/version.json  ↔  git rev-parse HEAD"
