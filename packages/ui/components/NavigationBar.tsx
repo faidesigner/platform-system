@@ -119,7 +119,8 @@ export default function NavigationBar({
     transparentRef.current = initialTransparent;
     setIsTransparent(initialTransparent);
     setDrawerOpen(false);
-    window.scrollTo({ top: 0, behavior: "instant" });
+    // scrollTo(0) 제거: SmoothScroll이 라우트 전환 스크롤을 단독 책임진다.
+    // 여기서 window.scrollTo(0)을 호출하면 언어 전환 시 SmoothScroll의 위치 복원을 덮어쓴다.
 
     requestAnimationFrame(() => {
       setSkipTransition(false);
