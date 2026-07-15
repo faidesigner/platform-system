@@ -138,7 +138,7 @@ export default function ProductReviews({ title, reviews }: ProductReviewsProps) 
               <div className="flex flex-col items-start gap-l">
                 <p className="fai-review-store text-body desktop:text-body-l font-bold text-text-basic-secondary">
                   {review.store}
-                  {review.role && (
+                  {review.store && review.role && (
                     <span style={{ padding: "0 var(--fai-space-s)", color: "var(--fai-color-quaternary)" }}>|</span>
                   )}
                   {review.role}

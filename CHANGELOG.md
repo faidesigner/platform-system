@@ -4,6 +4,20 @@
 
 ## [Unreleased] - 2026-07-15
 
+### 🔄 Changed
+
+#### NavigationBar 라우트 진입 시 배경 transition 순간 깜빡임 제거 (packages/ui)
+- `skipTransition` 상태 추가 — 라우트 변경 직후 배경 opacity transition 비활성화 후 `requestAnimationFrame`으로 복원
+- 라우트별 초기 투명 상태(`isHome` / `isProductDetail` / `isMedia`) 즉시 적용하여 진입 시 깜빡임 방지
+- 기존 700ms 크로스페이드는 스크롤 인터랙션 구간에서만 유지
+
+#### ProductReviews store 없을 때 구분자 `|` 노출 버그 수정 (products/homepage)
+- `review.role` 존재 여부만 체크하던 조건을 `review.store && review.role` 병렬 체크로 수정
+- ja.json `visionCheckout.reviews.3.store` 빈 문자열 케이스에서 구분자가 노출되던 문제 해결
+
+#### ja.json 리뷰 3번 store 값 빈 문자열로 수정 (products/homepage)
+- `visionCheckout.reviews.3.store`: `"リテール"` → `""` — 카테고리와 store 중복 표기 제거
+
 ### ✨ Added
 
 #### homepage-design SKILL.md 생성 (.claude/skills/homepage-design/)
