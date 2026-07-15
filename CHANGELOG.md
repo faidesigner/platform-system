@@ -6,6 +6,11 @@
 
 ### 🔄 Changed
 
+#### Footer JA locale 이메일 문의 행 숨김 + 타이틀-본문 간격 토큰 수정 (packages/ui, products/homepage)
+- `Footer`: `hideEmail` prop 추가 — JA locale에서 이메일 문의 행 미노출
+- `FooterBridge`: `useLocale()` 기반으로 `hideEmail={locale === 'ja'}` 주입
+- `InfoRow` 및 compact 섹션 타이틀-본문 간격 `--spacing-2XL` (32px, `gap-x-2xl`) 적용
+
 #### SmoothScroll 언어 전환 스크롤 복원 flash·상단고정 완전 수정 (products/homepage)
 - `useLayoutEffect([pathname, locale])` 추가 — paint 이전 동기 복원으로 KO 전환 깜빡임 해소, rAF 재시도로 RSC 스트리밍 지연 로드 대응
 - URL 기반 플래그(`localeHandledUrlRef`) 도입 — boolean 플래그 대신 URL 문자열로 React Strict Mode 이중 호출 시에도 `{type:'top'}` 발동 방지 (JA/EN 상단 고정 해소)
