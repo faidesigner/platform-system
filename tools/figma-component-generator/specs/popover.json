@@ -1,0 +1,29 @@
+{
+  "template": "popover",
+  "name": "Popover",
+  "description": "Click-triggered anchored overlay panel. Generated on system/badge-component.",
+  "panel": {
+    "minWidth": { "$pixelToken": "size.180" },
+    "radius": { "$pixelToken": "size.16" },
+    "strokeWeight": 1,
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "shadow": { "$token": "shadow.M" },
+    "layout": {
+      "direction": "vertical",
+      "gap": { "$pixelToken": "size.8" },
+      "padding": {
+        "top": { "$pixelToken": "size.16" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.16" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    }
+  },
+  "closeButton": { "component": "IconButton", "variant": "tertiary", "position": "top-right" },
+  "variants": [
+    { "name": "placement=bottom", "placement": "bottom" },
+    { "name": "placement=top", "placement": "top" },
+    { "name": "placement=bottom, close=true", "placement": "bottom", "showCloseButton": true }
+  ]
+}

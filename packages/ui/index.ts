@@ -132,3 +132,25 @@ export { InputButton } from './components/InputButton';
 export type { InputButtonProps, InputButtonSize } from './components/InputButton';
 export { Field, useField, FieldContext } from './components/field/Field';
 export type { FieldProps, FieldContextValue } from './components/field/Field';
+
+/* ── Kbd / Link / Lightbox (Astryx 참고 신규) ── */
+export { Kbd } from './components/Kbd';
+export type { KbdProps } from './components/Kbd';
+export { Link } from './components/Link';
+export type { LinkProps, LinkUnderline } from './components/Link';
+export { Lightbox } from './components/lightbox/Lightbox';
+export type { LightboxProps, LightboxItem } from './components/lightbox/Lightbox';
+
+/* ── List / MoreMenu / NumberInput / Pagination / Popover / LinearProgress (Astryx 참고 신규) ── */
+export { List, ListItem } from './components/list/List';
+export type { ListProps, ListItemProps, ListMarker } from './components/list/List';
+export { MoreMenu } from './components/MoreMenu';
+export type { MoreMenuProps, MoreMenuItem } from './components/MoreMenu';
+export { NumberInput } from './components/NumberInput';
+export type { NumberInputProps, NumberInputStatus } from './components/NumberInput';
+export { Pagination } from './components/Pagination';
+export type { PaginationProps, PaginationVariant } from './components/Pagination';
+export { Popover } from './components/Popover';
+export type { PopoverProps, PopoverPlacement } from './components/Popover';
+export { LinearProgress } from './components/LinearProgress';
+export type { LinearProgressProps, LinearProgressVariant } from './components/LinearProgress';

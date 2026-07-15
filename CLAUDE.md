@@ -35,6 +35,11 @@ Always reuse existing tokens and components first.
 1. 새 컴포넌트를 만들면 `root/components/web/`에 `.md` 명세를 반드시 남긴다. 코드만 있고 명세 없는 상태를 금지.
 2. `.md`(사람용 진실)와 `.json`(기계용 파생)의 내용이 어긋나면, `.md`를 기준으로 맞춘다.
 3. 코드(`.tsx`)가 `.md` 명세와 다르면, `.md`의 `Sync Note` 섹션에 불일치를 기록한다.
+4. **컴포넌트를 새로 만들 땐 항상 3종을 동시에 만든다** (2026-07-15 결정):
+   - `.md` 명세 (`root/components/web/`)
+   - `.tsx` 코드 (`packages/ui/components/`) + `index.ts` export
+   - `.json` 스펙 (`tools/figma-component-generator/specs/`) — Figma 생성용, 바로 이 브랜치에 반영
+   하나만 만들고 나머지를 미루지 않는다. 코드화 시 `.json` 스펙도 즉시 같이 생성.
 
 **구현(.tsx) 스타일 규칙 — ⚠️ 중요**:
 

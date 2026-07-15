@@ -1,0 +1,37 @@
+{
+  "template": "kbd",
+  "name": "Kbd",
+  "description": "Keyboard shortcut key badge. Generated on system/badge-component.",
+  "component": {
+    "minWidth": { "$pixelToken": "size.24" },
+    "radius": { "$pixelToken": "size.6" },
+    "strokeWeight": 1,
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.none" },
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": { "$pixelToken": "size.2" },
+        "right": { "$pixelToken": "size.4" },
+        "bottom": { "$pixelToken": "size.2" },
+        "left": { "$pixelToken": "size.4" }
+      }
+    },
+    "fill": { "$token": "semantic.light.filled.basic.secondary" },
+    "stroke": { "$token": "semantic.light.border.secondary" }
+  },
+  "text": {
+    "fontStyle": "Medium",
+    "fontFamily": "mono",
+    "fontSize": { "$pixelToken": "font.size.12" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.12" },
+    "color": { "$token": "semantic.light.text.basic.primary" }
+  },
+  "variants": [
+    { "name": "size=m", "size": "m", "text": "⌘" },
+    { "name": "size=s", "size": "s", "text": "Esc" }
+  ]
+}

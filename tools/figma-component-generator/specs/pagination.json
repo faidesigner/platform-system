@@ -1,0 +1,34 @@
+{
+  "template": "pagination",
+  "name": "Pagination",
+  "description": "Page navigation (pages/count/compact/dots). Generated on system/badge-component.",
+  "component": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.4" },
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER"
+    }
+  },
+  "pageButton": {
+    "size": { "$pixelToken": "size.32" },
+    "radius": { "$pixelToken": "size.8" },
+    "font": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    },
+    "currentFill": { "$token": "semantic.light.filled.basic.secondary" }
+  },
+  "dot": {
+    "size": { "$pixelToken": "size.4" },
+    "radius": 9999,
+    "activeFill": { "$token": "semantic.light.filled.optional.brand-primary" },
+    "inactiveFill": { "$token": "semantic.light.filled.basic.secondary" }
+  },
+  "variants": [
+    { "name": "variant=pages", "variant": "pages" },
+    { "name": "variant=count", "variant": "count" },
+    { "name": "variant=compact", "variant": "compact" },
+    { "name": "variant=dots", "variant": "dots" }
+  ]
+}

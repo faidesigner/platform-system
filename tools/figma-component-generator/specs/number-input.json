@@ -1,0 +1,43 @@
+{
+  "template": "number-input",
+  "name": "NumberInput",
+  "description": "Numeric input with min/max/step, unit, stepper, status. Generated on system/badge-component.",
+  "component": {
+    "field": {
+      "radius": { "$pixelToken": "size.8" },
+      "strokeWeight": 1,
+      "layout": {
+        "direction": "horizontal",
+        "gap": { "$pixelToken": "size.4" },
+        "primaryAlign": "MIN",
+        "counterAlign": "CENTER",
+        "padding": {
+          "top": { "$pixelToken": "size.6" },
+          "right": { "$pixelToken": "size.16" },
+          "bottom": { "$pixelToken": "size.6" },
+          "left": { "$pixelToken": "size.16" }
+        }
+      }
+    },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.16" },
+      "color": { "$token": "semantic.light.text.basic.secondary" }
+    },
+    "unit": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.secondary" }
+    }
+  },
+  "statusStroke": {
+    "default": { "$token": "semantic.light.border.secondary" },
+    "error": { "$token": "semantic.light.border.negative" },
+    "warning": { "$token": "semantic.light.border.warning" },
+    "success": { "$token": "semantic.light.border.positive" }
+  },
+  "variants": [
+    { "name": "status=default", "status": "default", "unit": "" },
+    { "name": "status=default, unit=%", "status": "default", "unit": "%" },
+    { "name": "status=error", "status": "error", "unit": "" },
+    { "name": "status=success", "status": "success", "unit": "GB" }
+  ]
+}

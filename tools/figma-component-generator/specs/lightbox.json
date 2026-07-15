@@ -1,0 +1,35 @@
+{
+  "template": "lightbox",
+  "name": "Lightbox",
+  "description": "Fullscreen media overlay (single/gallery). Generated on system/badge-component.",
+  "component": {
+    "fullscreen": true,
+    "radius": { "$pixelToken": "size.16" },
+    "layout": {
+      "direction": "vertical",
+      "gap": { "$pixelToken": "size.16" },
+      "primarySizing": "FILL",
+      "counterSizing": "FILL",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": { "$pixelToken": "size.24" },
+        "right": { "$pixelToken": "size.24" },
+        "bottom": { "$pixelToken": "size.24" },
+        "left": { "$pixelToken": "size.24" }
+      }
+    },
+    "backdrop": { "$token": "semantic.light.overlay.scrim", "note": "overlay-rules.md 토큰과 정합 필요" }
+  },
+  "controls": {
+    "closeButton": { "component": "IconButton", "position": "top-right" },
+    "prevButton": { "component": "IconButton", "position": "left", "galleryOnly": true },
+    "nextButton": { "component": "IconButton", "position": "right", "galleryOnly": true },
+    "indexBadge": { "position": "bottom-center", "galleryOnly": true }
+  },
+  "variants": [
+    { "name": "mode=single, type=image", "mode": "single", "itemType": "image" },
+    { "name": "mode=gallery, type=image", "mode": "gallery", "itemType": "image", "enableZoom": true },
+    { "name": "mode=single, type=video", "mode": "single", "itemType": "video" }
+  ]
+}
