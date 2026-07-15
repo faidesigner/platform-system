@@ -37,13 +37,10 @@ export function ContactUsSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  React.useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, []);
+  // scroll-to-top 제거: SmoothScroll이 라우트 진입 시 { type: 'top' } 액션으로 처리하며,
+  // 언어 전환 시에는 { type: 'restore' }로 이전 위치를 복원한다.
+  // 이 useEffect를 유지하면 RSC 스트리밍 Commit 2(페이지 콘텐츠)에서 마운트될 때
+  // SmoothScroll의 rAF 복원 이후에 scroll-to-0이 덮어써지는 충돌이 발생한다.
 
   const validateField = (key: string, value: string): string => {
     if (key === "company" && (!value || value.trim() === "")) return t("fields.company.errorMessage");
