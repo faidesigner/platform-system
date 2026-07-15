@@ -56,6 +56,20 @@ export default async function MediaPage({
       : l.title,
   }));
 
+  // 유튜브 RSS 재싱크로 title/description(영상 원어)이 재동기화되는 원문이라, videoId로 키를 매핑한
+  // 오버라이드로 로케일별 번역을 얹는다(HOM-25). 오버라이드 없는 videoId는 t.has가 false → 원문 그대로.
+  const showcaseVideos = visibleShowcaseVideos(showcase.videos, locale).map((v) => {
+    const overrideKey = `showcase.videoOverrides.${v.videoId}`;
+    if (!t.has(`${overrideKey}.title`)) return v;
+    const title = t(`${overrideKey}.title`);
+    return {
+      ...v,
+      title,
+      description: t(`${overrideKey}.description`),
+      thumbnailAlt: title,
+    };
+  });
+
   return (
     <main>
       <MediaShowcaseSection
@@ -64,8 +78,9 @@ export default async function MediaPage({
         ctaLabel={t("showcase.youtube.ctaLabel")}
         // showcase.videos는 sync-youtube.mjs가 RSS에서 그대로 받아오는 원문(로케일 혼재) —
         // 정적 messages 인덱스로 매핑 불가(영상 목록이 리싱크마다 바뀜). 원문 그대로 노출.
-        // 단, hideInLocales(언어별 노출 제외, HOM-25)가 지정된 영상은 현재 로케일에서 걸러낸다.
-        videos={visibleShowcaseVideos(showcase.videos, locale)}
+        // 단, hideInLocales(언어별 노출 제외, HOM-25)가 지정된 영상은 현재 로케일에서 걸러내고,
+        // videoOverrides(videoId 키 매핑, HOM-25)가 있는 영상은 로케일별 번역 title/description을 얹는다.
+        videos={showcaseVideos}
         socials={siteConfig.mediaShowcase.socials}
         // 클라 컴포넌트에는 함수를 props로 못 넘기므로(서버→클라 직렬화 제약),
         // {index}/{label} 플레이스홀더가 남은 템플릿 문자열을 그대로 전달해 클라에서 치환한다.

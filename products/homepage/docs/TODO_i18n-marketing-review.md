@@ -380,6 +380,16 @@ Phase 4에서 "이번 스코프에서 로마자 변환하지 않고 한글 그�
 - ja는 가나 음역(예: ハム・ミョンウォン) 대신 영문 로마자를 그대로 재사용했음. 일본어권 사용자 가독성·브랜드 가이드 관점에서 가나 음역이 필요한지 별도 확인 필요.
 - `footer.ceoValue`(en/ja: "Myungwon Ham · Minkwon Wang")의 구분자는 ko 원문의 "ㆍ"(가운뎃점) 대신 국제적으로 통용되는 " · "(중점)을 사용 — 표기 통일성 검토 필요.
 
+### media.showcase.videoOverrides — 유튜브 쇼케이스 영상 title/description 번역(오버라이드 맵, HOM-25)
+`config/youtube-showcase.json`은 RSS 재싱크마다 재생성되는 외부 동기화 데이터라, `retailTechLetter.letterTitles`와 동일하게 videoId로 매핑하는 `media.showcase.videoOverrides.<videoId>.{title,description}` 오버라이드 키를 도입(`app/[locale]/media/page.tsx`에서 `t.has()`로 존재 여부 확인 후 적용).
+
+| videoId | ko | en | ja |
+|---------|----|----|----|
+| lLDFJ-3rs2U | 파인더스에이아이ㅣAI 무인 매장 소개 / AI 무인매장 솔루션으로 운영되는 Super Swift와 GS25 DX LAB 가산스마트점을 소개합니다. | 원문(영상 자체가 영문) 그대로 유지 | **미번역 — 영문 원문을 임시 값으로 사용 중** |
+| VJSlS3ujdEo | 파인더스에이아이ㅣAI 무인매장 Super Swift / AI 솔루션 기반의 무인매장 스토어 Super Swift, 리테일의 미래를 파인더스에이아이에서 만나보세요. | 원문(영상 자체가 영문) 그대로 유지 | **미번역 — 영문 원문을 임시 값으로 사용 중** |
+
+**검수 포인트:** 두 영상 모두 `youtube-curation.json`의 `hideInLocales`에 `ja`가 남아있어 ja 로케일에는 아직 노출되지 않음(영문 원문이 그대로 노출되는 걸 막기 위한 의도적 게이팅). ja 실번역이 확정되면 (1) 위 videoOverrides의 ja 값을 실제 일본어로 교체하고 (2) `hideInLocales`에서 해당 videoId의 `ja`를 제거해야 노출됨.
+
 ### media.retailTechLetter.letterTitles.1~31 — Stibee 레터 목록 제목 번역(오버라이드 맵)
 `config/retail-tech-letter.json`은 Stibee API 리싱크 시마다 재생성되는 외부 동기화 데이터라 `title`(ko) 자체는 건드리지 않고, id로 매핑하는 `media.retailTechLetter.letterTitles.<id>` 오버라이드 키를 신규 추가(ko/en/ja 31개씩, 총 93개 키). `app/[locale]/media/page.tsx`에서 `t.has()`로 존재 여부를 확인해 있으면 번역을 얹고, 없으면(향후 리싱크로 신규 id 추가 시) ko 원문을 그대로 노출 — 로케일 간 동작이 통일됨(신규 레터는 번역 전까지 3개 로케일 모두 한국어로 보임).
 

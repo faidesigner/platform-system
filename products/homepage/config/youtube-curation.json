@@ -5,8 +5,8 @@
     "fSzG6pXZx-w": ["ko", "ja"],
     "U12evbt9Aoo": ["ko", "en"],
     "NZf1qo6LS8w": ["en"],
-    "lLDFJ-3rs2U": ["ko", "ja"],
-    "VJSlS3ujdEo": ["ko", "ja"]
+    "lLDFJ-3rs2U": ["ja"],
+    "VJSlS3ujdEo": ["ja"]
   },
   "manual": [
     {
@@ -43,6 +43,13 @@
       "description": "Fainders.AI debuts an unmanned flagship store powered by computer vision AI in Seoul",
       "thumbnailAlt": "Super Swift store powered by Fainders.AI",
       "href": "https://www.youtube.com/watch?v=VJSlS3ujdEo"
+    },
+    {
+      "videoId": "fSzG6pXZx-w",
+      "title": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
+      "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale.",
+      "thumbnailAlt": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
+      "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w"
     }
   ],
   "limit": null

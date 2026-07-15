@@ -1,7 +1,14 @@
 {
   "channelId": "UCZpwr96t6EkDKMurSPL11bQ",
-  "fetchedAt": "2026-07-15T02:18:27.495Z",
+  "fetchedAt": "2026-07-15T16:51:25.787Z",
   "videos": [
+    {
+      "videoId": "am92ZPQxrmo",
+      "title": "AI 알바생~ [빵 인식부터, 주문, 계산까지 무엇을 도와드릴까요?]",
+      "description": "우리 매장 신입 알바생을 소개합니다💁🏻‍♀️\n똑똑한 이 직원의 이름은 바로바로 VCO🪄\n\n\n #파인더스에이아이  #shorts  #베이커리맛집 #베이커리카페창업 #ai #리테일 #무인카페 #빵집 #베이커리 #브런치카페 #카페사장",
+      "thumbnailAlt": "AI 알바생~ [빵 인식부터, 주문, 계산까지 무엇을 도와드릴까요?]",
+      "href": "https://www.youtube.com/watch?v=am92ZPQxrmo"
+    },
     {
       "videoId": "K2ueKcophSc",
       "title": "요즘빵집근황[빵순이들의 천국에 루시퍼의 등장이라...(더보기)]",
@@ -108,17 +115,6 @@
       ]
     },
     {
-      "videoId": "fSzG6pXZx-w",
-      "title": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
-      "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale.",
-      "thumbnailAlt": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
-      "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w",
-      "hideInLocales": [
-        "ko",
-        "ja"
-      ]
-    },
-    {
       "videoId": "DSTIFkS5Nw8",
       "title": "Fainders.AI 매장 무인화 솔루션 소개 영상 (한글 자막)",
       "description": "Fainders.AI는 컴퓨터 비전(Computer Vision)과 인공지능(AI) 기술을 활용해 매장 무인화 솔루션을 개발합니다.",
@@ -146,7 +142,6 @@
       "thumbnailAlt": "[Intro] Fainders.AI's unmanned stores",
       "href": "https://www.youtube.com/watch?v=lLDFJ-3rs2U",
       "hideInLocales": [
-        "ko",
         "ja"
       ]
     },
@@ -156,6 +151,16 @@
       "description": "Fainders.AI debuts an unmanned flagship store powered by computer vision AI in Seoul",
       "thumbnailAlt": "Super Swift store powered by Fainders.AI",
       "href": "https://www.youtube.com/watch?v=VJSlS3ujdEo",
+      "hideInLocales": [
+        "ja"
+      ]
+    },
+    {
+      "videoId": "fSzG6pXZx-w",
+      "title": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
+      "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale.",
+      "thumbnailAlt": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
+      "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w",
       "hideInLocales": [
         "ko",
         "ja"

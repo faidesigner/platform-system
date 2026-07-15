@@ -7,6 +7,7 @@
  *
  * 기본 동작: 채널 최신 영상 "전체"를 최신순으로 노출.
  * 큐레이션: config/youtube-curation.json 으로 노출/제외/고정/개수 제어(아래 참고).
+ * 안전망: hideInLocales가 걸린 videoId는 RSS 창 밖으로 밀려나도 직전 결과에서 되살아난다(HOM-25).
  *
  * 쓰는 법:
  *   node scripts/sync-youtube.mjs
@@ -44,8 +45,18 @@ async function loadCuration() {
   }
 }
 
+async function loadPreviousVideos() {
+  try {
+    const prev = JSON.parse(await readFile(OUT, "utf8"));
+    return new Map((prev.videos ?? []).map((v) => [v.videoId, v]));
+  } catch {
+    return new Map();
+  }
+}
+
 async function run() {
   const curation = await loadCuration();
+  const previous = await loadPreviousVideos();
 
   const res = await fetch(RSS, { headers: { "User-Agent": "fai-homepage-sync" } });
   if (!res.ok) throw new Error(`RSS fetch 실패: ${res.status} ${res.statusText}`);
@@ -90,6 +101,18 @@ async function run() {
   const pin = curation.pinned.filter((id) => byId.has(id) && !ex.has(id));
   order = [...pin, ...order.filter((id) => !pin.includes(id))];
 
+  // 안전망: hideInLocales(언어별 노출 규칙)가 걸린 videoId는 RSS 15개 창 밖으로 밀려나거나
+  // manual에서 빠지면 이 영상을 보여줘야 하는 로케일에서도 통째로 사라진다(HOM-25 재발 사례,
+  // fSzG6pXZx-w가 새 영상 게시로 RSS 창 밖으로 밀려나며 발생). exclude로 명시 제외된 게 아니라면
+  // 직전 실행 결과(previous)에서 되살려 노출을 유지하고, 재큐레이션(manual 승격 등)이 필요함을 알린다.
+  const rescued = [];
+  for (const id of Object.keys(curation.hideInLocales ?? {})) {
+    if (byId.has(id) || ex.has(id) || !previous.has(id)) continue;
+    byId.set(id, previous.get(id));
+    order.push(id);
+    rescued.push(id);
+  }
+
   // 개수 제한(옵션)
   let videos = order.map((id) => byId.get(id)).filter(Boolean);
   if (curation.limit && Number.isFinite(curation.limit)) videos = videos.slice(0, curation.limit);
@@ -105,6 +128,13 @@ async function run() {
     OUT,
     JSON.stringify({ channelId: CHANNEL_ID, fetchedAt: new Date().toISOString(), videos }, null, 2) + "\n",
   );
+
+  if (rescued.length) {
+    console.warn(
+      `⚠️  ${rescued.length}개 영상이 RSS 최신 창/manual 밖으로 밀려났으나 hideInLocales 규칙이 있어 이전 데이터로 유지됨: ${rescued.join(", ")}`,
+    );
+    console.warn("   → youtube-curation.json의 manual에 고정 등록해 재발을 막으세요.");
+  }
 
   console.log(`✓ ${videos.length}개 영상 → ${path.relative(process.cwd(), OUT)}`);
   console.log(`  (RSS ${rss.length}개, 제외 ${ex.size}개, 고정 ${pin.length}개)`);

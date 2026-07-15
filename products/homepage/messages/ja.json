@@ -548,6 +548,16 @@
       },
       "socials": {
         "followAriaLabel": "{label}へ移動"
+      },
+      "videoOverrides": {
+        "lLDFJ-3rs2U": {
+          "title": "[Intro] Fainders.AI's unmanned stores",
+          "description": "Hey guys!\n\nWe are Fainders.AI  :)\nCome take a look at our AI-powered checkout-free stores!"
+        },
+        "VJSlS3ujdEo": {
+          "title": "Super Swift store powered by Fainders.AI",
+          "description": "Fainders.AI debuts an unmanned flagship store powered by computer vision AI in Seoul"
+        }
       }
     },
     "retailTechLetter": {
