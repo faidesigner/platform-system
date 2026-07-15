@@ -1,6 +1,7 @@
 'use client';
 
 import { useEffect, useRef } from 'react';
+import { useLocale } from 'next-intl';
 import { usePathname } from '@/i18n/navigation';
 import Lenis from 'lenis';
 import { consumeLocaleSwitchScroll } from '@/lib/localeScroll';
@@ -30,9 +31,12 @@ const navigationType = (): string | undefined =>
   (performance.getEntriesByType('navigation')[0] as PerformanceNavigationTiming | undefined)?.type;
 
 export default function SmoothScroll({ children }: { children: React.ReactNode }) {
-  // next-intl usePathname은 로케일 비종속(/products/vco). 언어 전환은 [locale] 루트
-  // 세그먼트를 바꿔 이 컴포넌트를 리마운트시키므로 아래 이펙트가 마운트 시 실행된다.
+  // next-intl usePathname은 로케일 비종속(/products/vco). production(static export)에서는
+  // 언어 전환 시 [locale] 루트 세그먼트가 바뀌어 이 컴포넌트가 리마운트된다.
+  // dev(Turbopack) SPA 모드에서는 리마운트 없이 update로 처리되어 [pathname] 단독 deps로는
+  // 언어 전환을 감지할 수 없다 → locale도 deps에 포함해 effect 재실행을 보장한다.
   const pathname = usePathname();
+  const locale = useLocale();
 
   // 스크롤 이펙트가 마지막으로 처리한 전체 URL / 경로변경 pop이 지정한 복원 대상 URL.
   const handledUrlRef = useRef<string | null>(null);
@@ -170,7 +174,7 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
       else applyScroll(0, lenisRef.current, window);
     };
     requestAnimationFrame(tryHash);
-  }, [pathname]);
+  }, [pathname, locale]);
 
   return <>{children}</>;
 }

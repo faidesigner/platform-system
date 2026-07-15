@@ -16,6 +16,7 @@ vi.mock("lenis", () => ({
 }));
 
 // 일반 네비게이션 경로(해시 없음) → decideScrollAction이 { type: 'top' }을 반환하는 케이스.
+vi.mock("next-intl", () => ({ useLocale: () => "ko" }));
 vi.mock("@/i18n/navigation", () => ({ usePathname: () => "/products" }));
 vi.mock("@/lib/localeScroll", () => ({ consumeLocaleSwitchScroll: () => null }));
 
