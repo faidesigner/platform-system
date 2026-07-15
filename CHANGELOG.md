@@ -6,6 +6,20 @@
 
 ### 🔄 Changed
 
+#### SmoothScroll 언어 전환 스크롤 복원 flash·상단고정 완전 수정 (products/homepage)
+- `useLayoutEffect([pathname, locale])` 추가 — paint 이전 동기 복원으로 KO 전환 깜빡임 해소, rAF 재시도로 RSC 스트리밍 지연 로드 대응
+- URL 기반 플래그(`localeHandledUrlRef`) 도입 — boolean 플래그 대신 URL 문자열로 React Strict Mode 이중 호출 시에도 `{type:'top'}` 발동 방지 (JA/EN 상단 고정 해소)
+- 다른 URL 이동 시 플래그 초기화 — 이후 동일 URL 재방문 시 scroll-to-top 정상 동작 보장
+- NavigationBar `window.scrollTo(0)` 제거 — 라우트 전환 스크롤 단일 책임 (SmoothScroll)
+- ContactUsSection scroll-to-top useEffect 제거 — 언어 전환 시 위치 복원 충돌 해소
+
+#### SmoothScroll 언어 전환 시 스크롤 위치 복원 누락 수정 (products/homepage)
+- dev(Turbopack) SPA 모드에서 locale 변경 시 `[locale]` 레이아웃이 remount 없이 update로 처리되어 `[pathname]` 단독 deps로는 언어 전환 감지 불가 → `[pathname, locale]`로 변경
+- `SmoothScroll.test.tsx`: `next-intl` mock(`useLocale: () => 'ko'`) 추가로 회귀 테스트 유지
+
+#### ContactUsSection toast 1440px 이상 중앙 정렬 (products/homepage)
+- `desktop:mx-auto` 추가 — 1440px 미만 좌측 정렬 유지, 1440px 이상에서 `max-w-[1140px]` 범위 내 중앙 정렬
+
 #### NavigationBar 라우트 진입 시 배경 transition 순간 깜빡임 제거 (packages/ui)
 - `skipTransition` 상태 추가 — 라우트 변경 직후 배경 opacity transition 비활성화 후 `requestAnimationFrame`으로 복원
 - 라우트별 초기 투명 상태(`isHome` / `isProductDetail` / `isMedia`) 즉시 적용하여 진입 시 깜빡임 방지

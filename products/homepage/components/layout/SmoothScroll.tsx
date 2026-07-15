@@ -1,6 +1,6 @@
 'use client';
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useLayoutEffect, useRef } from 'react';
 import { useLocale } from 'next-intl';
 import { usePathname } from '@/i18n/navigation';
 import Lenis from 'lenis';
@@ -42,6 +42,10 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
   const handledUrlRef = useRef<string | null>(null);
   const pendingPopUrlRef = useRef<string | null>(null);
   const firstRunRef = useRef(true);
+  // locale 전환 스크롤을 useLayoutEffect가 처리한 URL.
+  // boolean 대신 URL 문자열 저장 → React Strict Mode 이중 호출 시에도 값이 유지되어
+  // useEffect 두 번째 실행이 {type:'top'}으로 0으로 돌아가는 현상 방지.
+  const localeHandledUrlRef = useRef<string | null>(null);
 
   /** 콘텐츠 높이가 목표에 도달할 때까지 rAF 재시도 후 복원(도달 가능 최댓값으로 클램프). */
   const restoreScroll = (y: number) => {
@@ -119,14 +123,43 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     };
   }, []);
 
+  // 언어 전환 스크롤 복원.
+  // ① paint 이전 동기 scrollTo: 컨텐츠가 이미 로드됐을 때 flash 방지.
+  // ② rAF 재시도(restoreScroll): RSC 스트리밍으로 컨텐츠가 늦게 로드될 때도 복원 보장.
+  // ③ URL 기반 플래그(localeHandledUrlRef): React Strict Mode 이중 호출 시에도
+  //    useEffect 두 번째 실행이 {type:'top'}으로 scroll=0 하는 현상 방지.
+  useLayoutEffect(() => {
+    const localeY = consumeLocaleSwitchScroll();
+    if (localeY === null) return;
+    const url = fullUrl();
+    localeHandledUrlRef.current = url;
+    // ① 동기 즉시 복원 (paint 이전).
+    if (lenisRef.current) {
+      lenisRef.current.resize();
+      lenisRef.current.scrollTo(localeY, { immediate: true });
+    } else {
+      window.scrollTo(0, localeY);
+    }
+    // ② rAF 재시도 — 컨텐츠 로드 후 최종 위치 보정.
+    restoreScroll(localeY);
+  }, [pathname, locale]);
+
   // 라우트 전환 시 스크롤 포커싱 결정(순수 판정 → 부수효과 실행).
   //  - 첫 마운트 back/forward(문서 리로드 왕복 복귀 포함) → 저장 위치 복원
   //  - 경로변경 pop(뒤로/앞으로) → 저장 위치 복원
-  //  - 언어 전환 리마운트 → 저장 위치 복원(HOM-9)
   //  - 해시 앵커 → 해당 섹션 / 그 외 → 최상단
+  //  - 언어 전환은 useLayoutEffect가 처리 → URL 일치 시 skip (Strict Mode 안전)
   useEffect(() => {
     const target = fullUrl();
     handledUrlRef.current = target;
+
+    // locale 전환 URL과 일치하면 useLayoutEffect가 이미 처리 완료 — skip.
+    // boolean 플래그와 달리 URL 비교는 Strict Mode 두 번째 실행에서도 올바르게 동작.
+    if (localeHandledUrlRef.current === target) {
+      return;
+    }
+    // 다른 URL로 이동하면 플래그 해제 — 이후 같은 URL 재방문 시 scroll-to-top 정상 동작.
+    localeHandledUrlRef.current = null;
 
     const isFirstRun = firstRunRef.current;
     firstRunRef.current = false;
@@ -134,14 +167,13 @@ export default function SmoothScroll({ children }: { children: React.ReactNode }
     const pendingPopMatches = pendingPopUrlRef.current === target;
     if (pendingPopMatches) pendingPopUrlRef.current = null;
 
-    const localeY = consumeLocaleSwitchScroll();
     const hash = window.location.hash;
 
     const action = decideScrollAction({
       isFirstRun,
       navType: navigationType(),
       pendingPopMatches,
-      localeY,
+      localeY: null,
       hash,
       savedY: readScrollPosition(target),
     });
