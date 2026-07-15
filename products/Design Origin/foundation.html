@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Foundations - AI Design Origin</title>
+    <meta
+      name="description"
+      content="Foundation tokens and guidelines for AI Design Origin."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="topbar">
+        <a class="brand" href="./index.html" aria-label="AI Design Origin overview">
+          <span class="brand-mark" aria-hidden="true"></span>
+          <span>AI Design Origin</span>
+        </a>
+        <label class="top-search">
+          <span>Search</span>
+          <input type="search" placeholder="Search foundations" />
+        </label>
+      </nav>
+
+      <div class="page-layout">
+        <aside class="side-nav" aria-label="Foundation navigation">
+          <button class="side-nav-toggle" type="button">Expand side navigation</button>
+          <a class="side-link" href="./index.html">Overview</a>
+          <a class="side-link active" href="./foundation.html">Foundations</a>
+          <div class="side-subnav" aria-label="Foundation sections">
+            <a href="./foundation-color.html">Color</a>
+            <a href="./foundation-typography.html">Typography</a>
+            <a href="./foundation-spacing.html">Spacing</a>
+            <a href="./foundation-effects.html">Effects</a>
+            <a href="./foundation-motion.html">Motion</a>
+            <a href="./foundation-icons.html">Icons</a>
+          </div>
+          <a class="side-link" href="./index.html#component">Components</a>
+          <a class="side-link" href="./index.html#guideline">Guideline</a>
+          <a class="side-link" href="./index.html#history-title">Design history</a>
+        </aside>
+
+        <main class="content foundation-page">
+          <header class="site-header">
+            <section class="hero foundation-hero">
+              <div class="hero-copy">
+                <p class="eyebrow">Foundations</p>
+                <h1>Build from shared tokens</h1>
+                <p class="lead">
+                  Foundation은 컬러, 타이포그래피, 간격, 모션, 아이콘처럼 모든 UI가
+                  공통으로 참조하는 가장 낮은 단계의 시스템 언어입니다.
+                </p>
+                <p class="lead-sub">
+                  아래 내용은 이 저장소의 `root/foundation/docs`와 `root/foundation/*.json`
+                  기준으로 정리했습니다. 문서는 사용 규칙을 설명하고, JSON은 실제 값의
+                  source of truth입니다.
+                </p>
+              </div>
+              <aside class="progress-panel">
+                <div class="progress-head">
+                  <span>Foundation readiness</span>
+                  <strong>Git merge 기준</strong>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Docs</span>
+                    <strong>11 files</strong>
+                  </div>
+                  <div class="progress-track" aria-label="Foundation docs ready">
+                    <span style="width: 100%"></span>
+                  </div>
+                </div>
+                <div class="progress-item">
+                  <div class="progress-label">
+                    <span>Token source</span>
+                    <strong>10 JSON</strong>
+                  </div>
+                  <div class="progress-track" aria-label="Foundation token source ready">
+                    <span style="width: 100%"></span>
+                  </div>
+                </div>
+              </aside>
+            </section>
+          </header>
+
+          <section class="section foundation-overview" aria-labelledby="foundation-overview-title">
+            <div class="section-heading">
+              <p class="eyebrow">Foundation overview</p>
+              <h2 id="foundation-overview-title">Git 안의 Foundation 섹션</h2>
+            </div>
+            <div class="foundation-index-grid">
+              <a class="foundation-index-card" href="./foundation-color.html">
+                <span>01</span>
+                <strong>Color</strong>
+                <p>Primitive, semantic, brand override 구조</p>
+              </a>
+              <a class="foundation-index-card" href="./foundation-typography.html">
+                <span>02</span>
+                <strong>Typography</strong>
+                <p>Primitive font token과 Web type scale</p>
+              </a>
+              <a class="foundation-index-card" href="./foundation-spacing.html">
+                <span>03</span>
+                <strong>Spacing</strong>
+                <p>Size, padding, spacing, corner radius</p>
+              </a>
+              <a class="foundation-index-card" href="./foundation-effects.html">
+                <span>04</span>
+                <strong>Effects</strong>
+                <p>Opacity와 shadow elevation scale</p>
+              </a>
+              <a class="foundation-index-card" href="./foundation-motion.html">
+                <span>05</span>
+                <strong>Motion</strong>
+                <p>Duration, easing, reduced motion rules</p>
+              </a>
+              <a class="foundation-index-card" href="./foundation-icons.html">
+                <span>06</span>
+                <strong>Icons</strong>
+                <p>시맨틱 아이콘 이름과 역할 중심 사용</p>
+              </a>
+            </div>
+          </section>
+
+        </main>
+      </div>
+    </div>
+  </body>
+</html>
