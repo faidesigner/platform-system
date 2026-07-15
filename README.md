@@ -72,6 +72,44 @@ JSON 수정 → npm run sync → CSS 자동 갱신
 
 ---
 
+## Git 브랜치 규칙
+
+브랜치 이름은 **"어디를 건드리는 작업인가"** 로 정한다. 위치가 prefix를 결정한다.
+
+### 1. 디자인시스템 작업 → `system/`
+
+`packages/ui/` 또는 `root/`(foundation·토큰·컴포넌트 명세)를 건드리는 작업.
+**프로덕트가 지정되지 않으면 이것이 기본값.**
+
+| 예시 | 대상 |
+| --- | --- |
+| `system/badge-component` | 공용 Badge 컴포넌트 |
+| `system/icons-motion` | foundation 아이콘·모션 토큰 |
+
+### 2. 프로덕트 작업 → `<프로덕트>/<타입>/`
+
+`products/<프로덕트>/` 안에서 일어나는 작업. **프로덕트명을 반드시 포함**해 어느 프로덕트인지 명확히 한다.
+
+| 타입 | 용도 | 예시 |
+| --- | --- | --- |
+| `feat/` | 기능 개발 | `homepage/feat/hero-section` |
+| `fix/` | 버그 수정 | `homepage/fix/button-hover` |
+| `design/` | 스타일 변경 | `design-origin/design/typography` |
+
+### 3. Claude Design 작업 → `claude-design/` (유지)
+
+| 예시 | 대상 |
+| --- | --- |
+| `claude-design/navigation-bar` | Claude Design 컴포넌트 |
+
+### 판별 기준 (헷갈릴 때)
+
+- 바뀌는 파일이 `packages/ui/` 또는 `root/`에 있으면 → `system/`
+- 바뀌는 파일이 `products/<X>/`에 있으면 → `<X>/feat|fix|design/`
+- 둘 다 걸치면 → 디자인시스템(`system/`)이 우선. 프로덕트 반영은 별도 브랜치로 분리.
+
+---
+
 ## Claude Code와 함께 사용하기
 
 이 프로젝트는 `CLAUDE.md`가 포함되어 있어
