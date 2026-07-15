@@ -356,7 +356,7 @@ export function ContactUsSection() {
 
             {/* toast — ≥421px */}
             <div className="hidden min-[421px]:block dark self-stretch">
-              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
+              <div className="flex w-full max-w-[1140px] desktop:mx-auto items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
                   {/* 아이콘: ≥768px에서만 표시 */}
                   <CustomerSupportGraphic className="hidden tablet:block w-[40px] h-[40px] shrink-0" />
