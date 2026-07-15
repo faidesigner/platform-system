@@ -1,0 +1,19 @@
+{
+  "template": "skeleton",
+  "name": "Skeleton",
+  "description": "Animated shimmer loading placeholder. Generated on system/badge-component.",
+  "component": {
+    "fill": { "$token": "semantic.light.filled.basic.quaternary" },
+    "animation": "pulse"
+  },
+  "radius": {
+    "text": { "$pixelToken": "size.8" },
+    "rect": { "$pixelToken": "size.8" },
+    "circle": 9999
+  },
+  "variants": [
+    { "name": "variant=text", "variant": "text" },
+    { "name": "variant=circle", "variant": "circle" },
+    { "name": "variant=rect", "variant": "rect" }
+  ]
+}

@@ -1,0 +1,34 @@
+{
+  "template": "slider",
+  "name": "Slider",
+  "description": "Draggable numeric/range selector with marks, validation. Generated on system/badge-component.",
+  "track": {
+    "height": { "$pixelToken": "size.2" },
+    "radius": 9999,
+    "fill": { "$token": "semantic.light.filled.basic.quaternary" }
+  },
+  "fillColor": {
+    "default": { "$token": "semantic.light.filled.optional.brand-primary" },
+    "error": { "$token": "semantic.light.filled.basic.negative" },
+    "warning": { "$token": "semantic.light.filled.basic.warning" },
+    "success": { "$token": "semantic.light.filled.basic.positive" }
+  },
+  "thumb": {
+    "size": { "$pixelToken": "size.20" },
+    "radius": 9999,
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.brand-primary" },
+    "strokeWeight": 2,
+    "shadow": { "$token": "shadow.XS" }
+  },
+  "mark": {
+    "fontSize": { "$pixelToken": "font.size.12" },
+    "color": { "$token": "semantic.light.text.basic.secondary" }
+  },
+  "variants": [
+    { "name": "mode=single, status=default", "mode": "single", "status": "default" },
+    { "name": "mode=range, status=default", "mode": "range", "status": "default" },
+    { "name": "mode=single, marks", "mode": "single", "marks": true },
+    { "name": "mode=single, status=error", "mode": "single", "status": "error" }
+  ]
+}
