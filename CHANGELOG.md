@@ -2,6 +2,32 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.5.0] - 2026-07-15
+
+### ✨ Added
+
+#### 웹 컴포넌트 명세 보강
+- `root/components/web/layout/drawer-primitives.md` — DrawerMenu, DrawerListItem, DefaultListIcon 명세 추가
+- `root/components/web/layout/global-utility-menu.md` — 글로벌 유틸리티 메뉴 조립 컴포넌트 명세 추가
+- `root/components/web/layout/language-switcher.md` — 언어 전환 스위처 명세 추가
+- `root/components/web/layout/mega-menu-panel.md` — 메가 메뉴 콘텐츠 패널 명세 추가
+- `root/components/web/layout/mega-nav-menu.md` — 데스크톱 메가 네비게이션 메뉴 명세 추가
+- `root/components/web/layout/tablet-drawer-menu.md` — 태블릿 드로어 메뉴 명세 추가
+- `root/components/web/ui/ico-txt-button.md` — 아이콘+텍스트 버튼 명세 추가
+- `root/components/web/ui/in-view-video.md` — 뷰포트 진입 자동 재생 비디오 명세 추가
+
+### 🔄 Changed
+
+#### 토큰 동기화 점검 기록
+- `drawer-primitives`, `language-switcher`, `mega-menu-panel`, `ico-txt-button` 명세에 미방출 CSS 변수 사용 위치와 Tailwind 토큰 클래스 교체 방향을 Sync Note로 기록
+- `global-utility-menu`, `mega-nav-menu`, `tablet-drawer-menu`, `in-view-video` 명세에 토큰 규칙 준수 여부를 Sync Note로 기록
+
+### 🐛 Fixed
+
+#### 토큰 미연결 수정
+- `Scrollbar`, `LanguageSwitcher`, `DrawerPrimitives`, `MegaMenuPanel`, `IcoTxtButton` — `var(--padding-*)`, `var(--spacing-*)`, `var(--cornerRadius-*)` 직접 참조를 Tailwind 토큰 클래스로 교체
+- 관련 명세 Sync Note를 수정 완료 상태로 업데이트
+
 ## [3.4.2] - 2026-06-24
 
 ### 🐛 Fixed

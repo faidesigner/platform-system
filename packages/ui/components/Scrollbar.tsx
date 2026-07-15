@@ -10,7 +10,7 @@ export const Scrollbar = React.forwardRef<HTMLDivElement, ScrollbarProps>(
     return (
       <div
         ref={ref}
-        className={`inline-flex py-[var(--padding-S,8px)] px-[var(--padding-2XS,4px)] justify-center items-start gap-[var(--padding-None,0)] overflow-auto ${className}`}
+        className={`inline-flex justify-center items-start gap-0 overflow-auto py-s px-2xs ${className}`}
         {...props}
       >
         {children}

@@ -20,5 +20,5 @@
 - **overflow**: auto
 - **padding**: 세로 S(8px) / 가로 2XS(4px)
 
-## 4. ⚠️ Sync Note (코드 확인 2026-07-15)
-⚠️ **토큰 미연결**: 코드가 `py-[var(--padding-S,8px)]`, `px-[var(--padding-2XS,4px)]` 형태로 CSS 변수를 참조하는데, `--padding-*` 변수는 방출되지 않음(→ CLAUDE.md 구현 규칙). fallback(8px/4px)으로만 그려지는 상태. **Tailwind spacing 클래스로 교체 필요**: `py-s px-2xs`. 교체 시 토큰 연결됨.
+## 4. ✅ Sync Note (코드 확인 2026-07-15)
+Tailwind 토큰 클래스 방식으로 수정 완료. `py-s px-2xs gap-0` 사용으로 padding/spacing 토큰 연결됨.

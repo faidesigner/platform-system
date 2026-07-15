@@ -29,34 +29,17 @@ export interface MegaMenuPanelProps {
 
 /* [Container] */
 const containerStyle: CSSProperties = {
-  display:        'flex',
-  width:          '100%',
   height:         '332px',
-  padding:        'var(--padding-l, 20px) var(--padding-3-xl, 40px) var(--padding-3-xl, 40px) var(--padding-3-xl, 40px)',
-  flexDirection:  'column',
-  justifyContent: 'space-between',
-  alignItems:     'flex-start',
-  borderRadius:   'var(--cornerRadius-XL, 24px)',
-  border:         '0.5px solid var(--color-border-tertiary)',
-  background:     'var(--color-bg-100)',
-  boxShadow:      'var(--shadow-XL)',
 };
 
 /* [contentsArea] */
 const contentsAreaStyle: CSSProperties = {
-  display:    'flex',
-  alignItems: 'flex-start',
-  gap:        'var(--spacing-XL, 24px)',
   alignSelf:  'stretch',
 };
 
 /* [titleWrapper] */
 const titleWrapperStyle: CSSProperties = {
-  display:       'flex',
   width:         'clamp(243px, 23%, 380px)',
-  flexDirection: 'column',
-  alignItems:    'flex-start',
-  gap:           '8px',
   flexShrink:    0,
 };
 
@@ -73,22 +56,13 @@ const headingStyle: CSSProperties = {
 
 /* [menuItemsWrapper] */
 const menuItemsWrapperStyle: CSSProperties = {
-  display:    'flex',
-  alignItems: 'flex-start',
-  gap:        'var(--spacing-6XL, 100px)',
   flex:       '1 0 0',
 };
 
 /* [menuItem] */
 const menuItemStyle: CSSProperties = {
-  display:        'inline-flex',
   height:         '272px',
-  flexDirection:  'column',
-  alignItems:     'flex-start',
-  gap:            'var(--spacing-XL, 24px)',
   flex:           '1 0 0',
-  textDecoration: 'none',
-  cursor:         'pointer',
 };
 
 /* [textArea] */
@@ -123,15 +97,10 @@ const itemDescStyle: CSSProperties = {
 
 /* [imageFrame] 베이스 — 피그마 수치 통합 */
 const baseImageFrameStyle: CSSProperties = {
-  display:          'flex',
   width:            '267px',
   height:           '200px',
-  flexDirection:    'column',
-  justifyContent:   'flex-end',
-  alignItems:       'flex-start',
   flexShrink:       0,
   aspectRatio:      '267 / 200',
-  borderRadius:     'var(--cornerRadius-S, 8px)',
   backgroundColor:  'lightgray',
   backgroundRepeat: 'no-repeat',
   transition:       'transform 0.3s ease-out',
@@ -164,6 +133,7 @@ function MenuItem({ item }: { item: MegaMenuItemData }) {
     <Link
       href={item.href}
       style={menuItemStyle}
+      className="inline-flex cursor-pointer flex-col items-start gap-xl no-underline"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
@@ -174,7 +144,10 @@ function MenuItem({ item }: { item: MegaMenuItemData }) {
       </div>
 
       {/* 이미지 프레임 — 그라데이션 오버레이 + 배경 이미지 */}
-      <div style={dynamicImageFrameStyle} />
+      <div
+        style={dynamicImageFrameStyle}
+        className="flex flex-col items-start justify-end rounded-fai-s"
+      />
     </Link>
   );
 }
@@ -185,16 +158,19 @@ function MenuItem({ item }: { item: MegaMenuItemData }) {
 
 export function MegaMenuPanel({ title, items }: MegaMenuPanelProps) {
   return (
-    <div style={containerStyle}>
-      <div style={contentsAreaStyle}>
+    <div
+      style={containerStyle}
+      className="flex w-full flex-col items-start justify-between rounded-fai-xl border-[0.5px] border-border-tertiary bg-100 pt-l px-3xl pb-3xl shadow-XL"
+    >
+      <div style={contentsAreaStyle} className="flex items-start gap-xl">
 
         {/* 좌측: 섹션 타이틀 */}
-        <div style={titleWrapperStyle}>
+        <div style={titleWrapperStyle} className="flex flex-col items-start gap-s">
           <span style={headingStyle}>{title}</span>
         </div>
 
         {/* 우측: 아이템 리스트 */}
-        <div style={menuItemsWrapperStyle}>
+        <div style={menuItemsWrapperStyle} className="flex items-start gap-6xl">
           {items.map((item) => (
             <MenuItem key={item.href} item={item} />
           ))}

@@ -46,20 +46,9 @@ function LocaleButton({
   }
 
   const buttonStyle: React.CSSProperties = {
-    display: 'flex',
-    flexDirection: 'column',
-    alignItems: 'flex-start',
-    borderRadius: 'var(--cornerRadius-S, 8px)',
-    fontFamily: 'var(--font-family-Pretendard, Pretendard)',
-    fontSize: 'var(--font-size-14, 14px)',
-    fontStyle: 'normal',
-    lineHeight: 'var(--font-lineHeight-14, 21px)',
-    letterSpacing: 'var(--font-letterSpacing-0, 0)',
     background,
     border: 'none',
     cursor: 'pointer',
-    padding: '8px',
-    textAlign: 'center',
     transition: 'all 0.2s ease',
     fontWeight,
     opacity,
@@ -72,6 +61,7 @@ function LocaleButton({
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
       aria-current={isActive ? 'true' : undefined}
+      className="flex flex-col items-start rounded-fai-s p-s text-center text-body-s"
       style={buttonStyle}
     >
       {localeInfo.label}
@@ -95,9 +85,9 @@ export function LanguageSwitcher({
   };
 
   return (
-    <div style={{ display: 'flex', alignItems: 'center', gap: 'var(--spacing-XS, 6px)' }}>
+    <div className="flex items-center gap-xs">
       {LOCALES.map((l, i) => (
-        <span key={l.code} className="flex items-center" style={{ gap: 'var(--spacing-XS, 6px)' }}>
+        <span key={l.code} className="flex items-center gap-xs">
           {i > 0 && <LineDivider />}
           <LocaleButton
             localeInfo={l}
