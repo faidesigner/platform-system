@@ -6,6 +6,10 @@
 
 ### 🔄 Changed
 
+#### CustomersSection 420px 이하 버튼 텍스트 숨김 + 타이틀-버튼 중앙 정렬 (products/homepage)
+- 420px 이하에서 '실제 도입 후기 더보기' 텍스트 숨김, 아이콘만 노출 (`max-[421px]:hidden`)
+- 타이틀-버튼 수직 정렬 `items-end` → `items-center`
+
 #### Footer JA locale 이메일 문의 행 숨김 + 타이틀-본문 간격 토큰 수정 (packages/ui, products/homepage)
 - `Footer`: `hideEmail` prop 추가 — JA locale에서 이메일 문의 행 미노출
 - `FooterBridge`: `useLocale()` 기반으로 `hideEmail={locale === 'ja'}` 주입
