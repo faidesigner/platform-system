@@ -6,6 +6,14 @@
 
 ### ✨ Added
 
+#### 유튜브 쇼케이스 언어별 노출 제외 (hideInLocales, HOM-25) (products/homepage)
+- `youtube-curation.json`에 `hideInLocales`(videoId→숨길 로케일 배열) 규칙 추가 — 재싱크·재배포에도 유지되는 수동 소스
+- `sync-youtube.mjs`가 규칙을 `youtube-showcase.json` 각 영상 `hideInLocales` 필드로 전파(구움)
+- `lib/showcaseVisibility.ts`(`visibleShowcaseVideos`) 순수 필터 + 단위테스트 5건, `media/page.tsx`가 현재 로케일 기준 필터링
+- 적용: 영어 소개영상(`fSzG6pXZx-w`)→en 전용 / 일본어 사용법(`U12evbt9Aoo`)→ja 전용 / 한국어 사용법(`NZf1qo6LS8w`)→en에서만 숨김
+- 영어 소개영상 2건(`lLDFJ-3rs2U` [Intro], `VJSlS3ujdEo` Super Swift)을 RSS 창(최신 15개) 밖이라 `manual`로 고정 + en 전용 노출(번역 완료 전까지)
+- 정적 export 검증: /ko·/en·/ja media HTML에서 5개 영상 로케일별 노출/제외 정확히 반영 확인
+
 #### homepage-design SKILL.md 생성 (.claude/skills/homepage-design/)
 - 홈페이지 디자인/개발 패턴 가이드 스킬 파일 신규 생성
 - Foundation 토큰 계층, 브레이크포인트, 다크 모드, 그리드, GA 이벤트, i18n, 슬라이더 패턴 등 핵심 규칙 문서화
