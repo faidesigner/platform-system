@@ -6,6 +6,12 @@
 
 ### 🔄 Changed
 
+#### StoreEffects 그래픽 언어 전환 누락 수정 + 카드 높이 통일 + JA 타이틀 수정 (products/homepage)
+- `card.title`(번역 텍스트) → `card.icon`(로케일 독립 키)으로 `EffectGraphic` 키 참조 변경 — EN/JA 전환 시 그래픽 누락 해소
+- `siteConfig` effectCards `icon` 값 `MISSING_FROM_DESIGN` → `EffectIconKey` 실제 값으로 수정
+- 카드 컨테이너 `items-start` → `items-stretch` — 언어별 텍스트 길이 차이에 따른 높이 통일
+- `ja.json`: `遠隔運営が可能` → `遠隔運営可能` 텍스트 수정
+
 #### CustomersSection 420px 이하 버튼 텍스트 숨김 + 타이틀-버튼 중앙 정렬 (products/homepage)
 - 420px 이하에서 '실제 도입 후기 더보기' 텍스트 숨김, 아이콘만 노출 (`max-[421px]:hidden`)
 - 타이틀-버튼 수직 정렬 `items-end` → `items-center`
