@@ -94,7 +94,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
 
       {/* 상단: 3열 카드 */}
       {cards.length > 0 && (
-        <div ref={cardsRef} className="flex flex-row flex-wrap justify-center items-start gap-xl w-full">
+        <div ref={cardsRef} className="flex flex-row flex-wrap justify-center items-stretch gap-xl w-full">
           {cards.map((card, i) => (
             <article
               key={i}
@@ -110,7 +110,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                   }`}
                   style={{ transitionDelay: `${i * 160}ms` }}
                 >
-                  <EffectGraphic name={card.title as import('@fai/ui/components/common/Icon/EffectGraphic').EffectIconKey} />
+                  <EffectGraphic name={card.icon as import('@fai/ui/components/common/Icon/EffectGraphic').EffectIconKey} />
                 </div>
                 <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary">
                   {card.description}
