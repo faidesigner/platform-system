@@ -1,0 +1,233 @@
+{
+  "template": "badge",
+  "name": "Badge",
+  "description": "Read-only status and category badge generated from feature/badge-component.",
+  "component": {
+    "minWidth": {
+      "$pixelToken": "size.48"
+    },
+    "height": {
+      "$pixelToken": "size.20"
+    },
+    "radius": 9999,
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "size.4"
+      },
+      "primarySizing": "AUTO",
+      "counterSizing": "FIXED",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "size.none"
+        },
+        "right": {
+          "$pixelToken": "size.8"
+        },
+        "bottom": {
+          "$pixelToken": "size.none"
+        },
+        "left": {
+          "$pixelToken": "size.8"
+        }
+      }
+    }
+  },
+  "text": {
+    "fontStyle": "Medium",
+    "fontSize": {
+      "$pixelToken": "font.size.12"
+    },
+    "lineHeight": {
+      "$pixelToken": "font.lineHeight.12"
+    },
+    "color": {
+      "$token": "semantic.light.text.basic.primary"
+    }
+  },
+  "icon": {
+    "size": {
+      "$pixelToken": "size.6"
+    }
+  },
+  "variants": [
+    {
+      "name": "variant=neutral, icon=false",
+      "label": "Neutral",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.tertiary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.primary"
+      }
+    },
+    {
+      "name": "variant=info, icon=false",
+      "label": "Info",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.info"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.inverse"
+      }
+    },
+    {
+      "name": "variant=success, icon=false",
+      "label": "Success",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.positive"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.inverse"
+      }
+    },
+    {
+      "name": "variant=warning, icon=false",
+      "label": "Warning",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.warning"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.inverse"
+      }
+    },
+    {
+      "name": "variant=error, icon=false",
+      "label": "Error",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.negative"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.inverse"
+      }
+    },
+    {
+      "name": "variant=blue, icon=false",
+      "label": "Blue",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.info-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.Info"
+      }
+    },
+    {
+      "name": "variant=mint, icon=false",
+      "label": "Mint",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.positive-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.positive"
+      }
+    },
+    {
+      "name": "variant=orange, icon=false",
+      "label": "Orange",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.warning-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.warning"
+      }
+    },
+    {
+      "name": "variant=red, icon=false",
+      "label": "Red",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.basic.negative-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.negative"
+      }
+    },
+    {
+      "name": "variant=yellow, icon=false",
+      "label": "Yellow",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-yellow-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-yellow"
+      }
+    },
+    {
+      "name": "variant=green, icon=false",
+      "label": "Green",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-green-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-green"
+      }
+    },
+    {
+      "name": "variant=indigo, icon=false",
+      "label": "Indigo",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-indigo-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-indigo"
+      }
+    },
+    {
+      "name": "variant=purple, icon=false",
+      "label": "Purple",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-purple-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-purple"
+      }
+    },
+    {
+      "name": "variant=grape, icon=false",
+      "label": "Grape",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-grape-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-grape"
+      }
+    },
+    {
+      "name": "variant=gray, icon=false",
+      "label": "Gray",
+      "icon": false,
+      "fill": {
+        "$token": "semantic.light.filled.tag.category-gray-secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.tag.category-gray"
+      }
+    },
+    {
+      "name": "variant=neutral, icon=true",
+      "label": "Neutral",
+      "icon": true,
+      "fill": {
+        "$token": "semantic.light.filled.basic.tertiary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.primary"
+      }
+    }
+  ]
+}

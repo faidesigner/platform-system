@@ -1,0 +1,115 @@
+{
+  "template": "breadcrumbs",
+  "name": "Breadcrumbs",
+  "description": "Breadcrumb trail generated from feature/badge-component.",
+  "preview": {
+    "stepY": 72
+  },
+  "component": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "size.4"
+      },
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "size.none"
+        },
+        "right": {
+          "$pixelToken": "size.none"
+        },
+        "bottom": {
+          "$pixelToken": "size.none"
+        },
+        "left": {
+          "$pixelToken": "size.none"
+        }
+      }
+    }
+  },
+  "item": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "size.4"
+      },
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "size.4"
+        },
+        "right": {
+          "$pixelToken": "size.none"
+        },
+        "bottom": {
+          "$pixelToken": "size.4"
+        },
+        "left": {
+          "$pixelToken": "size.none"
+        }
+      }
+    }
+  },
+  "separator": {
+    "color": {
+      "$token": "semantic.light.text.basic.secondary"
+    }
+  },
+  "text": {
+    "default": {
+      "fontSize": {
+        "$pixelToken": "font.size.14"
+      },
+      "lineHeight": {
+        "$pixelToken": "font.lineHeight.14"
+      },
+      "color": {
+        "$token": "semantic.light.text.basic.secondary"
+      }
+    },
+    "supporting": {
+      "fontSize": {
+        "$pixelToken": "font.size.12"
+      },
+      "lineHeight": {
+        "$pixelToken": "font.lineHeight.12"
+      },
+      "color": {
+        "$token": "semantic.light.text.basic.secondary"
+      }
+    }
+  },
+  "variants": [
+    {
+      "name": "variant=default, separator=slash, depth=3",
+      "variant": "default",
+      "separator": "/",
+      "items": ["Home", "Products", "Analytics"],
+      "linkColor": {
+        "$token": "semantic.light.text.basic.secondary"
+      },
+      "currentColor": {
+        "$token": "semantic.light.text.basic.primary"
+      }
+    },
+    {
+      "name": "variant=supporting, separator=slash, depth=4",
+      "variant": "supporting",
+      "separator": "/",
+      "items": ["Home", "Admin", "Settings", "Members"],
+      "linkColor": {
+        "$token": "semantic.light.text.basic.secondary"
+      },
+      "currentColor": {
+        "$token": "semantic.light.text.basic.secondary"
+      }
+    }
+  ]
+}

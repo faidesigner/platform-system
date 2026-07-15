@@ -3,7 +3,7 @@
   "name": "Skeleton",
   "description": "Animated shimmer loading placeholder. Generated on system/badge-component.",
   "component": {
-    "fill": { "$token": "semantic.light.filled.basic.quaternary" },
+    "fill": { "$token": "semantic.light.filled.basic.fourth" },
     "animation": "pulse"
   },
   "radius": {

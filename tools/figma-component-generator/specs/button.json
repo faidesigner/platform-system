@@ -1,0 +1,42 @@
+{
+  "template": "button",
+  "name": "Button",
+  "description": "Action button generated from feature/badge-component.",
+  "preview": { "stepY": 72 },
+  "component": {
+    "width": 128,
+    "height": {
+      "xl": { "$pixelToken": "size.56" },
+      "l": { "$pixelToken": "size.40" },
+      "m": { "$pixelToken": "size.36" },
+      "s": 26
+    },
+    "strokeWeight": 1,
+    "iconOnly": false,
+    "layout": {
+      "xl": { "direction": "horizontal", "gap": { "$pixelToken": "size.4" }, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.16" }, "right": { "$pixelToken": "size.24" }, "bottom": { "$pixelToken": "size.16" }, "left": { "$pixelToken": "size.24" } } },
+      "l": { "direction": "horizontal", "gap": { "$pixelToken": "size.4" }, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.8" }, "right": { "$pixelToken": "size.20" }, "bottom": { "$pixelToken": "size.8" }, "left": { "$pixelToken": "size.20" } } },
+      "m": { "direction": "horizontal", "gap": { "$pixelToken": "size.4" }, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.8" }, "right": { "$pixelToken": "size.16" }, "bottom": { "$pixelToken": "size.8" }, "left": { "$pixelToken": "size.16" } } },
+      "s": { "direction": "horizontal", "gap": { "$pixelToken": "size.4" }, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.4" }, "right": { "$pixelToken": "size.12" }, "bottom": { "$pixelToken": "size.4" }, "left": { "$pixelToken": "size.12" } } }
+    }
+  },
+  "text": {
+    "xl": { "fontSize": { "$pixelToken": "font.size.16" }, "lineHeight": { "$pixelToken": "font.lineHeight.16" } },
+    "l": { "fontSize": { "$pixelToken": "font.size.14" }, "lineHeight": { "$pixelToken": "font.lineHeight.14" } },
+    "m": { "fontSize": { "$pixelToken": "font.size.13" }, "lineHeight": { "$pixelToken": "font.lineHeight.13" } },
+    "s": { "fontSize": { "$pixelToken": "font.size.12" }, "lineHeight": { "$pixelToken": "font.lineHeight.12" } }
+  },
+  "icon": {
+    "xl": { "size": 16, "fontSize": 14, "lineHeight": 16 },
+    "l": { "size": 16, "fontSize": 14, "lineHeight": 16 },
+    "m": { "size": 14, "fontSize": 12, "lineHeight": 14 },
+    "s": { "size": 12, "fontSize": 11, "lineHeight": 12 }
+  },
+  "variants": [
+    { "name": "tone=primary, size=m, shape=square, icon=false", "tone": "primary", "size": "m", "label": "Primary", "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.filled.basic.primary" }, "stroke": "#00000000", "text": { "$token": "semantic.light.text.basic.inverse" } },
+    { "name": "tone=secondary, size=m, shape=square, icon=false", "tone": "secondary", "size": "m", "label": "Secondary", "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.bg.100" }, "stroke": { "$token": "semantic.light.border.secondary" }, "text": { "$token": "semantic.light.text.basic.primary" } },
+    { "name": "tone=tertiary, size=m, shape=square, icon=false", "tone": "tertiary", "size": "m", "label": "Tertiary", "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.bg.100" }, "stroke": { "$token": "semantic.light.border.tertiary" }, "text": { "$token": "semantic.light.text.basic.secondary" } },
+    { "name": "tone=primary, size=m, shape=round, icon=true", "tone": "primary", "size": "m", "label": "Continue", "icon": "+", "radius": 9999, "fill": { "$token": "semantic.light.filled.basic.primary" }, "stroke": "#00000000", "text": { "$token": "semantic.light.text.basic.inverse" } },
+    { "name": "tone=secondary, size=s, shape=square, icon=false", "tone": "secondary", "size": "s", "label": "Small", "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.bg.100" }, "stroke": { "$token": "semantic.light.border.secondary" }, "text": { "$token": "semantic.light.text.basic.primary" } }
+  ]
+}

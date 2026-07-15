@@ -19,7 +19,7 @@
         "left": { "$pixelToken": "size.24" }
       }
     },
-    "backdrop": { "$token": "semantic.light.overlay.scrim", "note": "overlay-rules.md 토큰과 정합 필요" }
+    "backdrop": { "$token": "semantic.light.bg.scrim" }
   },
   "controls": {
     "closeButton": { "component": "IconButton", "position": "top-right" },

@@ -5,7 +5,7 @@
   "track": {
     "height": { "$pixelToken": "size.2" },
     "radius": 9999,
-    "fill": { "$token": "semantic.light.filled.basic.quaternary" }
+    "fill": { "$token": "semantic.light.filled.basic.fourth" }
   },
   "fillColor": {
     "default": { "$token": "semantic.light.filled.optional.brand-primary" },

@@ -1,0 +1,230 @@
+{
+  "template": "banner",
+  "name": "Banner",
+  "description": "Persistent status banner generated from feature/badge-component.",
+  "preview": {
+    "stepY": 156
+  },
+  "component": {
+    "width": {
+      "$token": "grid.layout.breakpoints.tablet.maxContentWidth"
+    },
+    "minHeight": {
+      "$pixelToken": "size.72"
+    },
+    "radius": {
+      "$pixelToken": "size.8"
+    }
+  },
+  "header": {
+    "minHeight": {
+      "$pixelToken": "size.56"
+    },
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "size.8"
+      },
+      "primarySizing": "FIXED",
+      "counterSizing": "AUTO",
+      "primaryAlign": "MIN",
+      "counterAlign": "MIN",
+      "padding": {
+        "top": {
+          "$pixelToken": "size.12"
+        },
+        "right": {
+          "$pixelToken": "size.16"
+        },
+        "bottom": {
+          "$pixelToken": "size.12"
+        },
+        "left": {
+          "$pixelToken": "size.16"
+        }
+      }
+    }
+  },
+  "copy": {
+    "width": 560,
+    "gap": 2
+  },
+  "title": {
+    "fontSize": {
+      "$pixelToken": "font.size.14"
+    },
+    "lineHeight": {
+      "$pixelToken": "font.lineHeight.14"
+    },
+    "color": {
+      "$token": "semantic.light.text.basic.primary"
+    }
+  },
+  "description": {
+    "fontSize": {
+      "$pixelToken": "font.size.12"
+    },
+    "lineHeight": {
+      "$pixelToken": "font.lineHeight.12"
+    },
+    "color": {
+      "$token": "semantic.light.text.basic.secondary"
+    }
+  },
+  "icon": {
+    "size": 20,
+    "fontSize": 16,
+    "lineHeight": 20,
+    "color": {
+      "$token": "semantic.light.icon.basic.Info"
+    }
+  },
+  "actions": {
+    "gap": {
+      "$pixelToken": "size.4"
+    }
+  },
+  "actionIcon": {
+    "size": 20,
+    "fontSize": 16,
+    "lineHeight": 20,
+    "color": {
+      "$token": "semantic.light.icon.basic.secondary"
+    }
+  },
+  "content": {
+    "minHeight": {
+      "$pixelToken": "size.56"
+    },
+    "fill": {
+      "$token": "semantic.light.bg.100"
+    },
+    "stroke": {
+      "$token": "semantic.light.border.tertiary"
+    },
+    "strokeWeight": 1,
+    "label": "Additional banner content",
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "size.8"
+      },
+      "primarySizing": "FIXED",
+      "counterSizing": "AUTO",
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "size.12"
+        },
+        "right": {
+          "$pixelToken": "size.16"
+        },
+        "bottom": {
+          "$pixelToken": "size.12"
+        },
+        "left": {
+          "$pixelToken": "size.16"
+        }
+      }
+    }
+  },
+  "variants": [
+    {
+      "name": "status=info, container=card, expanded=false, dismissable=false",
+      "status": "info",
+      "container": "card",
+      "expanded": false,
+      "dismissable": false,
+      "title": "New update available",
+      "description": "Review the latest system notice.",
+      "icon": "i",
+      "fill": {
+        "$token": "semantic.light.filled.basic.info-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.Info"
+      }
+    },
+    {
+      "name": "status=success, container=card, expanded=false, dismissable=false",
+      "status": "success",
+      "container": "card",
+      "expanded": false,
+      "dismissable": false,
+      "title": "Changes saved",
+      "description": "Your update has been published.",
+      "icon": "v",
+      "fill": {
+        "$token": "semantic.light.filled.basic.positive-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.positive"
+      }
+    },
+    {
+      "name": "status=warning, container=card, expanded=false, dismissable=false",
+      "status": "warning",
+      "container": "card",
+      "expanded": false,
+      "dismissable": false,
+      "title": "Action required",
+      "description": "Check the configuration before continuing.",
+      "icon": "!",
+      "fill": {
+        "$token": "semantic.light.filled.basic.warning-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.warning"
+      }
+    },
+    {
+      "name": "status=error, container=card, expanded=false, dismissable=false",
+      "status": "error",
+      "container": "card",
+      "expanded": false,
+      "dismissable": false,
+      "title": "Something went wrong",
+      "description": "Please resolve the issue and try again.",
+      "icon": "!",
+      "fill": {
+        "$token": "semantic.light.filled.basic.negative-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.negative"
+      }
+    },
+    {
+      "name": "status=info, container=card, expanded=true, dismissable=true",
+      "status": "info",
+      "container": "card",
+      "expanded": true,
+      "dismissable": true,
+      "title": "New update available",
+      "description": "Review the latest system notice.",
+      "icon": "i",
+      "fill": {
+        "$token": "semantic.light.filled.basic.info-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.Info"
+      }
+    },
+    {
+      "name": "status=warning, container=section, expanded=false, dismissable=true",
+      "status": "warning",
+      "container": "section",
+      "expanded": false,
+      "dismissable": true,
+      "title": "Scheduled maintenance",
+      "description": "Some services may be temporarily unavailable.",
+      "icon": "!",
+      "fill": {
+        "$token": "semantic.light.filled.basic.warning-secondary"
+      },
+      "iconColor": {
+        "$token": "semantic.light.icon.basic.warning"
+      }
+    }
+  ]
+}

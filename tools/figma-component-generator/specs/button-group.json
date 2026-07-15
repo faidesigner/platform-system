@@ -1,0 +1,155 @@
+{
+  "template": "button-group",
+  "name": "ButtonGroup",
+  "description": "Connected action button group generated from feature/badge-component.",
+  "preview": {
+    "stepY": 112
+  },
+  "button": {
+    "width": 88,
+    "height": {
+      "m": {
+        "$pixelToken": "size.40"
+      },
+      "s": 26
+    },
+    "strokeWeight": 1,
+    "layout": {
+      "m": {
+        "direction": "horizontal",
+        "gap": {
+          "$pixelToken": "size.4"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "CENTER",
+        "counterAlign": "CENTER",
+        "padding": {
+          "top": {
+            "$pixelToken": "size.8"
+          },
+          "right": {
+            "$pixelToken": "size.16"
+          },
+          "bottom": {
+            "$pixelToken": "size.8"
+          },
+          "left": {
+            "$pixelToken": "size.16"
+          }
+        }
+      },
+      "s": {
+        "direction": "horizontal",
+        "gap": {
+          "$pixelToken": "size.4"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "CENTER",
+        "counterAlign": "CENTER",
+        "padding": {
+          "top": {
+            "$pixelToken": "size.4"
+          },
+          "right": {
+            "$pixelToken": "size.12"
+          },
+          "bottom": {
+            "$pixelToken": "size.4"
+          },
+          "left": {
+            "$pixelToken": "size.12"
+          }
+        }
+      }
+    },
+    "text": {
+      "m": {
+        "fontSize": {
+          "$pixelToken": "font.size.13"
+        },
+        "lineHeight": {
+          "$pixelToken": "font.lineHeight.13"
+        }
+      },
+      "s": {
+        "fontSize": {
+          "$pixelToken": "font.size.12"
+        },
+        "lineHeight": {
+          "$pixelToken": "font.lineHeight.12"
+        }
+      }
+    }
+  },
+  "variants": [
+    {
+      "name": "orientation=horizontal, shape=square, size=m, tone=secondary",
+      "orientation": "horizontal",
+      "shape": "square",
+      "size": "m",
+      "radius": {
+        "$pixelToken": "size.8"
+      },
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.primary"
+      },
+      "items": [
+        { "label": "Copy" },
+        { "label": "Cut" },
+        { "label": "Paste" }
+      ]
+    },
+    {
+      "name": "orientation=horizontal, shape=round, size=m, tone=secondary",
+      "orientation": "horizontal",
+      "shape": "round",
+      "size": "m",
+      "radius": 9999,
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.primary"
+      },
+      "items": [
+        { "label": "Left" },
+        { "label": "Center" },
+        { "label": "Right" }
+      ]
+    },
+    {
+      "name": "orientation=vertical, shape=square, size=s, tone=secondary",
+      "orientation": "vertical",
+      "shape": "square",
+      "size": "s",
+      "radius": {
+        "$pixelToken": "size.8"
+      },
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.secondary"
+      },
+      "text": {
+        "$token": "semantic.light.text.basic.primary"
+      },
+      "items": [
+        { "label": "One" },
+        { "label": "Two" },
+        { "label": "Three" }
+      ]
+    }
+  ]
+}

@@ -1,0 +1,30 @@
+{
+  "template": "calendar",
+  "name": "Calendar",
+  "description": "Single and range calendar generated from feature/badge-component.",
+  "preview": { "stepY": 376 },
+  "component": { "width": 280, "height": 336, "gap": { "$pixelToken": "size.8" }, "fill": "#00000000" },
+  "header": {
+    "layout": { "direction": "horizontal", "gap": { "$pixelToken": "size.24" }, "primarySizing": "AUTO", "counterSizing": "AUTO", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": 0, "right": 0, "bottom": 0, "left": 0 } },
+    "text": { "fontSize": { "$pixelToken": "font.size.14" }, "lineHeight": { "$pixelToken": "font.lineHeight.14" }, "color": { "$token": "semantic.light.text.basic.primary" } },
+    "icon": { "size": 24, "fontSize": 16, "lineHeight": 24, "color": { "$token": "semantic.light.icon.basic.primary" } }
+  },
+  "weekdays": ["Sun", "Mon", "Tue", "Wed", "Thu", "Fri", "Sat"],
+  "weekdayText": { "fontSize": { "$pixelToken": "font.size.12" }, "lineHeight": { "$pixelToken": "font.lineHeight.12" }, "color": { "$token": "semantic.light.text.basic.tertiary" } },
+  "cell": {
+    "size": { "$pixelToken": "size.40" },
+    "radius": { "$pixelToken": "size.8" },
+    "layout": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": 0, "right": 0, "bottom": 0, "left": 0 } },
+    "text": { "fontSize": { "$pixelToken": "font.size.14" }, "lineHeight": { "$pixelToken": "font.lineHeight.14" }, "color": { "$token": "semantic.light.text.basic.primary" } },
+    "states": {
+      "default": { "fill": "#00000000", "text": { "$token": "semantic.light.text.basic.primary" } },
+      "selected": { "fill": { "$token": "semantic.light.filled.basic.primary" }, "text": { "$token": "semantic.light.text.basic.inverse" } },
+      "in-range": { "fill": { "$token": "semantic.light.filled.basic.primaryOp-secondary" }, "text": { "$token": "semantic.light.text.basic.primary" } },
+      "outside": { "fill": "#00000000", "text": { "$token": "semantic.light.text.basic.fourth" } }
+    }
+  },
+  "variants": [
+    { "name": "mode=single, selected=true, outsideDays=true", "mode": "single", "month": "July 2026" },
+    { "name": "mode=range, selected=true, outsideDays=true", "mode": "range", "month": "July 2026" }
+  ]
+}

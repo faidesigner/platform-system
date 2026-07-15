@@ -6,6 +6,12 @@
 
 ### ✨ Added
 
+#### Figma Component Generator
+- `tools/figma-component-generator/` — Figma 개발용 컴포넌트 생성 플러그인 본체, UI, manifest, 사용 문서 추가
+- `scripts/build-figma-component-generator.js` — 컴포넌트 스펙 빌드와 `code.js` 생성을 위한 빌드 스크립트 추가
+- Kbd, Link, List, Skeleton, LinearProgress, SegmentedControl, RadioList, Slider, Pagination, NumberInput, Selector, MultiSelector, Popover, MoreMenu, Lightbox 전용 렌더러 15개 추가
+- Badge, Banner, Breadcrumbs, ButtonGroup, Button, Calendar, Card, Carousel, Checkbox, IconButton, NavTab, ToggleButton 스펙 12개 추가
+
 #### 웹 컴포넌트 명세 보강
 - `root/components/web/layout/drawer-primitives.md` — DrawerMenu, DrawerListItem, DefaultListIcon 명세 추가
 - `root/components/web/layout/global-utility-menu.md` — 글로벌 유틸리티 메뉴 조립 컴포넌트 명세 추가
@@ -23,6 +29,11 @@
 - `global-utility-menu`, `mega-nav-menu`, `tablet-drawer-menu`, `in-view-video` 명세에 토큰 규칙 준수 여부를 Sync Note로 기록
 
 ### 🐛 Fixed
+
+#### Figma Component Generator 안정화
+- foundation shadow 소스 연결 및 Figma Auto Layout의 `FILL` 값 방어 로직 추가
+- 폰트 로딩과 컴포넌트 생성 과정의 오류 처리 보강 후 `code.js` 재생성
+- `lightbox`의 scrim 토큰과 `linear-progress`, `skeleton`, `slider`의 fourth fill 토큰 경로 수정
 
 #### 토큰 미연결 수정
 - `Scrollbar`, `LanguageSwitcher`, `DrawerPrimitives`, `MegaMenuPanel`, `IcoTxtButton` — `var(--padding-*)`, `var(--spacing-*)`, `var(--cornerRadius-*)` 직접 참조를 Tailwind 토큰 클래스로 교체
