@@ -1,6 +1,11 @@
 {
   "exclude": [],
   "pinned": [],
+  "hideInLocales": {
+    "fSzG6pXZx-w": ["ko", "ja"],
+    "U12evbt9Aoo": ["ko", "en"],
+    "NZf1qo6LS8w": ["en"]
+  },
   "manual": [
     {
       "videoId": "DSTIFkS5Nw8",

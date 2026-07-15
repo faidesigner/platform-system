@@ -9,6 +9,7 @@ import RetailTechLetterSection from "@/components/sections/media/RetailTechLette
 // 리싱크마다 목록이 바뀌는 외부 콘텐츠라 정적 messages 인덱스로 옮기지 않고 원문 그대로 사용.
 import showcase from "@/config/youtube-showcase.json";
 import letterData from "@/config/retail-tech-letter.json";
+import { visibleShowcaseVideos } from "@/lib/showcaseVisibility";
 
 export async function generateMetadata({
   params,
@@ -63,7 +64,8 @@ export default async function MediaPage({
         ctaLabel={t("showcase.youtube.ctaLabel")}
         // showcase.videos는 sync-youtube.mjs가 RSS에서 그대로 받아오는 원문(로케일 혼재) —
         // 정적 messages 인덱스로 매핑 불가(영상 목록이 리싱크마다 바뀜). 원문 그대로 노출.
-        videos={showcase.videos}
+        // 단, hideInLocales(언어별 노출 제외, HOM-25)가 지정된 영상은 현재 로케일에서 걸러낸다.
+        videos={visibleShowcaseVideos(showcase.videos, locale)}
         socials={siteConfig.mediaShowcase.socials}
         // 클라 컴포넌트에는 함수를 props로 못 넘기므로(서버→클라 직렬화 제약),
         // {index}/{label} 플레이스홀더가 남은 템플릿 문자열을 그대로 전달해 클라에서 치환한다.

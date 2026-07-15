@@ -1,6 +1,6 @@
 {
   "channelId": "UCZpwr96t6EkDKMurSPL11bQ",
-  "fetchedAt": "2026-07-14T15:15:55.221Z",
+  "fetchedAt": "2026-07-15T02:01:34.906Z",
   "videos": [
     {
       "videoId": "K2ueKcophSc",
@@ -56,7 +56,11 @@
       "title": "ファインダーズAI(Fainders AI)｜ベーカリーAIセルフレジ VCOの使い方",
       "description": "ベーカリーAIセルフレジ VCOの使い方",
       "thumbnailAlt": "ファインダーズAI(Fainders AI)｜ベーカリーAIセルフレジ VCOの使い方",
-      "href": "https://www.youtube.com/watch?v=U12evbt9Aoo"
+      "href": "https://www.youtube.com/watch?v=U12evbt9Aoo",
+      "hideInLocales": [
+        "ko",
+        "en"
+      ]
     },
     {
       "videoId": "20XzJavnjyY",
@@ -98,14 +102,21 @@
       "title": "파인더스에이아이ㅣ베이커리 AI 무인 자동 계산대 VCO 사용법",
       "description": "베이커리와 공산품, 구분 없는 결제의 시작. \n바코드 없는 상품도 인식 가능한 AI 무인 계산대 VCO를 소개합니다.",
       "thumbnailAlt": "파인더스에이아이ㅣ베이커리 AI 무인 자동 계산대 VCO 사용법",
-      "href": "https://www.youtube.com/watch?v=NZf1qo6LS8w"
+      "href": "https://www.youtube.com/watch?v=NZf1qo6LS8w",
+      "hideInLocales": [
+        "en"
+      ]
     },
     {
       "videoId": "fSzG6pXZx-w",
       "title": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
       "description": "See the next evolution in retail technology. Fainders.AI’s Vision Checkout (VCO) uses advanced vision AI to automate checkout. \n\nThis isn’t just a replacement for conventional systems—it’s a major upgrade. \n\nSee how we’re streamlining the point of sale.",
       "thumbnailAlt": "AI Vision Checkout (VCO) by Fainders.AI: The Future of Retail",
-      "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w"
+      "href": "https://www.youtube.com/watch?v=fSzG6pXZx-w",
+      "hideInLocales": [
+        "ko",
+        "ja"
+      ]
     },
     {
       "videoId": "DSTIFkS5Nw8",

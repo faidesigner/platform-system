@@ -36,7 +36,7 @@ const pick = (block, re) => {
 const watchHref = (id) => `https://www.youtube.com/watch?v=${id}`;
 
 async function loadCuration() {
-  const base = { exclude: [], pinned: [], manual: [], limit: null };
+  const base = { exclude: [], pinned: [], hideInLocales: {}, manual: [], limit: null };
   try {
     return { ...base, ...JSON.parse(await readFile(CURATION_FILE, "utf8")) };
   } catch {
@@ -93,6 +93,13 @@ async function run() {
   // 개수 제한(옵션)
   let videos = order.map((id) => byId.get(id)).filter(Boolean);
   if (curation.limit && Number.isFinite(curation.limit)) videos = videos.slice(0, curation.limit);
+
+  // 언어별 노출 제외 규칙을 각 영상에 구워 넣는다(videoId → 숨길 로케일 배열).
+  // 렌더 시점(media/page.tsx)이 이 필드로 현재 로케일 영상만 남긴다. lib/showcaseVisibility.ts 참고.
+  const hide = curation.hideInLocales ?? {};
+  videos = videos.map((v) =>
+    hide[v.videoId]?.length ? { ...v, hideInLocales: hide[v.videoId] } : v,
+  );
 
   await writeFile(
     OUT,

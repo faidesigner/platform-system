@@ -14,6 +14,8 @@ interface YoutubeVideo {
   description: string;
   thumbnailAlt: string;
   href: string;
+  // 언어별 노출 제외(HOM-25): 이 로케일 목록에서는 숨긴다. 실제 필터는 media/page.tsx가 수행.
+  hideInLocales?: string[];
 }
 
 type Social = SocialLink;
