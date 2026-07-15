@@ -2,7 +2,7 @@
 
 import { Footer } from "@fai/ui";
 import type { FooterLabels } from "@fai/ui";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { trackEvent } from "@/lib/analytics/track";
 
 /**
@@ -12,6 +12,7 @@ import { trackEvent } from "@/lib/analytics/track";
  */
 export default function FooterBridge() {
   const t = useTranslations("footer");
+  const locale = useLocale();
 
   const labels: FooterLabels = {
     company:      t("company"),
@@ -29,6 +30,7 @@ export default function FooterBridge() {
   return (
     <Footer
       labels={labels}
+      hideEmail={locale === "ja"}
       onSocialClick={(label) => trackEvent("interest_click", { location: "footer", label })}
     />
   );

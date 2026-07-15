@@ -98,12 +98,34 @@ export default function NavigationBar({
   const [drawerOpen, setDrawerOpen] = useState(false);
   // 스크롤 100px 초과 + 투명 구간일 때 그림자 활성화 (navShadow)
   const [hasShadow, setHasShadow] = useState(false);
+  // 라우트 변경 직후 배경 transition 비활성화 플래그
+  const [skipTransition, setSkipTransition] = useState(true);
 
-  /** 라우트 변경 시 드로어 닫기 + 뷰포트 상단 이동 */
+  /** 라우트 변경 시 드로어 닫기 + 초기 투명 상태 즉시 적용 (transition 비활성화) */
   useEffect(() => {
+    setSkipTransition(true);
+
+    let initialTransparent = false;
+    if (isHome) {
+      initialTransparent = false;
+    } else if (isProductDetail) {
+      initialTransparent = true;
+    } else if (isMedia) {
+      initialTransparent = false;
+    } else {
+      initialTransparent = true;
+    }
+
+    transparentRef.current = initialTransparent;
+    setIsTransparent(initialTransparent);
     setDrawerOpen(false);
-    window.scrollTo({ top: 0, behavior: "instant" });
-  }, [pathname]);
+    // scrollTo(0) 제거: SmoothScroll이 라우트 전환 스크롤을 단독 책임진다.
+    // 여기서 window.scrollTo(0)을 호출하면 언어 전환 시 SmoothScroll의 위치 복원을 덮어쓴다.
+
+    requestAnimationFrame(() => {
+      setSkipTransition(false);
+    });
+  }, [pathname, isHome, isProductDetail, isMedia]);
 
   /** 드로어 열림/닫힘 시 body 스크롤 잠금 */
   useEffect(() => {
@@ -202,10 +224,11 @@ export default function NavigationBar({
           hasShadow && !drawerOpen ? "shadow-M" : "",
         ].join(" ")}
       >
-        {/* 배경 레이어 — opacity 크로스페이드로 부드러운 전환 */}
+        {/* 배경 레이어 — opacity 크로스페이드로 부드러운 전환 (라우트 진입 시 transition 비활성화) */}
         <div
           className={[
-            "absolute inset-0 bg-surface transition-opacity duration-700 ease-out",
+            "absolute inset-0 bg-surface",
+            skipTransition ? "" : "transition-opacity duration-700 ease-out",
             effectiveTransparent ? "opacity-0" : "opacity-100",
           ].join(" ")}
         />

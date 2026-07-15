@@ -37,13 +37,10 @@ export function ContactUsSection() {
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
 
-  React.useEffect(() => {
-    if (lenisRef.current) {
-      lenisRef.current.scrollTo(0, { immediate: true });
-    } else {
-      window.scrollTo(0, 0);
-    }
-  }, []);
+  // scroll-to-top 제거: SmoothScroll이 라우트 진입 시 { type: 'top' } 액션으로 처리하며,
+  // 언어 전환 시에는 { type: 'restore' }로 이전 위치를 복원한다.
+  // 이 useEffect를 유지하면 RSC 스트리밍 Commit 2(페이지 콘텐츠)에서 마운트될 때
+  // SmoothScroll의 rAF 복원 이후에 scroll-to-0이 덮어써지는 충돌이 발생한다.
 
   const validateField = (key: string, value: string): string => {
     if (key === "company" && (!value || value.trim() === "")) return t("fields.company.errorMessage");
@@ -356,7 +353,7 @@ export function ContactUsSection() {
 
             {/* toast — ≥421px */}
             <div className="hidden min-[421px]:block dark self-stretch">
-              <div className="flex w-full max-w-[1140px] items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
+              <div className="flex w-full max-w-[1140px] desktop:mx-auto items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
                 <div className="flex items-center gap-[var(--spacing-M,16px)]">
                   {/* 아이콘: ≥768px에서만 표시 */}
                   <CustomerSupportGraphic className="hidden tablet:block w-[40px] h-[40px] shrink-0" />

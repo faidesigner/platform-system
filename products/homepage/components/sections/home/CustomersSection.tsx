@@ -48,7 +48,7 @@ export default function CustomersSection({
     <section className="bg-bg-100 py-5xl overflow-hidden">
       {/* 헤더 — container 내부에서 좌우 정렬 */}
       <div className="w-full px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
-        <div className="pb-4xl flex w-full justify-between items-end">
+        <div className="pb-4xl flex w-full justify-between items-center">
           <h2 className="text-title-l desktop:text-title-xl font-bold text-sand-text-primary">
             {resolvedTitle}
           </h2>
@@ -71,7 +71,7 @@ export default function CustomersSection({
             ].join(' ')}
           >
             <span className="flex items-center justify-center px-2xs gap-2xs">
-              <span className="text-body-ms font-semibold">{resolvedLinkLabel}</span>
+              <span className="text-body-ms font-semibold max-[421px]:hidden">{resolvedLinkLabel}</span>
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="16"

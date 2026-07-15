@@ -4,6 +4,49 @@
 
 ## [Unreleased] - 2026-07-15
 
+### 🔄 Changed
+
+#### StoreEffects 그래픽 언어 전환 누락 수정 + 카드 높이 통일 + JA 타이틀 수정 (products/homepage)
+- `card.title`(번역 텍스트) → `card.icon`(로케일 독립 키)으로 `EffectGraphic` 키 참조 변경 — EN/JA 전환 시 그래픽 누락 해소
+- `siteConfig` effectCards `icon` 값 `MISSING_FROM_DESIGN` → `EffectIconKey` 실제 값으로 수정
+- 카드 컨테이너 `items-start` → `items-stretch` — 언어별 텍스트 길이 차이에 따른 높이 통일
+- `ja.json`: `遠隔運営が可能` → `遠隔運営可能` 텍스트 수정
+
+#### CustomersSection 420px 이하 버튼 텍스트 숨김 + 타이틀-버튼 중앙 정렬 (products/homepage)
+- 420px 이하에서 '실제 도입 후기 더보기' 텍스트 숨김, 아이콘만 노출 (`max-[421px]:hidden`)
+- 타이틀-버튼 수직 정렬 `items-end` → `items-center`
+
+#### Footer JA locale 이메일 문의 행 숨김 + 타이틀-본문 간격 토큰 수정 (packages/ui, products/homepage)
+- `Footer`: `hideEmail` prop 추가 — JA locale에서 이메일 문의 행 미노출
+- `FooterBridge`: `useLocale()` 기반으로 `hideEmail={locale === 'ja'}` 주입
+- `InfoRow` 및 compact 섹션 타이틀-본문 간격 `--spacing-2XL` (32px, `gap-x-2xl`) 적용
+
+#### SmoothScroll 언어 전환 스크롤 복원 flash·상단고정 완전 수정 (products/homepage)
+- `useLayoutEffect([pathname, locale])` 추가 — paint 이전 동기 복원으로 KO 전환 깜빡임 해소, rAF 재시도로 RSC 스트리밍 지연 로드 대응
+- URL 기반 플래그(`localeHandledUrlRef`) 도입 — boolean 플래그 대신 URL 문자열로 React Strict Mode 이중 호출 시에도 `{type:'top'}` 발동 방지 (JA/EN 상단 고정 해소)
+- 다른 URL 이동 시 플래그 초기화 — 이후 동일 URL 재방문 시 scroll-to-top 정상 동작 보장
+- NavigationBar `window.scrollTo(0)` 제거 — 라우트 전환 스크롤 단일 책임 (SmoothScroll)
+- ContactUsSection scroll-to-top useEffect 제거 — 언어 전환 시 위치 복원 충돌 해소
+
+#### SmoothScroll 언어 전환 시 스크롤 위치 복원 누락 수정 (products/homepage)
+- dev(Turbopack) SPA 모드에서 locale 변경 시 `[locale]` 레이아웃이 remount 없이 update로 처리되어 `[pathname]` 단독 deps로는 언어 전환 감지 불가 → `[pathname, locale]`로 변경
+- `SmoothScroll.test.tsx`: `next-intl` mock(`useLocale: () => 'ko'`) 추가로 회귀 테스트 유지
+
+#### ContactUsSection toast 1440px 이상 중앙 정렬 (products/homepage)
+- `desktop:mx-auto` 추가 — 1440px 미만 좌측 정렬 유지, 1440px 이상에서 `max-w-[1140px]` 범위 내 중앙 정렬
+
+#### NavigationBar 라우트 진입 시 배경 transition 순간 깜빡임 제거 (packages/ui)
+- `skipTransition` 상태 추가 — 라우트 변경 직후 배경 opacity transition 비활성화 후 `requestAnimationFrame`으로 복원
+- 라우트별 초기 투명 상태(`isHome` / `isProductDetail` / `isMedia`) 즉시 적용하여 진입 시 깜빡임 방지
+- 기존 700ms 크로스페이드는 스크롤 인터랙션 구간에서만 유지
+
+#### ProductReviews store 없을 때 구분자 `|` 노출 버그 수정 (products/homepage)
+- `review.role` 존재 여부만 체크하던 조건을 `review.store && review.role` 병렬 체크로 수정
+- ja.json `visionCheckout.reviews.3.store` 빈 문자열 케이스에서 구분자가 노출되던 문제 해결
+
+#### ja.json 리뷰 3번 store 값 빈 문자열로 수정 (products/homepage)
+- `visionCheckout.reviews.3.store`: `"リテール"` → `""` — 카테고리와 store 중복 표기 제거
+
 ### ✨ Added
 
 #### 유튜브 쇼케이스 언어별 노출 제외 (hideInLocales, HOM-25) (products/homepage)
