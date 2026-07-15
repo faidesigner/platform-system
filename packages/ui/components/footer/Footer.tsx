@@ -134,23 +134,19 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
 }
 
 /* ── 회사 정보 행 공용 (desktop row1·row2 동일 구조) ── */
+// grid-cols-[max-content_1fr]: 타이틀 컬럼이 해당 그룹 내 가장 긴 라벨에 맞게 자동 조정.
+// 고정 px 폭 없이 KO·EN·JA 모든 언어에서 줄바꿈 없이 1행 보장.
 function InfoRow({ items, className }: { items: { title: string; text: string }[]; className?: string }) {
   return (
-    <div className={`flex flex-col items-start gap-s ${className ?? ''}`}>
-      {items.map((item) => (
-        <div key={item.title} className="flex items-center">
-          <div className="flex flex-col items-start gap-s w-[92px] shrink-0">
-            <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
-              {item.title}
-            </span>
-          </div>
-          <div className="flex flex-col items-start gap-s w-[286px]">
-            <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
-              {item.text}
-            </span>
-          </div>
-        </div>
-      ))}
+    <div className={`grid grid-cols-[max-content_1fr] gap-y-s gap-x-2xl ${className ?? ''}`}>
+      {items.flatMap((item) => [
+        <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+          {item.title}
+        </span>,
+        <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+          {item.text}
+        </span>,
+      ])}
     </div>
   );
 }
@@ -161,9 +157,11 @@ interface FooterProps {
   onSocialClick?: (label: string) => void;
   /** 회사정보·정책 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값 사용. */
   labels?: FooterLabels;
+  /** true이면 이메일 문의 행을 숨긴다(JA 로케일 전용). */
+  hideEmail?: boolean;
 }
 
-export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
+export default function Footer({ onSocialClick, labels, hideEmail = false }: FooterProps = {}) {
   const l = { ...DEFAULT_LABELS, ...labels };
 
   const companyName = l.company;
@@ -174,7 +172,7 @@ export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
   ];
   const row2Info = [
     { title: l.bizNo, text: VALUES.bizNo },
-    { title: l.email, text: VALUES.email },
+    ...(!hideEmail ? [{ title: l.email, text: VALUES.email }] : []),
   ];
   const policies: PolicyItem[] = [
     { label: l.privacy, href: POLICY_HREFS.privacy },
@@ -247,21 +245,15 @@ export default function Footer({ onSocialClick, labels }: FooterProps = {}) {
               <p className="text-body font-bold text-text-basic-primary leading-[150%]">
                 {companyName}
               </p>
-              <div className="flex flex-col gap-[var(--spacing-MS,12px)] w-full">
-                {[...row1Info, ...row2Info].map((item) => (
-                  <div key={item.title} className="flex items-start">
-                    <div className="flex shrink-0 w-[92px]">
-                      <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
-                        {item.title}
-                      </span>
-                    </div>
-                    <div className="flex flex-1">
-                      <span className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
-                        {item.text}
-                      </span>
-                    </div>
-                  </div>
-                ))}
+              <div className="grid grid-cols-[max-content_1fr] gap-y-[var(--spacing-MS,12px)] gap-x-2xl w-full">
+                {[...row1Info, ...row2Info].flatMap((item) => [
+                  <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+                    {item.title}
+                  </span>,
+                  <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                    {item.text}
+                  </span>,
+                ])}
               </div>
             </div>
 
