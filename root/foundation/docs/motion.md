@@ -8,7 +8,7 @@
 ## 규칙
 
 - 애니메이션과 트랜지션은 정의된 duration/easing 토큰만 사용합니다.
-- 작은 상호작용에는 fast, 레이아웃이 변하는 전환에는 medium, 큰 화면 전환에는 slow를 사용합니다.
+- 즉각적인 피드백에는 instant, 작은 상호작용에는 fast, 레이아웃이 변하는 전환에는 medium, 큰 화면 전환에는 slow를 사용합니다.
 - hover처럼 자주 발생하는 상호작용은 지연이 느껴지지 않도록 fast 계열만 사용합니다.
 - OS의 reduced motion 설정을 존중합니다.
 - 애니메이션이 사용자의 다음 행동을 막지 않도록 합니다.
@@ -19,6 +19,9 @@
 
 | 토큰 | 값 | 용도 |
 | --- | --- | --- |
+| --duration-instant-min | 100ms | 즉각적인 상태 토글 |
+| --duration-instant | 150ms | 즉각 피드백 (press, 체크 토글) |
+| --duration-instant-max | 200ms | 살짝 지연된 즉시 반응 |
 | --duration-fast-min | 130ms | 아주 작은 상태 변화 |
 | --duration-fast | 175ms | 버튼, 토글, 작은 피드백 |
 | --duration-fast-max | 230ms | 작지만 눈에 보여야 하는 전환 |
