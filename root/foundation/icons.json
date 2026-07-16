@@ -1,0 +1,22 @@
+{
+  "close": {
+    "usage": "닫기, 다이얼로그 해제",
+    "example": "<Icon name=\"close\" />"
+  },
+  "chevronDown": {
+    "usage": "드롭다운, 펼침/접힘",
+    "example": "<Icon name=\"chevronDown\" />"
+  },
+  "search": {
+    "usage": "검색",
+    "example": "<Icon name=\"search\" />"
+  },
+  "externalLink": {
+    "usage": "새 창 링크",
+    "example": "<Icon name=\"externalLink\" />"
+  },
+  "microphone": {
+    "usage": "음성 입력, 오디오 녹음",
+    "example": "<Icon name=\"microphone\" />"
+  }
+}

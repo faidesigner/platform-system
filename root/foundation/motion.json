@@ -1,0 +1,11 @@
+{
+  "duration": {
+    "fastMin": "130ms",
+    "fast": "175ms",
+    "medium": "410ms",
+    "slow": "975ms"
+  },
+  "easing": {
+    "standard": "cubic-bezier(0.24, 1, 0.4, 1)"
+  }
+}

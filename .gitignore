@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+**/.next/
 /out/
 
 # production
@@ -47,6 +48,7 @@ node_modules/
 
 # pnpm
 .pnpm-debug.log*
+.pnpm-store/
 
 # misc
 .DS_Store

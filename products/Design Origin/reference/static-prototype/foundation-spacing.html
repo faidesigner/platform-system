@@ -1,0 +1,56 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Spacing - AI Design Origin</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="topbar">
+        <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span><span>AI Design Origin</span></a>
+        <label class="top-search"><span>Search</span><input type="search" placeholder="Search spacing" /></label>
+      </nav>
+      <div class="page-layout">
+        <aside class="side-nav">
+          <button class="side-nav-toggle" type="button">Expand side navigation</button>
+          <a class="side-link" href="./index.html">Overview</a>
+          <a class="side-link active" href="./foundation.html">Foundations</a>
+          <div class="side-subnav">
+            <a href="./foundation-color.html">Color</a>
+            <a href="./foundation-typography.html">Typography</a>
+            <a class="active" href="./foundation-spacing.html">Spacing</a>
+            <a href="./foundation-effects.html">Effects</a>
+            <a href="./foundation-motion.html">Motion</a>
+            <a href="./foundation-icons.html">Icons</a>
+          </div>
+          <a class="side-link" href="./index.html#component">Components</a>
+          <a class="side-link" href="./index.html#guideline">Guideline</a>
+          <a class="side-link" href="./index.html#history-title">Design history</a>
+        </aside>
+        <main class="content foundation-page">
+          <header class="site-header">
+            <section class="hero foundation-hero">
+              <div class="hero-copy">
+                <p class="eyebrow">Foundations / Spacing</p>
+                <h1>Size, padding, spacing, corner radius</h1>
+                <p class="lead">간격과 모서리는 임의 px 값 대신 정의된 토큰만 사용합니다.</p>
+              </div>
+            </section>
+          </header>
+          <section class="section foundation-doc-section">
+            <div class="scale-row" aria-label="Spacing scale examples">
+              <span style="width:2px">2</span><span style="width:8px">8</span><span style="width:16px">16</span><span style="width:24px">24</span><span style="width:40px">40</span><span style="width:80px">80</span>
+            </div>
+            <div class="foundation-doc-grid">
+              <article class="foundation-doc-card"><h3>padding</h3><p>컴포넌트 내부 여백에 사용합니다.</p><code>--padding-S, --padding-M, --padding-XL</code></article>
+              <article class="foundation-doc-card"><h3>spacing</h3><p>요소 사이 gap과 margin에 사용합니다.</p><code>--spacing-XS, --spacing-L, --spacing-9XL</code></article>
+              <article class="foundation-doc-card"><h3>cornerRadius</h3><p>태그, 인풋, 버튼, 카드, 모달의 둥근 정도를 정의합니다.</p><code>--cornerRadius-S, --cornerRadius-M, --cornerRadius-circle</code></article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

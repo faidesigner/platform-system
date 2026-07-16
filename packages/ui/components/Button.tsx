@@ -74,9 +74,9 @@ function getToneClasses(tone: ButtonTone, impact: boolean) {
   switch (tone) {
     case "primary":
       return cn(
-        "bg-[var(--color-filled-optional-brand-primaryBtn)] text-inverse border border-border-faint",
-        "hover:bg-fill hover:border-border-subtle",
-        "active:bg-fill-soft active:text-primary active:border-border-subtle"
+        "bg-brand text-on-brand border border-border-brand",
+        "hover:bg-brand-subtle hover:text-brand-text hover:border-border-brand-sub",
+        "active:bg-brand-subtle active:text-brand-text active:border-border-brand-sub"
       );
     case "secondary":
       return cn(
@@ -168,4 +168,3 @@ export function Button({
     </button>
   );
 }
-
