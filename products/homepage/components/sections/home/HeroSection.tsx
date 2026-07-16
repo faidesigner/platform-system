@@ -101,15 +101,20 @@ export default function HeroSection({ logos }: HeroSectionProps) {
     <section ref={sectionRef} className="relative h-[180vh] w-full">
       <div className="sticky top-0 relative h-screen w-full overflow-hidden bg-surface">
 
-        {/* 상단 카피 — 확장 전에만 표시 */}
+        {/* 상단 카피 — 확장 전에만 표시. z-40: 비디오 박스(z-30)보다 위에 그려 어떤 height에서도 텍스트가 가려지지 않도록 하는 안전망 (HOM-57) */}
         {!isExpanded && (
-          <div className="absolute left-0 right-0 top-0 z-20 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
+          <div className="absolute left-0 right-0 top-0 z-40 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
             <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
             <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
           </div>
         )}
 
-        {/* 비디오 박스 ― layout FLIP 으로 크기/위치 보간 */}
+        {/*
+          비디오 박스 ― layout FLIP 으로 크기/위치 보간.
+          축소 상태 높이는 고정 374px 대신 min(374px, 100vh - 타이틀 예약공간)으로 계산 (HOM-57).
+          예약공간(--hero-title-clear)은 pt-[200px] + 브레이크포인트별 타이틀 2줄 높이(gap-s 포함)를 근사한 값이라
+          정상 height에서는 100vh가 충분해 기존과 동일한 374px로 귀결되고, height가 짧아질 때만 이미지가 줄어든다.
+        */}
         <motion.div
           layout
           animate={{
@@ -119,7 +124,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
           className={
             isExpanded
               ? "absolute inset-0 z-30 overflow-hidden bg-fill-strong"
-              : "absolute bottom-0 left-[calc(50%-200px)] w-[400px] h-[374px] z-30 overflow-hidden bg-fill-strong"
+              : "absolute bottom-0 left-[calc(50%-200px)] w-[400px] h-[min(374px,calc(100vh-var(--hero-title-clear)))] [--hero-title-clear:316px] min-[422px]:[--hero-title-clear:342px] tablet:[--hero-title-clear:364px] desktop:[--hero-title-clear:374px] z-30 overflow-hidden bg-fill-strong"
           }
         >
           {/* z-0: 비디오 */}
