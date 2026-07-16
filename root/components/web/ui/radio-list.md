@@ -1,7 +1,6 @@
 # RadioList Specification
 **Status**: Draft
 
-> 참고: Astryx RadioList / RadioListItem (https://astryx.atmeta.com/components/RadioList)
 > RadioList(그룹) + RadioListItem(항목) 2개 컴포넌트를 한 파일에 정의.
 
 ## 1. 🎯 Definition & Usage

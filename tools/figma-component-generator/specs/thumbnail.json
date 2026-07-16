@@ -1,0 +1,34 @@
+{
+  "template": "thumbnail",
+  "name": "Thumbnail",
+  "description": "Fixed image preview with placeholder, loading, remove, and disabled states.",
+  "frame": {
+    "size": { "$pixelToken": "size.64" },
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.filled.basic.fourth" },
+    "stroke": { "$token": "semantic.light.border.tertiary" }
+  },
+  "icon": {
+    "size": { "$pixelToken": "size.24" },
+    "color": { "$token": "semantic.light.icon.basic.tertiary" }
+  },
+  "overlay": {
+    "fill": { "$token": "semantic.light.bg.scrim" }
+  },
+  "remove": {
+    "size": { "$pixelToken": "size.20" },
+    "offset": { "$pixelToken": "size.4" },
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.bg.100" },
+    "color": { "$token": "semantic.light.icon.basic.secondary" },
+    "shadow": { "$token": "shadow.XS" }
+  },
+  "variants": [
+    { "name": "state=placeholder", "state": "placeholder" },
+    { "name": "state=image", "state": "image" },
+    { "name": "state=image, removable=true", "state": "image", "removable": true },
+    { "name": "state=loading, image=false", "state": "loading" },
+    { "name": "state=loading, image=true", "state": "loading-image" },
+    { "name": "state=disabled", "state": "image", "disabled": true }
+  ]
+}

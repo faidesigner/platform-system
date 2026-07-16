@@ -1,7 +1,6 @@
 # Lightbox Specification
 **Status**: Draft
 
-> 참고: Astryx Lightbox (https://astryx.atmeta.com/components/Lightbox)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 이미지/비디오를 풀스크린 오버레이로 원본 해상도 감상

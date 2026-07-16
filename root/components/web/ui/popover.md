@@ -1,7 +1,6 @@
 # Popover Specification
 **Status**: Draft
 
-> 참고: Astryx Popover (https://astryx.atmeta.com/components/Popover)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 트리거(버튼)에 앵커된 클릭 오버레이. 보조 액션·인라인 확인·부가 정보

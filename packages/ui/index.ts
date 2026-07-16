@@ -133,7 +133,7 @@ export type { InputButtonProps, InputButtonSize } from './components/InputButton
 export { Field, useField, FieldContext } from './components/field/Field';
 export type { FieldProps, FieldContextValue } from './components/field/Field';
 
-/* ── Kbd / Link / Lightbox (Astryx 참고 신규) ── */
+/* ── Kbd / Link / Lightbox (신규) ── */
 export { Kbd } from './components/Kbd';
 export type { KbdProps } from './components/Kbd';
 export { Link } from './components/Link';
@@ -141,7 +141,7 @@ export type { LinkProps, LinkUnderline } from './components/Link';
 export { Lightbox } from './components/lightbox/Lightbox';
 export type { LightboxProps, LightboxItem } from './components/lightbox/Lightbox';
 
-/* ── List / MoreMenu / NumberInput / Pagination / Popover / LinearProgress (Astryx 참고 신규) ── */
+/* ── List / MoreMenu / NumberInput / Pagination / Popover / LinearProgress (신규) ── */
 export { List, ListItem } from './components/list/List';
 export type { ListProps, ListItemProps, ListMarker } from './components/list/List';
 export { MoreMenu } from './components/MoreMenu';
@@ -155,7 +155,7 @@ export type { PopoverProps, PopoverPlacement } from './components/Popover';
 export { LinearProgress } from './components/LinearProgress';
 export type { LinearProgressProps, LinearProgressVariant } from './components/LinearProgress';
 
-/* ── Radio / Segmented / Selector / MultiSelector / Skeleton / Slider (Astryx 참고 신규) ── */
+/* ── Radio / Segmented / Selector / MultiSelector / Skeleton / Slider (신규) ── */
 export { RadioList, RadioListItem } from './components/radio/RadioList';
 export type { RadioListProps, RadioListItemProps, RadioOrientation } from './components/radio/RadioList';
 export { SegmentedControl, SegmentedControlItem } from './components/segmented-control/SegmentedControl';
@@ -168,3 +168,32 @@ export { Skeleton } from './components/Skeleton';
 export type { SkeletonProps, SkeletonVariant } from './components/Skeleton';
 export { Slider } from './components/Slider';
 export type { SliderProps, SliderStatus, SliderMark } from './components/Slider';
+export { Spinner } from './components/Spinner';
+export type { SpinnerProps, SpinnerSize, SpinnerShade } from './components/Spinner';
+export { Switch } from './components/Switch';
+export type {
+  SwitchProps,
+  SwitchLabelPosition,
+  SwitchLabelSpacing,
+  SwitchStatus,
+  SwitchStatusType,
+} from './components/Switch';
+export { Tab, TabList, TabMenu } from './components/tabs/TabList';
+export type {
+  TabProps,
+  TabListProps,
+  TabListSize,
+  TabListLayout,
+  TabListOrientation,
+  TabMenuProps,
+  TabMenuOption,
+} from './components/tabs/TabList';
+export { TextArea } from './components/TextArea';
+export type {
+  TextAreaProps,
+  TextAreaSize,
+  TextAreaStatus,
+  TextAreaStatusType,
+} from './components/TextArea';
+export { Thumbnail } from './components/Thumbnail';
+export type { ThumbnailProps } from './components/Thumbnail';

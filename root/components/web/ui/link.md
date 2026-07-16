@@ -1,7 +1,6 @@
 # Link Specification
 **Status**: Draft
 
-> 참고: Astryx Link (https://astryx.atmeta.com/components/Link)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 인라인/독립 텍스트 내비게이션용 스타일 앵커

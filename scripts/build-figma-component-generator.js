@@ -669,6 +669,11 @@ function createVariant(variantSpec, fontName) {
     "popover": createPopoverVariant,
     "more-menu": createMoreMenuVariant,
     "lightbox": createLightboxVariant,
+    "spinner": createSpinnerVariant,
+    "switch": createSwitchVariant,
+    "tab": createTabVariant,
+    "text-area": createTextAreaVariant,
+    "thumbnail": createThumbnailVariant,
   };
   const renderer = NEW_RENDERERS[SPEC.template];
   if (renderer) {
@@ -773,6 +778,325 @@ function createSkeletonVariant(variantSpec, fontName) {
   if (v === "circle") { c.resize(40, 40); c.cornerRadius = 9999; }
   else if (v === "rect") { c.resize(160, 90); c.cornerRadius = SPEC.radius.rect; }
   else { c.resize(200, 12); c.cornerRadius = SPEC.radius.text; }
+  return c;
+}
+
+// Spinner — 트랙 + 75% 활성 아크
+function createSpinnerVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  applyAutoLayout(c, SPEC.layout);
+  c.fills = [];
+
+  const size = SPEC.sizes[variantSpec.size || "md"];
+  const shade = SPEC.shades[variantSpec.shade || "default"];
+  const ring = figma.createFrame();
+  ring.name = "ring";
+  ring.layoutMode = "NONE";
+  ring.resize(size.frame, size.frame);
+  ring.fills = [];
+
+  const inset = size.strokeWeight / 2;
+  const diameter = size.frame - size.strokeWeight;
+
+  const track = figma.createEllipse();
+  track.name = "track";
+  track.resize(diameter, diameter);
+  track.x = inset;
+  track.y = inset;
+  track.fills = [];
+  track.strokes = [hexToPaint(shade.track)];
+  track.strokeWeight = size.strokeWeight;
+  ring.appendChild(track);
+
+  const active = figma.createEllipse();
+  active.name = "active-arc";
+  active.resize(diameter, diameter);
+  active.x = inset;
+  active.y = inset;
+  active.fills = [];
+  active.strokes = [hexToPaint(shade.active)];
+  active.strokeWeight = size.strokeWeight;
+  active.strokeCap = "ROUND";
+  active.arcData = {
+    startingAngle: SPEC.arc.start,
+    endingAngle: SPEC.arc.end,
+    innerRadius: 0,
+  };
+  ring.appendChild(active);
+  c.appendChild(ring);
+
+  if (variantSpec.label) {
+    c.appendChild(createLabel(variantSpec.label, fontName, SPEC.label));
+  }
+
+  return c;
+}
+
+// Switch — fixed track, adaptive thumb, and optional copy
+function createSwitchVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "HORIZONTAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "AUTO";
+  c.counterAxisAlignItems = "CENTER";
+  c.itemSpacing = SPEC.gap;
+  c.fills = [];
+
+  const track = figma.createFrame();
+  track.name = "track";
+  track.layoutMode = "NONE";
+  track.resize(SPEC.track.width, SPEC.track.height);
+  track.cornerRadius = SPEC.track.radius;
+  track.fills = [hexToPaint(variantSpec.value ? SPEC.track.onFill : SPEC.track.offFill)];
+
+  const thumbSize = variantSpec.value ? SPEC.thumb.onSize : SPEC.thumb.offSize;
+  const thumb = figma.createEllipse();
+  thumb.name = variantSpec.loading ? "thumb / loading" : "thumb";
+  thumb.resize(thumbSize, thumbSize);
+  thumb.x = variantSpec.value
+    ? SPEC.track.width - SPEC.track.padding - thumbSize
+    : SPEC.track.padding;
+  thumb.y = (SPEC.track.height - thumbSize) / 2;
+  thumb.fills = [hexToPaint(SPEC.thumb.fill)];
+  track.appendChild(thumb);
+  c.appendChild(track);
+
+  const copy = frameBox("copy", {
+    layout: {
+      direction: "vertical",
+      gap: variantSpec.description ? 2 : 0,
+      primarySizing: "AUTO",
+      counterSizing: "AUTO",
+      padding: {},
+    },
+  });
+  copy.fills = [];
+  copy.appendChild(createLabel(variantSpec.label || "Switch", fontName, SPEC.label));
+  if (variantSpec.description) {
+    copy.appendChild(createLabel(variantSpec.description, fontName, SPEC.description));
+  }
+  c.appendChild(copy);
+  if (variantSpec.disabled) c.opacity = 0.5;
+  return c;
+}
+
+// Tab family — Tab, TabList, and TabMenu share one component set
+function createTabVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.fills = [];
+
+  const makeItem = (label, selected, size) => {
+    const item = frameBox("tab / " + label);
+    item.layoutMode = "HORIZONTAL";
+    item.primaryAxisSizingMode = "AUTO";
+    item.counterAxisSizingMode = "FIXED";
+    item.counterAxisAlignItems = "CENTER";
+    item.primaryAxisAlignItems = "CENTER";
+    item.itemSpacing = SPEC.item.gap;
+    item.paddingLeft = SPEC.item.paddingX;
+    item.paddingRight = SPEC.item.paddingX;
+    item.resize(72, SPEC.sizes[size || "md"].height);
+    item.cornerRadius = SPEC.item.radius;
+    item.fills = [];
+    item.appendChild(txt(label, fontName, SPEC.item.fontSize, selected ? SPEC.item.selectedColor : SPEC.item.defaultColor));
+    if (selected) {
+      const indicator = figma.createFrame();
+      indicator.name = "indicator";
+      indicator.resize(48, SPEC.indicator.height);
+      indicator.cornerRadius = SPEC.indicator.radius;
+      indicator.fills = [hexToPaint(SPEC.indicator.fill)];
+      indicator.layoutPositioning = "ABSOLUTE";
+      indicator.x = 12;
+      indicator.y = SPEC.sizes[size || "md"].height - SPEC.indicator.height;
+      item.appendChild(indicator);
+    }
+    return item;
+  };
+
+  if (variantSpec.kind === "tab") {
+    const item = makeItem(variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
+    c.resize(item.width, item.height);
+    c.layoutMode = "HORIZONTAL";
+    c.primaryAxisSizingMode = "AUTO";
+    c.counterAxisSizingMode = "AUTO";
+    c.appendChild(item);
+    return c;
+  }
+
+  if (variantSpec.kind === "list") {
+    c.layoutMode = "HORIZONTAL";
+    c.primaryAxisSizingMode = variantSpec.layout === "fill" ? "FIXED" : "AUTO";
+    c.counterAxisSizingMode = "AUTO";
+    c.itemSpacing = 2;
+    if (variantSpec.layout === "fill") c.resize(320, SPEC.sizes.md.height);
+    ["개요", "제품", "설정"].forEach((label, index) => {
+      const item = makeItem(label, index === 0, "md");
+      if (variantSpec.layout === "fill") item.layoutGrow = 1;
+      c.appendChild(item);
+    });
+    if (variantSpec.hasDivider) {
+      c.strokes = [hexToPaint(SPEC.divider.fill)];
+      c.strokeBottomWeight = SPEC.divider.height;
+      c.strokeTopWeight = 0;
+      c.strokeLeftWeight = 0;
+      c.strokeRightWeight = 0;
+    }
+    return c;
+  }
+
+  c.layoutMode = "VERTICAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "FIXED";
+  c.itemSpacing = 4;
+  c.resize(SPEC.menu.width, 32);
+  c.appendChild(makeItem("더보기  v", false, "md"));
+  if (variantSpec.open) {
+    const menu = frameBox("menu", {
+      radius: SPEC.menu.radius,
+      fill: SPEC.menu.fill,
+      stroke: SPEC.menu.stroke,
+    });
+    menu.layoutMode = "VERTICAL";
+    menu.primaryAxisSizingMode = "AUTO";
+    menu.counterAxisSizingMode = "FIXED";
+    menu.paddingTop = 8;
+    menu.paddingBottom = 8;
+    menu.resize(SPEC.menu.width, 1);
+    ["설정", "활동 기록", "보관함"].forEach((label) => {
+      const row = frameBox("menu item");
+      row.layoutMode = "HORIZONTAL";
+      row.primaryAxisSizingMode = "FIXED";
+      row.counterAxisSizingMode = "FIXED";
+      row.counterAxisAlignItems = "CENTER";
+      row.paddingLeft = 12;
+      row.resize(SPEC.menu.width, 32);
+      row.fills = [];
+      row.appendChild(txt(label, fontName, SPEC.item.fontSize, SPEC.item.defaultColor));
+      menu.appendChild(row);
+    });
+    c.appendChild(menu);
+  }
+  return c;
+}
+
+// TextArea — label, multiline field, and helper row
+function createTextAreaVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "VERTICAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "FIXED";
+  c.itemSpacing = 4;
+  c.resize(SPEC.field.width, 1);
+  c.fills = [];
+  c.appendChild(createLabel(variantSpec.label || "Label", fontName, SPEC.label));
+
+  const field = frameBox("field", {
+    radius: SPEC.field.radius,
+    fill: SPEC.field.fill,
+    stroke: variantSpec.status ? SPEC.statusStroke[variantSpec.status] : SPEC.field.stroke,
+  });
+  field.layoutMode = "HORIZONTAL";
+  field.primaryAxisSizingMode = "FIXED";
+  field.counterAxisSizingMode = "FIXED";
+  field.paddingTop = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingRight = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingBottom = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingLeft = SPEC.field.padding[variantSpec.size || "md"];
+  field.resize(SPEC.field.width, SPEC.field.height);
+  field.appendChild(createLabel(
+    variantSpec.value || variantSpec.placeholder || "내용을 입력하세요",
+    fontName,
+    { ...SPEC.text, color: variantSpec.value ? SPEC.text.color : SPEC.text.placeholderColor }
+  ));
+  c.appendChild(field);
+
+  if (variantSpec.message || variantSpec.counter) {
+    const helper = frameBox("helper row");
+    helper.layoutMode = "HORIZONTAL";
+    helper.primaryAxisSizingMode = "FIXED";
+    helper.counterAxisSizingMode = "AUTO";
+    helper.primaryAxisAlignItems = "SPACE_BETWEEN";
+    helper.resize(SPEC.field.width, 1);
+    helper.fills = [];
+    helper.appendChild(createLabel(variantSpec.message || "", fontName, SPEC.helper));
+    if (variantSpec.counter) helper.appendChild(createLabel(variantSpec.counter, fontName, SPEC.helper));
+    c.appendChild(helper);
+  }
+  return c;
+}
+
+// Thumbnail — fixed preview with loading and remove overlays
+function createThumbnailVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "NONE";
+  c.resize(SPEC.frame.size, SPEC.frame.size);
+  c.cornerRadius = SPEC.frame.radius;
+  c.clipsContent = true;
+  c.fills = [hexToPaint(SPEC.frame.fill)];
+  c.strokes = [hexToPaint(SPEC.frame.stroke)];
+  c.strokeWeight = 1;
+
+  if (variantSpec.state === "image" || variantSpec.state === "loading-image") {
+    const image = figma.createFrame();
+    image.name = "image";
+    image.resize(SPEC.frame.size, SPEC.frame.size);
+    image.fills = [hexToPaint("#D7DADC")];
+    c.appendChild(image);
+  } else if (variantSpec.state === "loading") {
+    const skeleton = figma.createFrame();
+    skeleton.name = "skeleton";
+    skeleton.resize(SPEC.frame.size, SPEC.frame.size);
+    skeleton.fills = [hexToPaint(SPEC.frame.stroke)];
+    c.appendChild(skeleton);
+  } else {
+    const placeholder = figma.createFrame();
+    placeholder.name = "image placeholder";
+    placeholder.resize(SPEC.icon.size, SPEC.icon.size);
+    placeholder.x = (SPEC.frame.size - SPEC.icon.size) / 2;
+    placeholder.y = (SPEC.frame.size - SPEC.icon.size) / 2;
+    placeholder.cornerRadius = 4;
+    placeholder.fills = [];
+    placeholder.strokes = [hexToPaint(SPEC.icon.color)];
+    placeholder.strokeWeight = 2;
+    c.appendChild(placeholder);
+  }
+
+  if (variantSpec.state === "loading-image") {
+    const overlay = figma.createFrame();
+    overlay.name = "loading overlay";
+    overlay.resize(SPEC.frame.size, SPEC.frame.size);
+    overlay.fills = [hexToPaint(SPEC.overlay.fill)];
+    c.appendChild(overlay);
+    const spinner = figma.createEllipse();
+    spinner.name = "spinner";
+    spinner.resize(16, 16);
+    spinner.x = 24;
+    spinner.y = 24;
+    spinner.fills = [];
+    spinner.strokes = [hexToPaint("#FFFFFF")];
+    spinner.strokeWeight = 2;
+    overlay.appendChild(spinner);
+  }
+
+  if (variantSpec.removable) {
+    const remove = figma.createEllipse();
+    remove.name = "remove";
+    remove.resize(SPEC.remove.size, SPEC.remove.size);
+    remove.x = SPEC.frame.size - SPEC.remove.size - SPEC.remove.offset;
+    remove.y = SPEC.remove.offset;
+    remove.fills = [hexToPaint(SPEC.remove.fill)];
+    c.appendChild(remove);
+    const x = txt("x", fontName, 12, SPEC.remove.color);
+    x.x = remove.x + 6;
+    x.y = remove.y + 2;
+    c.appendChild(x);
+  }
+  if (variantSpec.disabled) c.opacity = 0.5;
   return c;
 }
 

@@ -1,7 +1,6 @@
 # Pagination Specification
 **Status**: Draft
 
-> 참고: Astryx Pagination (https://astryx.atmeta.com/components/Pagination)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 여러 페이지 콘텐츠를 앞뒤로 이동

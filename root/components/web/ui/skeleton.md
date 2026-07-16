@@ -1,7 +1,6 @@
 # Skeleton Specification
 **Status**: Draft
 
-> 참고: Astryx Skeleton (https://astryx.atmeta.com/components/Skeleton)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 콘텐츠 로딩 중 실제 레이아웃 모양을 미리 보여주는 시머 플레이스홀더

@@ -2109,6 +2109,434 @@ const SPECS = [
     ]
   },
   {
+    "id": "spinner",
+    "template": "spinner",
+    "name": "Spinner",
+    "description": "Indeterminate loading indicator with size, shade, and label variants.",
+    "layout": {
+      "direction": "vertical",
+      "gap": 8,
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": 0,
+        "right": 0,
+        "bottom": 0,
+        "left": 0
+      }
+    },
+    "sizes": {
+      "sm": {
+        "frame": 16,
+        "strokeWeight": 2
+      },
+      "md": {
+        "frame": 20,
+        "strokeWeight": 3
+      },
+      "lg": {
+        "frame": 24,
+        "strokeWeight": 3
+      }
+    },
+    "shades": {
+      "default": {
+        "active": "#36cd1e",
+        "track": "#a1a5aa"
+      },
+      "onMedia": {
+        "active": "#ffffff",
+        "track": "#d2d3d5"
+      },
+      "subtle": {
+        "active": "#3a3d40",
+        "track": "#a1a5aa"
+      },
+      "inherit": {
+        "active": "#1f2023",
+        "track": "#a1a5aa"
+      }
+    },
+    "arc": {
+      "start": -1.5707963267948966,
+      "end": 3.141592653589793
+    },
+    "label": {
+      "fontStyle": "SemiBold",
+      "fontSize": 16,
+      "lineHeight": 24,
+      "color": "#1f2023"
+    },
+    "variants": [
+      {
+        "name": "size=sm, shade=default",
+        "size": "sm",
+        "shade": "default"
+      },
+      {
+        "name": "size=md, shade=default",
+        "size": "md",
+        "shade": "default"
+      },
+      {
+        "name": "size=lg, shade=default",
+        "size": "lg",
+        "shade": "default"
+      },
+      {
+        "name": "size=sm, shade=onMedia",
+        "size": "sm",
+        "shade": "onMedia"
+      },
+      {
+        "name": "size=md, shade=onMedia",
+        "size": "md",
+        "shade": "onMedia"
+      },
+      {
+        "name": "size=lg, shade=onMedia",
+        "size": "lg",
+        "shade": "onMedia"
+      },
+      {
+        "name": "size=sm, shade=subtle",
+        "size": "sm",
+        "shade": "subtle"
+      },
+      {
+        "name": "size=md, shade=subtle",
+        "size": "md",
+        "shade": "subtle"
+      },
+      {
+        "name": "size=lg, shade=subtle",
+        "size": "lg",
+        "shade": "subtle"
+      },
+      {
+        "name": "size=sm, shade=inherit",
+        "size": "sm",
+        "shade": "inherit"
+      },
+      {
+        "name": "size=md, shade=inherit",
+        "size": "md",
+        "shade": "inherit"
+      },
+      {
+        "name": "size=lg, shade=inherit",
+        "size": "lg",
+        "shade": "inherit"
+      },
+      {
+        "name": "size=lg, shade=default, label=true",
+        "size": "lg",
+        "shade": "default",
+        "label": "로딩 중"
+      }
+    ]
+  },
+  {
+    "id": "switch",
+    "template": "switch",
+    "name": "Switch",
+    "description": {
+      "fontStyle": "Regular",
+      "fontSize": 12,
+      "lineHeight": 18,
+      "color": "#61646b"
+    },
+    "track": {
+      "width": 40,
+      "height": 24,
+      "padding": 4,
+      "radius": 9999,
+      "offFill": "#61646b",
+      "onFill": "#39db1f"
+    },
+    "thumb": {
+      "offSize": 16,
+      "onSize": 20,
+      "radius": 9999,
+      "fill": "#ffffff",
+      "shadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
+    },
+    "label": {
+      "fontStyle": "Medium",
+      "fontSize": 14,
+      "lineHeight": 21,
+      "color": "#1f2023"
+    },
+    "gap": 8,
+    "variants": [
+      {
+        "name": "value=off",
+        "value": false,
+        "label": "알림 받기"
+      },
+      {
+        "name": "value=on",
+        "value": true,
+        "label": "알림 받기"
+      },
+      {
+        "name": "value=off, description",
+        "value": false,
+        "label": "다크 모드",
+        "description": "어두운 화면으로 전환"
+      },
+      {
+        "name": "value=on, loading",
+        "value": true,
+        "loading": true,
+        "label": "동기화"
+      },
+      {
+        "name": "value=off, disabled",
+        "value": false,
+        "disabled": true,
+        "label": "프리미엄 기능"
+      }
+    ]
+  },
+  {
+    "id": "tab",
+    "template": "tab",
+    "name": "Tab",
+    "description": "Tab group containing Tab, TabList, and TabMenu patterns.",
+    "sizes": {
+      "sm": {
+        "height": 28
+      },
+      "md": {
+        "height": 32
+      },
+      "lg": {
+        "height": 36
+      }
+    },
+    "item": {
+      "radius": 8,
+      "gap": 4,
+      "paddingX": 12,
+      "fontSize": 14,
+      "lineHeight": 21,
+      "defaultColor": "#3a3d40",
+      "selectedColor": "#1f2023",
+      "hoverFill": "#f5f5f5"
+    },
+    "indicator": {
+      "height": 2,
+      "radius": 9999,
+      "fill": "#39db1f"
+    },
+    "divider": {
+      "height": 1,
+      "fill": "#e4e6e7"
+    },
+    "menu": {
+      "width": 180,
+      "radius": 16,
+      "fill": "#ffffff",
+      "stroke": "#e4e6e7",
+      "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)"
+    },
+    "variants": [
+      {
+        "name": "Tab/size=sm, selected=false",
+        "kind": "tab",
+        "size": "sm",
+        "selected": false,
+        "label": "개요"
+      },
+      {
+        "name": "Tab/size=md, selected=true",
+        "kind": "tab",
+        "size": "md",
+        "selected": true,
+        "label": "개요"
+      },
+      {
+        "name": "Tab/size=lg, selected=false",
+        "kind": "tab",
+        "size": "lg",
+        "selected": false,
+        "label": "설정"
+      },
+      {
+        "name": "TabList/layout=hug, divider=true",
+        "kind": "list",
+        "layout": "hug",
+        "hasDivider": true
+      },
+      {
+        "name": "TabList/layout=fill, divider=true",
+        "kind": "list",
+        "layout": "fill",
+        "hasDivider": true
+      },
+      {
+        "name": "TabMenu/state=closed",
+        "kind": "menu",
+        "open": false
+      },
+      {
+        "name": "TabMenu/state=open",
+        "kind": "menu",
+        "open": true
+      }
+    ]
+  },
+  {
+    "id": "text-area",
+    "template": "text-area",
+    "name": "TextArea",
+    "description": "Controlled multiline text field with label, status, loading, and character count.",
+    "field": {
+      "width": 320,
+      "height": 96,
+      "radius": 8,
+      "fill": "#ffffff",
+      "stroke": "#e4e6e7",
+      "focusStroke": "#39db1f",
+      "padding": {
+        "sm": 8,
+        "md": 12,
+        "lg": 16
+      }
+    },
+    "statusStroke": {
+      "error": "#ea3b2a",
+      "warning": "#fc7a03",
+      "success": "#17cf81"
+    },
+    "label": {
+      "fontStyle": "Medium",
+      "fontSize": 14,
+      "lineHeight": 21,
+      "color": "#1f2023"
+    },
+    "text": {
+      "fontStyle": "Regular",
+      "fontSize": 16,
+      "lineHeight": 24,
+      "color": "#1f2023",
+      "placeholderColor": "#61646b"
+    },
+    "helper": {
+      "fontStyle": "Regular",
+      "fontSize": 12,
+      "lineHeight": 18,
+      "color": "#61646b"
+    },
+    "variants": [
+      {
+        "name": "size=sm, state=default",
+        "size": "sm",
+        "label": "설명",
+        "placeholder": "내용을 입력하세요"
+      },
+      {
+        "name": "size=md, state=default",
+        "size": "md",
+        "label": "설명",
+        "placeholder": "내용을 입력하세요"
+      },
+      {
+        "name": "size=lg, state=default",
+        "size": "lg",
+        "label": "설명",
+        "placeholder": "내용을 입력하세요"
+      },
+      {
+        "name": "size=md, state=error",
+        "size": "md",
+        "status": "error",
+        "label": "설명",
+        "value": "입력된 내용",
+        "message": "내용을 확인하세요"
+      },
+      {
+        "name": "size=md, state=warning",
+        "size": "md",
+        "status": "warning",
+        "label": "설명",
+        "value": "입력된 내용"
+      },
+      {
+        "name": "size=md, state=success",
+        "size": "md",
+        "status": "success",
+        "label": "설명",
+        "value": "입력된 내용"
+      },
+      {
+        "name": "size=md, counter=true",
+        "size": "md",
+        "label": "메시지",
+        "value": "안녕하세요",
+        "counter": "5/100"
+      }
+    ]
+  },
+  {
+    "id": "thumbnail",
+    "template": "thumbnail",
+    "name": "Thumbnail",
+    "description": "Fixed image preview with placeholder, loading, remove, and disabled states.",
+    "frame": {
+      "size": 64,
+      "radius": 8,
+      "fill": "#f5f5f5",
+      "stroke": "#e4e6e7"
+    },
+    "icon": {
+      "size": 24,
+      "color": "#61646b"
+    },
+    "overlay": {
+      "fill": "#00000085"
+    },
+    "remove": {
+      "size": 20,
+      "offset": 4,
+      "radius": 8,
+      "fill": "#ffffff",
+      "color": "#3a3d40",
+      "shadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
+    },
+    "variants": [
+      {
+        "name": "state=placeholder",
+        "state": "placeholder"
+      },
+      {
+        "name": "state=image",
+        "state": "image"
+      },
+      {
+        "name": "state=image, removable=true",
+        "state": "image",
+        "removable": true
+      },
+      {
+        "name": "state=loading, image=false",
+        "state": "loading"
+      },
+      {
+        "name": "state=loading, image=true",
+        "state": "loading-image"
+      },
+      {
+        "name": "state=disabled",
+        "state": "image",
+        "disabled": true
+      }
+    ]
+  },
+  {
     "id": "toggle-button",
     "template": "toggle-button",
     "name": "ToggleButton",
@@ -2759,6 +3187,11 @@ function createVariant(variantSpec, fontName) {
     "popover": createPopoverVariant,
     "more-menu": createMoreMenuVariant,
     "lightbox": createLightboxVariant,
+    "spinner": createSpinnerVariant,
+    "switch": createSwitchVariant,
+    "tab": createTabVariant,
+    "text-area": createTextAreaVariant,
+    "thumbnail": createThumbnailVariant,
   };
   const renderer = NEW_RENDERERS[SPEC.template];
   if (renderer) {
@@ -2863,6 +3296,325 @@ function createSkeletonVariant(variantSpec, fontName) {
   if (v === "circle") { c.resize(40, 40); c.cornerRadius = 9999; }
   else if (v === "rect") { c.resize(160, 90); c.cornerRadius = SPEC.radius.rect; }
   else { c.resize(200, 12); c.cornerRadius = SPEC.radius.text; }
+  return c;
+}
+
+// Spinner — 트랙 + 75% 활성 아크
+function createSpinnerVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  applyAutoLayout(c, SPEC.layout);
+  c.fills = [];
+
+  const size = SPEC.sizes[variantSpec.size || "md"];
+  const shade = SPEC.shades[variantSpec.shade || "default"];
+  const ring = figma.createFrame();
+  ring.name = "ring";
+  ring.layoutMode = "NONE";
+  ring.resize(size.frame, size.frame);
+  ring.fills = [];
+
+  const inset = size.strokeWeight / 2;
+  const diameter = size.frame - size.strokeWeight;
+
+  const track = figma.createEllipse();
+  track.name = "track";
+  track.resize(diameter, diameter);
+  track.x = inset;
+  track.y = inset;
+  track.fills = [];
+  track.strokes = [hexToPaint(shade.track)];
+  track.strokeWeight = size.strokeWeight;
+  ring.appendChild(track);
+
+  const active = figma.createEllipse();
+  active.name = "active-arc";
+  active.resize(diameter, diameter);
+  active.x = inset;
+  active.y = inset;
+  active.fills = [];
+  active.strokes = [hexToPaint(shade.active)];
+  active.strokeWeight = size.strokeWeight;
+  active.strokeCap = "ROUND";
+  active.arcData = {
+    startingAngle: SPEC.arc.start,
+    endingAngle: SPEC.arc.end,
+    innerRadius: 0,
+  };
+  ring.appendChild(active);
+  c.appendChild(ring);
+
+  if (variantSpec.label) {
+    c.appendChild(createLabel(variantSpec.label, fontName, SPEC.label));
+  }
+
+  return c;
+}
+
+// Switch — fixed track, adaptive thumb, and optional copy
+function createSwitchVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "HORIZONTAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "AUTO";
+  c.counterAxisAlignItems = "CENTER";
+  c.itemSpacing = SPEC.gap;
+  c.fills = [];
+
+  const track = figma.createFrame();
+  track.name = "track";
+  track.layoutMode = "NONE";
+  track.resize(SPEC.track.width, SPEC.track.height);
+  track.cornerRadius = SPEC.track.radius;
+  track.fills = [hexToPaint(variantSpec.value ? SPEC.track.onFill : SPEC.track.offFill)];
+
+  const thumbSize = variantSpec.value ? SPEC.thumb.onSize : SPEC.thumb.offSize;
+  const thumb = figma.createEllipse();
+  thumb.name = variantSpec.loading ? "thumb / loading" : "thumb";
+  thumb.resize(thumbSize, thumbSize);
+  thumb.x = variantSpec.value
+    ? SPEC.track.width - SPEC.track.padding - thumbSize
+    : SPEC.track.padding;
+  thumb.y = (SPEC.track.height - thumbSize) / 2;
+  thumb.fills = [hexToPaint(SPEC.thumb.fill)];
+  track.appendChild(thumb);
+  c.appendChild(track);
+
+  const copy = frameBox("copy", {
+    layout: {
+      direction: "vertical",
+      gap: variantSpec.description ? 2 : 0,
+      primarySizing: "AUTO",
+      counterSizing: "AUTO",
+      padding: {},
+    },
+  });
+  copy.fills = [];
+  copy.appendChild(createLabel(variantSpec.label || "Switch", fontName, SPEC.label));
+  if (variantSpec.description) {
+    copy.appendChild(createLabel(variantSpec.description, fontName, SPEC.description));
+  }
+  c.appendChild(copy);
+  if (variantSpec.disabled) c.opacity = 0.5;
+  return c;
+}
+
+// Tab family — Tab, TabList, and TabMenu share one component set
+function createTabVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.fills = [];
+
+  const makeItem = (label, selected, size) => {
+    const item = frameBox("tab / " + label);
+    item.layoutMode = "HORIZONTAL";
+    item.primaryAxisSizingMode = "AUTO";
+    item.counterAxisSizingMode = "FIXED";
+    item.counterAxisAlignItems = "CENTER";
+    item.primaryAxisAlignItems = "CENTER";
+    item.itemSpacing = SPEC.item.gap;
+    item.paddingLeft = SPEC.item.paddingX;
+    item.paddingRight = SPEC.item.paddingX;
+    item.resize(72, SPEC.sizes[size || "md"].height);
+    item.cornerRadius = SPEC.item.radius;
+    item.fills = [];
+    item.appendChild(txt(label, fontName, SPEC.item.fontSize, selected ? SPEC.item.selectedColor : SPEC.item.defaultColor));
+    if (selected) {
+      const indicator = figma.createFrame();
+      indicator.name = "indicator";
+      indicator.resize(48, SPEC.indicator.height);
+      indicator.cornerRadius = SPEC.indicator.radius;
+      indicator.fills = [hexToPaint(SPEC.indicator.fill)];
+      indicator.layoutPositioning = "ABSOLUTE";
+      indicator.x = 12;
+      indicator.y = SPEC.sizes[size || "md"].height - SPEC.indicator.height;
+      item.appendChild(indicator);
+    }
+    return item;
+  };
+
+  if (variantSpec.kind === "tab") {
+    const item = makeItem(variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
+    c.resize(item.width, item.height);
+    c.layoutMode = "HORIZONTAL";
+    c.primaryAxisSizingMode = "AUTO";
+    c.counterAxisSizingMode = "AUTO";
+    c.appendChild(item);
+    return c;
+  }
+
+  if (variantSpec.kind === "list") {
+    c.layoutMode = "HORIZONTAL";
+    c.primaryAxisSizingMode = variantSpec.layout === "fill" ? "FIXED" : "AUTO";
+    c.counterAxisSizingMode = "AUTO";
+    c.itemSpacing = 2;
+    if (variantSpec.layout === "fill") c.resize(320, SPEC.sizes.md.height);
+    ["개요", "제품", "설정"].forEach((label, index) => {
+      const item = makeItem(label, index === 0, "md");
+      if (variantSpec.layout === "fill") item.layoutGrow = 1;
+      c.appendChild(item);
+    });
+    if (variantSpec.hasDivider) {
+      c.strokes = [hexToPaint(SPEC.divider.fill)];
+      c.strokeBottomWeight = SPEC.divider.height;
+      c.strokeTopWeight = 0;
+      c.strokeLeftWeight = 0;
+      c.strokeRightWeight = 0;
+    }
+    return c;
+  }
+
+  c.layoutMode = "VERTICAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "FIXED";
+  c.itemSpacing = 4;
+  c.resize(SPEC.menu.width, 32);
+  c.appendChild(makeItem("더보기  v", false, "md"));
+  if (variantSpec.open) {
+    const menu = frameBox("menu", {
+      radius: SPEC.menu.radius,
+      fill: SPEC.menu.fill,
+      stroke: SPEC.menu.stroke,
+    });
+    menu.layoutMode = "VERTICAL";
+    menu.primaryAxisSizingMode = "AUTO";
+    menu.counterAxisSizingMode = "FIXED";
+    menu.paddingTop = 8;
+    menu.paddingBottom = 8;
+    menu.resize(SPEC.menu.width, 1);
+    ["설정", "활동 기록", "보관함"].forEach((label) => {
+      const row = frameBox("menu item");
+      row.layoutMode = "HORIZONTAL";
+      row.primaryAxisSizingMode = "FIXED";
+      row.counterAxisSizingMode = "FIXED";
+      row.counterAxisAlignItems = "CENTER";
+      row.paddingLeft = 12;
+      row.resize(SPEC.menu.width, 32);
+      row.fills = [];
+      row.appendChild(txt(label, fontName, SPEC.item.fontSize, SPEC.item.defaultColor));
+      menu.appendChild(row);
+    });
+    c.appendChild(menu);
+  }
+  return c;
+}
+
+// TextArea — label, multiline field, and helper row
+function createTextAreaVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "VERTICAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "FIXED";
+  c.itemSpacing = 4;
+  c.resize(SPEC.field.width, 1);
+  c.fills = [];
+  c.appendChild(createLabel(variantSpec.label || "Label", fontName, SPEC.label));
+
+  const field = frameBox("field", {
+    radius: SPEC.field.radius,
+    fill: SPEC.field.fill,
+    stroke: variantSpec.status ? SPEC.statusStroke[variantSpec.status] : SPEC.field.stroke,
+  });
+  field.layoutMode = "HORIZONTAL";
+  field.primaryAxisSizingMode = "FIXED";
+  field.counterAxisSizingMode = "FIXED";
+  field.paddingTop = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingRight = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingBottom = SPEC.field.padding[variantSpec.size || "md"];
+  field.paddingLeft = SPEC.field.padding[variantSpec.size || "md"];
+  field.resize(SPEC.field.width, SPEC.field.height);
+  field.appendChild(createLabel(
+    variantSpec.value || variantSpec.placeholder || "내용을 입력하세요",
+    fontName,
+    { ...SPEC.text, color: variantSpec.value ? SPEC.text.color : SPEC.text.placeholderColor }
+  ));
+  c.appendChild(field);
+
+  if (variantSpec.message || variantSpec.counter) {
+    const helper = frameBox("helper row");
+    helper.layoutMode = "HORIZONTAL";
+    helper.primaryAxisSizingMode = "FIXED";
+    helper.counterAxisSizingMode = "AUTO";
+    helper.primaryAxisAlignItems = "SPACE_BETWEEN";
+    helper.resize(SPEC.field.width, 1);
+    helper.fills = [];
+    helper.appendChild(createLabel(variantSpec.message || "", fontName, SPEC.helper));
+    if (variantSpec.counter) helper.appendChild(createLabel(variantSpec.counter, fontName, SPEC.helper));
+    c.appendChild(helper);
+  }
+  return c;
+}
+
+// Thumbnail — fixed preview with loading and remove overlays
+function createThumbnailVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "NONE";
+  c.resize(SPEC.frame.size, SPEC.frame.size);
+  c.cornerRadius = SPEC.frame.radius;
+  c.clipsContent = true;
+  c.fills = [hexToPaint(SPEC.frame.fill)];
+  c.strokes = [hexToPaint(SPEC.frame.stroke)];
+  c.strokeWeight = 1;
+
+  if (variantSpec.state === "image" || variantSpec.state === "loading-image") {
+    const image = figma.createFrame();
+    image.name = "image";
+    image.resize(SPEC.frame.size, SPEC.frame.size);
+    image.fills = [hexToPaint("#D7DADC")];
+    c.appendChild(image);
+  } else if (variantSpec.state === "loading") {
+    const skeleton = figma.createFrame();
+    skeleton.name = "skeleton";
+    skeleton.resize(SPEC.frame.size, SPEC.frame.size);
+    skeleton.fills = [hexToPaint(SPEC.frame.stroke)];
+    c.appendChild(skeleton);
+  } else {
+    const placeholder = figma.createFrame();
+    placeholder.name = "image placeholder";
+    placeholder.resize(SPEC.icon.size, SPEC.icon.size);
+    placeholder.x = (SPEC.frame.size - SPEC.icon.size) / 2;
+    placeholder.y = (SPEC.frame.size - SPEC.icon.size) / 2;
+    placeholder.cornerRadius = 4;
+    placeholder.fills = [];
+    placeholder.strokes = [hexToPaint(SPEC.icon.color)];
+    placeholder.strokeWeight = 2;
+    c.appendChild(placeholder);
+  }
+
+  if (variantSpec.state === "loading-image") {
+    const overlay = figma.createFrame();
+    overlay.name = "loading overlay";
+    overlay.resize(SPEC.frame.size, SPEC.frame.size);
+    overlay.fills = [hexToPaint(SPEC.overlay.fill)];
+    c.appendChild(overlay);
+    const spinner = figma.createEllipse();
+    spinner.name = "spinner";
+    spinner.resize(16, 16);
+    spinner.x = 24;
+    spinner.y = 24;
+    spinner.fills = [];
+    spinner.strokes = [hexToPaint("#FFFFFF")];
+    spinner.strokeWeight = 2;
+    overlay.appendChild(spinner);
+  }
+
+  if (variantSpec.removable) {
+    const remove = figma.createEllipse();
+    remove.name = "remove";
+    remove.resize(SPEC.remove.size, SPEC.remove.size);
+    remove.x = SPEC.frame.size - SPEC.remove.size - SPEC.remove.offset;
+    remove.y = SPEC.remove.offset;
+    remove.fills = [hexToPaint(SPEC.remove.fill)];
+    c.appendChild(remove);
+    const x = txt("x", fontName, 12, SPEC.remove.color);
+    x.x = remove.x + 6;
+    x.y = remove.y + 2;
+    c.appendChild(x);
+  }
+  if (variantSpec.disabled) c.opacity = 0.5;
   return c;
 }
 

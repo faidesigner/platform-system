@@ -1,7 +1,6 @@
 # Selector Specification
 **Status**: Draft
 
-> 참고: Astryx Selector / SelectorOption (https://astryx.atmeta.com/components/Selector)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 목록에서 단일 값을 고르는 드롭다운 셀렉터. label/validation/description/required 지원

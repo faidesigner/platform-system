@@ -1,7 +1,6 @@
 # MultiSelector Specification
 **Status**: Draft
 
-> 참고: Astryx MultiSelector (https://astryx.atmeta.com/components/MultiSelector)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 목록에서 여러 값을 고르는 체크박스 드롭다운. 선택 항목을 count/labels/badges로 표시

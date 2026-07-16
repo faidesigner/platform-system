@@ -1,7 +1,6 @@
 # NumberInput Specification
 **Status**: Draft
 
-> 참고: Astryx NumberInput (https://astryx.atmeta.com/components/NumberInput)
 > 기존 LineInput 패턴(label/error/helpText/disabled) 계승.
 
 ## 1. 🎯 Definition & Usage

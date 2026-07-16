@@ -1,7 +1,6 @@
 # Slider Specification
 **Status**: Draft
 
-> 참고: Astryx Slider (https://astryx.atmeta.com/components/Slider)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 정해진 범위 내에서 숫자 값/범위를 드래그로 선택

@@ -1,0 +1,45 @@
+{
+  "template": "tab",
+  "name": "Tab",
+  "description": "Tab group containing Tab, TabList, and TabMenu patterns.",
+  "sizes": {
+    "sm": { "height": { "$pixelToken": "size.28" } },
+    "md": { "height": { "$pixelToken": "size.32" } },
+    "lg": { "height": { "$pixelToken": "size.36" } }
+  },
+  "item": {
+    "radius": { "$pixelToken": "size.8" },
+    "gap": { "$pixelToken": "size.4" },
+    "paddingX": { "$pixelToken": "size.12" },
+    "fontSize": { "$pixelToken": "font.size.14" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.14" },
+    "defaultColor": { "$token": "semantic.light.text.basic.secondary" },
+    "selectedColor": { "$token": "semantic.light.text.basic.primary" },
+    "hoverFill": { "$token": "semantic.light.filled.basic.fourth" }
+  },
+  "indicator": {
+    "height": { "$pixelToken": "size.2" },
+    "radius": 9999,
+    "fill": { "$token": "semantic.light.filled.optional.brand-primary" }
+  },
+  "divider": {
+    "height": 1,
+    "fill": { "$token": "semantic.light.border.tertiary" }
+  },
+  "menu": {
+    "width": { "$pixelToken": "size.180" },
+    "radius": { "$pixelToken": "size.16" },
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "shadow": { "$token": "shadow.M" }
+  },
+  "variants": [
+    { "name": "Tab/size=sm, selected=false", "kind": "tab", "size": "sm", "selected": false, "label": "개요" },
+    { "name": "Tab/size=md, selected=true", "kind": "tab", "size": "md", "selected": true, "label": "개요" },
+    { "name": "Tab/size=lg, selected=false", "kind": "tab", "size": "lg", "selected": false, "label": "설정" },
+    { "name": "TabList/layout=hug, divider=true", "kind": "list", "layout": "hug", "hasDivider": true },
+    { "name": "TabList/layout=fill, divider=true", "kind": "list", "layout": "fill", "hasDivider": true },
+    { "name": "TabMenu/state=closed", "kind": "menu", "open": false },
+    { "name": "TabMenu/state=open", "kind": "menu", "open": true }
+  ]
+}

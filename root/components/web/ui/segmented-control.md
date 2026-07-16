@@ -1,7 +1,6 @@
 # SegmentedControl Specification
 **Status**: Draft
 
-> 참고: Astryx SegmentedControl / SegmentedControlItem (https://astryx.atmeta.com/components/SegmentedControl)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 상호 배타적 옵션 중 하나를 고르는 세그먼트 버튼 그룹. 항상 정확히 하나 선택

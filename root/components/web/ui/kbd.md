@@ -1,7 +1,6 @@
 # Kbd Specification
 **Status**: Draft
 
-> 참고: Astryx Kbd (https://astryx.atmeta.com/components/Kbd)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 키보드 단축키를 스타일된 키 배지로 렌더

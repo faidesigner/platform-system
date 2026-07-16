@@ -1,0 +1,51 @@
+{
+  "template": "text-area",
+  "name": "TextArea",
+  "description": "Controlled multiline text field with label, status, loading, and character count.",
+  "field": {
+    "width": { "$pixelToken": "size.320" },
+    "height": { "$pixelToken": "size.96" },
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "focusStroke": { "$token": "semantic.light.border.brand-primary" },
+    "padding": {
+      "sm": { "$pixelToken": "size.8" },
+      "md": { "$pixelToken": "size.12" },
+      "lg": { "$pixelToken": "size.16" }
+    }
+  },
+  "statusStroke": {
+    "error": { "$token": "semantic.light.border.negative" },
+    "warning": { "$token": "semantic.light.border.warning" },
+    "success": { "$token": "semantic.light.border.positive" }
+  },
+  "label": {
+    "fontStyle": "Medium",
+    "fontSize": { "$pixelToken": "font.size.14" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.14" },
+    "color": { "$token": "semantic.light.text.basic.primary" }
+  },
+  "text": {
+    "fontStyle": "Regular",
+    "fontSize": { "$pixelToken": "font.size.16" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.16" },
+    "color": { "$token": "semantic.light.text.basic.primary" },
+    "placeholderColor": { "$token": "semantic.light.text.basic.tertiary" }
+  },
+  "helper": {
+    "fontStyle": "Regular",
+    "fontSize": { "$pixelToken": "font.size.12" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.12" },
+    "color": { "$token": "semantic.light.text.basic.tertiary" }
+  },
+  "variants": [
+    { "name": "size=sm, state=default", "size": "sm", "label": "설명", "placeholder": "내용을 입력하세요" },
+    { "name": "size=md, state=default", "size": "md", "label": "설명", "placeholder": "내용을 입력하세요" },
+    { "name": "size=lg, state=default", "size": "lg", "label": "설명", "placeholder": "내용을 입력하세요" },
+    { "name": "size=md, state=error", "size": "md", "status": "error", "label": "설명", "value": "입력된 내용", "message": "내용을 확인하세요" },
+    { "name": "size=md, state=warning", "size": "md", "status": "warning", "label": "설명", "value": "입력된 내용" },
+    { "name": "size=md, state=success", "size": "md", "status": "success", "label": "설명", "value": "입력된 내용" },
+    { "name": "size=md, counter=true", "size": "md", "label": "메시지", "value": "안녕하세요", "counter": "5/100" }
+  ]
+}

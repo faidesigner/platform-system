@@ -1,7 +1,6 @@
 # MoreMenu Specification
 **Status**: Draft
 
-> 참고: Astryx MoreMenu (https://astryx.atmeta.com/components/MoreMenu)
 
 ## 1. 🎯 Definition & Usage
 - **목적**: 세 개 점(⋯) 버튼을 눌러 액션 목록을 여는 오버플로 메뉴

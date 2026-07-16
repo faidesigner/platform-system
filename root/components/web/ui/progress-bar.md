@@ -1,9 +1,9 @@
 # ProgressBar Specification
 **Status**: Draft
 
-> ⚠️ 진행 표시는 **용도별 2개 컴포넌트**로 나뉜다 (2026-07-15, Astryx 반영):
+> ⚠️ 진행 표시는 **용도별 2개 컴포넌트**로 나뉜다 (2026-07-15):
 > - **ProgressBar** (본 문서 §1~4) — 스텝/세그먼트 인디케이터 (캐러셀·온보딩). 클릭 이동.
-> - **LinearProgress** (§5~7) — 단일 작업 진행률 바 (determinate/indeterminate, %, semantic 색상). 참고: Astryx ProgressBar.
+> - **LinearProgress** (§5~7) — 단일 작업 진행률 바 (determinate/indeterminate, %, semantic 색상).
 > 둘은 이름·용도가 다르므로 섞지 말 것.
 
 ## 1. 🎯 Definition & Usage (ProgressBar = 스텝 인디케이터)
