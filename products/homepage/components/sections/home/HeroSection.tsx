@@ -103,7 +103,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
 
         {/* 상단 카피 — 확장 전에만 표시. z-40: 비디오 박스(z-30)보다 위에 그려 어떤 height에서도 텍스트가 가려지지 않도록 하는 안전망 (HOM-57) */}
         {!isExpanded && (
-          <div className="absolute left-0 right-0 top-0 z-40 mx-auto flex flex-col items-center gap-s pt-[200px] text-center pointer-events-none">
+          <div className="absolute left-0 right-0 top-0 z-40 mx-auto flex flex-col items-center gap-s pt-[clamp(var(--padding-8XL),22.22vh,200px)] text-center pointer-events-none">
             <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
             <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
           </div>
@@ -112,8 +112,10 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         {/*
           비디오 박스 ― layout FLIP 으로 크기/위치 보간.
           축소 상태 높이는 고정 374px 대신 min(374px, 100vh - 타이틀 예약공간)으로 계산 (HOM-57).
-          예약공간(--hero-title-clear)은 pt-[200px] + 브레이크포인트별 타이틀 2줄 높이(gap-s 포함)를 근사한 값이라
-          정상 height에서는 100vh가 충분해 기존과 동일한 374px로 귀결되고, height가 짧아질 때만 이미지가 줄어든다.
+          예약공간(--hero-title-clear)은 상단 pt 최대값(200px, 짧은 height에서는 var(--padding-8XL)=150px까지 축소) +
+          브레이크포인트별 타이틀 2줄 높이(gap-s 포함)를 근사한 값이라, 정상 height에서는 100vh가 충분해 기존과 동일한
+          374px로 귀결되고, height가 짧아질 때만 이미지가 줄어든다. pt가 축소되는 구간에서는 실제 예약공간이 이 근사치보다
+          작아지므로(보수적 방향) 안전망(z-40)이 여전히 유효하다.
         */}
         <motion.div
           layout
