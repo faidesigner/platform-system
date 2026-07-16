@@ -1,17 +1,19 @@
 # Claude Project Rules
 
-Before UI generation:
-- Read homepage-system.md first
-- Use foundation tokens only
-- Use web grid tokens only
-- Preserve component consistency
+> 공통 규칙(네이밍·토큰·검증)의 SSOT는 **`design-system.md`**. 여기엔 요약과 이 저장소 고유 규칙만 둔다.
 
-Never:
-- create arbitrary spacing
-- create arbitrary colors
-- create custom radius values
+## 📖 문서 읽기 순서 (계층)
+1. **먼저 상위(공통)** — `design-system.md`(공통 규칙 SSOT) + `root/design-system.md`(작업 유형별 진입점).
+2. **그다음 해당 프로덕트에서 작업할 때만** 그 프로덕트 문서를 추가로 읽는다.
+   - `products/homepage` 작업 → `products/homepage/homepage-system.md` (모노레포 구조·컴포넌트 배치 헌법)
+3. 관련 없는 프로덕트 문서는 읽지 않는다. 공통 규칙이 우선이고, 프로덕트 문서는 그 위에 얹히는 세부 규칙이다.
 
-Always reuse existing tokens and components first.
+UI 생성 전:
+- foundation 토큰만 사용, web grid 토큰만 사용
+- 기존 컴포넌트·토큰 재사용 우선
+
+절대 금지 (자세한 근거는 design-system.md):
+- 임의 spacing / color / radius 생성 금지
 
 ## Paths (fai-homepage)
 
@@ -76,5 +78,5 @@ Always reuse existing tokens and components first.
 
 [Rule: 작업 범위 제한 및 최적화]
 1. 불필요한 탐색 금지: 파일 검색이나 코드 분석 시, 현재 지시받은 작업과 직접적인 관련이 없는 폴더나 파일은 절대 스캔하지 마.
-2. 타겟팅: 명시된 컴포넌트, `homepage-system.md`, `foundation` 폴더 안의 관련 토큰 등 작업에 꼭 필요한 최소한의 Context만 읽어서 빠르고 가볍게 응답해.
+2. 타겟팅: 명시된 컴포넌트, `design-system.md`, `foundation` 폴더 안의 관련 토큰 등 작업에 꼭 필요한 최소한의 Context만 읽어서 빠르고 가볍게 응답해.
 3. 묻고 움직이기: 전체 코드를 광범위하게 읽어야 할 상황이 발생하면, 멋대로 탐색하기 전에 반드시 사용자에게 먼저 허락을 구해.
