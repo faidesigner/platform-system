@@ -197,3 +197,9 @@ export type {
 } from './components/TextArea';
 export { Thumbnail } from './components/Thumbnail';
 export type { ThumbnailProps } from './components/Thumbnail';
+
+/* ── Table / TreeList (신규) ── */
+export { Table, TableRow, TableCell, TableHeaderCell } from './components/table/Table';
+export type { TableProps, TableRowProps, TableCellProps, TableHeaderCellProps, TableDensity, CellAlign } from './components/table/Table';
+export { TreeList } from './components/TreeList';
+export type { TreeListProps, TreeNode } from './components/TreeList';

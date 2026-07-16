@@ -674,6 +674,8 @@ function createVariant(variantSpec, fontName) {
     "tab": createTabVariant,
     "text-area": createTextAreaVariant,
     "thumbnail": createThumbnailVariant,
+    "table": createTableVariant,
+    "tree-list": createTreeListVariant,
   };
   const renderer = NEW_RENDERERS[SPEC.template];
   if (renderer) {
@@ -1338,6 +1340,106 @@ function createLightboxVariant(variantSpec, fontName) {
 }
 
 // 신규 컴포넌트용 fallback 렌더러.
+// Table — 헤더 행 + 데이터 행 2개(구조 미리보기)
+function createTableVariant(variantSpec, fontName) {
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "VERTICAL";
+  c.primaryAxisSizingMode = "AUTO";
+  c.counterAxisSizingMode = "FIXED";
+  c.resize(480, Math.max(c.height, 1));
+  c.itemSpacing = 0;
+  c.fills = [];
+
+  const cols = ["이름", "상태", "수정일"];
+  const rows = [["항목 A", "활성", "2026-07-15"], ["항목 B", "대기", "2026-07-14"]];
+
+  const makeRow = (cells, isHeader, striped) => {
+    const row = figma.createFrame();
+    row.name = isHeader ? "header-row" : "row";
+    row.layoutMode = "HORIZONTAL";
+    row.primaryAxisSizingMode = "FIXED";
+    row.counterAxisSizingMode = "AUTO";
+    row.itemSpacing = 0;
+    row.strokes = [hexToPaint(SPEC.row.divider)];
+    row.strokeWeight = 1;
+    row.strokeBottomWeight = 1; row.strokeTopWeight = 0; row.strokeLeftWeight = 0; row.strokeRightWeight = 0;
+    if (isHeader) row.fills = [hexToPaint(SPEC.header.fill)];
+    else if (striped) row.fills = [hexToPaint(SPEC.row.stripedFill)];
+    else row.fills = [];
+    cells.forEach((text) => {
+      const cell = figma.createFrame();
+      cell.layoutMode = "HORIZONTAL";
+      cell.counterAxisAlignItems = "CENTER";
+      cell.paddingTop = SPEC.cell.layout.padding.top;
+      cell.paddingBottom = SPEC.cell.layout.padding.bottom;
+      cell.paddingLeft = SPEC.cell.layout.padding.left;
+      cell.paddingRight = SPEC.cell.layout.padding.right;
+      cell.fills = [];
+      const style = isHeader ? SPEC.header.label : SPEC.cell.label;
+      cell.appendChild(txt(text, fontName, style.fontSize, style.color));
+      // append 후 크기 모드 설정 (Figma는 부모 편입 후에야 grow/stretch 인식)
+      row.appendChild(cell);
+      cell.layoutGrow = 1;                       // 폭 균등 분배
+      cell.layoutSizingVertical = "HUG";         // 높이는 내용에 맞춤
+    });
+    return row;
+  };
+
+  c.appendChild(makeRow(cols, true, false));
+  rows.forEach((r, i) => {
+    const row = makeRow(r, false, variantSpec.striped && i % 2 === 1);
+    c.appendChild(row);
+  });
+  // 행들을 컨테이너 폭에 맞춤 (append 후)
+  c.children.forEach((row) => { row.layoutSizingHorizontal = "FILL"; });
+  return c;
+}
+
+// TreeList — 계층 노드 미리보기 (2레벨)
+function createTreeListVariant(variantSpec, fontName) {
+  // auto-layout 세로 자동계산 대신 명시적 좌표/크기로 그린다 (노드 높이 늘어남 방지).
+  const WIDTH = 240;
+  const ROW_H = 28;
+  const GAP = 2;
+
+  const nodeDefs = [{ label: "문서", depth: 0, selected: false }];
+  const expanded = variantSpec.expanded !== false;
+  if (expanded) {
+    nodeDefs.push({ label: "보고서.pdf", depth: 1, selected: variantSpec.selected === true });
+    nodeDefs.push({ label: "이미지.png", depth: 1, selected: false });
+  }
+  nodeDefs.push({ label: "설정", depth: 0, selected: false });
+
+  const c = figma.createComponent();
+  c.name = variantSpec.name;
+  c.layoutMode = "NONE";
+  c.fills = [];
+  c.resize(WIDTH, nodeDefs.length * ROW_H + (nodeDefs.length - 1) * GAP);
+  c.clipsContent = false;
+
+  nodeDefs.forEach((def, i) => {
+    const node = figma.createFrame();
+    node.name = "node";
+    node.layoutMode = "HORIZONTAL";
+    node.counterAxisAlignItems = "CENTER";
+    node.primaryAxisSizingMode = "FIXED";
+    node.counterAxisSizingMode = "FIXED";
+    node.itemSpacing = SPEC.node.layout.gap;
+    node.paddingLeft = SPEC.node.layout.padding.left + def.depth * 16;
+    node.paddingRight = SPEC.node.layout.padding.right;
+    node.cornerRadius = SPEC.node.radius;
+    node.fills = def.selected ? [hexToPaint(SPEC.node.selectedFill)] : [];
+    node.appendChild(txt("›", fontName, 13, SPEC.node.chevron.color));
+    node.appendChild(txt(def.label, fontName, SPEC.node.label.fontSize, SPEC.node.label.color));
+    c.appendChild(node);
+    node.resize(WIDTH, ROW_H);
+    node.x = 0;
+    node.y = i * (ROW_H + GAP);
+  });
+  return c;
+}
+
 // template별 전용 렌더가 없을 때, 스펙의 공통 형태 키(component/panel/track/
 // trigger/container/item/field)에서 layout·fill·radius·stroke를 읽어 대략적 박스를 그린다.
 // 세부 디테일은 Figma에서 디자이너가 다듬는다.
