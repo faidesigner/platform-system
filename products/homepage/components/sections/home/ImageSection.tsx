@@ -35,10 +35,12 @@ export function ImageSection({
        * sticky top-0  → 뷰포트 상단 고정
        * h-dvh         → 뷰포트 전체 높이
        * w-full        → 뷰포트 전체 폭(단, 아래 폭 상한 적용 시 그 안쪽에 필러박스로 채워짐)
-       * object-cover object-bottom desktop:object-center
-       *   - 기본(모바일·태블릿): object-bottom — 세로 비율에서 바닥 기준 정렬이 자연스러움
-       *   - desktop(≥1440px): object-center — 광폭에서 object-bottom은 제품 상단(화면 문구)이
-       *     잘리므로, 넘치는 만큼을 상·하 균등 분배해 제품 상단이 보이도록 중앙 정렬로 전환한다.
+       * object-cover object-center (HOM-58)
+       *   세로가 긴 뷰포트(모바일·태블릿)는 가로축에서만 크롭되므로 object-position의 세로 성분은
+       *   애초에 화면에 영향을 주지 않는다. 세로 크롭이 실제로 발생하는 건 컨테이너가 원본보다
+       *   와이드해질 때뿐이라, breakpoint와 무관하게 항상 상/하 균등 크롭(center)으로 통일한다.
+       *   (이전 desktop:object-center 분기는 1440px 미만 와이드 뷰포트에서 object-bottom이 남아
+       *   크롭이 전부 위쪽에만 몰리는 버그가 있었음 — center 단일화로 근본 해결.)
        */}
       <div className="sticky top-0 w-full h-dvh overflow-hidden bg-gray-50">
         {/*
@@ -55,7 +57,7 @@ export function ImageSection({
             fill
             priority={priority}
             sizes="100vw"
-            className="object-cover object-bottom desktop:object-center"
+            className="object-cover object-center"
           />
         </div>
       </div>
