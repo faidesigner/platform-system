@@ -61,3 +61,6 @@ node_modules/
 # git worktrees (repo 내부 보관)
 .worktrees/
 .playwright-mcp/
+
+# 배포 전 S3 스냅샷 백업 (Tailwind 스캔 대상 밖으로 유지)
+.backups/
