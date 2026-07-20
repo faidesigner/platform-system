@@ -15,6 +15,7 @@
 
 # next.js
 /.next/
+**/.next/
 /out/
 
 # production
@@ -47,6 +48,10 @@ node_modules/
 
 # pnpm
 .pnpm-debug.log*
+.pnpm-store/
+
+# local-only (커밋 금지)
+HANDOFF.local.md
 
 # misc
 .DS_Store
