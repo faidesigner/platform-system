@@ -17,27 +17,27 @@ export interface IcoTxtButtonProps
 /* ── 사이즈 매트릭스 ── */
 const sizeMap = {
   XL: {
-    padding:    "px-[var(--padding-XL,24px)] py-[var(--padding-M,16px)]",
-    contentGap: "gap-[var(--spacing-XS,6px)]",
-    font:       "font-semibold text-[length:var(--m-text-XL-size,16px)] leading-[var(--m-text-XL-lineHeight,24px)]",
+    padding:    "px-xl py-m",
+    contentGap: "gap-xs",
+    font:       "text-body font-semibold",
     iconSize:   "w-[20px] h-[20px]",
   },
   L: {
-    padding:    "px-[var(--padding-M,16px)] py-[var(--padding-S,8px)]",
-    contentGap: "gap-[var(--spacing-2XS,4px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-L-size,15px)] font-semibold leading-[var(--m-text-L-lineHeight,22px)]",
+    padding:    "px-m py-s",
+    contentGap: "gap-2xs",
+    font:       "text-[length:var(--font-size-15,15px)] font-semibold leading-[var(--font-lineHeight-15,22px)]",
     iconSize:   "w-[16px] h-[16px]",
   },
   M: {
-    padding:    "px-[var(--padding-S,8px)] py-[var(--padding-XS,6px)]",
-    contentGap: "gap-[var(--spacing-3XS,2px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-S-size,13px)] font-semibold leading-[var(--m-text-S-lineHeight,20px)]",
+    padding:    "px-s py-xs",
+    contentGap: "gap-3xs",
+    font:       "text-[length:var(--font-size-13,13px)] font-semibold leading-[var(--font-lineHeight-13,20px)]",
     iconSize:   "w-[16px] h-[16px]",
   },
   S: {
-    padding:    "px-[var(--padding-XS,6px)] py-[var(--padding-XXS,4px)]",
-    contentGap: "gap-[var(--spacing-3XS,2px)]",
-    font:       "font-['Pretendard'] text-[var(--m-text-XS-size,12px)] font-semibold leading-[var(--m-text-XS-lineHeight,18px)]",
+    padding:    "px-xs py-2xs",
+    contentGap: "gap-3xs",
+    font:       "text-caption-m font-semibold",
     iconSize:   "w-[14px] h-[14px]",
   },
 };
@@ -131,10 +131,10 @@ export const IcoTxtButton = React.forwardRef<HTMLButtonElement, IcoTxtButtonProp
     /* S + square → 6px, 나머지 square → 8px, round → 999px */
     const isSquareSmall = shape === "square" && size === "S";
     const shapeClasses = shape === "round"
-      ? "rounded-[var(--cornerRadius-circle,999px)] after:rounded-[var(--cornerRadius-circle,999px)]"
+      ? "rounded-fai-circle after:rounded-fai-circle"
       : isSquareSmall
-        ? "rounded-[var(--cornerRadius-XS,6px)] after:rounded-[var(--cornerRadius-XS,6px)]"
-        : "rounded-[var(--cornerRadius-S,8px)] after:rounded-[var(--cornerRadius-S,8px)]";
+        ? "rounded-fai-xs after:rounded-fai-xs"
+        : "rounded-fai-s after:rounded-fai-s";
 
     const classes = [
       BASE,

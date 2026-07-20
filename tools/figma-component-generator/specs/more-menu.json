@@ -1,0 +1,50 @@
+{
+  "template": "more-menu",
+  "name": "MoreMenu",
+  "description": "Three-dot overflow action menu. Generated on system/badge-component.",
+  "trigger": {
+    "component": "IconButton",
+    "icon": "more-horizontal",
+    "variant": "tertiary"
+  },
+  "menu": {
+    "minWidth": { "$pixelToken": "size.180" },
+    "radius": { "$pixelToken": "size.16" },
+    "strokeWeight": 1,
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "shadow": { "$token": "shadow.M" },
+    "layout": {
+      "direction": "vertical",
+      "gap": { "$pixelToken": "size.none" },
+      "padding": {
+        "top": { "$pixelToken": "size.4" },
+        "right": { "$pixelToken": "size.none" },
+        "bottom": { "$pixelToken": "size.4" },
+        "left": { "$pixelToken": "size.none" }
+      }
+    }
+  },
+  "item": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.8" },
+      "padding": {
+        "top": { "$pixelToken": "size.6" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.6" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    },
+    "dangerColor": { "$token": "semantic.light.text.basic.negative" }
+  },
+  "variants": [
+    { "name": "type=items", "type": "items" },
+    { "name": "type=dividers", "type": "dividers" },
+    { "name": "type=sections", "type": "sections" }
+  ]
+}

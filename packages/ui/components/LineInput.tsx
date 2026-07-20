@@ -48,17 +48,12 @@ export const LineInput = React.forwardRef<HTMLDivElement, LineInputProps>(
               {label}
             </span>
             {required && (
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                width="8"
-                height="8"
-                viewBox="0 0 8 8"
-                fill="none"
+              <span
                 aria-hidden="true"
-                className="shrink-0"
+                className="shrink-0 text-[var(--color-text-basic-negative)] font-medium"
               >
-                <circle cx="4" cy="4" r="4" fill="#39DB1F" />
-              </svg>
+                *
+              </span>
             )}
           </div>
 

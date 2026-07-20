@@ -1,0 +1,82 @@
+{
+  "semantic": {
+    "close": {
+      "usage": "Dismiss, close dialogs/panels"
+    },
+    "chevronDown": {
+      "usage": "Dropdown triggers, expand/collapse"
+    },
+    "chevronLeft": {
+      "usage": "Navigate back, previous"
+    },
+    "chevronRight": {
+      "usage": "Navigate forward, next"
+    },
+    "check": {
+      "usage": "Checkbox checked, confirm"
+    },
+    "success": {
+      "usage": "Success status indicator"
+    },
+    "error": {
+      "usage": "Error status indicator"
+    },
+    "warning": {
+      "usage": "Warning status indicator"
+    },
+    "info": {
+      "usage": "Info status indicator, tooltips"
+    },
+    "calendar": {
+      "usage": "Date pickers, scheduling"
+    },
+    "clock": {
+      "usage": "Time pickers, timestamps"
+    },
+    "externalLink": {
+      "usage": "Links opening in new tab"
+    },
+    "menu": {
+      "usage": "Hamburger menu, navigation toggle"
+    },
+    "moreHorizontal": {
+      "usage": "Overflow menu, additional actions"
+    },
+    "search": {
+      "usage": "Search inputs, find"
+    },
+    "arrowUp": {
+      "usage": "Sort ascending, move up"
+    },
+    "arrowDown": {
+      "usage": "Sort descending, move down"
+    },
+    "arrowsUpDown": {
+      "usage": "Sortable column indicator"
+    },
+    "funnel": {
+      "usage": "Filter controls"
+    },
+    "eyeSlash": {
+      "usage": "Hidden/visibility toggle"
+    },
+    "viewColumns": {
+      "usage": "Column visibility settings"
+    },
+    "copy": {
+      "usage": "Copy to clipboard"
+    },
+    "checkDouble": {
+      "usage": "Copied confirmation"
+    },
+    "wrench": {
+      "usage": "Settings, configuration"
+    },
+    "stop": {
+      "usage": "Stop/cancel action"
+    },
+    "microphone": {
+      "usage": "Voice input, audio recording"
+    }
+  }
+}

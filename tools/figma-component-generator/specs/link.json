@@ -1,0 +1,37 @@
+{
+  "template": "link",
+  "name": "Link",
+  "description": "Styled text navigation anchor. Generated on system/badge-component.",
+  "component": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.2" },
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": { "$pixelToken": "size.none" },
+        "right": { "$pixelToken": "size.none" },
+        "bottom": { "$pixelToken": "size.none" },
+        "left": { "$pixelToken": "size.none" }
+      }
+    }
+  },
+  "text": {
+    "fontStyle": "Regular",
+    "fontSize": { "$pixelToken": "font.size.16" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.16" },
+    "color": { "$token": "semantic.light.text.optional.brand-primary" }
+  },
+  "icon": {
+    "name": "external",
+    "size": { "$pixelToken": "size.16" },
+    "color": { "$token": "semantic.light.text.optional.brand-primary" }
+  },
+  "variants": [
+    { "name": "underline=hover, external=false", "underline": "hover", "isExternal": false, "text": "Inline link" },
+    { "name": "underline=always, external=false", "underline": "always", "isExternal": false, "text": "Always underlined" },
+    { "name": "underline=hover, external=true", "underline": "hover", "isExternal": true, "text": "External link" }
+  ]
+}

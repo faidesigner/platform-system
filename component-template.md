@@ -30,7 +30,7 @@ AI는 새로운 컴포넌트 파일(.md, .json) 생성 시 아래의 **Kebab-cas
 ---
 
 ## 🧱 JSON Structure Reference
-AI는 `homepage-system.md`의 규칙을 준수하여 아래 구조로 데이터를 생성한다.
+AI는 `design-system.md`의 규칙을 준수하여 아래 구조로 데이터를 생성한다.
 
 ```json
 {
@@ -53,6 +53,4 @@ AI는 `homepage-system.md`의 규칙을 준수하여 아래 구조로 데이터�
 
 ### 🚨 데이터 누락 및 오류 대응 (Validation)
 
-1. 누락 데이터: 피그마에서 확인되지 않는 값은 임의로 추측하지 말고 "MISSING_FROM_DESIGN"으로 표기한다.
-2. 설명 추가: 해당 값 옆에 _description 키를 사용하여 어떤 정보가 누락되었는지 명시한다.
-3. 알림: 작업 완료 후 반드시 "⚠️ 데이터 누락 알림: [컴포넌트명]에서 [항목] 확인 필요" 메시지를 출력한다.
+> 규칙 원문은 `design-system.md`의 "AI Execution & Mapping Rules" 참조. (MISSING_FROM_DESIGN 표기 · _description · 누락 알림)

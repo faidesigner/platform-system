@@ -52,6 +52,7 @@
   --color-icon-tag-category-gray: var(--color-gray-700);
   --color-border-primary: var(--color-gray-200);
   --color-border-secondary: var(--color-gray-500);
+  --color-border-fourth: var(--color-gray-400);
   --color-border-tertiary: var(--color-gray-700);
   --color-border-inverse: var(--color-white);
   --color-border-disabled: var(--color-gray-700);

@@ -1,0 +1,21 @@
+{
+  "template": "carousel",
+  "name": "Carousel",
+  "description": "Horizontal scrolling carousel generated from feature/badge-component.",
+  "preview": { "stepY": 180 },
+  "component": { "width": 560, "height": 128 },
+  "item": {
+    "width": 144,
+    "height": 96,
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "layout": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.16" }, "right": { "$pixelToken": "size.16" }, "bottom": { "$pixelToken": "size.16" }, "left": { "$pixelToken": "size.16" } } },
+    "text": { "fontSize": { "$pixelToken": "font.size.14" }, "lineHeight": { "$pixelToken": "font.lineHeight.14" }, "color": { "$token": "semantic.light.text.basic.primary" } }
+  },
+  "variants": [
+    { "name": "gap=s, buttons=true, edgeFade=true, snap=false", "gap": { "$pixelToken": "size.8" }, "items": ["Item 1", "Item 2", "Item 3", "Item 4"] },
+    { "name": "gap=m, buttons=true, edgeFade=true, snap=true", "gap": { "$pixelToken": "size.16" }, "items": ["Card 1", "Card 2", "Card 3", "Card 4"] },
+    { "name": "gap=none, buttons=false, edgeFade=false, snap=false", "gap": 0, "items": ["Tag", "Tag", "Tag", "Tag"] }
+  ]
+}

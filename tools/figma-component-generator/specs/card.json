@@ -1,0 +1,190 @@
+{
+  "template": "card",
+  "name": "Card",
+  "description": {
+    "fontSize": {
+      "$pixelToken": "font.size.12"
+    },
+    "lineHeight": {
+      "$pixelToken": "font.lineHeight.12"
+    },
+    "color": {
+      "$token": "semantic.light.text.basic.secondary"
+    }
+  },
+  "preview": {
+    "stepY": 176
+  },
+  "component": {
+    "width": 320,
+    "height": 128,
+    "radius": {
+      "$pixelToken": "size.16"
+    },
+    "strokeWeight": 1,
+    "layout": {
+      "none": {
+        "direction": "vertical",
+        "gap": {
+          "$pixelToken": "size.8"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "MIN",
+        "counterAlign": "MIN",
+        "padding": {
+          "top": 0,
+          "right": 0,
+          "bottom": 0,
+          "left": 0
+        }
+      },
+      "s": {
+        "direction": "vertical",
+        "gap": {
+          "$pixelToken": "size.8"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "MIN",
+        "counterAlign": "MIN",
+        "padding": {
+          "top": {
+            "$pixelToken": "size.16"
+          },
+          "right": {
+            "$pixelToken": "size.16"
+          },
+          "bottom": {
+            "$pixelToken": "size.16"
+          },
+          "left": {
+            "$pixelToken": "size.16"
+          }
+        }
+      },
+      "m": {
+        "direction": "vertical",
+        "gap": {
+          "$pixelToken": "size.8"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "MIN",
+        "counterAlign": "MIN",
+        "padding": {
+          "top": {
+            "$pixelToken": "size.24"
+          },
+          "right": {
+            "$pixelToken": "size.24"
+          },
+          "bottom": {
+            "$pixelToken": "size.24"
+          },
+          "left": {
+            "$pixelToken": "size.24"
+          }
+        }
+      },
+      "l": {
+        "direction": "vertical",
+        "gap": {
+          "$pixelToken": "size.8"
+        },
+        "primarySizing": "FIXED",
+        "counterSizing": "FIXED",
+        "primaryAlign": "MIN",
+        "counterAlign": "MIN",
+        "padding": {
+          "top": {
+            "$pixelToken": "size.32"
+          },
+          "right": {
+            "$pixelToken": "size.32"
+          },
+          "bottom": {
+            "$pixelToken": "size.32"
+          },
+          "left": {
+            "$pixelToken": "size.32"
+          }
+        }
+      }
+    },
+    "shadow": {
+      "$token": "shadow.M"
+    }
+  },
+  "title": {
+    "fontSize": {
+      "$pixelToken": "font.size.16"
+    },
+    "lineHeight": {
+      "$pixelToken": "font.lineHeight.16"
+    },
+    "color": {
+      "$token": "semantic.light.text.basic.primary"
+    }
+  },
+  "indicator": {
+    "size": {
+      "$pixelToken": "size.20"
+    },
+    "fill": {
+      "$token": "semantic.light.filled.optional.brand-primary"
+    }
+  },
+  "variants": [
+    {
+      "name": "type=card, variant=default, padding=m, selected=false",
+      "padding": "m",
+      "title": "Default card",
+      "description": "Container for related content.",
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.tertiary"
+      },
+      "selected": false
+    },
+    {
+      "name": "type=clickable, variant=default, padding=m, selected=false",
+      "padding": "m",
+      "title": "Clickable card",
+      "description": "Entire card acts as one target.",
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.secondary"
+      },
+      "selected": false
+    },
+    {
+      "name": "type=selectable, variant=default, padding=m, selected=true",
+      "padding": "m",
+      "title": "Selectable card",
+      "description": "Selected state with indicator.",
+      "fill": {
+        "$token": "semantic.light.bg.100"
+      },
+      "stroke": {
+        "$token": "semantic.light.border.brand-primary"
+      },
+      "selected": true
+    },
+    {
+      "name": "type=card, variant=blue, padding=s, selected=false",
+      "padding": "s",
+      "title": "Tinted card",
+      "description": "Category tint variant.",
+      "fill": {
+        "$token": "semantic.light.filled.basic.info-secondary"
+      },
+      "stroke": "#00000000",
+      "selected": false
+    }
+  ]
+}

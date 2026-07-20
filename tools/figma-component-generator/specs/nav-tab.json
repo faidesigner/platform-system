@@ -1,0 +1,139 @@
+{
+  "name": "nav/tab",
+  "description": "Large-scale navigation tabs generated from platform-system component spec.",
+  "component": {
+    "width": {
+      "$token": "grid.layout.breakpoints.laptop.maxContentWidth"
+    },
+    "height": {
+      "$pixelToken": "size.72"
+    },
+    "fill": {
+      "$token": "semantic.light.bg.100"
+    },
+    "stroke": {
+      "$token": "semantic.light.border.tertiary"
+    },
+    "strokeWeight": 1,
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "space.spacing.M"
+      },
+      "primarySizing": "FIXED",
+      "counterSizing": "AUTO",
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "space.spacing.MS"
+        },
+        "right": {
+          "$pixelToken": "space.spacing.none"
+        },
+        "bottom": {
+          "$pixelToken": "space.spacing.MS"
+        },
+        "left": {
+          "$pixelToken": "space.spacing.none"
+        }
+      }
+    }
+  },
+  "item": {
+    "radius": {
+      "$pixelToken": "space.cornerRadius.S"
+    },
+    "layout": {
+      "direction": "horizontal",
+      "gap": {
+        "$pixelToken": "space.spacing.S"
+      },
+      "primarySizing": "AUTO",
+      "counterSizing": "AUTO",
+      "primaryAlign": "CENTER",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": {
+          "$pixelToken": "space.spacing.S"
+        },
+        "right": {
+          "$pixelToken": "space.spacing.M"
+        },
+        "bottom": {
+          "$pixelToken": "space.spacing.S"
+        },
+        "left": {
+          "$pixelToken": "space.spacing.M"
+        }
+      }
+    },
+    "text": {
+      "fontSize": {
+        "$pixelToken": "font.size.16"
+      },
+      "lineHeight": {
+        "$pixelToken": "font.lineHeight.16"
+      },
+      "color": {
+        "$token": "semantic.light.text.basic.tertiary"
+      }
+    },
+    "states": {
+      "default": {
+        "fill": {
+          "$token": "semantic.light.bg.100"
+        },
+        "text": {
+          "$token": "semantic.light.text.basic.tertiary"
+        }
+      },
+      "active": {
+        "fill": {
+          "$token": "semantic.light.filled.basic.fourth"
+        },
+        "text": {
+          "$token": "semantic.light.text.basic.primary"
+        }
+      }
+    }
+  },
+  "defaults": {
+    "defaultCount": 3,
+    "labels": [
+      "Overview",
+      "Components",
+      "Guidelines",
+      "Tokens",
+      "Assets",
+      "Release",
+      "Archive"
+    ]
+  },
+  "variants": [
+    {
+      "name": "product=bw, size=M, align=left, count=default",
+      "count": "default"
+    },
+    {
+      "name": "product=bw, size=M, align=left, count=3",
+      "count": 3
+    },
+    {
+      "name": "product=bw, size=M, align=left, count=4",
+      "count": 4
+    },
+    {
+      "name": "product=bw, size=M, align=left, count=5",
+      "count": 5
+    },
+    {
+      "name": "product=bw, size=M, align=left, count=6",
+      "count": 6
+    },
+    {
+      "name": "product=bw, size=M, align=left, count=7",
+      "count": 7
+    }
+  ]
+}

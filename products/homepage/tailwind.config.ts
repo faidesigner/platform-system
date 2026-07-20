@@ -371,6 +371,10 @@ const config: Config = {
         '2xl': '2rem',
         '3xl': '2.5rem',
         '4xl': '3.5rem',
+        'element-sm': '1.75rem', // size.28
+        'element-md': '2rem',    // size.32
+        'element-lg': '2.25rem', // size.36
+        'thumbnail': '4rem',     // size.64
         '5xl': 'var(--fai-space-5xl)', // 80px
         '6xl': 'var(--fai-space-6xl)', // 100px
         '7xl': 'var(--fai-space-7xl)', // 120px

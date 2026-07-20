@@ -1,0 +1,14 @@
+{
+  "z-index": {
+    "base": "0",
+    "sticky-header": "100",
+    "dropdown": "200",
+    "popover": "300",
+    "tooltip": "400",
+    "drawer": "500",
+    "dialog": "600",
+    "toast": "700",
+    "loading-overlay": "800",
+    "global-alert": "900"
+  }
+}

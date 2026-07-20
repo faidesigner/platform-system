@@ -6,6 +6,7 @@
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css');
 
 @import "tailwindcss";
+@import "../../../root/foundation/motion.css";
 
 /* ============================================================
    LAYER 1 — Primitive Tokens  (원시 수치, 직접 사용 금지)

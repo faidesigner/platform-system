@@ -13,6 +13,8 @@ Web 플랫폼의 기본 토큰 정의입니다.
 | color-brand.md | 클라이언트별 브랜드 컬러 오버라이드 |
 | opacity.md | 불투명도 스케일 |
 | effects.md | 그림자(Shadow) 스케일 |
+| icons.md | 시맨틱 아이콘 이름과 용도 |
+| motion.md | 애니메이션 duration / easing 스케일 |
 | spacing.md | 간격·여백·모서리 (size / mw) |
 | typography.md | 폰트 원시값 (family, weight, size, lineHeight, letterSpacing) |
 | typography-w.md | Web 타이포그래피 (`w-` 접두사) |

@@ -57,3 +57,13 @@ node_modules/
 
 # typescript
 *.tsbuildinfo
+
+# 개인용 (커밋 금지 — 나만 쓰는 메모/워크플로)
+*.local.md
+.claude-personal/
+
+# MCP 로컬 설정 (Figma 토큰 등 비밀값)
+.mcp.local.json
+
+# 모든 하위 경로 next.js 빌드
+**/.next/

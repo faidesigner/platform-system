@@ -23,7 +23,7 @@
 - `HeroSection`
 
 ### 2.2 디자인 시스템 자산 및 에셋
-- **디자인 토큰 원본 (`root/foundation/`)**: `color-global`, `color-semantic`, `grid`, `spacing`, `typography` 관련 JSON 및 MD 파일, `index.css`
+- **디자인 토큰 원본 (`root/foundation/`)**: `color-global`, `color-semantic`, `icons`, `motion`, `grid`, `spacing`, `typography` 관련 JSON 및 MD 파일, `index.css`
 - **웹 핵심 아이콘 (`root/assets/icon/`)**: `ChevronDownIcon`, `ChevronUpIcon`, `ExternalLinkIcon`, `GlobeOutlineIcon`
 
 ### 2.3 앱 전용 컴포넌트 (`products/homepage/src/components/`)

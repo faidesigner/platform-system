@@ -132,6 +132,17 @@ function generateEffectsCSS() {
   writeFile(FOUNDATION, 'effects.css', HEADER + `@theme {\n${body}\n}\n`);
 }
 
+function generateMotionCSS() {
+  const vars = flattenToVars(readJSON('motion.json'));
+  const sections = [
+    ['/* Duration */', filterByPrefix(vars, 'duration')],
+    ['/* Easing */',   filterByPrefix(vars, 'ease')],
+  ].filter(([, v]) => Object.keys(v).length > 0);
+
+  const body = sections.map(([c, v]) => `  ${c}\n${renderVars(v)}`).join('\n\n');
+  writeFile(FOUNDATION, 'motion.css', HEADER + `@theme {\n${body}\n}\n`);
+}
+
 function generateTypographyCSS() {
   const vars = flattenToVars(readJSON('typography.json'), 'font');
   const sections = [
@@ -169,7 +180,7 @@ function generateGridCSS() {
 
 // ─── foundation/index.css  (공유 토큰 진입점 — 자동 갱신) ──
 function generateFoundationIndex() {
-  const shared = ['color.css', 'opacity.css', 'effects.css', 'typography.css'];
+  const shared = ['color.css', 'opacity.css', 'effects.css', 'motion.css', 'typography.css'];
   const content = [
     HEADER,
     '/* 공유 토큰 진입점 — Tailwind 없이 CSS 변수만 필요할 때 import */',
@@ -283,6 +294,7 @@ try {
   generateColorBrandCSS();
   generateOpacityCSS();
   generateEffectsCSS();
+  generateMotionCSS();
   generateTypographyCSS();
   generateFoundationIndex();
 

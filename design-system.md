@@ -1,5 +1,7 @@
 # 🚀 Global Design System (Master Guide)
 
+> **이 파일이 공통 규칙(네이밍·토큰·검증)의 SSOT다.** CLAUDE.md·component-template.md는 이 문서를 참조하며, 규칙 원문은 여기서만 관리한다.
+
 ## ⚠️ Source of Truth (진실의 원천)
 모든 수치의 최종 권한은 **.json** 파일에 있습니다. .md 파일은 정책 설명용이며, 피그마 반영 및 코드 생성 시에는 반드시 **.json 데이터를 최우선**합니다.
 
