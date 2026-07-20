@@ -1,8 +1,15 @@
 'use client';
 
-import { useEffect, useState } from 'react';
+import { type RefObject, useEffect, useState } from 'react';
 import { motion } from 'framer-motion';
 import { IconButton } from './button/IconButton';
+
+type ScrollTarget = HTMLElement | RefObject<HTMLElement | null> | null;
+
+export interface ScrollTopButtonProps {
+  scrollTarget?: ScrollTarget;
+  threshold?: number;
+}
 
 /**
  * ScrollTopButton
@@ -16,20 +23,30 @@ import { IconButton } from './button/IconButton';
  *   배경     → IconButton variant="primary" (var(--color-filled-optional-brand-primaryBtn))
  */
 
-export function ScrollTopButton() {
+export function ScrollTopButton({ scrollTarget, threshold = 300 }: ScrollTopButtonProps = {}) {
   const [visible, setVisible] = useState(false);
 
   useEffect(() => {
+    const target = scrollTarget && 'current' in scrollTarget ? scrollTarget.current : scrollTarget;
+
     const handleScroll = () => {
-      setVisible(window.scrollY > 300);
+      setVisible((target ? target.scrollTop : window.scrollY) > threshold);
     };
 
     handleScroll();
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
+    const scrollElement = target ?? window;
+    scrollElement.addEventListener('scroll', handleScroll, { passive: true });
+    return () => scrollElement.removeEventListener('scroll', handleScroll);
+  }, [scrollTarget, threshold]);
 
-  const toTop = () => window.scrollTo({ top: 0, behavior: 'smooth' });
+  const toTop = () => {
+    const target = scrollTarget && 'current' in scrollTarget ? scrollTarget.current : scrollTarget;
+    if (target) {
+      target.scrollTo({ top: 0, behavior: 'smooth' });
+      return;
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   return (
     <motion.div

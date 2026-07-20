@@ -7,6 +7,7 @@ interface DrawerProps {
   isOpen:   boolean;
   onClose:  () => void;
   children: ReactNode;
+  scope?: "viewport" | "container";
 }
 
 const DURATION = 300; // ms — transition-duration과 동기화
@@ -19,7 +20,7 @@ const DURATION = 300; // ms — transition-duration과 동기화
  * - isOpen false → visible false (leave 트랜지션) → DURATION 후 unmount
  *   → 닫힘 애니메이션 완료 후 DOM 제거, 겹침 현상 방지
  */
-export function Drawer({ isOpen, onClose, children }: DrawerProps) {
+export function Drawer({ isOpen, onClose, children, scope = "viewport" }: DrawerProps) {
   const [mounted, setMounted] = useState(false);
   const [visible, setVisible] = useState(false);
 
@@ -42,12 +43,16 @@ export function Drawer({ isOpen, onClose, children }: DrawerProps) {
 
   if (!mounted) return null;
 
+  const isContainer = scope === "container";
+
   return (
     <>
       {/* 딤 오버레이 — 태블릿에서만 표시 */}
       <div
         className={[
-          "fixed inset-0 top-16 z-40 hidden tablet:block",
+          isContainer
+            ? "absolute inset-0 z-40"
+            : "fixed inset-0 top-16 z-40 hidden tablet:block",
           "transition-opacity ease-in-out",
           visible ? "opacity-100" : "opacity-0",
         ].join(" ")}
@@ -63,9 +68,11 @@ export function Drawer({ isOpen, onClose, children }: DrawerProps) {
           origin-top + scaleY: top-16 선에서 아래로만 접힘 → 헤더 영역 침범 없음 */}
       <Scrollbar
         className={[
-          "fixed top-16 left-0 right-0 z-50 bg-surface",
-          "bottom-0 tablet:bottom-auto",
-          "overflow-y-auto tablet:overflow-y-visible",
+          isContainer
+            ? "absolute left-0 right-0 top-0 z-50 bg-surface"
+            : "fixed top-16 left-0 right-0 z-50 bg-surface",
+          isContainer ? "bottom-auto" : "bottom-0 tablet:bottom-auto",
+          isContainer ? "overflow-y-visible" : "overflow-y-auto tablet:overflow-y-visible",
           "origin-top transition-[transform,opacity] ease-in-out",
           visible ? "scale-y-100 opacity-100" : "scale-y-0 opacity-0",
         ].join(" ")}

@@ -116,7 +116,7 @@ function OverviewCard({
     <article className="origin-overview-card">
       <Label size="S">{label}</Label>
       <h3>{title}</h3>
-      <p>{children}</p>
+      <div className="origin-overview-card-body">{children}</div>
       {href ? (
         <div className="origin-card-action">
           <RouteButton href={href}>Open {label}</RouteButton>

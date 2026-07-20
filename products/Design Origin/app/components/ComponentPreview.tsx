@@ -64,6 +64,64 @@ function PreviewGroup({ label, children }: { label: string; children: React.Reac
   return <section className="origin-preview-group"><p>{label}</p><div>{children}</div></section>;
 }
 
+function PreviewChevron({ open }: { open: boolean }) {
+  return <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" />;
+}
+
+function PreviewTrigger({
+  children,
+  open,
+  onClick,
+}: {
+  children: React.ReactNode;
+  open: boolean;
+  onClick?: () => void;
+}) {
+  return (
+    <IcoTxtButton
+      variant="tertiary"
+      size="L"
+      icon={<PreviewChevron open={open} />}
+      iconPosition="right"
+      onClick={onClick}
+      className="origin-preview-imported-trigger"
+    >
+      {children}
+    </IcoTxtButton>
+  );
+}
+
+function ScrollTopPreview() {
+  const [scrollTarget, setScrollTarget] = useState<HTMLDivElement | null>(null);
+
+  return (
+    <div className="origin-component-scroll-top-preview">
+      <div ref={setScrollTarget} className="origin-component-scroll-top-scroll-area">
+        <div className="origin-component-scroll-top-scroll-content">
+          <section>
+            <Label size="S">Top</Label>
+            <h3>Scrollable preview content</h3>
+            <p>이 흰 영역 안에서 아래로 스크롤하면 버튼이 영역 오른쪽 아래에 나타납니다.</p>
+          </section>
+          <section>
+            <Label size="S" shape="round">Middle</Label>
+            <h3>Component guidance</h3>
+            <p>프리뷰 컨테이너 자체가 스크롤 대상이므로 페이지 스크롤과 분리해서 확인할 수 있습니다.</p>
+          </section>
+          <section>
+            <Label size="S">End</Label>
+            <h3>End of scroll area</h3>
+            <p>버튼을 누르면 이 영역의 맨 위로 돌아갑니다.</p>
+          </section>
+        </div>
+      </div>
+      <div className="origin-component-scroll-top-local-button">
+        <ScrollTopButton scrollTarget={scrollTarget} threshold={80} />
+      </div>
+    </div>
+  );
+}
+
 export function ComponentPreview({ type }: { type: ComponentPreviewKey }) {
   const [buttonTone, setButtonTone] = useState<"primary" | "secondary" | "tertiary">("primary");
   const [buttonLoading, setButtonLoading] = useState(false);
@@ -92,14 +150,14 @@ export function ComponentPreview({ type }: { type: ComponentPreviewKey }) {
     case "checkbox": return <DemoFrame controls={<><ToggleControl label="Partial" checked={partial} onChange={setPartial} /><ToggleControl label="Selected" checked={checked} onChange={setChecked} /></>}><PreviewBoard><PreviewGroup label="State"><Checkbox checked={false} /><Checkbox checked /><Checkbox checked="partial" /><Checkbox disabled /></PreviewGroup><PreviewGroup label="Validation"><Checkbox error /><Checkbox checked error /><Checkbox checked={partial ? "partial" : checked} onChange={setChecked} /></PreviewGroup></PreviewBoard></DemoFrame>;
     case "checkboxField": return <DemoFrame controls={<ToggleControl label="Interactive selected" checked={checked} onChange={setChecked} />}><PreviewBoard><PreviewGroup label="State"><CheckboxField label="Default" checked={false} /><CheckboxField label="Selected" checked /><CheckboxField label="Disabled" disabled /><CheckboxField label="Error" error /></PreviewGroup><PreviewGroup label="Interactive"><CheckboxField label="Receive product updates" checked={checked} onChange={setChecked} /></PreviewGroup></PreviewBoard></DemoFrame>;
     case "lineInput": return <DemoFrame controls={<ToggleControl label="Interactive error" checked={inputError} onChange={setInputError} />}><PreviewBoard><PreviewGroup label="Default"><div className="origin-component-input-preview"><LineInput label="Component name" placeholder="Enter a name" value="" onChange={() => undefined} /></div></PreviewGroup><PreviewGroup label="State"><div className="origin-component-input-preview"><LineInput label="Filled" value="Design Origin" onChange={() => undefined} required /><LineInput label="Error" value="" onChange={() => undefined} error helpText="Enter a component name to continue." /><LineInput label="Disabled" value="Unavailable" onChange={() => undefined} disabled /></div></PreviewGroup><PreviewGroup label="Interactive"><div className="origin-component-input-preview"><LineInput label="Component name" value={inputValue} onChange={setInputValue} required error={inputError} helpText={inputError ? "Enter a component name to continue." : undefined} /></div></PreviewGroup></PreviewBoard></DemoFrame>;
-    case "dropdown": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Compact"><Dropdown size="S" triggerEl={(open, onToggle) => <button type="button" onClick={onToggle} className="origin-component-preview-trigger">Small <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" /></button>} items={[{ label: "Default option", href: "#default" }, { label: "Secondary option", href: "#secondary" }]} /><Dropdown size="M" triggerEl={(open, onToggle) => <button type="button" onClick={onToggle} className="origin-component-preview-trigger">Medium <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" /></button>} items={[{ label: "Default option", href: "#default" }, { label: "Secondary option", href: "#secondary" }]} /></PreviewGroup><PreviewGroup label="Mega menu"><Dropdown size="L" trigger="click" triggerEl={(open, onToggle) => <button type="button" onClick={onToggle} className="origin-component-preview-trigger">Large <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" /></button>} groups={[{ heading: "Products", items: [{ label: "Design Origin", href: "#design-origin", description: "Shared UI components" }] }]} /></PreviewGroup></PreviewBoard></DemoFrame>;
+    case "dropdown": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Compact"><Dropdown size="S" panelClassName="origin-preview-overlay-panel" triggerEl={(open, onToggle) => <PreviewTrigger open={open} onClick={onToggle}>Small</PreviewTrigger>} items={[{ label: "Default option", href: "#default" }, { label: "Secondary option", href: "#secondary" }]} /><Dropdown size="M" panelClassName="origin-preview-overlay-panel" triggerEl={(open, onToggle) => <PreviewTrigger open={open} onClick={onToggle}>Medium</PreviewTrigger>} items={[{ label: "Default option", href: "#default" }, { label: "Secondary option", href: "#secondary" }]} /></PreviewGroup><PreviewGroup label="Mega menu"><Dropdown size="L" trigger="click" panelClassName="origin-preview-dropdown-mega-panel" triggerEl={(open, onToggle) => <PreviewTrigger open={open} onClick={onToggle}>Large</PreviewTrigger>} groups={[{ heading: "Products", items: [{ label: "Design Origin", href: "#design-origin", description: "Shared UI components" }] }]} /></PreviewGroup></PreviewBoard></DemoFrame>;
     case "menu": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Vertical"><Menu size="S" items={[{ label: "Overview", href: "#overview", active: true }, { label: "Properties", href: "#properties" }, { label: "Behavior", href: "#behavior" }]} /><Menu size="M" items={[{ label: "Overview", href: "#overview", active: true }, { label: "Properties", href: "#properties" }, { label: "Behavior", href: "#behavior" }]} /></PreviewGroup><PreviewGroup label="Horizontal"><Menu size="L" items={[{ label: "Overview", href: "#overview", active: true }, { label: "Properties", href: "#properties" }, { label: "Behavior", href: "#behavior" }]} /></PreviewGroup></PreviewBoard></DemoFrame>;
-    case "hoverDropdown": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Hover"><HoverDropdown trigger={(open) => <button type="button" className="origin-component-preview-trigger">Hover menu <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" /></button>} panel={<Menu size="S" items={[{ label: "First action", href: "#first" }, { label: "Second action", href: "#second" }]} />} /><HoverDropdown trigger={(open) => <button type="button" className="origin-component-preview-trigger">With active item <ChevronDown className={open ? "rotate-180" : undefined} aria-hidden="true" /></button>} panel={<Menu size="M" items={[{ label: "Overview", href: "#overview", active: true }, { label: "Properties", href: "#properties" }]} />} /></PreviewGroup></PreviewBoard></DemoFrame>;
+    case "hoverDropdown": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Hover"><HoverDropdown panelClassName="origin-preview-hover-panel" trigger={(open) => <PreviewTrigger open={open}>Hover menu</PreviewTrigger>} panel={<Menu size="S" items={[{ label: "First action", href: "#first" }, { label: "Second action", href: "#second" }]} />} /><HoverDropdown panelClassName="origin-preview-hover-panel" trigger={(open) => <PreviewTrigger open={open}>With active item</PreviewTrigger>} panel={<Menu size="M" items={[{ label: "Overview", href: "#overview", active: true }, { label: "Properties", href: "#properties" }]} />} /></PreviewGroup></PreviewBoard></DemoFrame>;
     case "progressBar": return <DemoFrame controls={<SegmentedControl label="Interactive step" value={String(step)} onChange={(value) => setStep(Number(value))} options={[0, 1, 2, 3].map((value) => ({ label: String(value + 1), value: String(value) }))} />}><PreviewBoard><PreviewGroup label="Progress"><div className="origin-component-progress-preview"><ProgressBar count={4} activeIndex={0} onChange={() => undefined} duration={2400} /><ProgressBar count={4} activeIndex={2} onChange={() => undefined} duration={2400} /><ProgressBar count={4} activeIndex={3} onChange={() => undefined} duration={2400} /></div></PreviewGroup><PreviewGroup label="Interactive"><div className="origin-component-progress-preview"><ProgressBar count={4} activeIndex={step} onChange={setStep} duration={2400} getAriaLabel={(index) => `Preview step ${index + 1}`} /></div></PreviewGroup></PreviewBoard></DemoFrame>;
-    case "drawer": return <DemoFrame><PreviewBoard><PreviewGroup label="Closed"><Button tone="secondary" onClick={() => setDrawerOpen(true)}>Open drawer</Button></PreviewGroup><PreviewGroup label="Content"><div className="origin-component-preview-drawer-menu"><DrawerMenu><DrawerListItem label="Component overview" href="#overview" /><DrawerListItem label="Properties" href="#properties" /></DrawerMenu></div></PreviewGroup></PreviewBoard><Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}><DrawerMenu><DrawerListItem label="Component overview" onClick={() => setDrawerOpen(false)} /><DrawerListItem label="Properties" onClick={() => setDrawerOpen(false)} /></DrawerMenu></Drawer></DemoFrame>;
+    case "drawer": return <DemoFrame layout="wide"><div className="origin-component-drawer-preview"><Button tone="secondary" onClick={() => setDrawerOpen(true)}>Open drawer</Button><Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)} scope="container"><div className="origin-component-drawer-preview-panel"><div className="origin-component-drawer-preview-header"><Label size="S" shape="round">Mock drawer</Label><Button tone="secondary" onClick={() => setDrawerOpen(false)}>Close drawer</Button></div><div className="origin-component-drawer-preview-list"><CardItem><h3>Component overview</h3><p>현재 선택한 컴포넌트의 핵심 정보와 사용 맥락을 보여줍니다.</p></CardItem><CardItem><h3>Properties</h3><p>필수 props와 선택 props를 빠르게 확인하는 영역입니다.</p></CardItem><CardItem><h3>Usage notes</h3><p>실제 화면에 배치할 때 함께 고려할 동작 규칙을 정리합니다.</p></CardItem></div></div></Drawer></div></DemoFrame>;
     case "drawerMenu": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Default"><div className="origin-component-preview-drawer-menu"><DrawerMenu><DrawerListItem label="Component overview" href="#overview" /><DrawerListItem label="Properties" href="#properties" /></DrawerMenu></div></PreviewGroup><PreviewGroup label="Long list"><div className="origin-component-preview-drawer-menu"><DrawerMenu><DrawerListItem label="Overview" href="#overview" /><DrawerListItem label="Properties" href="#properties" /><DrawerListItem label="Usage" href="#usage" /><DrawerListItem label="Accessibility" href="#accessibility" /></DrawerMenu></div></PreviewGroup></PreviewBoard></DemoFrame>;
-    case "scrollbar": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Horizontal overflow"><Scrollbar className="origin-component-preview-scrollbar"><div className="origin-component-preview-scrollbar-content">Scrollable component content</div></Scrollbar></PreviewGroup><PreviewGroup label="Dense content"><Scrollbar className="origin-component-preview-scrollbar"><div className="origin-component-preview-scrollbar-content">Design tokens / Foundation / Components / Patterns / Guidelines / Resources</div></Scrollbar></PreviewGroup></PreviewBoard></DemoFrame>;
-    case "scrollTopButton": return <DemoFrame><div className="origin-component-scroll-top-preview"><p>페이지를 300px 이상 아래로 스크롤하면 실제 버튼이 화면 오른쪽 아래에 나타납니다.</p><ScrollTopButton /></div></DemoFrame>;
+    case "scrollbar": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Horizontal overflow"><Scrollbar className="origin-component-preview-scrollbar origin-component-preview-scrollbar--horizontal"><div className="origin-component-preview-scrollbar-content origin-component-preview-scrollbar-content--wide">Design tokens / Foundation / Components / Patterns / Guidelines / Resources / Motion / Accessibility / Content / Localization / Release notes</div></Scrollbar></PreviewGroup><PreviewGroup label="Vertical overflow"><Scrollbar className="origin-component-preview-scrollbar origin-component-preview-scrollbar--vertical"><div className="origin-component-preview-scrollbar-content origin-component-preview-scrollbar-content--tall">{["Foundation", "Components", "Patterns", "Guidelines", "Resources", "Motion", "Accessibility", "Content", "Localization", "Release notes"].map((item) => <span key={item}>{item}</span>)}</div></Scrollbar></PreviewGroup></PreviewBoard></DemoFrame>;
+    case "scrollTopButton": return <DemoFrame layout="wide"><ScrollTopPreview /></DemoFrame>;
     case "marquee": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Default"><Marquee speed={18} ariaLabel="Component capabilities"><li className="origin-component-preview-marquee-item">Design tokens</li><li className="origin-component-preview-marquee-item">Reusable UI</li><li className="origin-component-preview-marquee-item">Motion system</li></Marquee></PreviewGroup><PreviewGroup label="Fast"><Marquee speed={8} ariaLabel="Component capabilities"><li className="origin-component-preview-marquee-item">Foundation</li><li className="origin-component-preview-marquee-item">Components</li><li className="origin-component-preview-marquee-item">Guidelines</li></Marquee></PreviewGroup></PreviewBoard></DemoFrame>;
     case "logoMarquee": return <DemoFrame layout="wide"><PreviewBoard><PreviewGroup label="Default"><LogoMarquee speed={18} logos={[{ src: "/component-preview.svg", alt: "Design Origin" }, { src: "/component-preview.svg", alt: "Shared UI" }, { src: "/component-preview.svg", alt: "Foundation" }]} /></PreviewGroup><PreviewGroup label="Fast"><LogoMarquee speed={8} logos={[{ src: "/component-preview.svg", alt: "Design Origin" }, { src: "/component-preview.svg", alt: "Shared UI" }, { src: "/component-preview.svg", alt: "Foundation" }]} /></PreviewGroup></PreviewBoard></DemoFrame>;
     case "inViewVideo": return <DemoFrame layout="wide"><InViewVideo src="https://interactive-examples.mdn.mozilla.net/media/cc0-videos/flower.mp4" className="origin-component-preview-video" /></DemoFrame>;

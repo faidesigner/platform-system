@@ -292,8 +292,7 @@ a {
 .origin-component-stage--viewport {
   min-height: var(--size-320);
   padding: 0;
-  overflow: hidden;
-  contain: layout paint;
+  overflow: visible;
 }
 
 .origin-component-stage--viewport .origin-component-stage-content {
@@ -343,20 +342,47 @@ a {
   justify-content: center;
 }
 
-.origin-component-preview-trigger {
-  display: inline-flex;
-  align-items: center;
-  gap: var(--spacing-S);
-  padding: var(--spacing-S) var(--spacing-M);
-  color: var(--fai-color-primary);
-  background: var(--fai-bg-surface);
-  border: thin solid var(--fai-border-subtle);
-  border-radius: var(--fai-radius-s);
-  font-size: var(--w-text-S-size);
-  line-height: var(--w-text-S-lineHeight);
+.origin-preview-imported-trigger svg {
+  transition: transform var(--duration-fast) var(--ease-standard);
 }
 
-.origin-component-preview-trigger svg,
+.origin-preview-overlay-panel,
+.origin-preview-hover-panel {
+  z-index: 80;
+  box-shadow: var(--shadow-L, 0 10px 30px rgba(0, 0, 0, 0.08));
+}
+
+.origin-preview-hover-panel {
+  position: absolute;
+  top: calc(100% + var(--spacing-2XS));
+  left: 0;
+  min-width: max-content;
+  overflow: hidden;
+  background: var(--fai-bg-surface);
+  border: thin solid var(--fai-border-subtle);
+  border-radius: var(--fai-radius-ms);
+}
+
+.origin-preview-dropdown-mega-panel {
+  position: absolute !important;
+  top: calc(100% + var(--spacing-2XS)) !important;
+  right: auto !important;
+  left: 0 !important;
+  width: min(var(--grid-tablet-max-content-width), calc(100vw - var(--spacing-2XL)));
+  background: var(--fai-bg-surface);
+  border: thin solid var(--fai-border-subtle);
+  border-radius: var(--fai-radius-ms);
+  box-shadow: var(--shadow-L, 0 10px 30px rgba(0, 0, 0, 0.08));
+  overflow: hidden;
+}
+
+.origin-preview-dropdown-mega-panel .container {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: var(--spacing-L);
+}
+
 .origin-component-preview-icon {
   width: var(--size-24);
   height: var(--size-24);
@@ -366,6 +392,53 @@ a {
 .origin-component-preview-drawer-menu {
   width: 100%;
   max-width: var(--grid-tablet-max-content-width);
+}
+
+.origin-component-drawer-preview {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  min-height: var(--size-320);
+  overflow: hidden;
+  padding: var(--spacing-L);
+  background: var(--fai-bg-surface);
+  border: thin dashed var(--fai-border-subtle);
+  border-radius: var(--fai-radius-s);
+}
+
+.origin-component-drawer-preview-panel {
+  display: grid;
+  gap: var(--spacing-L);
+  padding: var(--spacing-L);
+}
+
+.origin-component-drawer-preview-header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  gap: var(--spacing-M);
+}
+
+.origin-component-drawer-preview-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: var(--spacing-M);
+}
+
+.origin-component-drawer-preview-list h3 {
+  margin: 0;
+  color: var(--fai-color-primary);
+  font-size: var(--w-text-L-size);
+  line-height: var(--w-text-L-lineHeight);
+}
+
+.origin-component-drawer-preview-list p {
+  margin: var(--spacing-S) 0 0;
+  color: var(--fai-color-secondary);
+  font-size: var(--w-text-S-size);
+  line-height: var(--w-text-S-lineHeight);
 }
 
 .origin-component-mega-panel,
@@ -379,18 +452,45 @@ a {
 
 .origin-component-preview-scrollbar {
   width: 100%;
-  max-width: var(--grid-tablet-max-content-width);
+  max-width: var(--size-480);
   border: thin solid var(--fai-border-subtle);
   background: var(--fai-bg-surface);
   border-radius: var(--fai-radius-s);
 }
 
+.origin-component-preview-scrollbar--horizontal {
+  overflow-x: auto;
+  overflow-y: hidden;
+}
+
+.origin-component-preview-scrollbar--vertical {
+  height: var(--size-180);
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 .origin-component-preview-scrollbar-content {
-  min-width: var(--grid-tablet-max-content-width);
   padding: var(--spacing-M);
   color: var(--fai-color-secondary);
   font-size: var(--w-text-S-size);
   line-height: var(--w-text-S-lineHeight);
+}
+
+.origin-component-preview-scrollbar-content--wide {
+  min-width: var(--grid-laptop-max-content-width);
+  white-space: nowrap;
+}
+
+.origin-component-preview-scrollbar-content--tall {
+  display: grid;
+  gap: var(--spacing-S);
+}
+
+.origin-component-preview-scrollbar-content--tall span {
+  display: block;
+  padding: var(--spacing-S) var(--spacing-M);
+  background: var(--fai-bg-fill-faint);
+  border-radius: var(--fai-radius-xs);
 }
 
 .origin-component-preview-marquee-item {
@@ -458,7 +558,56 @@ a {
 }
 
 .origin-component-scroll-top-preview {
-  max-width: var(--grid-tablet-max-content-width);
+  position: relative;
+  width: 100%;
+  max-width: var(--grid-laptop-max-content-width);
+}
+
+.origin-component-scroll-top-scroll-area {
+  height: var(--size-320, 20rem);
+  max-height: 20rem;
+  overflow-y: auto;
+  border: thin dashed var(--fai-border-subtle);
+  border-radius: var(--fai-radius-s);
+  background: var(--fai-bg-surface);
+}
+
+.origin-component-scroll-top-scroll-content {
+  display: grid;
+  gap: var(--spacing-XL);
+  min-height: 48rem;
+  padding: var(--spacing-L);
+  background: linear-gradient(180deg, var(--fai-bg-surface), var(--fai-bg-fill-faint));
+}
+
+.origin-component-scroll-top-scroll-content section {
+  display: grid;
+  align-content: start;
+  min-height: 13.5rem;
+  padding: var(--spacing-L);
+  background: var(--fai-bg-surface);
+  border: thin solid var(--fai-border-faint);
+  border-radius: var(--fai-radius-s);
+}
+
+.origin-component-scroll-top-scroll-content h3 {
+  margin: var(--spacing-M) 0 0;
+  color: var(--fai-color-primary);
+  font-size: var(--w-title-S-size);
+  line-height: var(--w-title-S-lineHeight);
+}
+
+.origin-component-scroll-top-local-button {
+  position: absolute;
+  right: var(--spacing-L);
+  bottom: var(--spacing-L);
+  z-index: 20;
+}
+
+@media (max-width: 767px) {
+  .origin-component-drawer-preview-list {
+    grid-template-columns: 1fr;
+  }
 }
 
 .origin-demo-controls {
@@ -682,11 +831,15 @@ a {
   letter-spacing: 0;
 }
 
-.origin-overview-card p {
+.origin-overview-card-body {
   margin: var(--spacing-S) 0 0;
   color: var(--fai-color-secondary);
   font-size: var(--w-text-S-size);
   line-height: 1.65;
+}
+
+.origin-overview-card-body p {
+  margin: 0;
 }
 
 .origin-card-action {
