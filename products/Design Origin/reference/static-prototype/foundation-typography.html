@@ -1,0 +1,62 @@
+<!doctype html>
+<html lang="ko">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Typography - AI Design Origin</title>
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="shell">
+      <nav class="topbar">
+        <a class="brand" href="./index.html"><span class="brand-mark" aria-hidden="true"></span><span>AI Design Origin</span></a>
+        <label class="top-search"><span>Search</span><input type="search" placeholder="Search typography" /></label>
+      </nav>
+      <div class="page-layout">
+        <aside class="side-nav">
+          <button class="side-nav-toggle" type="button">Expand side navigation</button>
+          <a class="side-link" href="./index.html">Overview</a>
+          <a class="side-link active" href="./foundation.html">Foundations</a>
+          <div class="side-subnav">
+            <a href="./foundation-color.html">Color</a>
+            <a class="active" href="./foundation-typography.html">Typography</a>
+            <a href="./foundation-spacing.html">Spacing</a>
+            <a href="./foundation-effects.html">Effects</a>
+            <a href="./foundation-motion.html">Motion</a>
+            <a href="./foundation-icons.html">Icons</a>
+          </div>
+          <a class="side-link" href="./index.html#component">Components</a>
+          <a class="side-link" href="./index.html#guideline">Guideline</a>
+          <a class="side-link" href="./index.html#history-title">Design history</a>
+        </aside>
+        <main class="content foundation-page">
+          <header class="site-header">
+            <section class="hero foundation-hero">
+              <div class="hero-copy">
+                <p class="eyebrow">Foundations / Typography</p>
+                <h1>Primitive and Web type scale</h1>
+                <p class="lead">원시 폰트 값은 직접 UI에 쓰지 않고 Web UI에서는 `typography-w.json`의 `w-` 접두사 토큰을 사용합니다.</p>
+              </div>
+            </section>
+          </header>
+          <section class="section foundation-doc-section">
+            <div class="foundation-doc-grid two">
+              <article class="foundation-doc-card">
+                <span class="doc-path">root/foundation/docs/typography.md</span>
+                <h3>Typography Primitive</h3>
+                <p>font family, weight, size, lineHeight, letterSpacing의 원시값을 정의합니다.</p>
+                <div class="type-sample"><strong>Pretendard Variable</strong><span>400 / 500 / 600 / 700</span></div>
+              </article>
+              <article class="foundation-doc-card">
+                <span class="doc-path">root/foundation/docs/typography-w.md</span>
+                <h3>Typography Web</h3>
+                <p>display, title, text, caption 스케일을 Web 플랫폼 UI에 적용합니다.</p>
+                <code>--w-{category}-{scale}-{property}</code>
+              </article>
+            </div>
+          </section>
+        </main>
+      </div>
+    </div>
+  </body>
+</html>

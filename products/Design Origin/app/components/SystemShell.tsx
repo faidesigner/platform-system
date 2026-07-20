@@ -1,7 +1,6 @@
 import Link from "next/link";
-import { Button } from "../../../../packages/ui/components/Button";
-import { CardItem } from "../../../../packages/ui/components/card/CardItem";
-import { Label } from "../../../../packages/ui/components/label/Label";
+import { CardItem, Label } from "@fai/ui";
+import { componentLinks } from "./componentCatalog";
 
 const foundationLinks = [
   { href: "/foundation/color", label: "Color" },
@@ -15,32 +14,34 @@ const foundationLinks = [
 export function Shell({
   active = "overview",
   foundationActive,
+  componentActive,
   children,
 }: {
   active?: "overview" | "foundation" | "components" | "guideline" | "history";
   foundationActive?: string;
+  componentActive?: string;
   children: React.ReactNode;
 }) {
   return (
     <div className="min-h-screen bg-surface-alt text-primary">
       <header className="sticky top-0 z-40 border-b border-border-faint bg-surface/90 backdrop-blur-sm">
-        <div className="mx-auto flex h-16 max-w-[1440px] items-center justify-between px-l">
+        <div className="origin-shell-header-inner">
           <Link href="/" className="flex items-center gap-s text-body-s font-semibold">
             <span className="h-6 w-6 rounded-fai-s bg-brand" aria-hidden="true" />
             AI Design Origin
           </Link>
-          <div className="hidden w-[320px] rounded-fai-s border border-border-subtle bg-surface px-m py-s text-body-s text-tertiary tablet:block">
+          <div className="origin-shell-search">
             Search AI Design Origin
           </div>
         </div>
       </header>
-      <div className="mx-auto grid max-w-[1440px] grid-cols-1 desktop-s:grid-cols-[264px_minmax(0,1fr)]">
-        <aside className="border-b border-border-faint bg-surface px-m py-m desktop-s:min-h-[calc(100vh-64px)] desktop-s:border-b-0 desktop-s:border-r">
+      <div className="origin-shell-layout">
+        <aside className="origin-shell-sidebar">
           <nav className="flex gap-2xs overflow-x-auto desktop-s:grid desktop-s:overflow-visible">
             <NavLink href="/" active={active === "overview"}>Overview</NavLink>
             <NavLink href="/foundation" active={active === "foundation"}>Foundations</NavLink>
             {active === "foundation" ? (
-              <div className="hidden border-l border-border-faint pl-m desktop-s:grid">
+              <div className="origin-shell-subnav">
                 {foundationLinks.map((item) => (
                   <Link
                     key={item.href}
@@ -57,12 +58,30 @@ export function Shell({
                 ))}
               </div>
             ) : null}
-            <NavLink href="/#component" active={active === "components"}>Components</NavLink>
+            <NavLink href="/components" active={active === "components"}>Components</NavLink>
+            {active === "components" ? (
+              <div className="origin-shell-subnav">
+                {componentLinks.map((item) => (
+                  <Link
+                    key={item.href}
+                    href={item.href}
+                    className={[
+                      "rounded-fai-xs px-s py-s text-body-s",
+                      componentActive === item.slug
+                        ? "text-brand-text font-semibold"
+                        : "text-tertiary hover:bg-fill-faint hover:text-primary",
+                    ].join(" ")}
+                  >
+                    {item.label}
+                  </Link>
+                ))}
+              </div>
+            ) : null}
             <NavLink href="/#guideline" active={active === "guideline"}>Guideline</NavLink>
             <NavLink href="/#history" active={active === "history"}>Design history</NavLink>
           </nav>
         </aside>
-        <main className="min-w-0 px-l py-5xl desktop-s:px-5xl">{children}</main>
+        <main className="origin-shell-main">{children}</main>
       </div>
     </div>
   );
@@ -102,10 +121,10 @@ export function PageHero({
   children?: React.ReactNode;
 }) {
   return (
-    <section className="grid gap-2xl desktop-s:grid-cols-[minmax(0,1fr)_320px]">
-      <div className="max-w-[760px]">
+    <section className="origin-page-hero">
+      <div className="origin-page-hero-copy">
         <Label size="M">{eyebrow}</Label>
-        <h1 className="mt-l text-display-s font-bold leading-[1.05] tracking-normal text-primary">
+        <h1 className="origin-page-hero-title">
           {title}
         </h1>
         <p className="mt-m text-body-l text-secondary">{description}</p>

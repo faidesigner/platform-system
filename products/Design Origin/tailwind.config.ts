@@ -21,7 +21,7 @@ const config: Config = {
     './components/**/*.{ts,tsx,js,jsx}',
     './config/**/*.{ts,tsx}',
     './root/components/**/*.{ts,tsx,js,jsx}',
-    '../../../packages/ui/components/**/*.{ts,tsx,js,jsx}',
+    '../../packages/ui/components/**/*.{ts,tsx,js,jsx}',
   ],
 
   darkMode: 'class', // <html class="dark"> 로 전환

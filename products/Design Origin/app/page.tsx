@@ -1,5 +1,4 @@
-import { Button } from "../../../packages/ui/components/Button";
-import { Label } from "../../../packages/ui/components/label/Label";
+import { Button, Label } from "@fai/ui";
 import { RouteButton, Shell } from "./components/SystemShell";
 
 export default function OverviewPage() {
@@ -39,6 +38,9 @@ export default function OverviewPage() {
           </OverviewCard>
           <OverviewCard label="Components" title="Reusable UI">
             컴포넌트는 `@fai/ui` 패키지에 있는 실제 React 컴포넌트를 기준으로 연결하고 확장합니다.
+            <div className="origin-card-action">
+              <RouteButton href="/components">Open Components</RouteButton>
+            </div>
           </OverviewCard>
           <OverviewCard label="Guideline" title="UX rules">
             아직 생성 중인 UX 가이드는 planned 상태로 두고, 이후 자동 생성 흐름을 붙일 수 있게 구성합니다.
@@ -113,7 +115,7 @@ function OverviewCard({
     <article className="origin-overview-card">
       <Label size="S">{label}</Label>
       <h3>{title}</h3>
-      <p>{children}</p>
+      <div className="origin-overview-card-body">{children}</div>
       {href ? (
         <div className="origin-card-action">
           <RouteButton href={href}>Open {label}</RouteButton>

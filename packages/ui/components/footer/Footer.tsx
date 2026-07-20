@@ -9,6 +9,7 @@
  */
 
 import Image from 'next/image';
+import type { ReactNode } from 'react';
 import { ScrollTopButton } from '../ScrollTopButton';
 import './footer.css';
 
@@ -122,7 +123,14 @@ function InfoRow({ items, className }: { items: { title: string; text: string }[
 
 /* ── Component ── */
 
-export default function Footer() {
+export type FooterProps = {
+  /** Optional brand mark for products that supply their own static asset pipeline. */
+  brandLogo?: ReactNode;
+};
+
+export default function Footer({ brandLogo }: FooterProps = {}) {
+  const logo = brandLogo ?? <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />;
+
   return (
     <footer className="relative w-full bg-bg-200">
 
@@ -140,7 +148,7 @@ export default function Footer() {
 
           {/* logoArea */}
           <div className="flex flex-col items-start justify-between self-stretch gap-6">
-            <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
+            {logo}
             <SnsButtons />
           </div>
 
@@ -174,7 +182,7 @@ export default function Footer() {
           {/* logoArea */}
           <div className="fai-footer__compact-top flex justify-between items-center self-stretch w-full">
             <div className="fai-footer__logo">
-              <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
+              {logo}
             </div>
             <div className="fai-footer__socials">
               <SnsButtons />

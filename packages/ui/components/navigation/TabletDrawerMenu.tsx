@@ -3,8 +3,12 @@
 import { useState } from 'react';
 import Link from 'next/link';
 import { useParams } from 'next/navigation';
-import { productMenu } from '@/config/site';
 import { DrawerMenu, DrawerListItem } from './DrawerPrimitives';
+
+export type TabletDrawerMenuItem = {
+  label: string;
+  href: string;
+};
 
 /* ---------------- 하위 아코디언 스타일 및 컴포넌트 ---------------- */
 const subLayerWrapperStyle: React.CSSProperties = {
@@ -107,7 +111,13 @@ function ArrowUpRightIcon() {
 }
 
 /* ---------------- Tablet Drawer 메인 컨텐츠 ---------------- */
-export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
+export function TabletDrawerMenu({
+  onNavigate,
+  productItems = [],
+}: {
+  onNavigate?: () => void;
+  productItems?: readonly TabletDrawerMenuItem[];
+}) {
   const [productOpen, setProductOpen] = useState(false);
   const params  = useParams();
   const locale  = typeof params?.locale === 'string' ? params.locale : '';
@@ -117,19 +127,21 @@ export function TabletDrawerMenu({ onNavigate }: { onNavigate?: () => void }) {
   return (
     <DrawerMenu>
       {/* 1. 제품 — 확장형 아코디언 */}
-      <DrawerListItem
-        label="제품"
-        onClick={() => setProductOpen((v) => !v)}
-        rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
-      >
-        {productOpen && (
-          <div style={subLayerWrapperStyle}>
-            {productMenu.map((p) => (
-              <SubMenuItem key={p.href} href={lhref(p.href)} label={p.label} onNavigate={onNavigate} />
-            ))}
-          </div>
-        )}
-      </DrawerListItem>
+      {productItems.length > 0 ? (
+        <DrawerListItem
+          label="제품"
+          onClick={() => setProductOpen((v) => !v)}
+          rightIcon={productOpen ? <ChevronUpIcon /> : <ChevronDownIcon />}
+        >
+          {productOpen && (
+            <div style={subLayerWrapperStyle}>
+              {productItems.map((item) => (
+                <SubMenuItem key={item.href} href={lhref(item.href)} label={item.label} onNavigate={onNavigate} />
+              ))}
+            </div>
+          )}
+        </DrawerListItem>
+      ) : null}
 
       {/* 2. 일반 내부 링크 */}
       <DrawerListItem label="회사소개" href={lhref('/about')}  onClick={onNavigate} />

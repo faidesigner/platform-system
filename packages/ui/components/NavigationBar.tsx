@@ -8,7 +8,7 @@ import { usePathname, useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "./button/IcoTxtButton";
 import { ChevronDown } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
-import { TabletDrawerMenu } from "./navigation/TabletDrawerMenu";
+import { TabletDrawerMenu, type TabletDrawerMenuItem } from "./navigation/TabletDrawerMenu";
 import { Drawer } from "./ui/Drawer";
 
 /* ──────────────────────────────────────────
@@ -64,6 +64,7 @@ export default function NavigationBar({
   navItems: navItemsProp,
 }: NavigationBarProps = {}) {
   const navItems = navItemsProp ?? NAV_ITEMS;
+  const productItems: readonly TabletDrawerMenuItem[] = navItems.find((item) => item.dropdown)?.dropdownItems ?? [];
   const pathname = usePathname();
   const params   = useParams();
   const locale   = typeof params?.locale === "string" ? params.locale : "";
@@ -276,7 +277,7 @@ export default function NavigationBar({
           드로어 — 960px 이하 공용 (모바일·태블릿)
       ════════════════════════════════════ */}
       <Drawer isOpen={drawerOpen} onClose={() => setDrawerOpen(false)}>
-        <TabletDrawerMenu onNavigate={() => setDrawerOpen(false)} />
+        <TabletDrawerMenu productItems={productItems} onNavigate={() => setDrawerOpen(false)} />
       </Drawer>
     </>
   );

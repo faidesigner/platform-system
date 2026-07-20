@@ -64,6 +64,14 @@ export type { ToastProps } from './components/Toast';
 export { DrawerMenu, DrawerListItem, DefaultListIcon } from './components/navigation/DrawerPrimitives';
 export type { DrawerListItemProps } from './components/navigation/DrawerPrimitives';
 export { TabletDrawerMenu } from './components/navigation/TabletDrawerMenu';
+export type { TabletDrawerMenuItem } from './components/navigation/TabletDrawerMenu';
+
+/* ── Common icons ── */
+export { default as ArrowUpIcon } from './components/common/Icon/ArrowUpIcon';
+export { default as ChevronIcon } from './components/common/Icon/ChevronIcon';
+export { default as GlobeIcon } from './components/common/Icon/GlobeIcon';
+export { default as SocialIcon } from './components/common/Icon/SocialIcon';
+export type { SocialIconKey } from './components/common/Icon/SocialIcon';
 
 /* ── Status & Navigation (badge.md / banner.md / breadcrumbs.md 스펙 구현) ── */
 export { Badge } from './components/Badge';

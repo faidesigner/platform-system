@@ -10,13 +10,13 @@ export function DesignCoreHeading({
   return (
     <header className="border-b border-border-faint pb-m">
       {eyebrow ? (
-        <p className="mb-xs text-caption-m font-semibold uppercase tracking-[0.08em] text-tertiary">
+        <p className="origin-heading-eyebrow">
           {eyebrow}
         </p>
       ) : null}
       <h2 className="text-title-m font-bold text-primary">{title}</h2>
       {description ? (
-        <p className="mt-s max-w-[760px] text-body-s text-secondary">
+        <p className="origin-heading-description">
           {description}
         </p>
       ) : null}
