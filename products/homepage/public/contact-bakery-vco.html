@@ -231,6 +231,13 @@
         medium:   utm.utm_medium,
         campaign: utm.utm_campaign
       });
+      // 카톡 상담 클릭 전용 전환 이벤트(Slack #마케팅 협의, 2026-07-21) — 폼 문의(inquiry_complete)와
+      // 별도 이벤트명으로 잡혀야 마케팅 대시보드에서 카톡 상담을 독립 전환으로 집계할 수 있음
+      gtag('event', 'kakao_contact_click', {
+        utm_source:   utm.utm_source,
+        utm_medium:   utm.utm_medium,
+        utm_campaign: utm.utm_campaign
+      });
     });
   }
 
