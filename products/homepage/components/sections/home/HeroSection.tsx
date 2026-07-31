@@ -34,6 +34,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
   const expandedRef = useRef(false);
   const navExpandedRef = useRef(false);
   const navTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const snapRef = useRef<Snap | null>(null);
+  const snapReleasedRef = useRef(false);
 
   useEffect(() => {
     return scrollYProgress.on("change", (v) => {
@@ -54,6 +56,18 @@ export default function HeroSection({ logos }: HeroSectionProps) {
           navExpandedRef.current = false;
           window.dispatchEvent(new CustomEvent("hero:collapsed"));
         }
+      }
+
+      // 펼침 snap 지점(EXPANDED_STOP)을 지나 다음 섹션으로 진행 중에는 snap을 꺼야 한다.
+      // distanceThreshold(30%)가 뷰포트 높이 기준이라 펼침 지점 이후 남은 스크롤 구간의
+      // 상당 부분을 잠식해, 감쇄성 스크롤이 그 구간 안에서 멈추면 펼침 지점으로 되돌려져
+      // "스크롤이 안 먹는" 것처럼 보인다. 지점을 넘어간 순간부터는 자유 스크롤을 보장하고,
+      // 다시 접힘 방향으로 돌아올 때만 snap을 재활성화한다.
+      const pastExpandStop = v >= EXPANDED_STOP;
+      if (pastExpandStop !== snapReleasedRef.current) {
+        snapReleasedRef.current = pastExpandStop;
+        if (pastExpandStop) snapRef.current?.stop();
+        else snapRef.current?.start();
       }
     });
   }, [scrollYProgress]);
@@ -83,6 +97,8 @@ export default function HeroSection({ logos }: HeroSectionProps) {
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
+      snapRef.current = snap;
+      if (snapReleasedRef.current) snap.stop();
       const range = el.offsetHeight - window.innerHeight;
       snap.add(el.offsetTop);
       snap.add(el.offsetTop + range * EXPANDED_STOP);
