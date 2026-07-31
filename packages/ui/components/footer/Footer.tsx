@@ -46,7 +46,7 @@ const SNS = [
 const VALUES = {
   ceo:     '함명원ㆍ왕민권',
   tel:     '02-6191-0049',
-  address: '0662 서울특별시 서초구 강남대로51길 1, 511타워 13층',
+  address: '06628 서울특별시 서초구 강남대로51길 1, 511타워 13층',
   bizNo:   '809-86-01657',
   email:   'contact@fainders.ai',
 };
@@ -55,7 +55,6 @@ const VALUES = {
 // 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
 const POLICY_HREFS = {
   privacy: '/document/privacy-policy.pdf',
-  cctv:    '/document/cctv-policy.pdf',
 };
 
 /**
@@ -72,7 +71,6 @@ export interface FooterLabels {
   bizNo?:        string;
   email?:        string;
   privacy?:      string;
-  cctv?:         string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
 }
@@ -86,7 +84,6 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   bizNo:        '사업자등록번호',
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
-  cctv:         '영상정보처리기기 운영 · 관리 방침',
   ceoValue:     VALUES.ceo,
 };
 
@@ -176,7 +173,6 @@ export default function Footer({ onSocialClick, labels, hideEmail = false }: Foo
   ];
   const policies: PolicyItem[] = [
     { label: l.privacy, href: POLICY_HREFS.privacy },
-    { label: l.cctv,    href: POLICY_HREFS.cctv },
   ];
 
   return (
