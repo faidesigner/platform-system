@@ -23,7 +23,6 @@ export default function FooterBridge() {
     bizNo:        t("labels.bizNo"),
     email:        t("labels.email"),
     privacy:      t("policies.privacy"),
-    cctv:         t("policies.cctv"),
     ceoValue:     t("ceoValue"),
   };
 
