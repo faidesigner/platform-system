@@ -133,14 +133,17 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
 /* ── 회사 정보 행 공용 (desktop row1·row2 동일 구조) ── */
 // grid-cols-[max-content_1fr]: 타이틀 컬럼이 해당 그룹 내 가장 긴 라벨에 맞게 자동 조정.
 // 고정 px 폭 없이 KO·EN·JA 모든 언어에서 줄바꿈 없이 1행 보장.
-function InfoRow({ items, className }: { items: { title: string; text: string }[]; className?: string }) {
+function InfoRow({ items, className }: { items: { title: string; text: string; noWrapValue?: boolean }[]; className?: string }) {
   return (
     <div className={`grid grid-cols-[max-content_1fr] gap-y-s gap-x-2xl ${className ?? ''}`}>
       {items.flatMap((item) => [
         <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
           {item.title}
         </span>,
-        <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+        <span
+          key={`${item.title}-v`}
+          className={`text-[13px] font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
+        >
           {item.text}
         </span>,
       ])}
@@ -167,9 +170,11 @@ export default function Footer({ onSocialClick, labels, hideEmail = false }: Foo
     { title: l.tel,     text: VALUES.tel },
     { title: l.address, text: l.addressValue },
   ];
+  // 사업자번호·이메일은 값 자체가 코드성 문자열이라, 라벨이 길어져도(예: ja "事業者登録番号（韓国）")
+  // 고정폭 컬럼 안에서 중간에 줄바꿈되면 안 된다 — noWrapValue로 값 칸만 nowrap 고정.
   const row2Info = [
-    { title: l.bizNo, text: VALUES.bizNo },
-    ...(!hideEmail ? [{ title: l.email, text: VALUES.email }] : []),
+    { title: l.bizNo, text: VALUES.bizNo, noWrapValue: true },
+    ...(!hideEmail ? [{ title: l.email, text: VALUES.email, noWrapValue: true }] : []),
   ];
   const policies: PolicyItem[] = [
     { label: l.privacy, href: POLICY_HREFS.privacy },
