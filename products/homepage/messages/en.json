@@ -51,7 +51,7 @@
         },
         "2": {
           "title": "99.9% Accuracy",
-          "description": "Far outperforms competitors, completing a scan in just one second at overwhelming speed"
+          "description": "A full scan takes a single second"
         }
       },
       "benefitsTitle": "What Changes for Your Store?",
@@ -216,8 +216,8 @@
           }
         },
         "1": {
-          "subtitle": "Open an unmanned retail shop in idle space of around 16 sqm",
-          "description": "Start an unmanned shop with prefab construction that installs in a day",
+          "subtitle": "Turn 180 sq ft of idle space into an unmanned shop",
+          "description": "Pre-assembled, and installed in a single day",
           "sectionTitle": "What Makes WALK-THROUGH Different?",
           "cards": {
             "0": {
@@ -249,7 +249,7 @@
           },
           "2": {
             "brand": "Naju Tech-Friendly",
-            "store": "CU Ansim Smart Store",
+            "store": "CU Secure Smart Store",
             "description": "Pilot store at KISA headquarters"
           },
           "3": {
@@ -261,12 +261,12 @@
         "micro": {
           "0": {
             "brand": "PX24",
-            "store": "Euljiro branch",
+            "store": "Euljiro",
             "description": "A 180 sq ft unmanned store inside a gym,\nopen 24/7"
           },
           "1": {
             "brand": "PX24",
-            "store": "Hwagok branch",
+            "store": "Hwagok",
             "description": "A compact 125 sq ft unmanned store\ninside a gym"
           }
         }
@@ -283,8 +283,8 @@
   },
   "home": {
     "hero": {
-      "title1": "The Future of Retail",
-      "title2": "Start One Step Ahead",
+      "title1": "Retail AI",
+      "title2": "At Your Store",
       "tagline": "Trouble Finding Staff? No Problem.",
       "subtitle": "Next-Gen AI Retail Automation"
     },
@@ -318,8 +318,8 @@
           "description": "Powered by Vision AI"
         },
         "1": {
-          "label": "Reduced customer wait time",
-          "labelCaption": "(before/after VCO adoption)",
+          "label": "Shorter wait times",
+          "labelCaption": "",
           "description": "Short lines, fewer lost sales"
         },
         "2": {
@@ -332,23 +332,23 @@
       "alt": "FAI Platform Fullscreen Overview"
     },
     "ctaBanner": {
-      "titleLine1": "Deploy it in your store today",
-      "titleLine2": "and experience maximum efficiency"
+      "titleLine1": "Ready to see it",
+      "titleLine2": "in your store?"
     }
   },
   "about": {
     "hero": {
       "eyebrow": "Retail Innovation",
       "title": [
-        "So Customers Can Focus",
-        "on What Retail Is Really About"
+        "Enable Retailers to Focus",
+        "on What Really Matters"
       ]
     },
     "partners": {
       "title": "Partners",
       "description": [
         "Working with global market leaders,",
-        "Working with global market leaders\non value that goes beyond technology"
+        " on value that goes beyond technology"
       ]
     },
     "investors": {
@@ -667,9 +667,9 @@
       "our experts answer you directly"
     ],
     "subCopy": {
-      "highlight": "a tailored solution proposal",
-      "rest": ", just fill out the inquiry form and",
-      "line2": "our team will get back to you promptly"
+      "highlight": "Tell us a bit about your business",
+      "rest": ",",
+      "line2": "and we'll revert ASAP"
     },
     "form": {
       "connectTitle": "How can we reach you?",
@@ -732,9 +732,9 @@
     "complete": {
       "title": "Thanks for reaching out!",
       "subCopy": {
-        "before": "We'll review your message and ",
-        "highlight": "within 2–3 days on average",
-        "after": " our team will get in touch"
+        "before": "We'll review your message and get back to you within ",
+        "highlight": "2–3 days",
+        "after": ""
       },
       "buttonLabel": "Keep Exploring"
     }
