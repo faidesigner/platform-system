@@ -1,0 +1,97 @@
+import { describe, expect, it } from "vitest";
+
+import en from "@/messages/en.json";
+import ja from "@/messages/ja.json";
+import ko from "@/messages/ko.json";
+
+type Tree = { [key: string]: string | Tree };
+
+/** 중첩 messages 객체를 `a.b.c` → 값 형태의 flat map으로 펼친다. */
+function flatten(tree: Tree, prefix = ""): Record<string, string> {
+  return Object.entries(tree).reduce<Record<string, string>>((acc, [key, value]) => {
+    const path = prefix ? `${prefix}.${key}` : key;
+    if (typeof value === "string") acc[path] = value;
+    else Object.assign(acc, flatten(value, path));
+    return acc;
+  }, {});
+}
+
+const KO = flatten(ko as Tree);
+const EN = flatten(en as Tree);
+const JA = flatten(ja as Tree);
+
+/**
+ * 서로 다른 ko 원문인데 번역문이 같아도 되는 키 묶음(의도된 중복).
+ * 스프레드시트 일괄 반영 시 "다른 키의 번역이 잘못 복사되는" 사고를 잡기 위한 화이트리스트이므로,
+ * 새 항목을 추가할 때는 반드시 의도된 중복인지 확인하고 근거를 주석으로 남긴다.
+ */
+const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
+  // "자세히 알아보기" / "더 알아보기" — 링크 CTA는 en/ja에서 한 표현으로 통일
+  ["common.cta.learnMore", "common.cta.mediaMore", "media.showcase.youtube.ctaLabel"],
+  // "문의하기" / "도입 문의하기" — nav·CTA·폼 제출 버튼 모두 Contact 하나로 통일
+  [
+    "common.cta.contact",
+    "common.cta.requestDemo",
+    "nav.contact",
+    "contact.meta.title",
+    "contact.form.submitLabel",
+  ],
+  // "미디어" / "Media" — 섹션 제목이 ko에서만 영문 표기
+  ["nav.media", "media.meta.title", "media.showcase.title"],
+  // "대표이사" / "CEO"
+  ["footer.labels.ceo", "about.people.cards.1.role", "about.people.cards.3.role"],
+  // "이메일 문의" / "이메일"
+  ["footer.labels.email", "contact.fields.email.label"],
+  // 같은 영상의 ko 제목 표기만 다름(무인매장/무인 매장)
+  [
+    "media.showcase.videoOverrides.VJSlS3ujdEo.title",
+    "media.showcase.videoOverrides.20XzJavnjyY.title",
+  ],
+  // "급식" ↔ "Cafeteria&Canteen" — 일본어권에서는 사내·학생 식당으로 풀어 쓰는 것이 마케팅 확정안
+  [
+    "products.visionCheckout.industries.1.label",
+    "products.visionCheckout.reviews.1.category",
+    "contact.interests.vco.options.catering",
+  ],
+];
+
+function allowedDuplicate(keys: string[]): boolean {
+  return INTENTIONAL_DUPLICATE_GROUPS.some((group) => keys.every((k) => group.includes(k)));
+}
+
+describe("messages 로케일 정합성", () => {
+  it("ko/en/ja 키 집합이 동일하다", () => {
+    const koKeys = Object.keys(KO);
+    // ja 전용 콘텐츠(일본 시장용 추가 도입사례)는 page.tsx가 locale === 'ja'로 가드한다.
+    const jaOnlyAllowed = /^products\.visionCheckout\.reviews\.3\./;
+    expect(Object.keys(EN).filter((k) => !(k in KO))).toEqual([]);
+    expect(koKeys.filter((k) => !(k in EN))).toEqual([]);
+    expect(Object.keys(JA).filter((k) => !(k in KO) && !jaOnlyAllowed.test(k))).toEqual([]);
+    expect(koKeys.filter((k) => !(k in JA))).toEqual([]);
+  });
+
+  // 스프레드시트 일괄 번역 반영 시 다른 키의 번역문이 잘못 복사돼 들어오는 사고를 구조적으로 차단한다.
+  // (실제 사고: reviews.0.category "베이커리" ← industries.0.label "Bakery&Cafe"의 ja 번역이 유입)
+  for (const [locale, MESSAGES] of [
+    ["en", EN],
+    ["ja", JA],
+  ] as const) {
+    it(`${locale}: 서로 다른 ko 원문이 같은 번역문을 공유하지 않는다`, () => {
+      const byTranslation = new Map<string, string[]>();
+      for (const [key, value] of Object.entries(MESSAGES)) {
+        if (!(key in KO)) continue;
+        if (value.trim().length < 2) continue;
+        if (value.startsWith("MISSING_FROM_DESIGN")) continue;
+        byTranslation.set(value, [...(byTranslation.get(value) ?? []), key]);
+      }
+
+      const collisions = [...byTranslation.entries()]
+        .filter(([, keys]) => keys.length > 1)
+        .filter(([, keys]) => new Set(keys.map((k) => KO[k])).size > 1)
+        .filter(([, keys]) => !allowedDuplicate(keys))
+        .map(([value, keys]) => `${value} ← ${keys.map((k) => `${k}(ko: ${KO[k]})`).join(" / ")}`);
+
+      expect(collisions).toEqual([]);
+    });
+  }
+});
