@@ -3,6 +3,10 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <!-- Meta(Facebook) 도메인 인증 — 삭제하면 인증이 풀려 iOS 사용자 전환이 광고 성과에서
+         누락된다. Meta는 루트 도메인의 메인 페이지를 읽으므로 이 파일에 반드시 유지할 것.
+         (Slack #prj_homepage 2026-08-05 김진영 요청 / tests/landingTags.test.ts 가 고정) -->
+    <meta name="facebook-domain-verification" content="tulmodqt0xe5lzjhkn95q89kd6cuqv" />
     <title>FAI | Fainders AI</title>
     <!-- 정적 export엔 미들웨어가 없어 서버 언어협상이 불가. 루트(/)는 이 페이지가
          브라우저 언어를 보고 /ko · /en · /ja 로 클라이언트 리다이렉트한다. -->

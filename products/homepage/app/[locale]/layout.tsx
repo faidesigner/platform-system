@@ -85,6 +85,12 @@ export async function generateMetadata({
       },
     },
     robots: { index: true, follow: true },
+    // Meta(Facebook) 도메인 인증. 루트(/)가 서빙하는 public/index.html 에도 동일 태그가 있고,
+    // Meta가 리다이렉트를 따라온 경우까지 커버하기 위해 로케일 페이지에도 심는다.
+    // 삭제하면 인증이 풀려 iOS 사용자 전환이 광고 성과에서 누락된다.
+    verification: {
+      other: { "facebook-domain-verification": "tulmodqt0xe5lzjhkn95q89kd6cuqv" },
+    },
   };
 }
 
