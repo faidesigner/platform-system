@@ -115,7 +115,7 @@
       "reviewsTitle": "導入事例・お客様の声",
       "reviews": {
         "0": {
-          "category": "ベーカリー・カフェ",
+          "category": "ベーカリー",
           "store": "マンナミル ベーカリー",
           "role": "総括マネージャー ソン・ジュヒ",
           "quote": {
@@ -719,7 +719,7 @@
         "group": "AIセルフレジ「VISION CHECK-OUT」",
         "multipleLabel": "（複数選択可）",
         "options": {
-          "bakery": "ベーカリー・カフェ",
+          "bakery": "ベーカリー",
           "catering": "社員食堂・学生食堂",
           "special-venue": "特殊施設（スタジアム・イベント会場・リゾートなど）",
           "etc": "その他"
