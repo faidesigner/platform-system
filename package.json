@@ -1,6 +1,9 @@
 {
   "name": "fai-homepage-monorepo",
   "private": true,
+  "scripts": {
+    "link-ui": "node scripts/link-ui.js"
+  },
   "workspaces": [
     "packages/*",
     "products/*"

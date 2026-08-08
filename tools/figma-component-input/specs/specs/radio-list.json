@@ -1,0 +1,41 @@
+{
+  "template": "radio-list",
+  "name": "RadioList",
+  "description": "Single-select option group. Generated on system/badge-component.",
+  "item": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.8" },
+      "primaryAlign": "MIN",
+      "counterAlign": "MIN",
+      "padding": {
+        "top": { "$pixelToken": "size.8" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.8" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "radio": {
+      "size": { "$pixelToken": "size.20" },
+      "radius": 9999,
+      "strokeWeight": 2,
+      "uncheckedStroke": { "$token": "semantic.light.border.secondary" },
+      "checkedStroke": { "$token": "semantic.light.border.brand-primary" },
+      "dotFill": { "$token": "semantic.light.filled.optional.brand-primary" }
+    },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.16" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    },
+    "description": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.secondary" }
+    }
+  },
+  "variants": [
+    { "name": "orientation=vertical", "orientation": "vertical" },
+    { "name": "orientation=horizontal", "orientation": "horizontal" },
+    { "name": "with-description", "orientation": "vertical", "hasDescription": true },
+    { "name": "with-error", "orientation": "vertical", "hasError": true }
+  ]
+}

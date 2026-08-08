@@ -1,0 +1,40 @@
+{
+  "template": "switch",
+  "name": "Switch",
+  "description": "Immediate on/off setting control with label, loading, disabled, and validation states.",
+  "track": {
+    "width": { "$pixelToken": "size.40" },
+    "height": { "$pixelToken": "size.24" },
+    "padding": { "$pixelToken": "size.4" },
+    "radius": 9999,
+    "offFill": { "$token": "semantic.light.filled.basic.secondary" },
+    "onFill": { "$token": "semantic.light.filled.optional.brand-primary" }
+  },
+  "thumb": {
+    "offSize": { "$pixelToken": "size.16" },
+    "onSize": { "$pixelToken": "size.20" },
+    "radius": 9999,
+    "fill": { "$token": "semantic.light.bg.100" },
+    "shadow": { "$token": "shadow.XS" }
+  },
+  "label": {
+    "fontStyle": "Medium",
+    "fontSize": { "$pixelToken": "font.size.14" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.14" },
+    "color": { "$token": "semantic.light.text.basic.primary" }
+  },
+  "description": {
+    "fontStyle": "Regular",
+    "fontSize": { "$pixelToken": "font.size.12" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.12" },
+    "color": { "$token": "semantic.light.text.basic.tertiary" }
+  },
+  "gap": { "$pixelToken": "size.8" },
+  "variants": [
+    { "name": "value=off", "value": false, "label": "알림 받기" },
+    { "name": "value=on", "value": true, "label": "알림 받기" },
+    { "name": "value=off, description", "value": false, "label": "다크 모드", "description": "어두운 화면으로 전환" },
+    { "name": "value=on, loading", "value": true, "loading": true, "label": "동기화" },
+    { "name": "value=off, disabled", "value": false, "disabled": true, "label": "프리미엄 기능" }
+  ]
+}

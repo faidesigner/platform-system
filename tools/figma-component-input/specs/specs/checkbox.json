@@ -1,0 +1,19 @@
+{
+  "template": "checkbox",
+  "name": "Checkbox",
+  "description": "Checkbox input and list item generated from feature/badge-component.",
+  "preview": { "stepY": 80 },
+  "component": {
+    "layout": { "direction": "horizontal", "gap": { "$pixelToken": "size.8" }, "primarySizing": "AUTO", "counterSizing": "AUTO", "primaryAlign": "MIN", "counterAlign": "MIN", "padding": { "top": { "$pixelToken": "size.12" }, "right": 0, "bottom": { "$pixelToken": "size.12" }, "left": 0 } }
+  },
+  "box": { "size": 18, "radius": { "$pixelToken": "size.4" }, "strokeWeight": 1.2 },
+  "copy": { "gap": 2 },
+  "label": { "fontSize": { "$pixelToken": "font.size.14" }, "lineHeight": { "$pixelToken": "font.lineHeight.14" }, "color": { "$token": "semantic.light.text.basic.primary" } },
+  "description": { "fontSize": { "$pixelToken": "font.size.12" }, "lineHeight": { "$pixelToken": "font.lineHeight.12" }, "color": { "$token": "semantic.light.text.basic.tertiary" } },
+  "variants": [
+    { "name": "state=unchecked, error=false, disabled=false", "state": "unchecked", "label": "Receive notifications", "description": "Get product updates by email.", "boxFill": { "$token": "semantic.light.bg.100" }, "boxStroke": { "$token": "semantic.light.border.secondary" }, "markColor": { "$token": "semantic.light.text.basic.inverse" }, "text": { "$token": "semantic.light.text.basic.primary" }, "descriptionColor": { "$token": "semantic.light.text.basic.tertiary" } },
+    { "name": "state=checked, error=false, disabled=false", "state": "checked", "label": "Receive notifications", "description": "Get product updates by email.", "boxFill": { "$token": "semantic.light.filled.basic.primary" }, "boxStroke": { "$token": "semantic.light.filled.basic.primary" }, "markColor": { "$token": "semantic.light.text.basic.inverse" }, "text": { "$token": "semantic.light.text.basic.primary" }, "descriptionColor": { "$token": "semantic.light.text.basic.tertiary" } },
+    { "name": "state=partial, error=false, disabled=false", "state": "partial", "label": "Select all", "description": "Some items are selected.", "boxFill": { "$token": "semantic.light.filled.basic.primary" }, "boxStroke": { "$token": "semantic.light.filled.basic.primary" }, "markColor": { "$token": "semantic.light.text.basic.inverse" }, "text": { "$token": "semantic.light.text.basic.primary" }, "descriptionColor": { "$token": "semantic.light.text.basic.tertiary" } },
+    { "name": "state=unchecked, error=true, disabled=false", "state": "unchecked", "label": "Required agreement", "description": "This field is required.", "boxFill": { "$token": "semantic.light.bg.100" }, "boxStroke": { "$token": "semantic.light.border.negative" }, "markColor": { "$token": "semantic.light.text.basic.inverse" }, "text": { "$token": "semantic.light.text.basic.primary" }, "descriptionColor": { "$token": "semantic.light.text.basic.negative" } }
+  ]
+}

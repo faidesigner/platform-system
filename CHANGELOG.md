@@ -2,6 +2,47 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [3.6.0] - 2026-08-03
+
+### ✨ Added
+
+#### SK하이닉스 브랜드 테마
+- `root/foundation/color-global.json` — `hynix-teal` primitive 스케일 추가 (50–900, 500 = brand default #00827C·white 대비 AA 4.5 통과.
+  원본 팔레트의 #009A93은 400으로 배치, 대비 사각지대(3.0~4.5)의 #33AFA7·#008B85는 제외,
+  600은 500–700 지각 균형점 #00706B로 재보간)
+- `root/foundation/color-brand.json` — `hynix` 브랜드 추가: brand-primary(teal.500)/brand-secondary(teal.50) + filled/text/icon/boder 세트
+- 브랜드 내 중립색 교체 패턴 신설: `hynix.gray.*` → `bluegray.*` primitive 별칭 11개.
+  `[data-brand='hynix']` 스코프에서 gray를 참조하는 모든 semantic·dark 모드가 자동으로 bluegray를 따름 (컴포넌트 수정 0)
+- `root/foundation/docs/color-brand.md` — 중립색 오버라이드 패턴 규칙 문서화, 지원 클라이언트에 hynix 추가
+- `root/foundation/docs/color-global.md` — hynix-teal 스케일 등재
+
+#### Figma 브랜드 모드 export
+- `scripts/export-figma-variables.js` — `BRAND_MODES` 도입: color-brand.json의 브랜드를 `FAI / Color Semantic` 컬렉션의 Figma 모드로 변환.
+  Hynix 모드 추가 (브랜드 그룹 → optional·border brand 변수 오버라이드, gray 별칭 → bluegray 치환, 나머지는 Light 상속).
+  새 브랜드는 `BRAND_MODES`에 `{ mode, client }` 한 줄 추가로 노출
+- 브랜드 다크 모드 지원 — `color-brand.json` 브랜드 항목의 `dark` 하위 그룹을
+  `sync-tokens.js`가 `[data-brand].dark` 조합 셀렉터 블록으로, `export-figma-variables.js`가
+  `Hynix Dark` Figma 모드(semantic Dark 기반 + gray→bluegray + 다크 브랜드 오버라이드)로 방출.
+  hynix 다크 값: 브랜드색 한 단계 상향(teal-400 중심), 전 조합 WCAG AA 통과 검증
+
+#### Figma 타이포 컬렉션 2계층 재편
+- `scripts/export-figma-variables.js` — `FAI / Typography`를 색상과 동일한 primitive/semantic 구조로 분리.
+  primitive(58개, 숫자·폰트명의 유일한 거처)와 `FAI / Typography Web`(46개, KO/EN/JP 로케일 모드) 신설.
+  기존 값 박제(`w/ko/... = 80`) 방식 → primitive alias 참조로 전환, `w/ko|en|jp` 이름 3벌(180개)을 변수 46개 × 모드 3개로 축소.
+  `font/family`도 로케일 모드로 방출 (JP = M PLUS 2). Text Styles 45개는 유지
+- 폰트 웨이트 export 추가 — `font/weight/400~700`을 fontStyle 바인딩용 STRING 변수(Regular/Medium/SemiBold/Bold)로 방출.
+  Text Styles를 'Regular' 하드코딩(45개, 적용 시 굵기 소실 버그) → 스케일당 4개 웨이트 변형(180개)으로 교체
+- `figma-foundation-input` 플러그인에 선택 import UI 추가 — 실행 시 전체 자동 import 대신
+  컬렉션별 체크박스(변수 개수 표시)·Text Styles·개요 페이지를 골라서 가져오기.
+  파일에 이미 있는 변수를 alias 해석에 활용해, Primitive를 먼저 넣어뒀다면 Semantic만 선택해도 참조가 연결됨
+
+### 🔄 Changed
+
+#### SHnix admin 테마 연결
+- `products/SHnix/admin/index.html` — `<html data-brand="hynix">` 적용
+- `products/SHnix/admin/src/styles.css` — `color-brand.css` 무레이어 import 추가([data-brand] 오버라이드가 @theme에 지지 않도록),
+  브릿지 레이어의 green 하드코딩 5곳을 brand 토큰 경유로 교체 (`var(--color-*-brand-*, green fallback)` — data-brand 미설정 시 기존 동작 유지)
+
 ## [3.5.0] - 2026-07-15
 
 ### ✨ Added

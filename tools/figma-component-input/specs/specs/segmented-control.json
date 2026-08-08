@@ -1,0 +1,44 @@
+{
+  "template": "segmented-control",
+  "name": "SegmentedControl",
+  "description": "Single-select segmented button group. Generated on system/badge-component.",
+  "container": {
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.filled.basic.secondary" },
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.2" },
+      "padding": {
+        "top": { "$pixelToken": "size.2" },
+        "right": { "$pixelToken": "size.2" },
+        "bottom": { "$pixelToken": "size.2" },
+        "left": { "$pixelToken": "size.2" }
+      }
+    }
+  },
+  "item": {
+    "radius": { "$pixelToken": "size.6" },
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.4" },
+      "padding": {
+        "top": { "$pixelToken": "size.4" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.4" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    },
+    "selectedFill": { "$token": "semantic.light.bg.100" },
+    "selectedShadow": { "$token": "shadow.XS" }
+  },
+  "variants": [
+    { "name": "layout=auto, content=label", "fill": false, "content": "label" },
+    { "name": "layout=fill, content=label", "fill": true, "content": "label" },
+    { "name": "content=icon+label", "fill": false, "content": "icon-label" },
+    { "name": "content=icon-only", "fill": false, "content": "icon-only" }
+  ]
+}

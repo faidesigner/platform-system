@@ -1,0 +1,67 @@
+{
+  "template": "spinner",
+  "name": "Spinner",
+  "description": "Indeterminate loading indicator with size, shade, and label variants.",
+  "layout": {
+    "direction": "vertical",
+    "gap": { "$pixelToken": "size.8" },
+    "primarySizing": "AUTO",
+    "counterSizing": "AUTO",
+    "primaryAlign": "CENTER",
+    "counterAlign": "CENTER",
+    "padding": {
+      "top": { "$pixelToken": "size.none" },
+      "right": { "$pixelToken": "size.none" },
+      "bottom": { "$pixelToken": "size.none" },
+      "left": { "$pixelToken": "size.none" }
+    }
+  },
+  "sizes": {
+    "sm": { "frame": { "$pixelToken": "size.16" }, "strokeWeight": 2 },
+    "md": { "frame": { "$pixelToken": "size.20" }, "strokeWeight": 3 },
+    "lg": { "frame": { "$pixelToken": "size.24" }, "strokeWeight": 3 }
+  },
+  "shades": {
+    "default": {
+      "active": { "$token": "semantic.light.icon.optional.brand-primary" },
+      "track": { "$token": "semantic.light.icon.basic.fourth" }
+    },
+    "onMedia": {
+      "active": { "$token": "semantic.light.icon.basic.inverse" },
+      "track": { "$token": "semantic.light.icon.basic.inverse-secondary" }
+    },
+    "subtle": {
+      "active": { "$token": "semantic.light.icon.basic.secondary" },
+      "track": { "$token": "semantic.light.icon.basic.fourth" }
+    },
+    "inherit": {
+      "active": { "$token": "semantic.light.icon.basic.primary" },
+      "track": { "$token": "semantic.light.icon.basic.fourth" }
+    }
+  },
+  "arc": {
+    "start": -1.5707963267948966,
+    "end": 3.141592653589793
+  },
+  "label": {
+    "fontStyle": "SemiBold",
+    "fontSize": { "$pixelToken": "font.size.16" },
+    "lineHeight": { "$pixelToken": "font.lineHeight.16" },
+    "color": { "$token": "semantic.light.text.basic.primary" }
+  },
+  "variants": [
+    { "name": "size=sm, shade=default", "size": "sm", "shade": "default" },
+    { "name": "size=md, shade=default", "size": "md", "shade": "default" },
+    { "name": "size=lg, shade=default", "size": "lg", "shade": "default" },
+    { "name": "size=sm, shade=onMedia", "size": "sm", "shade": "onMedia" },
+    { "name": "size=md, shade=onMedia", "size": "md", "shade": "onMedia" },
+    { "name": "size=lg, shade=onMedia", "size": "lg", "shade": "onMedia" },
+    { "name": "size=sm, shade=subtle", "size": "sm", "shade": "subtle" },
+    { "name": "size=md, shade=subtle", "size": "md", "shade": "subtle" },
+    { "name": "size=lg, shade=subtle", "size": "lg", "shade": "subtle" },
+    { "name": "size=sm, shade=inherit", "size": "sm", "shade": "inherit" },
+    { "name": "size=md, shade=inherit", "size": "md", "shade": "inherit" },
+    { "name": "size=lg, shade=inherit", "size": "lg", "shade": "inherit" },
+    { "name": "size=lg, shade=default, label=true", "size": "lg", "shade": "default", "label": "로딩 중" }
+  ]
+}

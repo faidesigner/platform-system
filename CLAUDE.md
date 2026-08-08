@@ -59,6 +59,21 @@ UI 생성 전:
 - **아키텍처 결정(2026-07-15)**: 간격·radius를 CSS 변수로 통일하지 않고 현행(색상=변수 / 간격류=Tailwind) 유지. Tailwind의 반응형·상태 변형을 이미 쓰는 구조이기 때문. 나중에 완전 통일이 필요하면 foundation이 간격도 CSS 변수로 방출하도록 바꾸는 별도 작업 필요.
 - Figma → MCP 읽기로 코드를 갱신할 때도 이 규칙을 그대로 적용한다. `card.json` 등 스펙의 `$pixelToken`/`$token`은 CSS 변수명이 아니라 위 표대로 변환해야 한다.
 
+**Figma → 코드 매칭 규칙 (바이브 코딩 시)**:
+
+Figma 파일을 MCP로 읽어 코드화할 때, 절대 원시값을 그대로 쓰지 말고 아래 순서로 토큰에 매칭한다.
+
+1. **변수 바인딩이 있으면 이름 번역이 최우선**: `color/text/basic/primary` → `text-basic-primary`,
+   `color/border/secondary` → `border-border-secondary`. Figma 변수명과 CSS 변수/Tailwind 클래스는
+   같은 SSOT(`root/foundation/*.json`)에서 생성되므로 1:1 기계 번역이다.
+2. **hex/숫자만 넘어오면 팔레트 역조회**: 모든 hex는 `color-global.json`에 유일하게 존재하므로
+   값 → primitive 특정 → 문맥(텍스트/배경/테두리)에 맞는 semantic 선택.
+3. **폰트 weight는 Figma에 변수가 없다(의도된 상태)**. 해석된 값으로 매칭한다:
+   Regular/400 → `font-normal`, Medium/500 → `font-medium`, SemiBold/600 → `font-semibold`, Bold/700 → `font-bold`.
+   weight 스케일은 이 4개뿐이므로 그 외 값이 보이면 오타로 간주하고 가장 가까운 값으로 매칭 후 보고한다.
+4. **hynix 브랜드 파일**: 시안에서 bluegray·hynix-teal 계열 hex가 보여도 컴포넌트 코드에는
+   semantic 클래스만 쓴다 (테마는 `data-brand="hynix"`가 처리). teal hex를 코드에 직접 쓰지 않는다.
+
 # Claude Code Automation Rules
 
 [Rule: 체인지로그 자동화]

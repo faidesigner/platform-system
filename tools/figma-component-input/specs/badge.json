@@ -9,7 +9,9 @@
     "height": {
       "$pixelToken": "size.20"
     },
-    "radius": 9999,
+    "radius": {
+      "$pixelToken": "space.cornerRadius.circle"
+    },
     "layout": {
       "direction": "horizontal",
       "gap": {
@@ -37,6 +39,7 @@
   },
   "text": {
     "fontStyle": "Medium",
+    "typographyToken": "w.caption.M",
     "fontSize": {
       "$pixelToken": "font.size.12"
     },

@@ -1,0 +1,40 @@
+{
+  "template": "table",
+  "name": "Table",
+  "description": "Data-driven table with density/dividers/hover/striped. Generated on system/badge-component.",
+  "header": {
+    "fill": { "$token": "semantic.light.bg.100" },
+    "borderBottom": { "$token": "semantic.light.border.tertiary" },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.secondary" }
+    }
+  },
+  "row": {
+    "divider": { "$token": "semantic.light.border.tertiary" },
+    "stripedFill": { "$token": "semantic.light.filled.basic.secondary" }
+  },
+  "cell": {
+    "layout": {
+      "direction": "horizontal",
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": { "$pixelToken": "size.8" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.8" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    }
+  },
+  "variants": [
+    { "name": "density=default", "density": "default" },
+    { "name": "density=compact", "density": "compact" },
+    { "name": "striped=true", "density": "default", "striped": true },
+    { "name": "hover=true", "density": "default", "hover": true }
+  ]
+}

@@ -4,7 +4,7 @@ const fs = require('fs');
 const path = require('path');
 
 const ROOT = path.resolve(__dirname, '..');
-const TOOL_DIR = path.join(ROOT, 'tools', 'figma-component-generator');
+const TOOL_DIR = path.join(ROOT, 'tools', 'figma-component-input');
 const SPECS_DIR = path.join(TOOL_DIR, 'specs');
 
 const specName = process.argv[2] || 'all';
@@ -86,7 +86,14 @@ function resolveSpecTokens(value) {
   }
   if (value && typeof value === 'object') {
     if (value.$token) {
-      return resolveToken(value.$token);
+      const resolved = resolveToken(value.$token);
+      if (value.$token.startsWith('color.') || value.$token.startsWith('semantic.')) {
+        return {
+          $figmaToken: value.$token,
+          value: resolved,
+        };
+      }
+      return resolved;
     }
     if (value.$pixelToken) {
       return toPixels(resolveToken(value.$pixelToken));
@@ -96,9 +103,60 @@ function resolveSpecTokens(value) {
   return value;
 }
 
+function attachTypographyTokenMetadata(value) {
+  if (Array.isArray(value)) {
+    return value.map(attachTypographyTokenMetadata);
+  }
+  if (!value || typeof value !== 'object') {
+    return value;
+  }
+
+  const next = Object.fromEntries(
+    Object.entries(value).map(([key, item]) => [key, attachTypographyTokenMetadata(item)])
+  );
+  if (typeof value.typographyToken === 'string') {
+    if (typeof next.fontSize === 'number') {
+      next.fontSize = {
+        $figmaFloatToken: `${value.typographyToken}.size`,
+        value: next.fontSize,
+        fallbackToken: `font.size.${Math.round(next.fontSize)}`,
+      };
+    }
+    if (typeof next.lineHeight === 'number') {
+      next.lineHeight = {
+        $figmaFloatToken: `${value.typographyToken}.lineHeight`,
+        value: next.lineHeight,
+      };
+    }
+  }
+  return next;
+}
+
+function collectPixelTokens(value, tokens = new Map()) {
+  if (Array.isArray(value)) {
+    value.forEach((item) => collectPixelTokens(item, tokens));
+    return tokens;
+  }
+  if (value && typeof value === 'object') {
+    if (value.$pixelToken) {
+      tokens.set(value.$pixelToken, toPixels(resolveToken(value.$pixelToken)));
+    }
+    for (const item of Object.values(value)) {
+      collectPixelTokens(item, tokens);
+    }
+  }
+  return tokens;
+}
+
 function renderPluginCode(componentSpecs) {
-  return `const SPECS = ${JSON.stringify(resolveSpecTokens(componentSpecs), null, 2)};
+  return `const SPECS = ${JSON.stringify(attachTypographyTokenMetadata(resolveSpecTokens(componentSpecs)), null, 2)};
+const PIXEL_TOKENS = ${JSON.stringify([...collectPixelTokens(componentSpecs)].map(([path, value]) => ({ path, value })), null, 2)};
 let SPEC = SPECS[0];
+let FIGMA_VARIABLES_BY_NAME = null;
+let FIGMA_VARIABLES_BY_VALUE = null;
+let FIGMA_FLOAT_VARIABLES_BY_NAME = null;
+let FIGMA_FLOAT_VARIABLES_BY_VALUE = null;
+let FIGMA_BIND_STATS = null;
 
 const FONT_FAMILIES = ["Pretendard Variable", "Pretendard", "Inter", "Arial"];
 
@@ -123,13 +181,496 @@ async function loadFont(style = "Regular") {
   throw new Error("No supported font found.");
 }
 
-function hexToPaint(hex) {
+async function prepareFigmaVariables() {
+  FIGMA_VARIABLES_BY_NAME = new Map();
+  FIGMA_VARIABLES_BY_VALUE = new Map();
+  FIGMA_FLOAT_VARIABLES_BY_NAME = new Map();
+  FIGMA_FLOAT_VARIABLES_BY_VALUE = new Map();
+  FIGMA_BIND_STATS = { variables: 0, valueKeys: 0, floatVariables: 0, floatValueKeys: 0, bound: 0, floatBound: 0, missed: 0, floatMissed: 0 };
+  const api = figma.variables;
+  if (!api) return;
+
+  if (figma.loadAllPagesAsync) {
+    await figma.loadAllPagesAsync();
+  }
+
+  const variables = api.getLocalVariablesAsync
+    ? await api.getLocalVariablesAsync()
+    : api.getLocalVariables
+      ? api.getLocalVariables()
+      : [];
+
+  for (const variable of variables || []) {
+    await registerFigmaVariable(variable);
+  }
+
+  await collectBoundVariablesFromDocument();
+  await importMatchingLibraryVariables();
+}
+
+async function registerFigmaVariable(variable) {
+  if (!variable) return;
+  if (variable.resolvedType === "FLOAT") {
+    registerFloatVariable(variable);
+    return;
+  }
+  if (variable.resolvedType && variable.resolvedType !== "COLOR") return;
+  FIGMA_VARIABLES_BY_NAME.set(normalizeVariableName(variable.name), variable);
+  FIGMA_BIND_STATS.variables = FIGMA_VARIABLES_BY_NAME.size;
+
+  const valueKeys = await variableColorValueKeys(variable);
+  for (const valueKey of valueKeys) {
+    const bucket = FIGMA_VARIABLES_BY_VALUE.get(valueKey) || [];
+    if (!bucket.some((item) => item.id === variable.id)) {
+      bucket.push(variable);
+    }
+    FIGMA_VARIABLES_BY_VALUE.set(valueKey, bucket);
+  }
+  FIGMA_BIND_STATS.valueKeys = FIGMA_VARIABLES_BY_VALUE.size;
+}
+
+function registerFloatVariable(variable) {
+  FIGMA_FLOAT_VARIABLES_BY_NAME.set(normalizeVariableName(variable.name), variable);
+  FIGMA_BIND_STATS.floatVariables = FIGMA_FLOAT_VARIABLES_BY_NAME.size;
+
+  const valueKeys = variableFloatValueKeys(variable);
+  for (const valueKey of valueKeys) {
+    const bucket = FIGMA_FLOAT_VARIABLES_BY_VALUE.get(valueKey) || [];
+    if (!bucket.some((item) => item.id === variable.id)) {
+      bucket.push(variable);
+    }
+    FIGMA_FLOAT_VARIABLES_BY_VALUE.set(valueKey, bucket);
+  }
+  FIGMA_BIND_STATS.floatValueKeys = FIGMA_FLOAT_VARIABLES_BY_VALUE.size;
+}
+
+async function collectBoundVariablesFromPage(rootNode) {
+  if (!rootNode || !figma.variables) return;
+  const stack = [rootNode];
+  const seenVariableIds = new Set();
+
+  while (stack.length > 0) {
+    const node = stack.pop();
+    const boundVariables = node.boundVariables || {};
+    const aliases = [];
+    for (const value of Object.values(boundVariables)) {
+      if (Array.isArray(value)) aliases.push(...value);
+      else if (value) aliases.push(value);
+    }
+
+    for (const alias of aliases) {
+      if (!alias || !alias.id || seenVariableIds.has(alias.id)) continue;
+      seenVariableIds.add(alias.id);
+      try {
+        const variable = figma.variables.getVariableByIdAsync
+          ? await figma.variables.getVariableByIdAsync(alias.id)
+          : figma.variables.getVariableById
+            ? figma.variables.getVariableById(alias.id)
+            : null;
+        await registerFigmaVariable(variable);
+      } catch (error) {
+        // Ignore variables that are unavailable in this file/session.
+      }
+    }
+
+    if ("children" in node) {
+      for (const child of node.children) stack.push(child);
+    }
+  }
+}
+
+async function collectBoundVariablesFromDocument() {
+  const pages = figma.root && figma.root.children ? figma.root.children : [figma.currentPage];
+  for (const page of pages) {
+    await collectBoundVariablesFromPage(page);
+  }
+}
+
+async function importMatchingLibraryVariables() {
+  if (!figma.teamLibrary || !figma.teamLibrary.getAvailableLibraryVariableCollectionsAsync) return;
+
+  const tokenNames = collectRequestedTokenNames();
+  if (tokenNames.length === 0) return;
+
+  let collections = [];
+  try {
+    collections = await figma.teamLibrary.getAvailableLibraryVariableCollectionsAsync();
+  } catch (error) {
+    return;
+  }
+
+  for (const collection of collections || []) {
+    let libraryVariables = [];
+    try {
+      libraryVariables = await figma.teamLibrary.getVariablesInLibraryCollectionAsync(collection.key);
+    } catch (error) {
+      continue;
+    }
+
+    for (const libraryVariable of libraryVariables || []) {
+      if (libraryVariable.resolvedType && libraryVariable.resolvedType !== "COLOR" && libraryVariable.resolvedType !== "FLOAT") continue;
+      if (!matchesRequestedTokenName(libraryVariable.name, tokenNames)) continue;
+      try {
+        const variable = await figma.variables.importVariableByKeyAsync(libraryVariable.key);
+        await registerFigmaVariable(variable);
+      } catch (error) {
+        // Ignore variables that cannot be imported from the enabled library.
+      }
+    }
+  }
+}
+
+function collectRequestedTokenNames() {
+  const names = new Set();
+  for (const token of PIXEL_TOKENS) {
+    for (const candidate of tokenVariableCandidates(token.path)) {
+      names.add(candidate);
+    }
+  }
+  const visit = (value) => {
+    if (Array.isArray(value)) {
+      value.forEach(visit);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if (value.$figmaToken) {
+      for (const candidate of tokenVariableCandidates(value.$figmaToken)) {
+        names.add(candidate);
+      }
+    }
+    if (value.$figmaFloatToken) {
+      for (const candidate of tokenVariableCandidates(value.$figmaFloatToken)) {
+        names.add(candidate);
+      }
+      if (value.fallbackToken) {
+        for (const candidate of tokenVariableCandidates(value.fallbackToken)) {
+          names.add(candidate);
+        }
+      }
+    }
+    for (const item of Object.values(value)) {
+      visit(item);
+    }
+  };
+  SPECS.forEach(visit);
+  return [...names].filter(Boolean);
+}
+
+function matchesRequestedTokenName(name, requestedNames) {
+  const normalized = normalizeVariableName(name);
+  return requestedNames.some((candidate) => normalized.includes(candidate) || candidate.includes(normalized));
+}
+
+function normalizeVariableName(name) {
+  return String(name || "")
+    .replace(/^--/, "")
+    .replace(/[._\\s]+/g, "/")
+    .toLowerCase();
+}
+
+function tokenPath(input) {
+  return input && typeof input === "object" && input.$figmaToken ? input.$figmaToken : null;
+}
+
+function tokenValue(input) {
+  return input && typeof input === "object" && (input.$figmaToken || input.$figmaFloatToken) ? input.value : input;
+}
+
+function floatTokenPath(input) {
+  return input && typeof input === "object" && input.$figmaFloatToken ? input.$figmaFloatToken : null;
+}
+
+function tokenVariableCandidates(path) {
+  if (!path) return [];
+  const parts = path.split(".");
+  const withoutNamespace = parts.slice(1).join("/");
+  const withoutMode = parts[0] === "semantic" ? parts.slice(2).join("/") : withoutNamespace;
+  const colorScoped = parts[0] === "semantic" ? "color/" + parts.slice(2).join("/") : "color/" + withoutNamespace;
+  const cssName = "--color-" + parts.slice(2).join("-");
+  return [
+    path,
+    path.replace(/\\./g, "/"),
+    path.replace(/[.-]/g, "/"),
+    withoutNamespace,
+    withoutMode,
+    colorScoped,
+    colorScoped.replace(/-/g, "/"),
+    cssName,
+    cssName.replace(/^--/, ""),
+  ].map(normalizeVariableName);
+}
+
+function findFigmaFloatVariableByToken(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_NAME || !token) return null;
+  const candidatePaths = [token.path, token.fallbackToken].filter(Boolean);
+  for (const candidatePath of candidatePaths) {
+    for (const candidate of tokenVariableCandidates(candidatePath)) {
+      const variable = FIGMA_FLOAT_VARIABLES_BY_NAME.get(candidate);
+      if (variable) return variable;
+    }
+  }
+  return findFigmaFloatVariableByValue(token);
+}
+
+function findFigmaFloatVariableByInput(input, fallbackPreference = "") {
+  const value = tokenValue(input);
+  const path = floatTokenPath(input);
+  const token = path
+    ? { path, value, fallbackToken: input.fallbackToken }
+    : numericTokenForValue(value, fallbackPreference);
+  return findFigmaFloatVariableByToken(token);
+}
+
+function bindNumericInput(node, field, input, fallbackPreference = "") {
+  if (!node || typeof node.setBoundVariable !== "function") return;
+  const value = tokenValue(input);
+  if (typeof value !== "number") return;
+  const variable = findFigmaFloatVariableByInput(input, fallbackPreference);
+  if (!variable) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+    return;
+  }
+  try {
+    node.setBoundVariable(field, variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatBound += 1;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+  }
+}
+
+function bindNumericField(node, field, value, preference = "") {
+  if (!node || typeof node.setBoundVariable !== "function" || typeof value !== "number") return;
+  const token = numericTokenForValue(value, preference);
+  const variable = findFigmaFloatVariableByToken(token);
+  if (!variable) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+    return;
+  }
+  try {
+    node.setBoundVariable(field, variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatBound += 1;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+  }
+}
+
+function bindTextNumericTokens(node, style) {
+  if (!node || node.type !== "TEXT" || !style) return;
+  bindNumericInput(node, "fontSize", style.fontSize, "font.size");
+  bindNumericInput(node, "lineHeight", style.lineHeight, "font.lineHeight");
+}
+
+function findFigmaFloatVariableByTokenLegacy(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_NAME || !token) return null;
+  for (const candidate of tokenVariableCandidates(token.path)) {
+    const variable = FIGMA_FLOAT_VARIABLES_BY_NAME.get(candidate);
+    if (variable) return variable;
+  }
+  return findFigmaFloatVariableByValue(token);
+}
+
+function findFigmaFloatVariableByValue(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_VALUE || !token) return null;
+  const variables = FIGMA_FLOAT_VARIABLES_BY_VALUE.get(floatValueKey(token.value)) || [];
+  if (variables.length === 0) return null;
+  if (variables.length === 1) return variables[0];
+
+  const candidates = tokenVariableCandidates(token.path);
+  let best = null;
+  let bestScore = 0;
+  for (const variable of variables) {
+    const name = normalizeVariableName(variable.name);
+    let score = 0;
+    for (const candidate of candidates) {
+      if (candidate && (name.includes(candidate) || candidate.includes(name))) {
+        score = Math.max(score, candidate.length);
+      }
+    }
+    if (score > bestScore) {
+      best = variable;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+function numericTokenForValue(value, preference = "") {
+  const key = floatValueKey(value);
+  let exact = null;
+  let preferred = null;
+  for (const token of PIXEL_TOKENS) {
+    if (floatValueKey(token.value) !== key) continue;
+    if (preference && token.path.startsWith(preference)) {
+      preferred = token;
+      break;
+    }
+    if (!preference && token.path.includes("cornerRadius")) return token;
+    if (!exact) exact = token;
+  }
+  return preferred || exact;
+}
+
+function findFigmaVariable(input) {
+  if (!FIGMA_VARIABLES_BY_NAME) return null;
+  for (const candidate of tokenVariableCandidates(tokenPath(input))) {
+    const variable = FIGMA_VARIABLES_BY_NAME.get(candidate);
+    if (variable) return variable;
+  }
+  return findFigmaVariableByValue(input);
+}
+
+function findFigmaVariableByValue(input) {
+  if (!FIGMA_VARIABLES_BY_VALUE) return null;
+  const valueKey = hexValueKey(tokenValue(input));
+  if (!valueKey) return null;
+
+  const variables = FIGMA_VARIABLES_BY_VALUE.get(valueKey) || [];
+  if (variables.length === 0) return null;
+  if (variables.length === 1) return variables[0];
+
+  const candidates = tokenVariableCandidates(tokenPath(input));
+  let best = null;
+  let bestScore = 0;
+  for (const variable of variables) {
+    const name = normalizeVariableName(variable.name);
+    let score = 0;
+    for (const candidate of candidates) {
+      if (candidate && (name.includes(candidate) || candidate.includes(name))) {
+        score = Math.max(score, candidate.length);
+      }
+    }
+    if (score > bestScore) {
+      best = variable;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+async function variableColorValueKeys(variable) {
+  const keys = [];
+  const valuesByMode = variable.valuesByMode || {};
+  for (const value of Object.values(valuesByMode)) {
+    const key = await resolveColorValueKey(value, new Set([variable.id]));
+    if (key) keys.push(key);
+  }
+  return keys;
+}
+
+async function resolveColorValueKey(value, seenIds) {
+  const directKey = colorValueKey(value);
+  if (directKey) return directKey;
+
+  if (!value || value.type !== "VARIABLE_ALIAS" || !value.id || seenIds.has(value.id) || !figma.variables) {
+    return null;
+  }
+  seenIds.add(value.id);
+
+  try {
+    const variable = figma.variables.getVariableByIdAsync
+      ? await figma.variables.getVariableByIdAsync(value.id)
+      : figma.variables.getVariableById
+        ? figma.variables.getVariableById(value.id)
+        : null;
+    if (!variable) return null;
+    for (const modeValue of Object.values(variable.valuesByMode || {})) {
+      const key = await resolveColorValueKey(modeValue, seenIds);
+      if (key) return key;
+    }
+  } catch (error) {
+    return null;
+  }
+  return null;
+}
+
+function colorValueKey(value) {
+  if (!value || typeof value !== "object") return null;
+  if (typeof value.r !== "number" || typeof value.g !== "number" || typeof value.b !== "number") return null;
+  const toByte = (channel) => Math.round(Math.max(0, Math.min(1, channel)) * 255).toString(16).padStart(2, "0");
+  const alpha = typeof value.a === "number" && value.a < 1
+    ? Math.round(Math.max(0, Math.min(1, value.a)) * 255).toString(16).padStart(2, "0")
+    : "";
+  return "#" + toByte(value.r) + toByte(value.g) + toByte(value.b) + alpha;
+}
+
+function hexValueKey(hex) {
+  const raw = String(hex || "").trim();
+  if (!raw.startsWith("#")) return null;
+  const value = raw.toLowerCase();
+  if (/^#[0-9a-f]{6}$/.test(value) || /^#[0-9a-f]{8}$/.test(value)) return value;
+  return null;
+}
+
+function variableFloatValueKeys(variable) {
+  const keys = [];
+  const valuesByMode = variable.valuesByMode || {};
+  for (const value of Object.values(valuesByMode)) {
+    const key = typeof value === "number" ? floatValueKey(value) : null;
+    if (key) keys.push(key);
+  }
+  return keys;
+}
+
+function floatValueKey(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  return String(Math.round(value * 1000) / 1000);
+}
+
+function bindNumericTokensInNode(node) {
+  const fields = [
+    "itemSpacing",
+    "paddingTop",
+    "paddingRight",
+    "paddingBottom",
+    "paddingLeft",
+    "cornerRadius",
+    "topLeftRadius",
+    "topRightRadius",
+    "bottomLeftRadius",
+    "bottomRightRadius",
+  ];
+  for (const field of fields) {
+    if (typeof node[field] === "number") {
+      bindNumericField(node, field, node[field]);
+    }
+  }
+  if (node.type === "TEXT") {
+    if (typeof node.fontSize === "number") {
+      bindNumericField(node, "fontSize", node.fontSize, "font.size");
+    }
+    if (node.lineHeight && node.lineHeight.unit === "PIXELS" && typeof node.lineHeight.value === "number") {
+      bindNumericField(node, "lineHeight", node.lineHeight.value, "font.lineHeight");
+    }
+  }
+  if ("children" in node) {
+    for (const child of node.children) bindNumericTokensInNode(child);
+  }
+}
+
+function bindPaintToToken(paint, input) {
+  const variable = findFigmaVariable(input);
+  if (!variable || !figma.variables || !figma.variables.setBoundVariableForPaint) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.missed += 1;
+    return paint;
+  }
+  try {
+    const boundPaint = figma.variables.setBoundVariableForPaint(paint, "color", variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.bound += 1;
+    return boundPaint;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.missed += 1;
+    return paint;
+  }
+}
+
+function hexToPaint(input) {
+  const hex = tokenValue(input);
   const value = String(hex || "#000000").replace("#", "");
   const r = parseInt(value.slice(0, 2), 16) / 255;
   const g = parseInt(value.slice(2, 4), 16) / 255;
   const b = parseInt(value.slice(4, 6), 16) / 255;
   const a = value.length === 8 ? parseInt(value.slice(6, 8), 16) / 255 : 1;
-  return { type: "SOLID", color: { r, g, b }, opacity: a };
+  return bindPaintToToken({ type: "SOLID", color: { r, g, b }, opacity: a }, input);
 }
 
 function applyAutoLayout(node, layout) {
@@ -152,9 +693,10 @@ function createLabel(text, fontName, style) {
   node.name = "label";
   node.fontName = fontName;
   node.characters = text;
-  node.fontSize = style.fontSize;
-  node.lineHeight = { unit: "PIXELS", value: style.lineHeight };
+  node.fontSize = tokenValue(style.fontSize);
+  node.lineHeight = { unit: "PIXELS", value: tokenValue(style.lineHeight) };
   node.fills = [hexToPaint(style.color)];
+  bindTextNumericTokens(node, style);
   return node;
 }
 
@@ -281,22 +823,22 @@ function createBannerVariant(variantSpec, fontName) {
   }
   header.appendChild(copy);
 
-  const actions = figma.createFrame();
-  actions.name = "actions";
-  actions.layoutMode = "HORIZONTAL";
-  actions.primaryAxisSizingMode = "AUTO";
-  actions.counterAxisSizingMode = "AUTO";
-  actions.counterAxisAlignItems = "CENTER";
-  actions.itemSpacing = SPEC.actions.gap;
-  actions.fills = [];
-
-  if (variantSpec.expanded) {
-    actions.appendChild(createSymbol("^", fontName, SPEC.actionIcon));
-  }
-  if (variantSpec.dismissable) {
-    actions.appendChild(createSymbol("x", fontName, SPEC.actionIcon));
-  }
   if (variantSpec.expanded || variantSpec.dismissable) {
+    const actions = figma.createFrame();
+    actions.name = "actions";
+    actions.layoutMode = "HORIZONTAL";
+    actions.primaryAxisSizingMode = "AUTO";
+    actions.counterAxisSizingMode = "AUTO";
+    actions.counterAxisAlignItems = "CENTER";
+    actions.itemSpacing = SPEC.actions.gap;
+    actions.fills = [];
+
+    if (variantSpec.expanded) {
+      actions.appendChild(createSymbol("^", fontName, SPEC.actionIcon));
+    }
+    if (variantSpec.dismissable) {
+      actions.appendChild(createSymbol("x", fontName, SPEC.actionIcon));
+    }
     header.appendChild(actions);
   }
 
@@ -708,8 +1250,9 @@ function txt(text, fontName, size, color) {
   const n = figma.createText();
   n.fontName = fontName;
   n.characters = String(text);
-  n.fontSize = size || 13;
+  n.fontSize = tokenValue(size) || 13;
   n.fills = [hexToPaint(color || "#1F2023")];
+  bindNumericInput(n, "fontSize", size, "font.size");
   return n;
 }
 
@@ -890,8 +1433,8 @@ function createTabVariant(variantSpec, fontName) {
   c.name = variantSpec.name;
   c.fills = [];
 
-  const makeItem = (label, selected, size) => {
-    const item = frameBox("tab / " + label);
+  const setupItem = (item, label, selected, size) => {
+    const height = SPEC.sizes[size || "md"].height;
     item.layoutMode = "HORIZONTAL";
     item.primaryAxisSizingMode = "AUTO";
     item.counterAxisSizingMode = "FIXED";
@@ -900,7 +1443,7 @@ function createTabVariant(variantSpec, fontName) {
     item.itemSpacing = SPEC.item.gap;
     item.paddingLeft = SPEC.item.paddingX;
     item.paddingRight = SPEC.item.paddingX;
-    item.resize(72, SPEC.sizes[size || "md"].height);
+    item.resize(72, height);
     item.cornerRadius = SPEC.item.radius;
     item.fills = [];
     item.appendChild(txt(label, fontName, SPEC.item.fontSize, selected ? SPEC.item.selectedColor : SPEC.item.defaultColor));
@@ -910,21 +1453,21 @@ function createTabVariant(variantSpec, fontName) {
       indicator.resize(48, SPEC.indicator.height);
       indicator.cornerRadius = SPEC.indicator.radius;
       indicator.fills = [hexToPaint(SPEC.indicator.fill)];
+      item.appendChild(indicator);
       indicator.layoutPositioning = "ABSOLUTE";
       indicator.x = 12;
-      indicator.y = SPEC.sizes[size || "md"].height - SPEC.indicator.height;
-      item.appendChild(indicator);
+      indicator.y = height - SPEC.indicator.height;
     }
+  };
+
+  const makeItem = (label, selected, size) => {
+    const item = frameBox("tab / " + label);
+    setupItem(item, label, selected, size);
     return item;
   };
 
   if (variantSpec.kind === "tab") {
-    const item = makeItem(variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
-    c.resize(item.width, item.height);
-    c.layoutMode = "HORIZONTAL";
-    c.primaryAxisSizingMode = "AUTO";
-    c.counterAxisSizingMode = "AUTO";
-    c.appendChild(item);
+    setupItem(c, variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
     return c;
   }
 
@@ -1512,6 +2055,7 @@ async function generateSpec(componentSpec, generatedPage, originX, originY) {
 
   const components = SPEC.variants.map((variant, index) => {
     const component = createVariant(variant, fontName);
+    bindNumericTokensInNode(component);
     component.x = originX;
     component.y = originY + index * (SPEC.preview?.stepY || SPEC.component?.height || SPEC.component?.minHeight || 120);
     generatedPage.appendChild(component);
@@ -1536,6 +2080,7 @@ async function generateSelected(ids) {
     return;
   }
 
+  await prepareFigmaVariables();
   const generatedPage = await getOrCreatePage("Generated");
   await getOrCreatePage("Published");
   await figma.setCurrentPageAsync(generatedPage);
@@ -1561,7 +2106,11 @@ async function generateSelected(ids) {
   if (failed.length > 0) {
     figma.notify("생성 실패 " + failed.length + "개: " + failed.join(" / "), { error: true, timeout: 10000 });
   } else {
-    figma.notify("Generated " + generatedNodes.length + " component set(s).");
+    const stats = FIGMA_BIND_STATS
+      ? " · color " + FIGMA_BIND_STATS.bound + "/" + (FIGMA_BIND_STATS.bound + FIGMA_BIND_STATS.missed) + " · number " + FIGMA_BIND_STATS.floatBound + "/" + (FIGMA_BIND_STATS.floatBound + FIGMA_BIND_STATS.floatMissed)
+      : "";
+    console.log("figma-component-input variable binding stats:", FIGMA_BIND_STATS);
+    figma.notify("Generated " + generatedNodes.length + " component set(s)." + stats, { timeout: 8000 });
   }
   figma.closePlugin();
 }
@@ -1595,4 +2144,4 @@ figma.ui.onmessage = (message) => {
 
 fs.mkdirSync(TOOL_DIR, { recursive: true });
 fs.writeFileSync(path.join(TOOL_DIR, 'code.js'), renderPluginCode(specs));
-console.log(`Generated tools/figma-component-generator/code.js with ${specs.length} component spec(s).`);
+console.log(`Generated tools/figma-component-input/code.js with ${specs.length} component spec(s).`);

@@ -7,7 +7,7 @@ const SPECS = [
     "component": {
       "minWidth": 48,
       "height": 20,
-      "radius": 9999,
+      "radius": 999,
       "layout": {
         "direction": "horizontal",
         "gap": 4,
@@ -25,9 +25,20 @@ const SPECS = [
     },
     "text": {
       "fontStyle": "Medium",
-      "fontSize": 12,
-      "lineHeight": 18,
-      "color": "#1f2023"
+      "typographyToken": "w.caption.M",
+      "fontSize": {
+        "$figmaFloatToken": "w.caption.M.size",
+        "value": 12,
+        "fallbackToken": "font.size.12"
+      },
+      "lineHeight": {
+        "$figmaFloatToken": "w.caption.M.lineHeight",
+        "value": 18
+      },
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "icon": {
       "size": 6
@@ -37,113 +48,209 @@ const SPECS = [
         "name": "variant=neutral, icon=false",
         "label": "Neutral",
         "icon": false,
-        "fill": "#e4e6e7",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.tertiary",
+          "value": "#e4e6e7"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "variant=info, icon=false",
         "label": "Info",
         "icon": false,
-        "fill": "#2388f6",
-        "text": "#ffffff"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.info",
+          "value": "#2388f6"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "variant=success, icon=false",
         "label": "Success",
         "icon": false,
-        "fill": "#17cf81",
-        "text": "#ffffff"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.positive",
+          "value": "#17cf81"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "variant=warning, icon=false",
         "label": "Warning",
         "icon": false,
-        "fill": "#fc7a03",
-        "text": "#ffffff"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.warning",
+          "value": "#fc7a03"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "variant=error, icon=false",
         "label": "Error",
         "icon": false,
-        "fill": "#ea3b2a",
-        "text": "#ffffff"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.negative",
+          "value": "#ea3b2a"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "variant=blue, icon=false",
         "label": "Blue",
         "icon": false,
-        "fill": "#f0f7fe",
-        "text": "#2388f6"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.info-secondary",
+          "value": "#f0f7fe"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.Info",
+          "value": "#2388f6"
+        }
       },
       {
         "name": "variant=mint, icon=false",
         "label": "Mint",
         "icon": false,
-        "fill": "#e3fcf1",
-        "text": "#17cf81"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.positive-secondary",
+          "value": "#e3fcf1"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.positive",
+          "value": "#17cf81"
+        }
       },
       {
         "name": "variant=orange, icon=false",
         "label": "Orange",
         "icon": false,
-        "fill": "#fff7f0",
-        "text": "#fc7a03"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.warning-secondary",
+          "value": "#fff7f0"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.warning",
+          "value": "#fc7a03"
+        }
       },
       {
         "name": "variant=red, icon=false",
         "label": "Red",
         "icon": false,
-        "fill": "#fef6f6",
-        "text": "#ea3b2a"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.negative-secondary",
+          "value": "#fef6f6"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.negative",
+          "value": "#ea3b2a"
+        }
       },
       {
         "name": "variant=yellow, icon=false",
         "label": "Yellow",
         "icon": false,
-        "fill": "#fffaeb",
-        "text": "#e3ab03"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-yellow-secondary",
+          "value": "#fffaeb"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-yellow",
+          "value": "#e3ab03"
+        }
       },
       {
         "name": "variant=green, icon=false",
         "label": "Green",
         "icon": false,
-        "fill": "#e4fbdf",
-        "text": "#36cd1e"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-green-secondary",
+          "value": "#e4fbdf"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-green",
+          "value": "#36cd1e"
+        }
       },
       {
         "name": "variant=indigo, icon=false",
         "label": "Indigo",
         "icon": false,
-        "fill": "#eff1fb",
-        "text": "#374cc3"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-indigo-secondary",
+          "value": "#eff1fb"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-indigo",
+          "value": "#374cc3"
+        }
       },
       {
         "name": "variant=purple, icon=false",
         "label": "Purple",
         "icon": false,
-        "fill": "#f4f1fd",
-        "text": "#693eea"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-purple-secondary",
+          "value": "#f4f1fd"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-purple",
+          "value": "#693eea"
+        }
       },
       {
         "name": "variant=grape, icon=false",
         "label": "Grape",
         "icon": false,
-        "fill": "#fbf1fd",
-        "text": "#cf59ec"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-grape-secondary",
+          "value": "#fbf1fd"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-grape",
+          "value": "#cf59ec"
+        }
       },
       {
         "name": "variant=gray, icon=false",
         "label": "Gray",
         "icon": false,
-        "fill": "#f5f5f5",
-        "text": "#61646b"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.tag.category-gray-secondary",
+          "value": "#f5f5f5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.tag.category-gray",
+          "value": "#61646b"
+        }
       },
       {
         "name": "variant=neutral, icon=true",
         "label": "Neutral",
         "icon": true,
-        "fill": "#e4e6e7",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.tertiary",
+          "value": "#e4e6e7"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     ]
   },
@@ -152,9 +259,20 @@ const SPECS = [
     "template": "banner",
     "name": "Banner",
     "description": {
-      "fontSize": 12,
-      "lineHeight": 18,
-      "color": "#3a3d40"
+      "typographyToken": "w.caption.M",
+      "fontSize": {
+        "$figmaFloatToken": "w.caption.M.size",
+        "value": 12,
+        "fallbackToken": "font.size.12"
+      },
+      "lineHeight": {
+        "$figmaFloatToken": "w.caption.M.lineHeight",
+        "value": 18
+      },
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "preview": {
       "stepY": 156
@@ -186,15 +304,29 @@ const SPECS = [
       "gap": 2
     },
     "title": {
-      "fontSize": 14,
-      "lineHeight": 21,
-      "color": "#1f2023"
+      "typographyToken": "w.text.S",
+      "fontSize": {
+        "$figmaFloatToken": "w.text.S.size",
+        "value": 14,
+        "fallbackToken": "font.size.14"
+      },
+      "lineHeight": {
+        "$figmaFloatToken": "w.text.S.lineHeight",
+        "value": 21
+      },
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "icon": {
       "size": 20,
       "fontSize": 16,
       "lineHeight": 20,
-      "color": "#2388f6"
+      "color": {
+        "$figmaToken": "semantic.light.icon.basic.Info",
+        "value": "#2388f6"
+      }
     },
     "actions": {
       "gap": 4
@@ -203,12 +335,21 @@ const SPECS = [
       "size": 20,
       "fontSize": 16,
       "lineHeight": 20,
-      "color": "#3a3d40"
+      "color": {
+        "$figmaToken": "semantic.light.icon.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "content": {
       "minHeight": 56,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "strokeWeight": 1,
       "label": "Additional banner content",
       "layout": {
@@ -236,8 +377,14 @@ const SPECS = [
         "title": "New update available",
         "description": "Review the latest system notice.",
         "icon": "i",
-        "fill": "#f0f7fe",
-        "iconColor": "#2388f6"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.info-secondary",
+          "value": "#f0f7fe"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.Info",
+          "value": "#2388f6"
+        }
       },
       {
         "name": "status=success, container=card, expanded=false, dismissable=false",
@@ -248,8 +395,14 @@ const SPECS = [
         "title": "Changes saved",
         "description": "Your update has been published.",
         "icon": "v",
-        "fill": "#e3fcf1",
-        "iconColor": "#17cf81"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.positive-secondary",
+          "value": "#e3fcf1"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.positive",
+          "value": "#17cf81"
+        }
       },
       {
         "name": "status=warning, container=card, expanded=false, dismissable=false",
@@ -260,8 +413,14 @@ const SPECS = [
         "title": "Action required",
         "description": "Check the configuration before continuing.",
         "icon": "!",
-        "fill": "#fff7f0",
-        "iconColor": "#fc7a03"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.warning-secondary",
+          "value": "#fff7f0"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.warning",
+          "value": "#fc7a03"
+        }
       },
       {
         "name": "status=error, container=card, expanded=false, dismissable=false",
@@ -272,8 +431,14 @@ const SPECS = [
         "title": "Something went wrong",
         "description": "Please resolve the issue and try again.",
         "icon": "!",
-        "fill": "#fef6f6",
-        "iconColor": "#ea3b2a"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.negative-secondary",
+          "value": "#fef6f6"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.negative",
+          "value": "#ea3b2a"
+        }
       },
       {
         "name": "status=info, container=card, expanded=true, dismissable=true",
@@ -284,8 +449,14 @@ const SPECS = [
         "title": "New update available",
         "description": "Review the latest system notice.",
         "icon": "i",
-        "fill": "#f0f7fe",
-        "iconColor": "#2388f6"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.info-secondary",
+          "value": "#f0f7fe"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.Info",
+          "value": "#2388f6"
+        }
       },
       {
         "name": "status=warning, container=section, expanded=false, dismissable=true",
@@ -296,8 +467,14 @@ const SPECS = [
         "title": "Scheduled maintenance",
         "description": "Some services may be temporarily unavailable.",
         "icon": "!",
-        "fill": "#fff7f0",
-        "iconColor": "#fc7a03"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.warning-secondary",
+          "value": "#fff7f0"
+        },
+        "iconColor": {
+          "$figmaToken": "semantic.light.icon.basic.warning",
+          "value": "#fc7a03"
+        }
       }
     ]
   },
@@ -342,18 +519,27 @@ const SPECS = [
       }
     },
     "separator": {
-      "color": "#3a3d40"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "text": {
       "default": {
         "fontSize": 14,
         "lineHeight": 21,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       },
       "supporting": {
         "fontSize": 12,
         "lineHeight": 18,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     },
     "variants": [
@@ -366,8 +552,14 @@ const SPECS = [
           "Products",
           "Analytics"
         ],
-        "linkColor": "#3a3d40",
-        "currentColor": "#1f2023"
+        "linkColor": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        },
+        "currentColor": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "variant=supporting, separator=slash, depth=4",
@@ -379,8 +571,14 @@ const SPECS = [
           "Settings",
           "Members"
         ],
-        "linkColor": "#3a3d40",
-        "currentColor": "#3a3d40"
+        "linkColor": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        },
+        "currentColor": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     ]
   },
@@ -447,9 +645,18 @@ const SPECS = [
         "shape": "square",
         "size": "m",
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
         "items": [
           {
             "label": "Copy"
@@ -468,9 +675,18 @@ const SPECS = [
         "shape": "round",
         "size": "m",
         "radius": 9999,
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
         "items": [
           {
             "label": "Left"
@@ -489,9 +705,18 @@ const SPECS = [
         "shape": "square",
         "size": "s",
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
         "items": [
           {
             "label": "One"
@@ -630,9 +855,15 @@ const SPECS = [
         "size": "m",
         "label": "Primary",
         "radius": 8,
-        "fill": "#2c2d30",
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
         "stroke": "#00000000",
-        "text": "#ffffff"
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "tone=secondary, size=m, shape=square, icon=false",
@@ -640,9 +871,18 @@ const SPECS = [
         "size": "m",
         "label": "Secondary",
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "tone=tertiary, size=m, shape=square, icon=false",
@@ -650,9 +890,18 @@ const SPECS = [
         "size": "m",
         "label": "Tertiary",
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#e4e6e7",
-        "text": "#3a3d40"
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.tertiary",
+          "value": "#e4e6e7"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       },
       {
         "name": "tone=primary, size=m, shape=round, icon=true",
@@ -661,9 +910,15 @@ const SPECS = [
         "label": "Continue",
         "icon": "+",
         "radius": 9999,
-        "fill": "#2c2d30",
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
         "stroke": "#00000000",
-        "text": "#ffffff"
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "tone=secondary, size=s, shape=square, icon=false",
@@ -671,9 +926,18 @@ const SPECS = [
         "size": "s",
         "label": "Small",
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     ]
   },
@@ -709,13 +973,19 @@ const SPECS = [
       "text": {
         "fontSize": 14,
         "lineHeight": 21,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       "icon": {
         "size": 24,
         "fontSize": 16,
         "lineHeight": 24,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.icon.basic.primary",
+          "value": "#1f2023"
+        }
       }
     },
     "weekdays": [
@@ -730,7 +1000,10 @@ const SPECS = [
     "weekdayText": {
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "cell": {
       "size": 40,
@@ -752,24 +1025,45 @@ const SPECS = [
       "text": {
         "fontSize": 14,
         "lineHeight": 21,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       "states": {
         "default": {
           "fill": "#00000000",
-          "text": "#1f2023"
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.primary",
+            "value": "#1f2023"
+          }
         },
         "selected": {
-          "fill": "#2c2d30",
-          "text": "#ffffff"
+          "fill": {
+            "$figmaToken": "semantic.light.filled.basic.primary",
+            "value": "#2c2d30"
+          },
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.inverse",
+            "value": "#ffffff"
+          }
         },
         "in-range": {
-          "fill": "#2C2D300F",
-          "text": "#1f2023"
+          "fill": {
+            "$figmaToken": "semantic.light.filled.basic.primaryOp-secondary",
+            "value": "#2C2D300F"
+          },
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.primary",
+            "value": "#1f2023"
+          }
         },
         "outside": {
           "fill": "#00000000",
-          "text": "#a1a5aa"
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.fourth",
+            "value": "#a1a5aa"
+          }
         }
       }
     },
@@ -793,7 +1087,10 @@ const SPECS = [
     "description": {
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#3a3d40"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "preview": {
       "stepY": 176
@@ -866,11 +1163,17 @@ const SPECS = [
     "title": {
       "fontSize": 16,
       "lineHeight": 24,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "indicator": {
       "size": 20,
-      "fill": "#39db1f"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      }
     },
     "variants": [
       {
@@ -878,8 +1181,14 @@ const SPECS = [
         "padding": "m",
         "title": "Default card",
         "description": "Container for related content.",
-        "fill": "#ffffff",
-        "stroke": "#e4e6e7",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.tertiary",
+          "value": "#e4e6e7"
+        },
         "selected": false
       },
       {
@@ -887,8 +1196,14 @@ const SPECS = [
         "padding": "m",
         "title": "Clickable card",
         "description": "Entire card acts as one target.",
-        "fill": "#ffffff",
-        "stroke": "#d2d3d5",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
         "selected": false
       },
       {
@@ -896,8 +1211,14 @@ const SPECS = [
         "padding": "m",
         "title": "Selectable card",
         "description": "Selected state with indicator.",
-        "fill": "#ffffff",
-        "stroke": "#39db1f",
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.brand-primary",
+          "value": "#39db1f"
+        },
         "selected": true
       },
       {
@@ -905,7 +1226,10 @@ const SPECS = [
         "padding": "s",
         "title": "Tinted card",
         "description": "Category tint variant.",
-        "fill": "#f0f7fe",
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.info-secondary",
+          "value": "#f0f7fe"
+        },
         "stroke": "#00000000",
         "selected": false
       }
@@ -927,8 +1251,14 @@ const SPECS = [
       "width": 144,
       "height": 96,
       "radius": 8,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "layout": {
         "direction": "horizontal",
         "gap": 0,
@@ -946,7 +1276,10 @@ const SPECS = [
       "text": {
         "fontSize": 14,
         "lineHeight": 21,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     },
     "variants": [
@@ -989,7 +1322,10 @@ const SPECS = [
     "description": {
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "preview": {
       "stepY": 80
@@ -1021,7 +1357,10 @@ const SPECS = [
     "label": {
       "fontSize": 14,
       "lineHeight": 21,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "variants": [
       {
@@ -1029,44 +1368,104 @@ const SPECS = [
         "state": "unchecked",
         "label": "Receive notifications",
         "description": "Get product updates by email.",
-        "boxFill": "#ffffff",
-        "boxStroke": "#d2d3d5",
-        "markColor": "#ffffff",
-        "text": "#1f2023",
-        "descriptionColor": "#61646b"
+        "boxFill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "boxStroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "markColor": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
+        "descriptionColor": {
+          "$figmaToken": "semantic.light.text.basic.tertiary",
+          "value": "#61646b"
+        }
       },
       {
         "name": "state=checked, error=false, disabled=false",
         "state": "checked",
         "label": "Receive notifications",
         "description": "Get product updates by email.",
-        "boxFill": "#2c2d30",
-        "boxStroke": "#2c2d30",
-        "markColor": "#ffffff",
-        "text": "#1f2023",
-        "descriptionColor": "#61646b"
+        "boxFill": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
+        "boxStroke": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
+        "markColor": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
+        "descriptionColor": {
+          "$figmaToken": "semantic.light.text.basic.tertiary",
+          "value": "#61646b"
+        }
       },
       {
         "name": "state=partial, error=false, disabled=false",
         "state": "partial",
         "label": "Select all",
         "description": "Some items are selected.",
-        "boxFill": "#2c2d30",
-        "boxStroke": "#2c2d30",
-        "markColor": "#ffffff",
-        "text": "#1f2023",
-        "descriptionColor": "#61646b"
+        "boxFill": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
+        "boxStroke": {
+          "$figmaToken": "semantic.light.filled.basic.primary",
+          "value": "#2c2d30"
+        },
+        "markColor": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
+        "descriptionColor": {
+          "$figmaToken": "semantic.light.text.basic.tertiary",
+          "value": "#61646b"
+        }
       },
       {
         "name": "state=unchecked, error=true, disabled=false",
         "state": "unchecked",
         "label": "Required agreement",
         "description": "This field is required.",
-        "boxFill": "#ffffff",
-        "boxStroke": "#ea3b2a",
-        "markColor": "#ffffff",
-        "text": "#1f2023",
-        "descriptionColor": "#ea3b2a"
+        "boxFill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "boxStroke": {
+          "$figmaToken": "semantic.light.border.negative",
+          "value": "#ea3b2a"
+        },
+        "markColor": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        },
+        "descriptionColor": {
+          "$figmaToken": "semantic.light.text.basic.negative",
+          "value": "#ea3b2a"
+        }
       }
     ]
   },
@@ -1177,9 +1576,15 @@ const SPECS = [
         "label": "",
         "icon": "+",
         "radius": 9999,
-        "fill": "#2c2d30",
+        "fill": {
+          "$figmaToken": "semantic.light.filled.optional.brand-primaryBtn",
+          "value": "#2c2d30"
+        },
         "stroke": "#00000000",
-        "text": "#ffffff"
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.inverse",
+          "value": "#ffffff"
+        }
       },
       {
         "name": "variant=secondary, size=L, shape=circle",
@@ -1187,9 +1592,15 @@ const SPECS = [
         "label": "",
         "icon": ">",
         "radius": 9999,
-        "fill": "#e4e6e7",
+        "fill": {
+          "$figmaToken": "semantic.light.filled.optional.brand-secondaryBtn",
+          "value": "#e4e6e7"
+        },
         "stroke": "#00000000",
-        "text": "#1f2023"
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "variant=tertiary, size=M, shape=square",
@@ -1198,8 +1609,14 @@ const SPECS = [
         "icon": "x",
         "radius": 8,
         "fill": "#00000000",
-        "stroke": "#e4e6e7",
-        "text": "#1f2023"
+        "stroke": {
+          "$figmaToken": "semantic.light.border.tertiary",
+          "value": "#e4e6e7"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.icon.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "variant=assistive, size=S, shape=circle",
@@ -1209,7 +1626,10 @@ const SPECS = [
         "radius": 9999,
         "fill": "#00000000",
         "stroke": "#00000000",
-        "text": "#3a3d40"
+        "text": {
+          "$figmaToken": "semantic.light.icon.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     ]
   },
@@ -1236,15 +1656,24 @@ const SPECS = [
           "left": 4
         }
       },
-      "fill": "#61646b",
-      "stroke": "#d2d3d5"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.secondary",
+        "value": "#d2d3d5"
+      }
     },
     "text": {
       "fontStyle": "Medium",
       "fontFamily": "mono",
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "variants": [
       {
@@ -1281,7 +1710,10 @@ const SPECS = [
           "left": 24
         }
       },
-      "backdrop": "#00000085"
+      "backdrop": {
+        "$figmaToken": "semantic.light.bg.scrim",
+        "value": "#00000085"
+      }
     },
     "controls": {
       "closeButton": {
@@ -1330,17 +1762,35 @@ const SPECS = [
     "track": {
       "height": 4,
       "radius": 8,
-      "fill": "#f5f5f5"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.fourth",
+        "value": "#f5f5f5"
+      }
     },
     "fillColor": {
-      "accent": "#39db1f",
-      "success": "#17cf81",
-      "warning": "#fc7a03",
-      "error": "#ea3b2a"
+      "accent": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      },
+      "success": {
+        "$figmaToken": "semantic.light.filled.basic.positive",
+        "value": "#17cf81"
+      },
+      "warning": {
+        "$figmaToken": "semantic.light.filled.basic.warning",
+        "value": "#fc7a03"
+      },
+      "error": {
+        "$figmaToken": "semantic.light.filled.basic.negative",
+        "value": "#ea3b2a"
+      }
     },
     "label": {
       "fontSize": 13,
-      "color": "#3a3d40"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "variants": [
       {
@@ -1390,12 +1840,18 @@ const SPECS = [
       "fontStyle": "Regular",
       "fontSize": 16,
       "lineHeight": 24,
-      "color": "#36cd1e"
+      "color": {
+        "$figmaToken": "semantic.light.text.optional.brand-primary",
+        "value": "#36cd1e"
+      }
     },
     "icon": {
       "name": "external",
       "size": 16,
-      "color": "#36cd1e"
+      "color": {
+        "$figmaToken": "semantic.light.text.optional.brand-primary",
+        "value": "#36cd1e"
+      }
     },
     "variants": [
       {
@@ -1438,7 +1894,10 @@ const SPECS = [
           "left": 0
         }
       },
-      "divider": "#e4e6e7"
+      "divider": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      }
     },
     "item": {
       "layout": {
@@ -1455,11 +1914,17 @@ const SPECS = [
       },
       "label": {
         "fontSize": 16,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       "description": {
         "fontSize": 13,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     },
     "variants": [
@@ -1499,8 +1964,14 @@ const SPECS = [
       "minWidth": 180,
       "radius": 16,
       "strokeWeight": 1,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)",
       "layout": {
         "direction": "vertical",
@@ -1526,9 +1997,15 @@ const SPECS = [
       },
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
-      "dangerColor": "#ea3b2a"
+      "dangerColor": {
+        "$figmaToken": "semantic.light.text.basic.negative",
+        "value": "#ea3b2a"
+      }
     },
     "variants": [
       {
@@ -1553,7 +2030,10 @@ const SPECS = [
     "trigger": {
       "radius": 8,
       "strokeWeight": 1,
-      "stroke": "#d2d3d5",
+      "stroke": {
+        "$figmaToken": "semantic.light.border.secondary",
+        "value": "#d2d3d5"
+      },
       "layout": {
         "direction": "horizontal",
         "gap": 8,
@@ -1568,20 +2048,32 @@ const SPECS = [
     "list": {
       "radius": 16,
       "strokeWeight": 1,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)"
     },
     "option": {
       "checkbox": true,
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     },
     "badge": {
       "radius": 6,
-      "fill": "#61646b"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      }
     },
     "variants": [
       {
@@ -1612,8 +2104,14 @@ const SPECS = [
     "component": {
       "width": 1120,
       "height": 72,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "strokeWeight": 1,
       "layout": {
         "direction": "horizontal",
@@ -1649,16 +2147,31 @@ const SPECS = [
       "text": {
         "fontSize": 16,
         "lineHeight": 24,
-        "color": "#61646b"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.tertiary",
+          "value": "#61646b"
+        }
       },
       "states": {
         "default": {
-          "fill": "#ffffff",
-          "text": "#61646b"
+          "fill": {
+            "$figmaToken": "semantic.light.bg.100",
+            "value": "#ffffff"
+          },
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.tertiary",
+            "value": "#61646b"
+          }
         },
         "active": {
-          "fill": "#f5f5f5",
-          "text": "#1f2023"
+          "fill": {
+            "$figmaToken": "semantic.light.filled.basic.fourth",
+            "value": "#f5f5f5"
+          },
+          "text": {
+            "$figmaToken": "semantic.light.text.basic.primary",
+            "value": "#1f2023"
+          }
         }
       }
     },
@@ -1725,18 +2238,36 @@ const SPECS = [
       },
       "label": {
         "fontSize": 16,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       },
       "unit": {
         "fontSize": 13,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     },
     "statusStroke": {
-      "default": "#d2d3d5",
-      "error": "#ea3b2a",
-      "warning": "#fc7a03",
-      "success": "#17cf81"
+      "default": {
+        "$figmaToken": "semantic.light.border.secondary",
+        "value": "#d2d3d5"
+      },
+      "error": {
+        "$figmaToken": "semantic.light.border.negative",
+        "value": "#ea3b2a"
+      },
+      "warning": {
+        "$figmaToken": "semantic.light.border.warning",
+        "value": "#fc7a03"
+      },
+      "success": {
+        "$figmaToken": "semantic.light.border.positive",
+        "value": "#17cf81"
+      }
     },
     "variants": [
       {
@@ -1779,15 +2310,27 @@ const SPECS = [
       "radius": 8,
       "font": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
-      "currentFill": "#61646b"
+      "currentFill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      }
     },
     "dot": {
       "size": 4,
       "radius": 9999,
-      "activeFill": "#39db1f",
-      "inactiveFill": "#61646b"
+      "activeFill": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      },
+      "inactiveFill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      }
     },
     "variants": [
       {
@@ -1817,8 +2360,14 @@ const SPECS = [
       "minWidth": 180,
       "radius": 16,
       "strokeWeight": 1,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)",
       "layout": {
         "direction": "vertical",
@@ -1874,17 +2423,32 @@ const SPECS = [
         "size": 20,
         "radius": 9999,
         "strokeWeight": 2,
-        "uncheckedStroke": "#d2d3d5",
-        "checkedStroke": "#39db1f",
-        "dotFill": "#39db1f"
+        "uncheckedStroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "checkedStroke": {
+          "$figmaToken": "semantic.light.border.brand-primary",
+          "value": "#39db1f"
+        },
+        "dotFill": {
+          "$figmaToken": "semantic.light.filled.optional.brand-primary",
+          "value": "#39db1f"
+        }
       },
       "label": {
         "fontSize": 16,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       "description": {
         "fontSize": 13,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     },
     "variants": [
@@ -1915,7 +2479,10 @@ const SPECS = [
     "description": "Single-select segmented button group. Generated on system/badge-component.",
     "container": {
       "radius": 8,
-      "fill": "#61646b",
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      },
       "layout": {
         "direction": "horizontal",
         "gap": 2,
@@ -1941,9 +2508,15 @@ const SPECS = [
       },
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
-      "selectedFill": "#ffffff",
+      "selectedFill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
       "selectedShadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
     },
     "variants": [
@@ -1988,23 +2561,44 @@ const SPECS = [
         }
       },
       "statusStroke": {
-        "default": "#d2d3d5",
-        "error": "#ea3b2a",
-        "warning": "#fc7a03",
-        "success": "#17cf81"
+        "default": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "error": {
+          "$figmaToken": "semantic.light.border.negative",
+          "value": "#ea3b2a"
+        },
+        "warning": {
+          "$figmaToken": "semantic.light.border.warning",
+          "value": "#fc7a03"
+        },
+        "success": {
+          "$figmaToken": "semantic.light.border.positive",
+          "value": "#17cf81"
+        }
       }
     },
     "list": {
       "radius": 16,
       "strokeWeight": 1,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)"
     },
     "option": {
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     },
     "variants": [
@@ -2034,7 +2628,10 @@ const SPECS = [
     "name": "Skeleton",
     "description": "Animated shimmer loading placeholder. Generated on system/badge-component.",
     "component": {
-      "fill": "#f5f5f5",
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.fourth",
+        "value": "#f5f5f5"
+      },
       "animation": "pulse"
     },
     "radius": {
@@ -2065,25 +2662,49 @@ const SPECS = [
     "track": {
       "height": 2,
       "radius": 9999,
-      "fill": "#f5f5f5"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.fourth",
+        "value": "#f5f5f5"
+      }
     },
     "fillColor": {
-      "default": "#39db1f",
-      "error": "#ea3b2a",
-      "warning": "#fc7a03",
-      "success": "#17cf81"
+      "default": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      },
+      "error": {
+        "$figmaToken": "semantic.light.filled.basic.negative",
+        "value": "#ea3b2a"
+      },
+      "warning": {
+        "$figmaToken": "semantic.light.filled.basic.warning",
+        "value": "#fc7a03"
+      },
+      "success": {
+        "$figmaToken": "semantic.light.filled.basic.positive",
+        "value": "#17cf81"
+      }
     },
     "thumb": {
       "size": 20,
       "radius": 9999,
-      "fill": "#ffffff",
-      "stroke": "#39db1f",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.brand-primary",
+        "value": "#39db1f"
+      },
       "strokeWeight": 2,
       "shadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
     },
     "mark": {
       "fontSize": 12,
-      "color": "#3a3d40"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      }
     },
     "variants": [
       {
@@ -2143,20 +2764,44 @@ const SPECS = [
     },
     "shades": {
       "default": {
-        "active": "#36cd1e",
-        "track": "#a1a5aa"
+        "active": {
+          "$figmaToken": "semantic.light.icon.optional.brand-primary",
+          "value": "#36cd1e"
+        },
+        "track": {
+          "$figmaToken": "semantic.light.icon.basic.fourth",
+          "value": "#a1a5aa"
+        }
       },
       "onMedia": {
-        "active": "#ffffff",
-        "track": "#d2d3d5"
+        "active": {
+          "$figmaToken": "semantic.light.icon.basic.inverse",
+          "value": "#ffffff"
+        },
+        "track": {
+          "$figmaToken": "semantic.light.icon.basic.inverse-secondary",
+          "value": "#d2d3d5"
+        }
       },
       "subtle": {
-        "active": "#3a3d40",
-        "track": "#a1a5aa"
+        "active": {
+          "$figmaToken": "semantic.light.icon.basic.secondary",
+          "value": "#3a3d40"
+        },
+        "track": {
+          "$figmaToken": "semantic.light.icon.basic.fourth",
+          "value": "#a1a5aa"
+        }
       },
       "inherit": {
-        "active": "#1f2023",
-        "track": "#a1a5aa"
+        "active": {
+          "$figmaToken": "semantic.light.icon.basic.primary",
+          "value": "#1f2023"
+        },
+        "track": {
+          "$figmaToken": "semantic.light.icon.basic.fourth",
+          "value": "#a1a5aa"
+        }
       }
     },
     "arc": {
@@ -2167,7 +2812,10 @@ const SPECS = [
       "fontStyle": "SemiBold",
       "fontSize": 16,
       "lineHeight": 24,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "variants": [
       {
@@ -2246,28 +2894,43 @@ const SPECS = [
       "fontStyle": "Regular",
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "track": {
       "width": 40,
       "height": 24,
       "padding": 4,
       "radius": 9999,
-      "offFill": "#61646b",
-      "onFill": "#39db1f"
+      "offFill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      },
+      "onFill": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      }
     },
     "thumb": {
       "offSize": 16,
       "onSize": 20,
       "radius": 9999,
-      "fill": "#ffffff",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
       "shadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
     },
     "label": {
       "fontStyle": "Medium",
       "fontSize": 14,
       "lineHeight": 21,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "gap": 8,
     "variants": [
@@ -2323,24 +2986,45 @@ const SPECS = [
       "paddingX": 12,
       "fontSize": 14,
       "lineHeight": 21,
-      "defaultColor": "#3a3d40",
-      "selectedColor": "#1f2023",
-      "hoverFill": "#f5f5f5"
+      "defaultColor": {
+        "$figmaToken": "semantic.light.text.basic.secondary",
+        "value": "#3a3d40"
+      },
+      "selectedColor": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      },
+      "hoverFill": {
+        "$figmaToken": "semantic.light.filled.basic.fourth",
+        "value": "#f5f5f5"
+      }
     },
     "indicator": {
       "height": 2,
       "radius": 9999,
-      "fill": "#39db1f"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.optional.brand-primary",
+        "value": "#39db1f"
+      }
     },
     "divider": {
       "height": 1,
-      "fill": "#e4e6e7"
+      "fill": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      }
     },
     "menu": {
       "width": 180,
       "radius": 16,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "shadow": "0px 1px 3px 0px rgba(0, 0, 0, 0.09)"
     },
     "variants": [
@@ -2395,16 +3079,31 @@ const SPECS = [
     "name": "Table",
     "description": "Data-driven table with density/dividers/hover/striped. Generated on system/badge-component.",
     "header": {
-      "fill": "#ffffff",
-      "borderBottom": "#e4e6e7",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "borderBottom": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "label": {
         "fontSize": 13,
-        "color": "#3a3d40"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       }
     },
     "row": {
-      "divider": "#e4e6e7",
-      "stripedFill": "#61646b"
+      "divider": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
+      "stripedFill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      }
     },
     "cell": {
       "layout": {
@@ -2420,7 +3119,10 @@ const SPECS = [
       },
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     },
     "variants": [
@@ -2453,9 +3155,18 @@ const SPECS = [
       "width": 320,
       "height": 96,
       "radius": 8,
-      "fill": "#ffffff",
-      "stroke": "#e4e6e7",
-      "focusStroke": "#39db1f",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
+      "focusStroke": {
+        "$figmaToken": "semantic.light.border.brand-primary",
+        "value": "#39db1f"
+      },
       "padding": {
         "sm": 8,
         "md": 12,
@@ -2463,28 +3174,49 @@ const SPECS = [
       }
     },
     "statusStroke": {
-      "error": "#ea3b2a",
-      "warning": "#fc7a03",
-      "success": "#17cf81"
+      "error": {
+        "$figmaToken": "semantic.light.border.negative",
+        "value": "#ea3b2a"
+      },
+      "warning": {
+        "$figmaToken": "semantic.light.border.warning",
+        "value": "#fc7a03"
+      },
+      "success": {
+        "$figmaToken": "semantic.light.border.positive",
+        "value": "#17cf81"
+      }
     },
     "label": {
       "fontStyle": "Medium",
       "fontSize": 14,
       "lineHeight": 21,
-      "color": "#1f2023"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      }
     },
     "text": {
       "fontStyle": "Regular",
       "fontSize": 16,
       "lineHeight": 24,
-      "color": "#1f2023",
-      "placeholderColor": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.primary",
+        "value": "#1f2023"
+      },
+      "placeholderColor": {
+        "$figmaToken": "semantic.light.text.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "helper": {
       "fontStyle": "Regular",
       "fontSize": 12,
       "lineHeight": 18,
-      "color": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.text.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "variants": [
       {
@@ -2544,22 +3276,40 @@ const SPECS = [
     "frame": {
       "size": 64,
       "radius": 8,
-      "fill": "#f5f5f5",
-      "stroke": "#e4e6e7"
+      "fill": {
+        "$figmaToken": "semantic.light.filled.basic.fourth",
+        "value": "#f5f5f5"
+      },
+      "stroke": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      }
     },
     "icon": {
       "size": 24,
-      "color": "#61646b"
+      "color": {
+        "$figmaToken": "semantic.light.icon.basic.tertiary",
+        "value": "#61646b"
+      }
     },
     "overlay": {
-      "fill": "#00000085"
+      "fill": {
+        "$figmaToken": "semantic.light.bg.scrim",
+        "value": "#00000085"
+      }
     },
     "remove": {
       "size": 20,
       "offset": 4,
       "radius": 8,
-      "fill": "#ffffff",
-      "color": "#3a3d40",
+      "fill": {
+        "$figmaToken": "semantic.light.bg.100",
+        "value": "#ffffff"
+      },
+      "color": {
+        "$figmaToken": "semantic.light.icon.basic.secondary",
+        "value": "#3a3d40"
+      },
       "shadow": "0px 1px 5px 0px rgba(0, 0, 0, 0.5)"
     },
     "variants": [
@@ -2643,9 +3393,18 @@ const SPECS = [
         "label": "Unpressed",
         "pressed": false,
         "radius": 8,
-        "fill": "#ffffff",
-        "stroke": "#e4e6e7",
-        "text": "#3a3d40"
+        "fill": {
+          "$figmaToken": "semantic.light.bg.100",
+          "value": "#ffffff"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.tertiary",
+          "value": "#e4e6e7"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.secondary",
+          "value": "#3a3d40"
+        }
       },
       {
         "name": "pressed=true, size=m, icon=false",
@@ -2653,9 +3412,18 @@ const SPECS = [
         "label": "Pressed",
         "pressed": true,
         "radius": 8,
-        "fill": "#e4e6e7",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.tertiary",
+          "value": "#e4e6e7"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
       {
         "name": "pressed=true, size=m, icon=true",
@@ -2664,9 +3432,18 @@ const SPECS = [
         "icon": "B",
         "pressed": true,
         "radius": 8,
-        "fill": "#e4e6e7",
-        "stroke": "#d2d3d5",
-        "text": "#1f2023"
+        "fill": {
+          "$figmaToken": "semantic.light.filled.basic.tertiary",
+          "value": "#e4e6e7"
+        },
+        "stroke": {
+          "$figmaToken": "semantic.light.border.secondary",
+          "value": "#d2d3d5"
+        },
+        "text": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       }
     ]
   },
@@ -2691,13 +3468,25 @@ const SPECS = [
       "radius": 8,
       "label": {
         "fontSize": 13,
-        "color": "#1f2023"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.primary",
+          "value": "#1f2023"
+        }
       },
-      "selectedFill": "#61646b",
-      "branchLine": "#e4e6e7",
+      "selectedFill": {
+        "$figmaToken": "semantic.light.filled.basic.secondary",
+        "value": "#61646b"
+      },
+      "branchLine": {
+        "$figmaToken": "semantic.light.border.tertiary",
+        "value": "#e4e6e7"
+      },
       "chevron": {
         "size": 20,
-        "color": "#61646b"
+        "color": {
+          "$figmaToken": "semantic.light.text.basic.tertiary",
+          "value": "#61646b"
+        }
       }
     },
     "variants": [
@@ -2717,7 +3506,150 @@ const SPECS = [
     ]
   }
 ];
+const PIXEL_TOKENS = [
+  {
+    "path": "size.48",
+    "value": 48
+  },
+  {
+    "path": "size.20",
+    "value": 20
+  },
+  {
+    "path": "space.cornerRadius.circle",
+    "value": 999
+  },
+  {
+    "path": "size.4",
+    "value": 4
+  },
+  {
+    "path": "size.none",
+    "value": 0
+  },
+  {
+    "path": "size.8",
+    "value": 8
+  },
+  {
+    "path": "font.size.12",
+    "value": 12
+  },
+  {
+    "path": "font.lineHeight.12",
+    "value": 18
+  },
+  {
+    "path": "size.6",
+    "value": 6
+  },
+  {
+    "path": "size.72",
+    "value": 72
+  },
+  {
+    "path": "size.56",
+    "value": 56
+  },
+  {
+    "path": "size.12",
+    "value": 12
+  },
+  {
+    "path": "size.16",
+    "value": 16
+  },
+  {
+    "path": "font.size.14",
+    "value": 14
+  },
+  {
+    "path": "font.lineHeight.14",
+    "value": 21
+  },
+  {
+    "path": "size.40",
+    "value": 40
+  },
+  {
+    "path": "font.size.13",
+    "value": 13
+  },
+  {
+    "path": "font.lineHeight.13",
+    "value": 20
+  },
+  {
+    "path": "size.36",
+    "value": 36
+  },
+  {
+    "path": "size.24",
+    "value": 24
+  },
+  {
+    "path": "font.size.16",
+    "value": 16
+  },
+  {
+    "path": "font.lineHeight.16",
+    "value": 24
+  },
+  {
+    "path": "size.32",
+    "value": 32
+  },
+  {
+    "path": "size.2",
+    "value": 2
+  },
+  {
+    "path": "size.180",
+    "value": 180
+  },
+  {
+    "path": "space.spacing.M",
+    "value": 16
+  },
+  {
+    "path": "space.spacing.MS",
+    "value": 12
+  },
+  {
+    "path": "space.spacing.none",
+    "value": 0
+  },
+  {
+    "path": "space.cornerRadius.S",
+    "value": 8
+  },
+  {
+    "path": "space.spacing.S",
+    "value": 8
+  },
+  {
+    "path": "size.28",
+    "value": 28
+  },
+  {
+    "path": "size.320",
+    "value": 320
+  },
+  {
+    "path": "size.96",
+    "value": 96
+  },
+  {
+    "path": "size.64",
+    "value": 64
+  }
+];
 let SPEC = SPECS[0];
+let FIGMA_VARIABLES_BY_NAME = null;
+let FIGMA_VARIABLES_BY_VALUE = null;
+let FIGMA_FLOAT_VARIABLES_BY_NAME = null;
+let FIGMA_FLOAT_VARIABLES_BY_VALUE = null;
+let FIGMA_BIND_STATS = null;
 
 const FONT_FAMILIES = ["Pretendard Variable", "Pretendard", "Inter", "Arial"];
 
@@ -2742,13 +3674,496 @@ async function loadFont(style = "Regular") {
   throw new Error("No supported font found.");
 }
 
-function hexToPaint(hex) {
+async function prepareFigmaVariables() {
+  FIGMA_VARIABLES_BY_NAME = new Map();
+  FIGMA_VARIABLES_BY_VALUE = new Map();
+  FIGMA_FLOAT_VARIABLES_BY_NAME = new Map();
+  FIGMA_FLOAT_VARIABLES_BY_VALUE = new Map();
+  FIGMA_BIND_STATS = { variables: 0, valueKeys: 0, floatVariables: 0, floatValueKeys: 0, bound: 0, floatBound: 0, missed: 0, floatMissed: 0 };
+  const api = figma.variables;
+  if (!api) return;
+
+  if (figma.loadAllPagesAsync) {
+    await figma.loadAllPagesAsync();
+  }
+
+  const variables = api.getLocalVariablesAsync
+    ? await api.getLocalVariablesAsync()
+    : api.getLocalVariables
+      ? api.getLocalVariables()
+      : [];
+
+  for (const variable of variables || []) {
+    await registerFigmaVariable(variable);
+  }
+
+  await collectBoundVariablesFromDocument();
+  await importMatchingLibraryVariables();
+}
+
+async function registerFigmaVariable(variable) {
+  if (!variable) return;
+  if (variable.resolvedType === "FLOAT") {
+    registerFloatVariable(variable);
+    return;
+  }
+  if (variable.resolvedType && variable.resolvedType !== "COLOR") return;
+  FIGMA_VARIABLES_BY_NAME.set(normalizeVariableName(variable.name), variable);
+  FIGMA_BIND_STATS.variables = FIGMA_VARIABLES_BY_NAME.size;
+
+  const valueKeys = await variableColorValueKeys(variable);
+  for (const valueKey of valueKeys) {
+    const bucket = FIGMA_VARIABLES_BY_VALUE.get(valueKey) || [];
+    if (!bucket.some((item) => item.id === variable.id)) {
+      bucket.push(variable);
+    }
+    FIGMA_VARIABLES_BY_VALUE.set(valueKey, bucket);
+  }
+  FIGMA_BIND_STATS.valueKeys = FIGMA_VARIABLES_BY_VALUE.size;
+}
+
+function registerFloatVariable(variable) {
+  FIGMA_FLOAT_VARIABLES_BY_NAME.set(normalizeVariableName(variable.name), variable);
+  FIGMA_BIND_STATS.floatVariables = FIGMA_FLOAT_VARIABLES_BY_NAME.size;
+
+  const valueKeys = variableFloatValueKeys(variable);
+  for (const valueKey of valueKeys) {
+    const bucket = FIGMA_FLOAT_VARIABLES_BY_VALUE.get(valueKey) || [];
+    if (!bucket.some((item) => item.id === variable.id)) {
+      bucket.push(variable);
+    }
+    FIGMA_FLOAT_VARIABLES_BY_VALUE.set(valueKey, bucket);
+  }
+  FIGMA_BIND_STATS.floatValueKeys = FIGMA_FLOAT_VARIABLES_BY_VALUE.size;
+}
+
+async function collectBoundVariablesFromPage(rootNode) {
+  if (!rootNode || !figma.variables) return;
+  const stack = [rootNode];
+  const seenVariableIds = new Set();
+
+  while (stack.length > 0) {
+    const node = stack.pop();
+    const boundVariables = node.boundVariables || {};
+    const aliases = [];
+    for (const value of Object.values(boundVariables)) {
+      if (Array.isArray(value)) aliases.push(...value);
+      else if (value) aliases.push(value);
+    }
+
+    for (const alias of aliases) {
+      if (!alias || !alias.id || seenVariableIds.has(alias.id)) continue;
+      seenVariableIds.add(alias.id);
+      try {
+        const variable = figma.variables.getVariableByIdAsync
+          ? await figma.variables.getVariableByIdAsync(alias.id)
+          : figma.variables.getVariableById
+            ? figma.variables.getVariableById(alias.id)
+            : null;
+        await registerFigmaVariable(variable);
+      } catch (error) {
+        // Ignore variables that are unavailable in this file/session.
+      }
+    }
+
+    if ("children" in node) {
+      for (const child of node.children) stack.push(child);
+    }
+  }
+}
+
+async function collectBoundVariablesFromDocument() {
+  const pages = figma.root && figma.root.children ? figma.root.children : [figma.currentPage];
+  for (const page of pages) {
+    await collectBoundVariablesFromPage(page);
+  }
+}
+
+async function importMatchingLibraryVariables() {
+  if (!figma.teamLibrary || !figma.teamLibrary.getAvailableLibraryVariableCollectionsAsync) return;
+
+  const tokenNames = collectRequestedTokenNames();
+  if (tokenNames.length === 0) return;
+
+  let collections = [];
+  try {
+    collections = await figma.teamLibrary.getAvailableLibraryVariableCollectionsAsync();
+  } catch (error) {
+    return;
+  }
+
+  for (const collection of collections || []) {
+    let libraryVariables = [];
+    try {
+      libraryVariables = await figma.teamLibrary.getVariablesInLibraryCollectionAsync(collection.key);
+    } catch (error) {
+      continue;
+    }
+
+    for (const libraryVariable of libraryVariables || []) {
+      if (libraryVariable.resolvedType && libraryVariable.resolvedType !== "COLOR" && libraryVariable.resolvedType !== "FLOAT") continue;
+      if (!matchesRequestedTokenName(libraryVariable.name, tokenNames)) continue;
+      try {
+        const variable = await figma.variables.importVariableByKeyAsync(libraryVariable.key);
+        await registerFigmaVariable(variable);
+      } catch (error) {
+        // Ignore variables that cannot be imported from the enabled library.
+      }
+    }
+  }
+}
+
+function collectRequestedTokenNames() {
+  const names = new Set();
+  for (const token of PIXEL_TOKENS) {
+    for (const candidate of tokenVariableCandidates(token.path)) {
+      names.add(candidate);
+    }
+  }
+  const visit = (value) => {
+    if (Array.isArray(value)) {
+      value.forEach(visit);
+      return;
+    }
+    if (!value || typeof value !== "object") return;
+    if (value.$figmaToken) {
+      for (const candidate of tokenVariableCandidates(value.$figmaToken)) {
+        names.add(candidate);
+      }
+    }
+    if (value.$figmaFloatToken) {
+      for (const candidate of tokenVariableCandidates(value.$figmaFloatToken)) {
+        names.add(candidate);
+      }
+      if (value.fallbackToken) {
+        for (const candidate of tokenVariableCandidates(value.fallbackToken)) {
+          names.add(candidate);
+        }
+      }
+    }
+    for (const item of Object.values(value)) {
+      visit(item);
+    }
+  };
+  SPECS.forEach(visit);
+  return [...names].filter(Boolean);
+}
+
+function matchesRequestedTokenName(name, requestedNames) {
+  const normalized = normalizeVariableName(name);
+  return requestedNames.some((candidate) => normalized.includes(candidate) || candidate.includes(normalized));
+}
+
+function normalizeVariableName(name) {
+  return String(name || "")
+    .replace(/^--/, "")
+    .replace(/[._\s]+/g, "/")
+    .toLowerCase();
+}
+
+function tokenPath(input) {
+  return input && typeof input === "object" && input.$figmaToken ? input.$figmaToken : null;
+}
+
+function tokenValue(input) {
+  return input && typeof input === "object" && (input.$figmaToken || input.$figmaFloatToken) ? input.value : input;
+}
+
+function floatTokenPath(input) {
+  return input && typeof input === "object" && input.$figmaFloatToken ? input.$figmaFloatToken : null;
+}
+
+function tokenVariableCandidates(path) {
+  if (!path) return [];
+  const parts = path.split(".");
+  const withoutNamespace = parts.slice(1).join("/");
+  const withoutMode = parts[0] === "semantic" ? parts.slice(2).join("/") : withoutNamespace;
+  const colorScoped = parts[0] === "semantic" ? "color/" + parts.slice(2).join("/") : "color/" + withoutNamespace;
+  const cssName = "--color-" + parts.slice(2).join("-");
+  return [
+    path,
+    path.replace(/\./g, "/"),
+    path.replace(/[.-]/g, "/"),
+    withoutNamespace,
+    withoutMode,
+    colorScoped,
+    colorScoped.replace(/-/g, "/"),
+    cssName,
+    cssName.replace(/^--/, ""),
+  ].map(normalizeVariableName);
+}
+
+function findFigmaFloatVariableByToken(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_NAME || !token) return null;
+  const candidatePaths = [token.path, token.fallbackToken].filter(Boolean);
+  for (const candidatePath of candidatePaths) {
+    for (const candidate of tokenVariableCandidates(candidatePath)) {
+      const variable = FIGMA_FLOAT_VARIABLES_BY_NAME.get(candidate);
+      if (variable) return variable;
+    }
+  }
+  return findFigmaFloatVariableByValue(token);
+}
+
+function findFigmaFloatVariableByInput(input, fallbackPreference = "") {
+  const value = tokenValue(input);
+  const path = floatTokenPath(input);
+  const token = path
+    ? { path, value, fallbackToken: input.fallbackToken }
+    : numericTokenForValue(value, fallbackPreference);
+  return findFigmaFloatVariableByToken(token);
+}
+
+function bindNumericInput(node, field, input, fallbackPreference = "") {
+  if (!node || typeof node.setBoundVariable !== "function") return;
+  const value = tokenValue(input);
+  if (typeof value !== "number") return;
+  const variable = findFigmaFloatVariableByInput(input, fallbackPreference);
+  if (!variable) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+    return;
+  }
+  try {
+    node.setBoundVariable(field, variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatBound += 1;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+  }
+}
+
+function bindNumericField(node, field, value, preference = "") {
+  if (!node || typeof node.setBoundVariable !== "function" || typeof value !== "number") return;
+  const token = numericTokenForValue(value, preference);
+  const variable = findFigmaFloatVariableByToken(token);
+  if (!variable) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+    return;
+  }
+  try {
+    node.setBoundVariable(field, variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatBound += 1;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.floatMissed += 1;
+  }
+}
+
+function bindTextNumericTokens(node, style) {
+  if (!node || node.type !== "TEXT" || !style) return;
+  bindNumericInput(node, "fontSize", style.fontSize, "font.size");
+  bindNumericInput(node, "lineHeight", style.lineHeight, "font.lineHeight");
+}
+
+function findFigmaFloatVariableByTokenLegacy(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_NAME || !token) return null;
+  for (const candidate of tokenVariableCandidates(token.path)) {
+    const variable = FIGMA_FLOAT_VARIABLES_BY_NAME.get(candidate);
+    if (variable) return variable;
+  }
+  return findFigmaFloatVariableByValue(token);
+}
+
+function findFigmaFloatVariableByValue(token) {
+  if (!FIGMA_FLOAT_VARIABLES_BY_VALUE || !token) return null;
+  const variables = FIGMA_FLOAT_VARIABLES_BY_VALUE.get(floatValueKey(token.value)) || [];
+  if (variables.length === 0) return null;
+  if (variables.length === 1) return variables[0];
+
+  const candidates = tokenVariableCandidates(token.path);
+  let best = null;
+  let bestScore = 0;
+  for (const variable of variables) {
+    const name = normalizeVariableName(variable.name);
+    let score = 0;
+    for (const candidate of candidates) {
+      if (candidate && (name.includes(candidate) || candidate.includes(name))) {
+        score = Math.max(score, candidate.length);
+      }
+    }
+    if (score > bestScore) {
+      best = variable;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+function numericTokenForValue(value, preference = "") {
+  const key = floatValueKey(value);
+  let exact = null;
+  let preferred = null;
+  for (const token of PIXEL_TOKENS) {
+    if (floatValueKey(token.value) !== key) continue;
+    if (preference && token.path.startsWith(preference)) {
+      preferred = token;
+      break;
+    }
+    if (!preference && token.path.includes("cornerRadius")) return token;
+    if (!exact) exact = token;
+  }
+  return preferred || exact;
+}
+
+function findFigmaVariable(input) {
+  if (!FIGMA_VARIABLES_BY_NAME) return null;
+  for (const candidate of tokenVariableCandidates(tokenPath(input))) {
+    const variable = FIGMA_VARIABLES_BY_NAME.get(candidate);
+    if (variable) return variable;
+  }
+  return findFigmaVariableByValue(input);
+}
+
+function findFigmaVariableByValue(input) {
+  if (!FIGMA_VARIABLES_BY_VALUE) return null;
+  const valueKey = hexValueKey(tokenValue(input));
+  if (!valueKey) return null;
+
+  const variables = FIGMA_VARIABLES_BY_VALUE.get(valueKey) || [];
+  if (variables.length === 0) return null;
+  if (variables.length === 1) return variables[0];
+
+  const candidates = tokenVariableCandidates(tokenPath(input));
+  let best = null;
+  let bestScore = 0;
+  for (const variable of variables) {
+    const name = normalizeVariableName(variable.name);
+    let score = 0;
+    for (const candidate of candidates) {
+      if (candidate && (name.includes(candidate) || candidate.includes(name))) {
+        score = Math.max(score, candidate.length);
+      }
+    }
+    if (score > bestScore) {
+      best = variable;
+      bestScore = score;
+    }
+  }
+  return best;
+}
+
+async function variableColorValueKeys(variable) {
+  const keys = [];
+  const valuesByMode = variable.valuesByMode || {};
+  for (const value of Object.values(valuesByMode)) {
+    const key = await resolveColorValueKey(value, new Set([variable.id]));
+    if (key) keys.push(key);
+  }
+  return keys;
+}
+
+async function resolveColorValueKey(value, seenIds) {
+  const directKey = colorValueKey(value);
+  if (directKey) return directKey;
+
+  if (!value || value.type !== "VARIABLE_ALIAS" || !value.id || seenIds.has(value.id) || !figma.variables) {
+    return null;
+  }
+  seenIds.add(value.id);
+
+  try {
+    const variable = figma.variables.getVariableByIdAsync
+      ? await figma.variables.getVariableByIdAsync(value.id)
+      : figma.variables.getVariableById
+        ? figma.variables.getVariableById(value.id)
+        : null;
+    if (!variable) return null;
+    for (const modeValue of Object.values(variable.valuesByMode || {})) {
+      const key = await resolveColorValueKey(modeValue, seenIds);
+      if (key) return key;
+    }
+  } catch (error) {
+    return null;
+  }
+  return null;
+}
+
+function colorValueKey(value) {
+  if (!value || typeof value !== "object") return null;
+  if (typeof value.r !== "number" || typeof value.g !== "number" || typeof value.b !== "number") return null;
+  const toByte = (channel) => Math.round(Math.max(0, Math.min(1, channel)) * 255).toString(16).padStart(2, "0");
+  const alpha = typeof value.a === "number" && value.a < 1
+    ? Math.round(Math.max(0, Math.min(1, value.a)) * 255).toString(16).padStart(2, "0")
+    : "";
+  return "#" + toByte(value.r) + toByte(value.g) + toByte(value.b) + alpha;
+}
+
+function hexValueKey(hex) {
+  const raw = String(hex || "").trim();
+  if (!raw.startsWith("#")) return null;
+  const value = raw.toLowerCase();
+  if (/^#[0-9a-f]{6}$/.test(value) || /^#[0-9a-f]{8}$/.test(value)) return value;
+  return null;
+}
+
+function variableFloatValueKeys(variable) {
+  const keys = [];
+  const valuesByMode = variable.valuesByMode || {};
+  for (const value of Object.values(valuesByMode)) {
+    const key = typeof value === "number" ? floatValueKey(value) : null;
+    if (key) keys.push(key);
+  }
+  return keys;
+}
+
+function floatValueKey(value) {
+  if (typeof value !== "number" || !Number.isFinite(value)) return null;
+  return String(Math.round(value * 1000) / 1000);
+}
+
+function bindNumericTokensInNode(node) {
+  const fields = [
+    "itemSpacing",
+    "paddingTop",
+    "paddingRight",
+    "paddingBottom",
+    "paddingLeft",
+    "cornerRadius",
+    "topLeftRadius",
+    "topRightRadius",
+    "bottomLeftRadius",
+    "bottomRightRadius",
+  ];
+  for (const field of fields) {
+    if (typeof node[field] === "number") {
+      bindNumericField(node, field, node[field]);
+    }
+  }
+  if (node.type === "TEXT") {
+    if (typeof node.fontSize === "number") {
+      bindNumericField(node, "fontSize", node.fontSize, "font.size");
+    }
+    if (node.lineHeight && node.lineHeight.unit === "PIXELS" && typeof node.lineHeight.value === "number") {
+      bindNumericField(node, "lineHeight", node.lineHeight.value, "font.lineHeight");
+    }
+  }
+  if ("children" in node) {
+    for (const child of node.children) bindNumericTokensInNode(child);
+  }
+}
+
+function bindPaintToToken(paint, input) {
+  const variable = findFigmaVariable(input);
+  if (!variable || !figma.variables || !figma.variables.setBoundVariableForPaint) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.missed += 1;
+    return paint;
+  }
+  try {
+    const boundPaint = figma.variables.setBoundVariableForPaint(paint, "color", variable);
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.bound += 1;
+    return boundPaint;
+  } catch (error) {
+    if (FIGMA_BIND_STATS) FIGMA_BIND_STATS.missed += 1;
+    return paint;
+  }
+}
+
+function hexToPaint(input) {
+  const hex = tokenValue(input);
   const value = String(hex || "#000000").replace("#", "");
   const r = parseInt(value.slice(0, 2), 16) / 255;
   const g = parseInt(value.slice(2, 4), 16) / 255;
   const b = parseInt(value.slice(4, 6), 16) / 255;
   const a = value.length === 8 ? parseInt(value.slice(6, 8), 16) / 255 : 1;
-  return { type: "SOLID", color: { r, g, b }, opacity: a };
+  return bindPaintToToken({ type: "SOLID", color: { r, g, b }, opacity: a }, input);
 }
 
 function applyAutoLayout(node, layout) {
@@ -2771,9 +4186,10 @@ function createLabel(text, fontName, style) {
   node.name = "label";
   node.fontName = fontName;
   node.characters = text;
-  node.fontSize = style.fontSize;
-  node.lineHeight = { unit: "PIXELS", value: style.lineHeight };
+  node.fontSize = tokenValue(style.fontSize);
+  node.lineHeight = { unit: "PIXELS", value: tokenValue(style.lineHeight) };
   node.fills = [hexToPaint(style.color)];
+  bindTextNumericTokens(node, style);
   return node;
 }
 
@@ -2900,22 +4316,22 @@ function createBannerVariant(variantSpec, fontName) {
   }
   header.appendChild(copy);
 
-  const actions = figma.createFrame();
-  actions.name = "actions";
-  actions.layoutMode = "HORIZONTAL";
-  actions.primaryAxisSizingMode = "AUTO";
-  actions.counterAxisSizingMode = "AUTO";
-  actions.counterAxisAlignItems = "CENTER";
-  actions.itemSpacing = SPEC.actions.gap;
-  actions.fills = [];
-
-  if (variantSpec.expanded) {
-    actions.appendChild(createSymbol("^", fontName, SPEC.actionIcon));
-  }
-  if (variantSpec.dismissable) {
-    actions.appendChild(createSymbol("x", fontName, SPEC.actionIcon));
-  }
   if (variantSpec.expanded || variantSpec.dismissable) {
+    const actions = figma.createFrame();
+    actions.name = "actions";
+    actions.layoutMode = "HORIZONTAL";
+    actions.primaryAxisSizingMode = "AUTO";
+    actions.counterAxisSizingMode = "AUTO";
+    actions.counterAxisAlignItems = "CENTER";
+    actions.itemSpacing = SPEC.actions.gap;
+    actions.fills = [];
+
+    if (variantSpec.expanded) {
+      actions.appendChild(createSymbol("^", fontName, SPEC.actionIcon));
+    }
+    if (variantSpec.dismissable) {
+      actions.appendChild(createSymbol("x", fontName, SPEC.actionIcon));
+    }
     header.appendChild(actions);
   }
 
@@ -3327,8 +4743,9 @@ function txt(text, fontName, size, color) {
   const n = figma.createText();
   n.fontName = fontName;
   n.characters = String(text);
-  n.fontSize = size || 13;
+  n.fontSize = tokenValue(size) || 13;
   n.fills = [hexToPaint(color || "#1F2023")];
+  bindNumericInput(n, "fontSize", size, "font.size");
   return n;
 }
 
@@ -3509,8 +4926,8 @@ function createTabVariant(variantSpec, fontName) {
   c.name = variantSpec.name;
   c.fills = [];
 
-  const makeItem = (label, selected, size) => {
-    const item = frameBox("tab / " + label);
+  const setupItem = (item, label, selected, size) => {
+    const height = SPEC.sizes[size || "md"].height;
     item.layoutMode = "HORIZONTAL";
     item.primaryAxisSizingMode = "AUTO";
     item.counterAxisSizingMode = "FIXED";
@@ -3519,7 +4936,7 @@ function createTabVariant(variantSpec, fontName) {
     item.itemSpacing = SPEC.item.gap;
     item.paddingLeft = SPEC.item.paddingX;
     item.paddingRight = SPEC.item.paddingX;
-    item.resize(72, SPEC.sizes[size || "md"].height);
+    item.resize(72, height);
     item.cornerRadius = SPEC.item.radius;
     item.fills = [];
     item.appendChild(txt(label, fontName, SPEC.item.fontSize, selected ? SPEC.item.selectedColor : SPEC.item.defaultColor));
@@ -3529,21 +4946,21 @@ function createTabVariant(variantSpec, fontName) {
       indicator.resize(48, SPEC.indicator.height);
       indicator.cornerRadius = SPEC.indicator.radius;
       indicator.fills = [hexToPaint(SPEC.indicator.fill)];
+      item.appendChild(indicator);
       indicator.layoutPositioning = "ABSOLUTE";
       indicator.x = 12;
-      indicator.y = SPEC.sizes[size || "md"].height - SPEC.indicator.height;
-      item.appendChild(indicator);
+      indicator.y = height - SPEC.indicator.height;
     }
+  };
+
+  const makeItem = (label, selected, size) => {
+    const item = frameBox("tab / " + label);
+    setupItem(item, label, selected, size);
     return item;
   };
 
   if (variantSpec.kind === "tab") {
-    const item = makeItem(variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
-    c.resize(item.width, item.height);
-    c.layoutMode = "HORIZONTAL";
-    c.primaryAxisSizingMode = "AUTO";
-    c.counterAxisSizingMode = "AUTO";
-    c.appendChild(item);
+    setupItem(c, variantSpec.label || "Tab", variantSpec.selected, variantSpec.size);
     return c;
   }
 
@@ -4131,6 +5548,7 @@ async function generateSpec(componentSpec, generatedPage, originX, originY) {
 
   const components = SPEC.variants.map((variant, index) => {
     const component = createVariant(variant, fontName);
+    bindNumericTokensInNode(component);
     component.x = originX;
     component.y = originY + index * (SPEC.preview?.stepY || SPEC.component?.height || SPEC.component?.minHeight || 120);
     generatedPage.appendChild(component);
@@ -4155,6 +5573,7 @@ async function generateSelected(ids) {
     return;
   }
 
+  await prepareFigmaVariables();
   const generatedPage = await getOrCreatePage("Generated");
   await getOrCreatePage("Published");
   await figma.setCurrentPageAsync(generatedPage);
@@ -4180,7 +5599,11 @@ async function generateSelected(ids) {
   if (failed.length > 0) {
     figma.notify("생성 실패 " + failed.length + "개: " + failed.join(" / "), { error: true, timeout: 10000 });
   } else {
-    figma.notify("Generated " + generatedNodes.length + " component set(s).");
+    const stats = FIGMA_BIND_STATS
+      ? " · color " + FIGMA_BIND_STATS.bound + "/" + (FIGMA_BIND_STATS.bound + FIGMA_BIND_STATS.missed) + " · number " + FIGMA_BIND_STATS.floatBound + "/" + (FIGMA_BIND_STATS.floatBound + FIGMA_BIND_STATS.floatMissed)
+      : "";
+    console.log("figma-component-input variable binding stats:", FIGMA_BIND_STATS);
+    figma.notify("Generated " + generatedNodes.length + " component set(s)." + stats, { timeout: 8000 });
   }
   figma.closePlugin();
 }

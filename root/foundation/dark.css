@@ -135,4 +135,13 @@
   --color-interaction-strong-brand(FAI)-hover: #39DB1F6B;
   --color-interaction-strong-brand(FAI)-focus: #39DB1F80;
   --color-interaction-strong-brand(FAI)-pressed: #39DB1F9C;
+  --color-sand-filled-primary: var(--color-sand-900);
+  --color-sand-filled-secondary: var(--color-sand-800);
+  --color-sand-filled-tertiary: var(--color-sand-700);
+  --color-sand-filled-disabled: var(--color-sand-500);
+  --color-sand-text-primary: var(--color-sand-50);
+  --color-sand-text-secondary: var(--color-sand-200);
+  --color-sand-text-tertiary: var(--color-sand-400);
+  --color-sand-border-primary: var(--color-sand-300);
+  --color-sand-border-secondary: var(--color-sand-600);
 }

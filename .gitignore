@@ -67,3 +67,8 @@ node_modules/
 
 # 모든 하위 경로 next.js 빌드
 **/.next/
+
+# 캐시/임시/스왑 파일 (커밋 금지)
+.pnpm-store/
+*.swp
+_tmp_*

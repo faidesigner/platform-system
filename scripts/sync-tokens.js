@@ -110,8 +110,16 @@ function generateDarkCSS() {
 function generateColorBrandCSS() {
   const brand = readJSON('color-brand.json');
   const blocks = Object.entries(brand).map(([client, tokens]) => {
-    const vars = flattenToVars(tokens, 'color');
-    return `/* ${client} */\n[data-brand='${client}'] {\n${renderVars(vars)}\n}`;
+    // `dark` 하위 그룹은 브랜드의 다크 모드 오버라이드 — 기본 블록에서 분리해
+    // .dark 조합 셀렉터로 방출한다 (기본 브랜드 블록(0,1,0)보다 높은 특이성 (0,2,0)).
+    const { dark, ...base } = tokens;
+    const vars = flattenToVars(base, 'color');
+    let block = `/* ${client} */\n[data-brand='${client}'] {\n${renderVars(vars)}\n}`;
+    if (dark) {
+      const darkVars = flattenToVars(dark, 'color');
+      block += `\n\n/* ${client} — dark */\n[data-brand='${client}'].dark,\n.dark [data-brand='${client}'],\n[data-brand='${client}'] .dark {\n${renderVars(darkVars)}\n}`;
+    }
+    return block;
   });
   writeFile(FOUNDATION, 'color-brand.css', HEADER + blocks.join('\n\n') + '\n');
 }

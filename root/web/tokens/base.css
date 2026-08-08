@@ -26,6 +26,7 @@
   --size-100: 6.25rem;
   --size-120: 7.5rem;
   --size-140: 8.75rem;
+  --size-150: 9.375rem;
   --size-180: 11.25rem;
   --size-240: 15rem;
   --size-320: 20rem;
@@ -46,16 +47,16 @@
   --padding-S: var(--size-8);
   --padding-MS: var(--size-12);
   --padding-M: var(--size-16);
-  --padding-ML: var(--padding-default);
+  --padding-ML: var(--size-18);
   --padding-L: var(--size-20);
   --padding-XL: var(--size-24);
   --padding-2XL: var(--size-32);
   --padding-3XL: var(--size-40);
   --padding-4XL: var(--size-56);
-  --padding-5XL: var(--padding-default);
-  --padding-6XL: var(--padding-default);
-  --padding-7XL: var(--padding-default);
-  --padding-8XL: var(--padding-default);
+  --padding-5XL: var(--size-80);
+  --padding-6XL: var(--size-100);
+  --padding-7XL: var(--size-120);
+  --padding-8XL: var(--size-180);
 
   /* Spacing (mw) */
   --spacing-default: var(--size-8);
@@ -70,17 +71,17 @@
   --spacing-S: var(--size-8);
   --spacing-MS: var(--size-12);
   --spacing-M: var(--size-16);
-  --spacing-ML: var(--spacing-default);
+  --spacing-ML: var(--size-18);
   --spacing-L: var(--size-20);
   --spacing-XL: var(--size-24);
   --spacing-2XL: var(--size-32);
   --spacing-3XL: var(--size-40);
   --spacing-4XL: var(--size-56);
-  --spacing-5XL: var(--spacing-default);
-  --spacing-6XL: var(--spacing-default);
-  --spacing-7XL: var(--spacing-default);
-  --spacing-8XL: var(--spacing-default);
-  --spacing-9XL: var(--spacing-default);
+  --spacing-5XL: var(--size-80);
+  --spacing-6XL: var(--size-100);
+  --spacing-7XL: var(--size-120);
+  --spacing-8XL: var(--size-180);
+  --spacing-9XL: var(--size-240);
 
   /* Corner Radius */
   --cornerRadius-default: var(--size-4);

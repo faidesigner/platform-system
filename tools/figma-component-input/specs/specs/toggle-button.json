@@ -1,0 +1,22 @@
+{
+  "template": "toggle-button",
+  "name": "ToggleButton",
+  "description": "Toggle button generated from feature/badge-component.",
+  "preview": { "stepY": 72 },
+  "component": {
+    "width": 112,
+    "height": { "m": { "$pixelToken": "size.36" } },
+    "strokeWeight": 1,
+    "iconOnly": false,
+    "layout": {
+      "m": { "direction": "horizontal", "gap": { "$pixelToken": "size.4" }, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.8" }, "right": { "$pixelToken": "size.16" }, "bottom": { "$pixelToken": "size.8" }, "left": { "$pixelToken": "size.16" } } }
+    }
+  },
+  "text": { "m": { "fontSize": { "$pixelToken": "font.size.13" }, "lineHeight": { "$pixelToken": "font.lineHeight.13" } } },
+  "icon": { "m": { "size": 14, "fontSize": 12, "lineHeight": 14 } },
+  "variants": [
+    { "name": "pressed=false, size=m, icon=false", "size": "m", "label": "Unpressed", "pressed": false, "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.bg.100" }, "stroke": { "$token": "semantic.light.border.tertiary" }, "text": { "$token": "semantic.light.text.basic.secondary" } },
+    { "name": "pressed=true, size=m, icon=false", "size": "m", "label": "Pressed", "pressed": true, "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.filled.basic.tertiary" }, "stroke": { "$token": "semantic.light.border.secondary" }, "text": { "$token": "semantic.light.text.basic.primary" } },
+    { "name": "pressed=true, size=m, icon=true", "size": "m", "label": "Bold", "icon": "B", "pressed": true, "radius": { "$pixelToken": "size.8" }, "fill": { "$token": "semantic.light.filled.basic.tertiary" }, "stroke": { "$token": "semantic.light.border.secondary" }, "text": { "$token": "semantic.light.text.basic.primary" } }
+  ]
+}

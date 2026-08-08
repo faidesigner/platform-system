@@ -1,9 +1,8 @@
 {
-  "name": "FAI Component Generator",
-  "id": "fai-component-generator",
+  "name": "figma-foundation-input",
+  "id": "figma-foundation-input",
   "api": "1.0.0",
   "main": "code.js",
-  "ui": "ui.html",
   "capabilities": [],
   "enableProposedApi": false,
   "editorType": [

@@ -1,0 +1,44 @@
+{
+  "template": "selector",
+  "name": "Selector",
+  "description": "Single-select dropdown selector. Generated on system/badge-component.",
+  "trigger": {
+    "radius": { "$pixelToken": "size.8" },
+    "strokeWeight": 1,
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.8" },
+      "padding": {
+        "top": { "$pixelToken": "size.6" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.6" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "statusStroke": {
+      "default": { "$token": "semantic.light.border.secondary" },
+      "error": { "$token": "semantic.light.border.negative" },
+      "warning": { "$token": "semantic.light.border.warning" },
+      "success": { "$token": "semantic.light.border.positive" }
+    }
+  },
+  "list": {
+    "radius": { "$pixelToken": "size.16" },
+    "strokeWeight": 1,
+    "fill": { "$token": "semantic.light.bg.100" },
+    "stroke": { "$token": "semantic.light.border.tertiary" },
+    "shadow": { "$token": "shadow.M" }
+  },
+  "option": {
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    }
+  },
+  "variants": [
+    { "name": "status=default", "status": "default" },
+    { "name": "status=default, clearable", "status": "default", "clearable": true },
+    { "name": "sectioned", "status": "default", "sectioned": true },
+    { "name": "status=error", "status": "error" }
+  ]
+}

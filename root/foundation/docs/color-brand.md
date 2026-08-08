@@ -22,6 +22,33 @@
 | `px24` | PX24 |
 | `changi-airport` | Changi Airport |
 | `sevenelev` | 7-Eleven |
+| `hynix` | SK하이닉스 (brand-primary = hynix-teal.500, brand-secondary = hynix-teal.50) |
+
+---
+
+## 중립색(그레이) 오버라이드 — hynix 패턴
+
+브랜드가 기본 gray 대신 다른 중립 스케일을 쓸 때는, 브랜드 항목에 `gray` 객체로
+**primitive 별칭**을 정의합니다 (semantic 재매핑 아님).
+
+- hynix는 `gray.30~900` 전체를 `bluegray` 동일 스텝으로 별칭 처리.
+- 방출 결과: `[data-brand='hynix'] { --color-gray-900: var(--color-bluegray-900); … }`
+- gray를 참조하는 모든 semantic(`text-basic-*`, `bg-*`, `border-*`)과 dark 모드가
+  자동으로 따라오므로, semantic 68곳을 개별 재정의하지 않습니다.
+- 전제: 대체 스케일의 스텝 구조가 gray와 1:1일 것. 스텝이 다르면 semantic 재매핑으로 처리.
+
+---
+
+## 브랜드 다크 모드 — `dark` 그룹
+
+브랜드가 다크 모드용 브랜드 컬러를 가지면, 브랜드 항목에 `dark` 하위 그룹으로 정의합니다
+(구조는 기본과 동일: brand-primary/filled/text/icon/boder).
+
+- 방출: `[data-brand='클라이언트'].dark` 등 조합 셀렉터 블록 (기본 브랜드 블록보다 높은 특이성).
+- 중립색은 별도 정의 불필요 — gray primitive 별칭이 다크 semantic까지 자동 적용.
+- 관례: 다크에서는 브랜드색을 한 단계 밝게 (hynix: 500 → 400).
+- Figma: `scripts/export-figma-variables.js`의 `BRAND_MODES`에 `base: 'dark'` 항목을 추가하면
+  Semantic 컬렉션에 `{브랜드} Dark` 모드로 방출됩니다.
 
 ---
 

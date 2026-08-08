@@ -1,0 +1,16 @@
+{
+  "name": "figma-component-input",
+  "id": "figma-component-input",
+  "api": "1.0.0",
+  "main": "code.js",
+  "ui": "ui.html",
+  "capabilities": [],
+  "permissions": [
+    "teamlibrary"
+  ],
+  "enableProposedApi": false,
+  "editorType": [
+    "figma"
+  ],
+  "documentAccess": "dynamic-page"
+}

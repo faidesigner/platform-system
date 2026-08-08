@@ -1,0 +1,26 @@
+{
+  "template": "linear-progress",
+  "name": "LinearProgress",
+  "description": "Single-task progress bar (determinate/indeterminate). Generated on system/badge-component.",
+  "track": {
+    "height": { "$pixelToken": "size.4" },
+    "radius": { "$pixelToken": "size.8" },
+    "fill": { "$token": "semantic.light.filled.basic.fourth" }
+  },
+  "fillColor": {
+    "accent": { "$token": "semantic.light.filled.optional.brand-primary" },
+    "success": { "$token": "semantic.light.filled.basic.positive" },
+    "warning": { "$token": "semantic.light.filled.basic.warning" },
+    "error": { "$token": "semantic.light.filled.basic.negative" }
+  },
+  "label": {
+    "fontSize": { "$pixelToken": "font.size.13" },
+    "color": { "$token": "semantic.light.text.basic.secondary" }
+  },
+  "variants": [
+    { "name": "variant=accent, value=60", "variant": "accent", "value": 60 },
+    { "name": "variant=success, value=100", "variant": "success", "value": 100 },
+    { "name": "variant=accent, indeterminate", "variant": "accent", "value": null },
+    { "name": "variant=error, value=30", "variant": "error", "value": 30 }
+  ]
+}

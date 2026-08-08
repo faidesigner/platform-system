@@ -106,5 +106,72 @@
       "brand-primary": "#14B873",
       "brand-secondary": "#19E690"
     }
+  },
+  "hynix": {
+    "brand-primary": "{color.hynix-teal.500}",
+    "brand-secondary": "{color.hynix-teal.50}",
+    "filled": {
+      "brand-primaryBtn": "{color.hynix-teal.500}",
+      "brand-secondaryBtn": "{color.hynix-teal.50}",
+      "brand-primary": "{color.hynix-teal.500}",
+      "brand-secondary": "{color.hynix-teal.100}",
+      "brand-absoluteBtn": "{color.white}"
+    },
+    "text": {
+      "brand-primary": "{color.hynix-teal.500}",
+      "brand-secondary": "{color.hynix-teal.400}",
+      "brand-primaryBtn": "{color.white}",
+      "brand-secondaryBtn": "{color.hynix-teal.600}"
+    },
+    "icon": {
+      "brand-primary": "{color.hynix-teal.500}",
+      "brand-secondary": "{color.hynix-teal.400}",
+      "brand-primaryBtn": "{color.white}",
+      "brand-secondaryBtn": "{color.hynix-teal.500}"
+    },
+    "boder": {
+      "brand-primary": "{color.hynix-teal.500}",
+      "brand-secondary": "{color.hynix-teal.200}"
+    },
+    "gray": {
+      "30": "{color.bluegray.30}",
+      "50": "{color.bluegray.50}",
+      "100": "{color.bluegray.100}",
+      "200": "{color.bluegray.200}",
+      "300": "{color.bluegray.300}",
+      "400": "{color.bluegray.400}",
+      "500": "{color.bluegray.500}",
+      "600": "{color.bluegray.600}",
+      "700": "{color.bluegray.700}",
+      "800": "{color.bluegray.800}",
+      "900": "{color.bluegray.900}"
+    },
+    "dark": {
+      "brand-primary": "{color.hynix-teal.400}",
+      "brand-secondary": "{color.hynix-teal.900}",
+      "filled": {
+        "brand-primaryBtn": "{color.hynix-teal.400}",
+        "brand-secondaryBtn": "{color.bluegray.700}",
+        "brand-primary": "{color.hynix-teal.400}",
+        "brand-secondary": "{color.hynix-teal.800}",
+        "brand-absoluteBtn": "{color.white}"
+      },
+      "text": {
+        "brand-primary": "{color.hynix-teal.400}",
+        "brand-secondary": "{color.hynix-teal.300}",
+        "brand-primaryBtn": "{color.bluegray.900}",
+        "brand-secondaryBtn": "{color.white}"
+      },
+      "icon": {
+        "brand-primary": "{color.hynix-teal.400}",
+        "brand-secondary": "{color.hynix-teal.300}",
+        "brand-primaryBtn": "{color.bluegray.900}",
+        "brand-secondaryBtn": "{color.white}"
+      },
+      "boder": {
+        "brand-primary": "{color.hynix-teal.400}",
+        "brand-secondary": "{color.hynix-teal.600}"
+      }
+    }
   }
 }

@@ -1,0 +1,35 @@
+{
+  "template": "tree-list",
+  "name": "TreeList",
+  "description": "Expandable hierarchical tree with branch connector lines. Generated on system/badge-component.",
+  "node": {
+    "layout": {
+      "direction": "horizontal",
+      "gap": { "$pixelToken": "size.8" },
+      "primaryAlign": "MIN",
+      "counterAlign": "CENTER",
+      "padding": {
+        "top": { "$pixelToken": "size.4" },
+        "right": { "$pixelToken": "size.16" },
+        "bottom": { "$pixelToken": "size.4" },
+        "left": { "$pixelToken": "size.16" }
+      }
+    },
+    "radius": { "$pixelToken": "size.8" },
+    "label": {
+      "fontSize": { "$pixelToken": "font.size.13" },
+      "color": { "$token": "semantic.light.text.basic.primary" }
+    },
+    "selectedFill": { "$token": "semantic.light.filled.basic.secondary" },
+    "branchLine": { "$token": "semantic.light.border.tertiary" },
+    "chevron": {
+      "size": { "$pixelToken": "size.20" },
+      "color": { "$token": "semantic.light.text.basic.tertiary" }
+    }
+  },
+  "variants": [
+    { "name": "state=collapsed", "expanded": false },
+    { "name": "state=expanded", "expanded": true },
+    { "name": "state=selected", "expanded": true, "selected": true }
+  ]
+}

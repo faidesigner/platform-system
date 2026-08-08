@@ -116,6 +116,16 @@
   --color-bluegray-700: #292c33;
   --color-bluegray-800: #1b1e26;
   --color-bluegray-900: #17191c;
+  --color-sand-50: #f6f6f1;
+  --color-sand-100: #f0efe9;
+  --color-sand-200: #eceae4;
+  --color-sand-300: #dcdbd8;
+  --color-sand-400: #cfcfcf;
+  --color-sand-500: #9e9d9c;
+  --color-sand-600: #807f7d;
+  --color-sand-700: #62615f;
+  --color-sand-800: #484744;
+  --color-sand-900: #363531;
   --color-brown: #2b1504;
   --color-skin-50: #fff3f1;
   --color-skin-100: #ffe9e5;
@@ -127,6 +137,16 @@
   --color-skin-700: #ef9f91;
   --color-skin-800: #f39282;
   --color-skin-900: #f28471;
+  --color-hynix-teal-50: #e6f5f4;
+  --color-hynix-teal-100: #ccebe9;
+  --color-hynix-teal-200: #99d7d3;
+  --color-hynix-teal-300: #66c3bd;
+  --color-hynix-teal-400: #009a93;
+  --color-hynix-teal-500: #00827c;
+  --color-hynix-teal-600: #00706b;
+  --color-hynix-teal-700: #005e59;
+  --color-hynix-teal-800: #004844;
+  --color-hynix-teal-900: #001f1d;
 
   /* Semantic Colors (Light) */
   --color-bg-100: var(--color-white);
@@ -264,4 +284,13 @@
   --color-interaction-strong-brand(FAI)-hover: #39DB1F47;
   --color-interaction-strong-brand(FAI)-focus: #39DB1F59;
   --color-interaction-strong-brand(FAI)-pressed: #39DB1F85;
+  --color-sand-filled-primary: var(--color-sand-50);
+  --color-sand-filled-secondary: var(--color-sand-100);
+  --color-sand-filled-tertiary: var(--color-sand-200);
+  --color-sand-filled-disabled: var(--color-sand-400);
+  --color-sand-text-primary: var(--color-sand-900);
+  --color-sand-text-secondary: var(--color-sand-700);
+  --color-sand-text-tertiary: var(--color-sand-600);
+  --color-sand-border-primary: var(--color-sand-700);
+  --color-sand-border-secondary: var(--color-sand-300);
 }

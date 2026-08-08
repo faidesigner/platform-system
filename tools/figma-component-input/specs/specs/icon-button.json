@@ -1,0 +1,31 @@
+{
+  "template": "icon-button",
+  "name": "IconButton",
+  "description": "Icon-only action button generated from feature/badge-component.",
+  "preview": { "stepY": 72 },
+  "component": {
+    "width": 48,
+    "height": { "XL": 56, "L": 48, "M": 32, "S": 28 },
+    "strokeWeight": 1,
+    "iconOnly": true,
+    "layout": {
+      "XL": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.16" }, "right": { "$pixelToken": "size.16" }, "bottom": { "$pixelToken": "size.16" }, "left": { "$pixelToken": "size.16" } } },
+      "L": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.12" }, "right": { "$pixelToken": "size.12" }, "bottom": { "$pixelToken": "size.12" }, "left": { "$pixelToken": "size.12" } } },
+      "M": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.6" }, "right": { "$pixelToken": "size.6" }, "bottom": { "$pixelToken": "size.6" }, "left": { "$pixelToken": "size.6" } } },
+      "S": { "direction": "horizontal", "gap": 0, "primarySizing": "FIXED", "counterSizing": "FIXED", "primaryAlign": "CENTER", "counterAlign": "CENTER", "padding": { "top": { "$pixelToken": "size.6" }, "right": { "$pixelToken": "size.6" }, "bottom": { "$pixelToken": "size.6" }, "left": { "$pixelToken": "size.6" } } }
+    }
+  },
+  "text": {},
+  "icon": {
+    "XL": { "size": 24, "fontSize": 20, "lineHeight": 24 },
+    "L": { "size": 24, "fontSize": 20, "lineHeight": 24 },
+    "M": { "size": 20, "fontSize": 16, "lineHeight": 20 },
+    "S": { "size": 16, "fontSize": 14, "lineHeight": 16 }
+  },
+  "variants": [
+    { "name": "variant=primary, size=L, shape=circle", "size": "L", "label": "", "icon": "+", "radius": 9999, "fill": { "$token": "semantic.light.filled.optional.brand-primaryBtn" }, "stroke": "#00000000", "text": { "$token": "semantic.light.text.basic.inverse" } },
+    { "name": "variant=secondary, size=L, shape=circle", "size": "L", "label": "", "icon": ">", "radius": 9999, "fill": { "$token": "semantic.light.filled.optional.brand-secondaryBtn" }, "stroke": "#00000000", "text": { "$token": "semantic.light.text.basic.primary" } },
+    { "name": "variant=tertiary, size=M, shape=square", "size": "M", "label": "", "icon": "x", "radius": { "$pixelToken": "size.8" }, "fill": "#00000000", "stroke": { "$token": "semantic.light.border.tertiary" }, "text": { "$token": "semantic.light.icon.basic.primary" } },
+    { "name": "variant=assistive, size=S, shape=circle", "size": "S", "label": "", "icon": "i", "radius": 9999, "fill": "#00000000", "stroke": "#00000000", "text": { "$token": "semantic.light.icon.basic.secondary" } }
+  ]
+}
