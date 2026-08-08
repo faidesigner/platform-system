@@ -73,3 +73,7 @@ node_modules/
 *.swp
 _tmp_*
 _to_delete/
+
+# 개인 규칙/자산 (커밋 금지 — 총괄 디자이너 개인 자산)
+CLAUDE.sunyeon.md
+CLAUDE.*.local.md
