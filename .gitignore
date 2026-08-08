@@ -72,3 +72,4 @@ node_modules/
 .pnpm-store/
 *.swp
 _tmp_*
+_to_delete/
