@@ -87,9 +87,9 @@
 [data-brand='hynix'] {
   --color-brand-primary: var(--color-hynix-teal-500);
   --color-brand-secondary: var(--color-hynix-teal-50);
-  --color-filled-brand-primaryBtn: var(--color-hynix-teal-500);
+  --color-filled-brand-primaryBtn: var(--color-hynix-teal-400);
   --color-filled-brand-secondaryBtn: var(--color-hynix-teal-50);
-  --color-filled-brand-primary: var(--color-hynix-teal-500);
+  --color-filled-brand-primary: var(--color-hynix-teal-400);
   --color-filled-brand-secondary: var(--color-hynix-teal-100);
   --color-filled-brand-absoluteBtn: var(--color-white);
   --color-text-brand-primary: var(--color-hynix-teal-500);
