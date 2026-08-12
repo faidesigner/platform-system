@@ -12,17 +12,15 @@ interface ProductHeroProps {
   videoSrc?: string;
 }
 
-const FALLBACK_VIDEO = "https://www.w3schools.com/html/mov_bbb.mp4";
-
 export default function ProductHero({
   subtitle,
   title,
   ctaLabel,
   videoSrc,
 }: ProductHeroProps) {
-  const src = (!videoSrc || videoSrc === "MISSING_FROM_DESIGN")
-    ? FALLBACK_VIDEO
-    : videoSrc;
+  // 과거 폴백은 외부 사이트(w3schools)의 데모 mp4였다 — 운영 히어로가 제3자 호스팅에 의존하면
+  // 그쪽이 링크를 내리는 순간 배경이 깨진다. 자체 호스팅 경로가 없으면 아예 렌더하지 않는다.
+  const src = !videoSrc || videoSrc === "MISSING_FROM_DESIGN" ? null : videoSrc;
 
   const params = useParams();
   const locale = typeof params?.locale === "string" ? params.locale : "";
@@ -38,15 +36,17 @@ export default function ProductHero({
 
   return (
     <section className="relative w-full h-screen overflow-hidden">
-      {/* z-0: 배경 비디오 */}
-      <video
-        className="absolute inset-0 w-full h-full z-0 object-cover"
-        autoPlay
-        loop
-        muted
-        playsInline
-        src={src}
-      />
+      {/* z-0: 배경 비디오 — 자체 호스팅 경로가 있을 때만 렌더 */}
+      {src && (
+        <video
+          className="absolute inset-0 w-full h-full z-0 object-cover"
+          autoPlay
+          loop
+          muted
+          playsInline
+          src={src}
+        />
+      )}
 
       {/* z-10: Dim Overlay */}
       <div
