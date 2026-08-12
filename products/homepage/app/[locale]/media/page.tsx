@@ -10,6 +10,7 @@ import RetailTechLetterSection from "@/components/sections/media/RetailTechLette
 import showcase from "@/config/youtube-showcase.json";
 import letterData from "@/config/retail-tech-letter.json";
 import { visibleShowcaseVideos } from "@/lib/showcaseVisibility";
+import { localePolicy } from "@/config/locale-policy";
 
 export async function generateMetadata({
   params,
@@ -102,6 +103,7 @@ export default async function MediaPage({
         moreLabel={tCommon("more")}
         url={siteConfig.retailTechLetter.url}
         letters={letters}
+        showSubscribeCta={localePolicy(locale).showLetterSubscribeCta}
       />
     </main>
   );

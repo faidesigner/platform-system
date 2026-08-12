@@ -128,7 +128,14 @@ export interface ProductIndustry {
 }
 
 /** Reviews */
+import type { ReviewKey } from "./locale-policy";
+
 export interface ProductReview {
+  /**
+   * 카드 식별자 — 로케일별 정렬(HOM-80)의 안정 키.
+   * icon은 ja 전용 리테일 카드가 'cafeteria'를 재사용해 고유하지 않으므로 별도 키를 둔다.
+   */
+  key: ReviewKey;
   category: string;
   categoryColorVar: string;
   iconBgVar: string;

@@ -144,9 +144,15 @@ export interface TabletDrawerMenuProps {
   onContactClick?: () => void;
   /** nav 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값. */
   labels?: DrawerLabels;
+  /**
+   * 채용 항목 노출 여부(HOM-68). 채용 페이지가 한국어 전용이라 소비자가 ko에서만 true를 넘긴다.
+   * 드로어는 데스크톱 navItems를 재사용하지 않고 자체 렌더하므로 규칙을 따로 받아야 한다.
+   * 미지정 시 기존 동작(노출)을 유지한다.
+   */
+  showCareers?: boolean;
 }
 
-export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick, labels }: TabletDrawerMenuProps) {
+export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick, labels, showCareers = true }: TabletDrawerMenuProps) {
   const l = { ...DEFAULT_DRAWER_LABELS, ...labels };
   const [productOpen, setProductOpen] = useState(false);
   const params  = useParams();
@@ -186,14 +192,16 @@ export function TabletDrawerMenu({ onNavigate, onItemClick, onContactClick, labe
         onClick={() => { onNavigate?.(); onItemClick?.({ label: l.media, href: '/media' }); }}
       />
 
-      {/* 3. 채용 — 외부 링크 ↗ (계측 대상 아님) */}
-      <DrawerListItem
-        label={l.careers}
-        href="https://faindersai.career.greetinghr.com/ko/home"
-        isExternal={true}
-        onClick={onNavigate}
-        rightIcon={<ArrowUpRightIcon />}
-      />
+      {/* 3. 채용 — 외부 링크 ↗ (계측 대상 아님) · ko 전용(HOM-68) */}
+      {showCareers && (
+        <DrawerListItem
+          label={l.careers}
+          href="https://faindersai.career.greetinghr.com/ko/home"
+          isExternal={true}
+          onClick={onNavigate}
+          rightIcon={<ArrowUpRightIcon />}
+        />
+      )}
 
       {/* 4. 문의하기 — 내부 링크 (리드 CTA) */}
       <DrawerListItem

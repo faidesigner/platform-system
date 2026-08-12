@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { siteConfig, type ProductSlug } from '@/config/site'
+import { localePolicy, orderReviews } from '@/config/locale-policy'
 import ProductHero from '@/components/sections/products/ProductHero'
 import StoreHero from '@/components/sections/products/StoreHero'
 import ProductFeatures from '@/components/sections/products/ProductFeatures'
@@ -97,6 +98,7 @@ export default async function ProductDetailPage({
       })),
     })),
     ...(locale === 'ja' && slug === 'vision-check-out' ? [{
+      key: 'retail' as const,
       category: t('reviews.3.category'),
       categoryColorVar: '--color-text-basic-positive',
       iconBgVar: '--color-filled-basic-positive-secondary',
@@ -108,6 +110,12 @@ export default async function ProductDetailPage({
       quote: [{ text: t('reviews.3.quote.0.text'), emphasis: false }],
     }] : []),
   ]
+
+  // ja는 일본 고객사(리조트·리테일)를 앞세운다(HOM-80). ko/en은 config 기본 순서 유지.
+  const orderedReviews = orderReviews(reviews, locale)
+
+  const heroVideoSrc =
+    slug === 'vision-check-out' ? localePolicy(locale).vcoHeroVideo : product.heroVideo
 
   const effectCards = product.effectCards.map((c, i) => ({
     ...c,
@@ -149,12 +157,14 @@ export default async function ProductDetailPage({
 
   return (
     <main className="flex flex-col">
+      {/* VCO 히어로 영상은 로케일별 자막 버전으로 갈린다(HOM-70). 영상 히어로는 현재 VCO뿐이라
+          다른 제품이 영상 히어로가 되어도 VCO 영상을 물려받지 않도록 slug로 좁힌다. */}
       {product.heroType === 'video' ? (
         <ProductHero
           subtitle={t('heroSubtitle')}
           title={product.heroTitle}
           ctaLabel={ctaLabel}
-          videoSrc={product.heroVideo}
+          videoSrc={heroVideoSrc}
         />
       ) : (
         <StoreHero
@@ -188,8 +198,8 @@ export default async function ProductDetailPage({
         industries={industries}
       />
       <ProductReviews
-        title={reviews.length > 0 ? t('reviewsTitle') : ''}
-        reviews={reviews}
+        title={orderedReviews.length > 0 ? t('reviewsTitle') : ''}
+        reviews={orderedReviews}
       />
       {slug !== 'unmanned-store' && <CtaBanner location="product_cta_banner" />}
     </main>

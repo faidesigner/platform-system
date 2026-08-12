@@ -192,6 +192,7 @@ export const siteConfig = {
       reviewsTitle: "고객사 도입 후기",
       reviews: [
         {
+          key: "bakery",
           category: "베이커리",
           categoryColorVar: "--color-text-tag-category-yellow",
           iconBgVar: "--color-filled-tag-category-yellow-secondary",
@@ -208,6 +209,7 @@ export const siteConfig = {
           ],
         },
         {
+          key: "cafeteria",
           category: "급식",
           categoryColorVar: "--color-text-basic-positive",
           iconBgVar: "--color-filled-basic-positive-secondary",
@@ -223,6 +225,7 @@ export const siteConfig = {
           ],
         },
         {
+          key: "resort",
           category: "리조트",
           categoryColorVar: "--color-text-tag-category-grape",
           iconBgVar: "--color-filled-tag-category-grape-secondary",

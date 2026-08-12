@@ -3,9 +3,11 @@ import * as React from "react";
 import { flushSync } from "react-dom";
 import Image from "next/image";
 import { useRouter } from "next/navigation";
-import { useTranslations } from "next-intl";
+import { useTranslations, useLocale } from "next-intl";
 import { lenisRef } from "@/components/layout/SmoothScroll";
 import { siteConfig } from "@/config/site";
+import { localePolicy } from "@/config/locale-policy";
+import type { GaLocation } from "@/lib/analytics/events";
 import { trackEvent } from "@/lib/analytics/track";
 import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
 import { LineInput } from "@fai/ui/components/LineInput";
@@ -30,7 +32,13 @@ const INTEREST_GROUP_KEYS = ["vco", "store"] as const;
 
 export function ContactUsSection() {
   const t = useTranslations("contact");
+  const locale = useLocale();
   const router = useRouter();
+
+  // 상담 토스트 채널은 로케일마다 다르다(HOM-72): ko=카카오톡, ja=LINE, en=미노출.
+  const { contactChat } = localePolicy(locale);
+  // GA location도 채널을 따라간다 — 토스트는 channel이 있을 때만 렌더되므로 kakao가 안전한 기본값.
+  const chatLocation: GaLocation = contactChat.channel === "line" ? "contact_line" : "contact_kakao";
   const [state, setState] = React.useState<FormState>(EMPTY_STATE);
   const [submitted, setSubmitted] = React.useState(false);
 
@@ -351,6 +359,9 @@ export function ContactUsSection() {
               </form>
             </div>
 
+            {/* 상담 토스트 — 채널이 없는 en에서는 영역 자체를 렌더하지 않는다(HOM-72) */}
+            {contactChat.show && contactChat.url && (
+              <>
             {/* toast — ≥421px */}
             <div className="hidden min-[421px]:block dark self-stretch">
               <div className="flex w-full max-w-[1140px] desktop:mx-auto items-center justify-between gap-m rounded-fai-circle bg-[var(--color-filled-basic-fourth)] py-[var(--padding-MS,12px)] pl-[var(--padding-2XL,32px)] pr-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:pl-[var(--padding-3-xl,40px)] tablet:pr-[var(--padding-XL,24px)]">
@@ -367,10 +378,10 @@ export function ContactUsSection() {
                   </p>
                 </div>
                 <a
-                  href={contact.toast.kakaoUrl}
+                  href={contactChat.url}
                   target="_blank"
                   rel="noopener noreferrer"
-                  onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
+                  onClick={() => trackEvent("inquiry_complete", { location: chatLocation, label: "빠른 상담하기" })}
                   className="flex shrink-0 flex-col items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn)] py-[var(--padding-MS,12px)] px-[var(--padding-L,20px)] tablet:py-[var(--padding-M,16px)] tablet:px-[var(--padding-XL,24px)]"
                 >
                   <span className="text-center text-[var(--color-text-optional-brand-primaryBtn)] text-body-s desktop-s:text-body font-semibold leading-[var(--w-text-M-lineHeight,1.5rem)]">
@@ -383,10 +394,10 @@ export function ContactUsSection() {
             {/* ≤420px — 풀너비 버튼만 */}
             <div className="dark min-[421px]:hidden w-full">
               <a
-                href={contact.toast.kakaoUrl}
+                href={contactChat.url}
                 target="_blank"
                 rel="noopener noreferrer"
-                onClick={() => trackEvent("inquiry_complete", { location: "contact_kakao", label: "빠른 상담하기" })}
+                onClick={() => trackEvent("inquiry_complete", { location: chatLocation, label: "빠른 상담하기" })}
                 className="w-full flex items-center justify-center rounded-[var(--cornerRadius-circle,999px)] bg-[var(--color-filled-optional-brand-primaryBtn)] py-[var(--padding-MS,12px)]"
               >
                 <span className="text-center text-[var(--color-text-optional-brand-primaryBtn)] text-body font-semibold leading-[var(--w-text-XL-lineHeight,1.875rem)]">
@@ -394,6 +405,8 @@ export function ContactUsSection() {
                 </span>
               </a>
             </div>
+              </>
+            )}
           </>
         )}
 
