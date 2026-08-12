@@ -72,3 +72,9 @@ Always reuse existing tokens and components first.
    develop에만 있으면 **코드 결함이 아니라 미배포**다 — 카드에 그렇게 적고 재수정하지 마라.
 3. 상태 승격 기준선을 이렇게 읽어라: **❸ Fix Complete = develop 머지 / ❹ QA 요청 = dev 배포 완료 / ❻ Release = PRD 배포 완료**. "배포후" 티켓을 ❻로 올리기 전 반드시 `deploy.sh prd`가 돌았는지 `version.json`으로 확인하라.
 4. **PRD가 develop보다 뒤처진 채 방치되면 유령 티켓이 계속 생산된다.** develop과 main의 격차(`git log main..develop --oneline`)가 쌓이면 배포 일정을 먼저 확인해라 — 개별 티켓을 파고들기 전에.
+
+[Rule: QA 보드 상태 변경 권한 — Claude는 ❸ Fix Complete까지만] (2026-08-12 지시)
+1. **Claude가 스스로 올릴 수 있는 최대 상태는 `❸ Fix Complete(디버깅 완료)`다.** 수정을 develop에 머지하고 dev 배포·검증까지 끝냈더라도 여기서 멈춘다.
+2. **`❹ QA 요청` 이상으로의 승격은 사람(사용자)이 항상 수동으로 한다.** Claude가 임의로 올리지 마라 — QA팀의 작업 큐에 직접 영향을 주는 행위이고, 무엇을 언제 검증에 태울지는 사람이 정한다.
+3. 예외적으로 **아래로 내리는 것은 허용**된다: 조치 불가·외부 입력 대기로 판명되면 `✚ Pending(처리보류)`으로 내리고 사유를 카드에 남겨라.
+4. dev 배포까지 끝나 승격 준비가 된 티켓은 **상태를 바꾸지 말고 사용자에게 목록으로 보고**해라. ("아래 N건은 dev 검증까지 끝나 ❹로 올릴 수 있는 상태입니다.")
