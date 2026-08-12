@@ -73,6 +73,13 @@ export interface FooterLabels {
   privacy?:      string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
+  /**
+   * 전화 실데이터 값(로케일별). ko는 국내 표기(02-…), en·ja는 국가코드 포함(+82-2-…)이다(HOM-67).
+   * 미지정 시 한국어 기본값 사용.
+   */
+  telValue?:     string;
+  /** 이메일 실데이터 값(로케일별). ja는 일본팀 주소(contact_jp@)를 쓴다(HOM-67). */
+  emailValue?:   string;
 }
 
 const DEFAULT_LABELS: Required<FooterLabels> = {
@@ -85,6 +92,8 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
   ceoValue:     VALUES.ceo,
+  telValue:     VALUES.tel,
+  emailValue:   VALUES.email,
 };
 
 /* ── SNS 버튼 공용 ── */
@@ -153,28 +162,49 @@ function InfoRow({ items, className }: { items: { title: string; text: string; n
 
 /* ── Component ── */
 
+/** 추가 정보 행(로케일 전용). 소비자가 무엇을 덧붙일지 결정한다 — @fai/ui는 로케일을 모른다. */
+export interface FooterInfoRow {
+  title: string;
+  text: string;
+  noWrapValue?: boolean;
+}
+
 interface FooterProps {
   onSocialClick?: (label: string) => void;
   /** 회사정보·정책 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값 사용. */
   labels?: FooterLabels;
-  /** true이면 이메일 문의 행을 숨긴다(JA 로케일 전용). */
-  hideEmail?: boolean;
+  /** 이메일 문의 행 노출 여부(HOM-67). 미지정 시 노출. */
+  showEmail?: boolean;
+  /** 사업자등록번호 행 노출 여부(HOM-67). 한국 사업자번호라 ja에서는 숨긴다. 미지정 시 노출. */
+  showBizNo?: boolean;
+  /**
+   * 회사정보 뒤에 덧붙일 추가 행(HOM-67). ja의 일본 법인 정보(법인명·대표·전화)에 쓰인다.
+   * 로케일 판단은 소비자(FooterBridge)가 하고 여기서는 받은 행을 그대로 렌더한다.
+   */
+  extraInfo?: readonly FooterInfoRow[];
 }
 
-export default function Footer({ onSocialClick, labels, hideEmail = false }: FooterProps = {}) {
+export default function Footer({
+  onSocialClick,
+  labels,
+  showEmail = true,
+  showBizNo = true,
+  extraInfo = [],
+}: FooterProps = {}) {
   const l = { ...DEFAULT_LABELS, ...labels };
 
   const companyName = l.company;
   const row1Info = [
     { title: l.ceo,     text: l.ceoValue },
-    { title: l.tel,     text: VALUES.tel },
+    { title: l.tel,     text: l.telValue },
     { title: l.address, text: l.addressValue },
   ];
   // 사업자번호·이메일은 값 자체가 코드성 문자열이라, 라벨이 길어져도(예: ja "事業者登録番号（韓国）")
   // 고정폭 컬럼 안에서 중간에 줄바꿈되면 안 된다 — noWrapValue로 값 칸만 nowrap 고정.
   const row2Info = [
-    { title: l.bizNo, text: VALUES.bizNo, noWrapValue: true },
-    ...(!hideEmail ? [{ title: l.email, text: VALUES.email, noWrapValue: true }] : []),
+    ...(showBizNo ? [{ title: l.bizNo, text: VALUES.bizNo, noWrapValue: true }] : []),
+    ...(showEmail ? [{ title: l.email, text: l.emailValue, noWrapValue: true }] : []),
+    ...extraInfo,
   ];
   const policies: PolicyItem[] = [
     { label: l.privacy, href: POLICY_HREFS.privacy },

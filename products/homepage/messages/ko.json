@@ -34,7 +34,9 @@
     },
     "policies": {
       "privacy": "개인정보 처리방침"
-    }
+    },
+    "telValue": "02-6191-0049",
+    "emailValue": "contact@fainders.ai"
   },
   "products": {
     "visionCheckout": {

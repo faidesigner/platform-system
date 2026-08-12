@@ -22,7 +22,7 @@
     "contact": "Contact"
   },
   "footer": {
-    "company": "Fainders.AI Co., Ltd.",
+    "company": "Fainders.ai Inc.",
     "ceoValue": "Myungwon Ham · Minkwon Wang",
     "addressValue": "13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul 06628, Republic of Korea",
     "labels": {
@@ -34,7 +34,9 @@
     },
     "policies": {
       "privacy": "Privacy Policy"
-    }
+    },
+    "telValue": "+82-2-6191-0049",
+    "emailValue": "contact@fainders.ai"
   },
   "products": {
     "visionCheckout": {

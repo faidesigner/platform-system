@@ -62,8 +62,10 @@ function allowedDuplicate(keys: string[]): boolean {
 describe("messages 로케일 정합성", () => {
   it("ko/en/ja 키 집합이 동일하다", () => {
     const koKeys = Object.keys(KO);
-    // ja 전용 콘텐츠(일본 시장용 추가 도입사례)는 page.tsx가 locale === 'ja'로 가드한다.
-    const jaOnlyAllowed = /^products\.visionCheckout\.reviews\.3\./;
+    // ja 전용 콘텐츠는 렌더 시점에 로케일로 가드된다.
+    // - products.visionCheckout.reviews.3.*: 일본 시장용 추가 도입사례 (page.tsx가 locale === 'ja'로 가드)
+    // - footer.japanEntity.*: 일본 법인 정보(법인명·대표·전화) (HOM-67, locale-policy의 showJapanEntity로 가드)
+    const jaOnlyAllowed = /^(products\.visionCheckout\.reviews\.3\.|footer\.japanEntity\.)/;
     expect(Object.keys(EN).filter((k) => !(k in KO))).toEqual([]);
     expect(koKeys.filter((k) => !(k in EN))).toEqual([]);
     expect(Object.keys(JA).filter((k) => !(k in KO) && !jaOnlyAllowed.test(k))).toEqual([]);
