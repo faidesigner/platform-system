@@ -66,6 +66,11 @@ interface NavigationBarProps {
   contactLabel?: string;
   /** 태블릿·모바일 드로어 라벨(번역 주입용). 미지정 값은 한국어 기본값. */
   drawerLabels?: DrawerLabels;
+  /**
+   * 드로어의 채용 항목 노출 여부(HOM-68). 데스크톱은 navItems에서 제외하면 되지만
+   * 드로어는 자체 렌더라 규칙을 따로 전달해야 한다. 미지정 시 기존 동작(노출) 유지.
+   */
+  showCareers?: boolean;
 }
 
 /* ──────────────────────────────────────────
@@ -80,6 +85,7 @@ export default function NavigationBar({
   onContactClick,
   contactLabel = "문의하기",
   drawerLabels,
+  showCareers = true,
 }: NavigationBarProps = {}) {
   const navItems = navItemsProp ?? NAV_ITEMS;
   const pathname = usePathname();
@@ -360,6 +366,7 @@ export default function NavigationBar({
           onItemClick={onItemClick}
           onContactClick={onContactClick}
           labels={drawerLabels}
+          showCareers={showCareers}
         />
       </Drawer>
     </>

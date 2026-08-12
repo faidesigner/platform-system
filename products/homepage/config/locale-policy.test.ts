@@ -39,24 +39,31 @@ describe("HOM-72 — 문의 토스트 채널", () => {
     const { contactChat } = localePolicy("ko");
     expect(contactChat.show).toBe(true);
     expect(contactChat.url).toBe("http://pf.kakao.com/_cZLcn");
+    expect(contactChat.channel).toBe("kakao");
   });
 
   it("ja는 LINE 링크로 연결한다", () => {
     const { contactChat } = localePolicy("ja");
     expect(contactChat.show).toBe(true);
     expect(contactChat.url).toBe("https://lin.ee/7sWaw8t");
+    // GA location이 contact_kakao로 남으면 ja 유입이 카카오로 잘못 집계된다.
+    expect(contactChat.channel).toBe("line");
   });
 
   it("en은 토스트 자체를 노출하지 않는다", () => {
     const { contactChat } = localePolicy("en");
     expect(contactChat.show).toBe(false);
     expect(contactChat.url).toBeNull();
+    expect(contactChat.channel).toBeNull();
   });
 
-  it("노출하는 로케일은 반드시 링크를 가진다 (빈 버튼 방지)", () => {
+  it("노출하는 로케일은 반드시 링크와 채널 식별자를 가진다 (빈 버튼·오집계 방지)", () => {
     for (const l of ALL_LOCALES) {
       const { contactChat } = localePolicy(l);
-      if (contactChat.show) expect(contactChat.url).toBeTruthy();
+      if (contactChat.show) {
+        expect(contactChat.url).toBeTruthy();
+        expect(contactChat.channel).toBeTruthy();
+      }
     }
   });
 });

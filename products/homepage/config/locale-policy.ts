@@ -26,6 +26,11 @@ export interface LocalePolicy {
     show: boolean;
     /** 상담 채널 URL. show=false일 때만 null이 될 수 있다. */
     url: string | null;
+    /**
+     * 채널 식별자 — GA 이벤트 location(`contact_${channel}`)에 쓰인다.
+     * ja가 LINE으로 바뀌었는데 location이 contact_kakao로 남으면 유입 분석이 틀어지므로 함께 분기한다.
+     */
+    channel: "kakao" | "line" | null;
   };
 
   /** 리테일테크레터 구독 CTA 노출(HOM-76). 일본 BD팀 요청으로 ja만 숨긴다. */
@@ -64,7 +69,7 @@ const VCO_HERO_VIDEO_KO = "/videos/product/vco-hero-bg.mp4";
 export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   ko: {
     showCareers: true,
-    contactChat: { show: true, url: KAKAO_CHANNEL_URL },
+    contactChat: { show: true, url: KAKAO_CHANNEL_URL, channel: "kakao" },
     showLetterSubscribeCta: true,
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
     vcoHeroVideo: VCO_HERO_VIDEO_KO,
@@ -73,7 +78,7 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   en: {
     showCareers: false,
     // en 상담 채널이 없어 토스트를 노출하지 않는다 — 빈 CTA를 띄우지 않기 위함.
-    contactChat: { show: false, url: null },
+    contactChat: { show: false, url: null, channel: null },
     showLetterSubscribeCta: true,
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
     vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 영어 자막 버전 압축본으로 교체
@@ -81,7 +86,7 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   },
   ja: {
     showCareers: false,
-    contactChat: { show: true, url: LINE_CHANNEL_URL },
+    contactChat: { show: true, url: LINE_CHANNEL_URL, channel: "line" },
     showLetterSubscribeCta: false,
     footer: { showEmail: true, showBizNo: false, showJapanEntity: true },
     vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 일본어 자막 버전 압축본으로 교체

@@ -28,6 +28,11 @@ interface RetailTechLetterSectionProps {
   moreLabel: string;
   url: string;
   letters: Letter[];
+  /**
+   * 구독 CTA 노출 여부(HOM-76). 일본 BD팀 요청으로 ja에서는 숨긴다.
+   * 미지정 시 기존 동작(노출)을 유지한다.
+   */
+  showSubscribeCta?: boolean;
 }
 
 // Stibee는 외부 iframe 임베드를 차단(X-Frame-Options)하므로, 원본 Stibee의 "지난 뉴스레터"
@@ -39,6 +44,7 @@ export default function RetailTechLetterSection({
   moreLabel,
   url,
   letters,
+  showSubscribeCta = true,
 }: RetailTechLetterSectionProps) {
   const [visibleCount, setVisibleCount] = useState(PAGE);
 
@@ -50,16 +56,18 @@ export default function RetailTechLetterSection({
   return (
     <section className="w-full bg-surface">
       <div className="flex flex-col items-start max-w-[1440px] mx-auto px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)] pt-[var(--padding-5XL,80px)] pb-[var(--padding-7-xl,120px)] gap-[var(--spacing-3XL,40px)]">
-        {/* 헤더: 제목 + 구독하기 */}
+        {/* 헤더: 제목 + 구독하기 — 구독 CTA는 ja에서 숨긴다(HOM-76, 일본 BD팀 요청) */}
         <div className="flex w-full flex-col items-start justify-between gap-l min-[641px]:flex-row min-[641px]:items-center">
           <h2 className="text-title-l desktop:text-title-xl font-bold text-text-basic-primary">
             {title}
           </h2>
-          <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block shrink-0">
-            <IcoTxtButton variant="secondary" size="L" shape="square">
-              {ctaLabel}
-            </IcoTxtButton>
-          </a>
+          {showSubscribeCta && (
+            <a href={url} target="_blank" rel="noopener noreferrer" className="inline-block shrink-0">
+              <IcoTxtButton variant="secondary" size="L" shape="square">
+                {ctaLabel}
+              </IcoTxtButton>
+            </a>
+          )}
         </div>
 
         {/* 지난 뉴스레터 목록 + 더보기 */}
