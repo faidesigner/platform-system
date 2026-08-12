@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { getPageDescription } from "@/config/seo";
 import { siteConfig } from "@/config/site";
 import MediaNewsSection from "@/components/sections/media/NewsSection";
 import MediaShowcaseSection from "@/components/sections/media/ShowcaseSection";
@@ -19,13 +20,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations("media.meta");
-  return {
+  // 설명은 노션 SEO 명세(④ 사이트 링크)의 페이지별 문구를 쓴다(HOM-74).
+  return pageMetadata({
+    locale,
+    path: "media",
     title: t("title"),
-    description: t("description"),
-    ...(locale === routing.defaultLocale
-      ? { alternates: { canonical: `/${locale}/media/` } }
-      : {}),
-  };
+    description: getPageDescription("media", locale),
+  });
 }
 
 export default async function MediaPage({

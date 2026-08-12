@@ -4,6 +4,8 @@ import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { siteConfig, type ProductSlug } from '@/config/site'
 import { localePolicy, orderReviews } from '@/config/locale-policy'
+import { pageMetadata } from '@/lib/seo'
+import { getPageDescription, type SeoPageKey } from '@/config/seo'
 import ProductHero from '@/components/sections/products/ProductHero'
 import StoreHero from '@/components/sections/products/StoreHero'
 import ProductFeatures from '@/components/sections/products/ProductFeatures'
@@ -36,14 +38,13 @@ export async function generateMetadata({
   const { locale, slug } = await params
   if (!PRODUCT_SLUGS.includes(slug as ProductSlug)) return {}
   const product = siteConfig.products[slug as ProductSlug]
-  const t = await getTranslations(SLUG_NS[slug as ProductSlug])
-  return {
+  // 설명은 노션 SEO 명세(④ 사이트 링크)의 제품별 문구를 쓴다(HOM-74).
+  return pageMetadata({
+    locale,
+    path: `products/${slug}`,
     title: product.label,
-    description: t('heroSubtitle'),
-    ...(locale === routing.defaultLocale
-      ? { alternates: { canonical: `/${locale}/products/${slug}/` } }
-      : {}),
-  }
+    description: getPageDescription(slug as SeoPageKey, locale),
+  })
 }
 
 export default async function ProductDetailPage({

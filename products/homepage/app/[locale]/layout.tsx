@@ -5,7 +5,9 @@ import { NextIntlClientProvider } from "next-intl";
 import { getMessages, setRequestLocale } from "next-intl/server";
 import { notFound } from "next/navigation";
 import { routing } from "@/i18n/routing";
-import { siteConfig, getSeo } from "@/config/site";
+import { siteConfig } from "@/config/site";
+import { getSiteSeo } from "@/config/seo";
+import { pageMetadata, absoluteUrl, localePath } from "@/lib/seo";
 import NavigationBarBridge from "@/components/layout/NavigationBarBridge";
 import FooterBridge from "@/components/layout/FooterBridge";
 import SmoothScroll from "@/components/layout/SmoothScroll";
@@ -30,13 +32,6 @@ export function generateStaticParams() {
   return routing.locales.map((locale) => ({ locale }));
 }
 
-// OG 로케일 코드 매핑(BCP-47 → Open Graph locale).
-const OG_LOCALE: Record<string, string> = {
-  ko: "ko_KR",
-  en: "en_US",
-  ja: "ja_JP",
-};
-
 // 로케일별 색인 정책: ko/en/ja 모두 번역 완료 → 전 로케일 색인 허용.
 export async function generateMetadata({
   params,
@@ -44,8 +39,21 @@ export async function generateMetadata({
   params: Promise<{ locale: string }>;
 }): Promise<Metadata> {
   const { locale } = await params;
-  const s = getSeo(locale);
+  const s = getSiteSeo(locale);
+
+  // canonical·og:url·hreflang은 pageMetadata가 같은 경로에서 파생시킨다(HOM-74).
+  // 하위 페이지가 각자 pageMetadata로 자기 경로를 덮으므로 og:url 루트 고정 버그가 재발하지 않는다.
+  const base = pageMetadata({
+    locale,
+    path: "",
+    title: s.title,
+    description: s.description,
+    ogTitle: s.ogTitle,
+    ogDescription: s.ogDescription,
+  });
+
   return {
+    ...base,
     metadataBase: new URL(siteConfig.url),
     // FAI 브랜드 파비콘 세트(app/favicon.ico + public PNG/Apple/PWA manifest).
     icons: {
@@ -57,33 +65,9 @@ export async function generateMetadata({
       other: [{ rel: "mask-icon", url: "/safari-pinned-tab.svg" }],
     },
     manifest: "/site.webmanifest",
+    // 하위 페이지 title에 브랜드 접미사를 자동 부착.
     title: { default: s.title, template: "%s | Fainders.AI" },
-    description: s.description,
-    keywords: s.keywords,
-    openGraph: {
-      type: "website",
-      locale: OG_LOCALE[locale] ?? OG_LOCALE.ko,
-      url: siteConfig.url,
-      siteName: "Fainders.AI",
-      title: s.ogTitle,
-      description: s.ogDescription,
-      images: [{ url: "/images/og/og-default.jpg", width: 1200, height: 630 }],
-    },
-    twitter: {
-      card: "summary_large_image",
-      title: s.ogTitle,
-      description: s.ogDescription,
-      images: ["/images/og/og-default.jpg"],
-    },
-    alternates: {
-      canonical: `/${locale}/`,
-      languages: {
-        ko: "/ko/",
-        en: "/en/",
-        ja: "/ja/",
-        "x-default": "/ko/",
-      },
-    },
+    // keywords 메타 태그는 쓰지 않는다 — 명세(③)가 JSON-LD로만 노출하도록 정했다.
     robots: { index: true, follow: true },
     // Meta(Facebook) 도메인 인증. 루트(/)가 서빙하는 public/index.html 에도 동일 태그가 있고,
     // Meta가 리다이렉트를 따라온 경우까지 커버하기 위해 로케일 페이지에도 심는다.
@@ -112,19 +96,38 @@ export default async function LocaleLayout({
 
   const messages = await getMessages();
 
-  // 검색엔진용 구조화 데이터(Organization). 리치 결과·지식 패널 노출에 도움.
-  const organizationJsonLd = {
+  // 검색엔진용 구조화 데이터. Organization + WebSite를 @graph로 묶는다.
+  //
+  // 키워드(명세 ③)는 여기에만 넣는다. 화면 카피·마크업은 그대로 두고 봇만 읽는 JSON-LD로 제공해
+  // keyword stuffing 페널티를 피하라는 것이 명세의 요구다. 로케일에 따라 키워드가 바뀐다.
+  const seoForLocale = getSiteSeo(locale);
+  const structuredData = {
     "@context": "https://schema.org",
-    "@type": "Organization",
-    name: "Fainders AI",
-    alternateName: siteConfig.name,
-    url: siteConfig.url,
-    logo: `${siteConfig.url}/logos/logoFaindersai-b.png`,
-    description: getSeo("ko").description,
-    sameAs: [
-      "https://www.instagram.com/fainders_ai",
-      "https://www.linkedin.com/company/faindersai",
-      "https://www.youtube.com/@faindersAI",
+    "@graph": [
+      {
+        "@type": "Organization",
+        "@id": `${siteConfig.url}/#organization`,
+        name: "Fainders AI",
+        alternateName: siteConfig.name,
+        url: siteConfig.url,
+        logo: `${siteConfig.url}/logos/logoFaindersai-b.png`,
+        description: seoForLocale.description,
+        sameAs: [
+          "https://www.instagram.com/fainders_ai",
+          "https://www.linkedin.com/company/faindersai",
+          "https://www.youtube.com/@faindersAI",
+        ],
+      },
+      {
+        "@type": "WebSite",
+        "@id": `${siteConfig.url}/#website`,
+        url: absoluteUrl(localePath(locale, "")),
+        name: seoForLocale.title,
+        description: seoForLocale.description,
+        inLanguage: locale,
+        keywords: seoForLocale.keywords.join(", "),
+        publisher: { "@id": `${siteConfig.url}/#organization` },
+      },
     ],
   };
 
@@ -133,7 +136,7 @@ export default async function LocaleLayout({
       <body className="font-base antialiased bg-surface text-primary">
         <script
           type="application/ld+json"
-          dangerouslySetInnerHTML={{ __html: JSON.stringify(organizationJsonLd) }}
+          dangerouslySetInnerHTML={{ __html: JSON.stringify(structuredData) }}
         />
         <NextIntlClientProvider messages={messages}>
           <SmoothScroll>
