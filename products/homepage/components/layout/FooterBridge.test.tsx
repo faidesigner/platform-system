@@ -69,6 +69,14 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     expect(en).not.toContain("Co., Ltd.");
   });
 
+  it("ja 주소의 '길'은 표준 표기 キル를 쓴다 (ギル 아님)", () => {
+    // 도로명주소 신청지원센터의 번역 규정이 카타카나 「キル」로 정했고 일본어권 번역·지도 서비스
+    // (코네스트 등)도 「江南大路98キル 25」처럼 キル + 건물번호 앞 공백으로 표기한다.
+    const ja = renderAt("ja").container.textContent ?? "";
+    expect(ja).toContain("江南大路51キル 1");
+    expect(ja).not.toContain("ギル");
+  });
+
   it("영상정보처리기기 방침 링크는 어느 로케일에도 남아 있지 않다 (HOM-61 회귀)", () => {
     for (const locale of ["ko", "en", "ja"] as const) {
       const { container } = renderAt(locale);
