@@ -2,6 +2,7 @@ import type {
   AboutConfig,
   SiteConfig,
   ClientLogoItem,
+  CustomerImage,
   EffectCard,
   EffectListItem,
   StoreTypeTab,
@@ -80,6 +81,24 @@ export const clientLogos = [
   { id: "changi",           name: "Changi Airport",    src: "/logos/logo-changi-white.png" },
   { id: "orange-planet",    name: "Orange Planet",     src: "/logos/logo-orange-planet-white-2.png" },
 ] satisfies ClientLogoItem[];
+
+/**
+ * 홈 고객사 롤링 이미지 — **단일 소스**.
+ *
+ * 과거 이 배열이 app/[locale]/page.tsx와 CustomersSection.tsx의 기본값으로 **두 벌 복제**돼 있어,
+ * 한쪽만 고치면 조용히 어긋나는 상태였다(HOM-69에서 실제로 교체 대상이 양쪽에 존재). 여기로 통합한다.
+ */
+export const customerImages = [
+  { name: "bakery-mannamil",    src: "/images/customers/01-bakery-mannamil.jpg",    alt: "베이커리 만나밀" },
+  { name: "bakery-hansangmin",  src: "/images/customers/02-bakery-hansangmin.jpg",  alt: "베이커리 한상민" },
+  { name: "foodCourt-niseko-1", src: "/images/customers/03-foodCourt-niseko-2.jpg", alt: "푸드코트 니세코 1" },
+  // HOM-69: 인물 얼굴이 노출된 컷 → 블러 처리본으로 교체(도입 후기 섹션과 동일 에셋 재사용).
+  { name: "foodCourt-niseko-2", src: "/images/products/review/vco-review-resort-final.webp", alt: "푸드코트 니세코 2" },
+  { name: "retail-hibinoma",    src: "/images/customers/05-retail-hibinoma.jpg",    alt: "리테일 히비노마" },
+  { name: "retail-wellstory",   src: "/images/customers/06-retail-wellstory.jpeg",  alt: "리테일 웰스토리" },
+  { name: "retail-shokunoma",   src: "/images/customers/07-retail-shokunoma.jpg",   alt: "리테일 쇼쿠노마" },
+  { name: "bakery-toujours",    src: "/images/customers/08-bakery-toujours.jpg",    alt: "뚜쥬루 베이커리" },
+] satisfies CustomerImage[];
 
 export const siteConfig = {
   name: "FAI",

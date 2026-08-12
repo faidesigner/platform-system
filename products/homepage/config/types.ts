@@ -382,6 +382,14 @@ export interface CompanyConfig {
   representative: string;
 }
 
+/** 홈 고객사 롤링(마퀴)에 쓰는 현장 사진 한 장. */
+export interface CustomerImage {
+  /** 안정 식별자 — 파일명이 바뀌어도 항목을 추적할 수 있게 한다. */
+  name: string;
+  src: string;
+  alt: string;
+}
+
 /** 사이트 전체 데이터 계약 */
 export interface SiteConfig {
   name: string;
