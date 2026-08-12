@@ -3,6 +3,7 @@ import HeroSection from "@/components/sections/home/HeroSection";
 import { ImageSection } from "@/components/sections/home/ImageSection";
 import type { LogoItem } from "@fai/ui";
 import { clientLogos } from "@/config/site";
+import { localePolicy } from "@/config/locale-policy";
 import WhyFaiSection from "@/components/sections/home/WhyFaiSection";
 import CustomersSection from "@/components/sections/home/CustomersSection";
 import type { CustomerImage } from "@/components/sections/home/CustomersSection";
@@ -36,8 +37,9 @@ export default async function HomePage({
   return (
     <>
       <HeroSection logos={PARTNER_LOGOS} />
+      {/* 키오스크 화면 문구가 렌더된 컷이라 로케일마다 이미지가 다르다(HOM-64) */}
       <ImageSection
-        src="/images/main/imageSection-hero-2.webp"
+        src={localePolicy(locale).homeHeroImage}
         alt={t("alt")}
         priority
       />
