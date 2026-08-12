@@ -45,12 +45,16 @@ export function ImageSection({
       <div className="sticky top-0 w-full h-dvh overflow-hidden bg-gray-50">
         {/*
           와이드+짧은 뷰포트(HOM-58)에서 object-cover가 세로로 과도하게 크롭되는 것을 막기 위해
-          이미지 폭에 상한선을 둔다. 원본(3120×2048)의 세로가 최소 80%는 보이도록 하는 폭이
-          100dvh × (3120 / (2048 × 0.8)) = 100dvh × 975/512 — 이미지 교체 시 이 상수도 갱신 필요.
-          정상 height에서는 min()이 100%로 귀결돼 기존과 동일한 풀블리드 유지, height가 짧아질 때만
-          폭이 좁아지고(=크롭 20% 고정) 남는 좌우는 사진 배경과 유사한 bg-gray-50 필러박스로 채워진다.
+          이미지 폭에 상한선을 둔다. 원본의 세로가 최소 80%는 보이도록 하는 폭이
+          100dvh × (W / (H × 0.8)) 이다.
+          현재 에셋 1472×800 → 100dvh × 1472/640 (= 2.3배). 이전 3120×2048 컷일 때는 975/512(= 1.9배)였고,
+          HOM-64에서 좌우 배경이 생성 확장된 와이드 컷으로 교체하면서 상한이 넓어져 회색 필러가 드러나는
+          구간이 크게 줄었다(예: 1920×800에서 필러 198px → 40px).
+          **이미지 교체 시 이 상수도 함께 갱신해야 하며, imageSection-aspect.test.ts가 그 동기화를 강제한다.**
+          정상 height에서는 min()이 100%로 귀결돼 풀블리드 유지, height가 짧아질 때만 폭이 좁아지고
+          (=크롭 20% 고정) 남는 좌우는 사진 배경과 유사한 bg-gray-50 필러박스로 채워진다.
         */}
-        <div className="relative mx-auto h-full w-[min(100%,calc(100dvh*975/512))]">
+        <div className="relative mx-auto h-full w-[min(100%,calc(100dvh*1472/640))]">
           <Image
             src={src}
             alt={alt}

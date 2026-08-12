@@ -60,6 +60,15 @@ export interface LocalePolicy {
    * ja는 일본 고객사(리조트·리테일)를 앞세운다.
    */
   reviewOrder: readonly ReviewKey[] | null;
+
+  /**
+   * 홈 imageSection 히어로 이미지(HOM-64).
+   * 키오스크 화면 문구가 로케일별로 다르게 렌더된 컷이라 언어마다 파일이 갈린다.
+   * 좌우 배경이 생성 확장된 와이드 컷이라, 넓은 뷰포트에서 회색 필러가 드러나던 문제도 함께 해소한다.
+   * 교체 시 ImageSection의 폭 상한 상수(이미지 종횡비에서 유도)도 같이 갱신해야 한다
+   * — imageSection-aspect.test.ts가 그 동기화를 강제한다.
+   */
+  homeHeroImage: string;
 }
 
 const KAKAO_CHANNEL_URL = "http://pf.kakao.com/_cZLcn";
@@ -74,6 +83,7 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
     vcoHeroVideo: VCO_HERO_VIDEO_KO,
     reviewOrder: null,
+    homeHeroImage: "/images/main/imageSection-hero-ko.webp",
   },
   en: {
     showCareers: false,
@@ -83,6 +93,7 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
     vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 영어 자막 버전 압축본으로 교체
     reviewOrder: null,
+    homeHeroImage: "/images/main/imageSection-hero-en.webp",
   },
   ja: {
     showCareers: false,
@@ -91,6 +102,7 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     footer: { showEmail: true, showBizNo: false, showJapanEntity: true },
     vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 일본어 자막 버전 압축본으로 교체
     reviewOrder: ["resort", "retail", "bakery", "cafeteria"],
+    homeHeroImage: "/images/main/imageSection-hero-ja.webp",
   },
 };
 
