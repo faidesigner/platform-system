@@ -63,3 +63,12 @@ Always reuse existing tokens and components first.
    `curl -s https://d6hs8futv6rcu.cloudfront.net/version.json` 의 `sha` ↔ `git rev-parse HEAD`(develop). 다르면 재배포부터.
 3. 카드 노트의 "Playwright PASS"가 **로컬/브랜치 빌드** 기준인지 **dev 배포본** 기준인지 구분해 적어라. 로컬 PASS는 dev 반영을 보장하지 않는다.
 4. dev 검증이 끝나도 그건 **프리뷰**일 뿐 — 실서비스(www.fainders.ai) 반영은 별도 `deploy.sh prd`다. "dev 검증 완료"를 "배포 완료"로 오인하지 마.
+
+[Rule: dev 검증 ≠ PRD 배포 — "배포후" 티켓의 기준선은 PRD다] (HOM-60/61/62 유령 티켓 사후분석 2026-08-12)
+배경: HOM-60(주소 오타)·HOM-61(CCTV 방침 제거)·HOM-62(ctaBanner 문구) 3건이 "아직 안 고쳐졌다"고 재신고됐다. 실측해 보니 **develop에는 모두 반영돼 있었고 main(=PRD)에만 옛 값이 남아** 있었다. PRD 배포가 2026-08-05에 멈춰 있는 동안 develop만 12커밋 앞서 있었고, QA팀은 `www.fainders.ai`를 보고 이미 고친 버그를 다시 적었다. 위 두 규칙([Fix Complete = develop 머지까지], [develop 머지 ≠ dev 배포])의 **다음 구멍**이다. 실손실: QA 재작성 3건 + 개발자 재조사.
+1. 카드의 `위치구분`이 **"배포후"면 검증 기준선은 PRD(`www.fainders.ai`)**다. dev 프리뷰가 최신이어도 그 티켓은 닫히지 않는다. `위치구분`을 먼저 보고 어느 환경을 대조할지 정해라.
+2. **"배포후" 티켓을 조사할 때는 develop만 보지 마라.** 코드가 이미 고쳐져 있는지 양쪽을 기계로 대조하라:
+   `git show main:<파일>` ↔ `git show develop:<파일>`, 그리고 `curl -s https://www.fainders.ai/version.json` 의 `sha` ↔ `git rev-parse main`.
+   develop에만 있으면 **코드 결함이 아니라 미배포**다 — 카드에 그렇게 적고 재수정하지 마라.
+3. 상태 승격 기준선을 이렇게 읽어라: **❸ Fix Complete = develop 머지 / ❹ QA 요청 = dev 배포 완료 / ❻ Release = PRD 배포 완료**. "배포후" 티켓을 ❻로 올리기 전 반드시 `deploy.sh prd`가 돌았는지 `version.json`으로 확인하라.
+4. **PRD가 develop보다 뒤처진 채 방치되면 유령 티켓이 계속 생산된다.** develop과 main의 격차(`git log main..develop --oneline`)가 쌓이면 배포 일정을 먼저 확인해라 — 개별 티켓을 파고들기 전에.
