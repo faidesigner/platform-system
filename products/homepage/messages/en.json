@@ -2,10 +2,10 @@
   "common": {
     "cta": {
       "contact": "Contact",
-      "requestDemo": "Request a Demo",
+      "requestDemo": "Contact",
       "learnMore": "Learn More",
       "more": "More",
-      "quickChat": "Quick Chat",
+      "quickChat": "Chat with Us",
       "reviewsMore": "More Customer Stories",
       "mediaMore": "Learn More"
     },
@@ -22,103 +22,104 @@
     "contact": "Contact"
   },
   "footer": {
-    "company": "Fainders.AI Inc.",
+    "company": "Fainders.ai Inc.",
     "ceoValue": "Myungwon Ham · Minkwon Wang",
-    "addressValue": "13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul, Republic of Korea",
+    "addressValue": "13F, 511 Tower, 1 Gangnam-daero 51-gil, Seocho-gu, Seoul 06628, Republic of Korea",
     "labels": {
       "ceo": "CEO",
       "tel": "Tel",
       "address": "Address",
-      "bizNo": "Business Reg. No.",
+      "bizNo": "Business Registration No.",
       "email": "Email"
     },
     "policies": {
-      "privacy": "Privacy Policy",
-      "cctv": "CCTV Operation & Management Policy"
-    }
+      "privacy": "Privacy Policy"
+    },
+    "telValue": "+82-2-6191-0049",
+    "emailValue": "contact@fainders.ai"
   },
   "products": {
     "visionCheckout": {
-      "heroSubtitle": "Next-Gen AI Autonomous Checkout Solution",
-      "featuresTitle": "What makes VCO different?",
+      "heroSubtitle": "The Next Generation of AI Self-Checkout",
+      "featuresTitle": "What Makes VCO Different?",
       "features": {
         "0": {
-          "title": "14 AI cameras that\nscan every angle",
-          "description": "Powered by Korea's only multi-view 3D recognition technology"
+          "title": "14 AI Cameras,\nNothing Gets Missed",
+          "description": "Sees every item in 3D, from every angle"
         },
         "1": {
-          "title": "Keep your existing POS,\nno equipment swap",
-          "description": "Works with the POS you already use"
+          "title": "Plugs Into Your\nExisting POS",
+          "description": "No need to switch POS"
         },
         "2": {
-          "title": "Flawless 99.9% recognition accuracy",
-          "description": "Far outperforms competitors, completing a scan in just one second at overwhelming speed"
+          "title": "99.9% Accuracy",
+          "description": "A full scan takes a single second"
         }
       },
-      "benefitsTitle": "How does it change things?",
+      "benefitsTitle": "What Changes for Your Store?",
       "benefits": {
         "0": {
-          "eyebrow": "Simplified purchase flow",
-          "title": "Seamless checkout,\neven for barcode-free items",
+          "eyebrow": "Frictionless Checkout",
+          "title": "Barcode or Not,\nCheckout Just Works",
           "items": {
             "0": {
-              "subtitle": "Easy to use",
-              "description": "No need to scan barcodes yourself, just place the tray and you're done!"
+              "subtitle": "Easy to Use",
+              "description": "Place the tray, and you're done!"
             },
             "1": {
-              "subtitle": "AI recognition with no item limits",
-              "description": "From barcode-free items like bread, salads, cafeteria meals to parts, 3D Vision AI recognizes them precisely, enabling automation with no item restrictions"
+              "subtitle": "Whatever You Sell, AI Reads It",
+              "description": "Pastries, salads, cafeteria meals, even nuts and bolts: Vision AI rings them all up"
             }
           }
         },
         "1": {
-          "eyebrow": "Workforce risk management",
-          "title": "A store free of hiring stress",
+          "eyebrow": "The Staffing Issue? No Problem",
+          "title": "Short-Staffed? No Problem",
           "items": {
             "0": {
-              "subtitle": "Reduced labor costs",
-              "description": "VCO handles simple checkout tasks, easing the owner's labor cost burden and enabling reasonable store operation"
+              "subtitle": "Save on OPEX",
+              "description": "VCO covers the checkout, Your staff focus elsewhere"
             },
             "1": {
-              "subtitle": "No hiring or training burden",
-              "description": "Free yourself from complex staff management and job training\nRun stably with minimal staff even where hiring is hard"
+              "subtitle": "Never Needs Hiring or Training",
+              "description": "VCO is up to speed from day one\nShort-staffed, frequent turnover? Your store keeps running"
             }
           }
         },
         "2": {
-          "eyebrow": "Improved profitability",
-          "title": "An intuitive checkout\nthat needs no guidance",
+          "eyebrow": "Sell More, Spend Less",
+          "title": "No Instructions Needed",
           "items": {
             "0": {
-              "subtitle": "Fast turnover",
-              "description": "Faster checkout shortens queues, boosting peak-time sales"
+              "subtitle": "Higher Throughput",
+              "description": "Faster checkout, shorter lines, more sales in the peak-hour rush"
             },
             "1": {
-              "subtitle": "Contactless with no digital exclusion",
-              "description": "From customers who find kiosks difficult to those who prefer self-checkout\nEasy for everyone, fast for all"
+              "subtitle": "Self-Service Everyone Can Use",
+              "description": "Easier and faster than a standard self-checkout kiosk"
             }
           }
         }
       },
-      "industriesTitle": "Key industries served",
-      "industriesDescription": "In spaces where many people gather in a short time, even barcode-free items can be checked out quickly",
+      "industriesTitle": "Industries",
+      "industriesDescription": "Fast checkout for crowded venues, barcode or not",
       "industries": {
         "0": {
           "label": "Bakery&Cafe"
         },
         "1": {
-          "label": "Cafeteria&Canteen"
+          "label": "Cafeteria"
         },
         "2": {
           "label": "Hospitality"
         }
       },
-      "reviewsTitle": "Customer testimonials",
+      "reviewsTitle": "Customer Stories",
       "reviews": {
         "0": {
           "category": "Bakery",
-          "store": "Mannameal Bakery",
-          "role": "General Manager, Song Ju-hee",
+          "store": "Manamil Bakery",
+          "role": "Juhee Song, General Manager",
           "quote": {
             "0": {
               "text": "\"Hiring extra staff was a burden, so we adopted VCO. "
@@ -127,13 +128,13 @@
               "text": "It does the work of one employee"
             },
             "2": {
-              "text": ", which clearly reduced our workload. It even tells apart look-alike breads well, so I'd recommend it to other stores.\""
+              "text": "\"Additional staffing just wasn't viable for us, so we brought in VCO instead. It does the work of one person, and our work got much lighter right away. It can even tell apart pastries that look the same. I'd tell any bakery to get one.\""
             }
           }
         },
         "1": {
-          "category": "Foodservice",
-          "store": "Manager, large catering firm W",
+          "category": "Cafeteria",
+          "store": "Manager, major foodservice operator 'W'",
           "role": "",
           "quote": {
             "0": {
@@ -143,17 +144,17 @@
               "text": "360 people per hour"
             },
             "2": {
-              "text": ", drastically shortening queues, and the solution improved checkout accuracy.\""
+              "text": "\"At lunch we're getting 360 people through every hour now, so the lines are nothing like they used to be. And checkout is more accurate than when the staff were ringing everything up.\""
             }
           }
         },
         "2": {
           "category": "Resort",
-          "store": "Resort Manager, Niseko, Hokkaido, Japan",
+          "store": "Manager, Niseko Resort, Hokkaido, Japan",
           "role": "",
           "quote": {
             "0": {
-              "text": "\"Since adopting AI, our staff no longer need to manually enter items by looking at products, greatly reducing employee stress. Checkout speed has also improved "
+              "text": "\"Since the AI came in, our staff don't have to look at every item and key in the price, and you can tell it's taken a lot of pressure off them. Checkout is about two to three times faster, which makes a real difference for us on the floor.\""
             },
             "1": {
               "text": "approximately 2–3 times"
@@ -166,72 +167,72 @@
       }
     },
     "unmannedStore": {
-      "heroSubtitle": "The world's most economical autonomous store solution",
-      "effectsTitle": "Experience the impact of WALK-THROUGH",
+      "heroSubtitle": "The World's Most Economical Unmanned Store",
+      "effectsTitle": "What You Get With WALK-THROUGH",
       "effectCards": {
         "0": {
-          "title": "Reduced labor costs",
-          "description": "Operate with minimal staff"
+          "title": "Save on OPEX",
+          "description": "Runs without extra hires"
         },
         "1": {
-          "title": "Unmanned checkout",
-          "description": "No need to scan barcodes"
+          "title": "Automated Checkout",
+          "description": "Nothing to scan"
         },
         "2": {
-          "title": "Remote operation",
-          "description": "Get real-time status updates"
+          "title": "Remote Operation",
+          "description": "Real-time status, wherever you are"
         }
       },
       "effectList": {
         "0": {
-          "title": "Differentiated VISION-AI technology",
-          "description": "Through multiple cameras and AI technology,\nwe deliver an autonomous store solution with unprecedented technology for offline stores"
+          "title": "How Our VISION-AI Is Different",
+          "description": "Multiple cameras powered by AI\nbringing unmanned operation to brick and mortal stores"
         },
         "1": {
-          "title": "Inventory management via real-time shelf status",
-          "description": "Real-time shelf status checks enable out-of-stock management\nRespond instantly to sales losses from empty shelves"
+          "title": "Real-Time Shelf Monitoring",
+          "description": "Detect out-of-stocks live\nand restock before they cost you a sale"
         },
         "2": {
-          "title": "Offline customer data analysis",
-          "description": "Cameras track the products customers pick and checkout happens automatically,\napplying a fully autonomous checkout system"
+          "title": "In-Store Customer Analytics",
+          "description": "Cameras track what customers pick up,\nand payment completes on its own with no checkout at all"
         }
       },
       "storeTypes": {
         "0": {
           "subtitle": "Automating small stores under 100 sqm",
-          "description": "With high flexibility that fits any store format,\ntry it in convenience stores, small supermarkets, and select shops",
-          "sectionTitle": "What makes Walk-through different?",
+          "description": "Unmanned operation for stores under 1,100 sq ft\nFits any layout\nConvenience stores, small supermarkets, select shops",
+          "sectionTitle": "What Makes WALK-THROUGH Different?",
           "cards": {
             "0": {
-              "title": "Simple customer experience",
-              "description": "No checkout lines, no barcode scanning, the simplest customer experience."
+              "title": "Seamless Shopping",
+              "description": "No lines, no scanning, just the simplest way to shop"
             },
             "1": {
-              "title": "Proven accuracy",
-              "description": "Start a new store on the excellent accuracy proven at stores already in operation"
+              "title": "Proven Accuracy",
+              "description": "Launch with accuracy already proven in live stores"
             },
             "2": {
-              "title": "Greater operational efficiency",
-              "description": "Like online, use in-store data to decide the optimal direction for operations"
+              "title": "Smarter Store Operations",
+              "description": "Run offline like online, letting in-store data drive your decisions"
             }
           }
         },
         "1": {
-          "subtitle": "Open an unmanned retail shop in idle space of around 16 sqm",
-          "description": "Start an unmanned shop with prefab construction that installs in a day",
-          "sectionTitle": "What makes Walk-through different?",
+          "subtitle": "Turn 180 sq ft of idle space into an unmanned shop",
+          "description": "Pre-assembled, and installed in a single day",
+          "sectionTitle": "What Makes WALK-THROUGH Different?",
           "cards": {
             "0": {
-              "title": "Low setup cost",
-              "description": "With standardized prefab construction, adopt an unmanned store at the lowest price"
+              "title": "Low Setup Cost",
+              "description": "Standardized pre-assembly makes it the most affordable way to go unmanned"
             },
             "1": {
-              "title": "Fast installation",
-              "description": "Choose a set spec and installation completes in a day.\nStart selling the next day"
+              "title": "Fast Installation",
+              "description": "Pick a format, and it's installed in a day\nGo live the next morning"
             },
             "2": {
-              "title": "Monetizing idle space",
-              "description": "Make the most of every last space.\nShop-in-shop, lobbies, inside stadiums, an unmanned shop fits any kind of space"
+              "title": "Monetize Idle Space",
+              "description": "Make every last square foot count\nConcessions across hotels, malls, and stadiums: an unmanned shop fits anywhere"
             }
           }
         }
@@ -239,54 +240,54 @@
       "caseStudies": {
         "standard": {
           "0": {
-            "brand": "GS25 DX LAB",
+            "brand": "GS25 DX LAB\nGasan Smart Store",
             "store": "Gasan Smart Store",
-            "description": "Korea's first fully unmanned roadside-style convenience store\nAsia's first integrated load-cell technology"
+            "description": "Korea's first fully unmanned convenience store"
           },
           "1": {
             "brand": "Super Swift",
             "store": "Self-operated store",
-            "description": "Directly operated store\nKorea's first pay-later CX"
+            "description": "Flagship store\nA customer journey designed to make AI checkout feel natural"
           },
           "2": {
             "brand": "Naju Tech-Friendly",
-            "store": "CU Ansim Smart Store",
-            "description": "KISA headquarters test store"
+            "store": "CU Secure Smart Store",
+            "description": "Pilot store at KISA headquarters"
           },
           "3": {
             "brand": "Pangyo Alphadom",
             "store": "\"Worker Shop\"",
-            "description": "\"Shadow\" select shop"
+            "description": "\"Shadow\" Store"
           }
         },
         "micro": {
           "0": {
             "brand": "PX24",
-            "store": "Euljiro branch",
-            "description": "A 24/7, 16 sqm unmanned store\nlocated inside a fitness center"
+            "store": "Euljiro",
+            "description": "A 180 sq ft unmanned store inside a gym,\nopen 24/7"
           },
           "1": {
             "brand": "PX24",
-            "store": "Hwagok branch",
-            "description": "An ultra-compact 11.5 sqm unmanned store\nlocated inside a fitness center"
+            "store": "Hwagok",
+            "description": "A compact 125 sq ft unmanned store\ninside a gym"
           }
         }
       }
     },
     "productMenu": {
       "0": {
-        "description": "AI self-checkout with no barcode scanning"
+        "description": "AI Self-Checkout"
       },
       "1": {
-        "description": "VISION AI autonomous store solution"
+        "description": "Unmanned store powered by Vision AI"
       }
     }
   },
   "home": {
     "hero": {
-      "title1": "The Future of Retail",
-      "title2": "Start One Step Ahead",
-      "tagline": "No Staff, No Problem.",
+      "title1": "Retail AI",
+      "title2": "At Your Store",
+      "tagline": "Trouble Finding Staff? No Problem.",
       "subtitle": "Next-Gen AI Retail Automation"
     },
     "whyFai": {
@@ -294,16 +295,16 @@
       "subheadline": "No stoppages, no added labor cost, no waiting in line\nRun your store at peak efficiency.",
       "items": {
         "0": {
-          "title": "Seamless, uninterrupted checkout",
-          "description": "No barcode scanning — just set items down and checkout is done\nA smooth checkout experience changes your store's revenue"
+          "title": "Keep Lines Moving",
+          "description": "Customers place their items, pay, and go\nShorter lines sell more"
         },
         "1": {
-          "title": "Maximum efficiency, minimum staff",
-          "description": "Let smart AI handle simple calculations, so you can focus on higher-value store management"
+          "title": "Still Running, Even Short-Handed",
+          "description": "AI handles the checkout, your staff handles the store"
         },
         "2": {
-          "title": "A seamless customer experience",
-          "description": "With shorter wait times, customers leave happier and are more likely to come back"
+          "title": "Seamless Customer Experience",
+          "description": "Satisfied customers turn into regulars"
         }
       }
     },
@@ -312,20 +313,20 @@
     },
     "efficiency": {
       "title": "Efficiency",
-      "subtitle": "Proven performance in numbers, redefining the standard for stores",
+      "subtitle": "The numbers speak for themselves",
       "stats": {
         "0": {
-          "label": "Payment accuracy",
-          "description": "Flawless vision AI with zero error"
+          "label": "Checkout accuracy",
+          "description": "Powered by Vision AI"
         },
         "1": {
-          "label": "Reduced customer wait time",
-          "labelCaption": "(before/after VCO adoption)",
-          "description": "Ultra-fast checkout that stops churn"
+          "label": "Shorter wait times",
+          "labelCaption": "",
+          "description": "Short lines, fewer lost sales"
         },
         "2": {
-          "label": "Revenue growth rate",
-          "description": "Maximized turnover during peak hours"
+          "label": "Increase in sales",
+          "description": "Higher peak-time throughput"
         }
       }
     },
@@ -333,32 +334,32 @@
       "alt": "FAI Platform Fullscreen Overview"
     },
     "ctaBanner": {
-      "titleLine1": "Deploy it in your store today",
-      "titleLine2": "and experience maximum efficiency"
+      "titleLine1": "Ready to see it",
+      "titleLine2": "in your store?"
     }
   },
   "about": {
     "hero": {
       "eyebrow": "Retail Innovation",
       "title": [
-        "So Customers Can Focus",
-        "on What Retail Is Really About"
+        "Enable Retailers to Focus",
+        "on What Really Matters"
       ]
     },
     "partners": {
       "title": "Partners",
       "description": [
         "Working with global market leaders,",
-        "we're creating value that goes beyond technology"
+        " on value that goes beyond technology"
       ]
     },
     "investors": {
       "groups": {
         "0": {
-          "caption": "With KRW 12.7B in cumulative funding, we've earned recognition for our global business performance and growth potential"
+          "caption": "₩12.7B raised to date, backing our global growth"
         },
         "1": {
-          "caption": "Selected for major government deep-tech development programs, recognized for technology that leads the market."
+          "caption": "Selected for Korea's deep-tech support programs."
         }
       }
     },
@@ -373,8 +374,8 @@
             "2": "M.S. in Computer Science, UCLA"
           },
           "career": {
-            "0": "Former Samsung Electronics",
-            "1": "Former CTO (Co-founder), Fripy"
+            "0": "Samsung Electronics",
+            "1": "Co-founder & CTO, Frifee"
           }
         },
         "1": {
@@ -384,54 +385,54 @@
             "1": "M.S. in ITM, KAIST"
           },
           "career": {
-            "0": "Former Founder & CEO, Funded (acquired)",
-            "1": "Former WeMakePrice NBE TF"
+            "0": "Founded & exited a VC-backed startup (CEO)",
+            "1": "Wemakeprice, NBE TF"
           }
         },
         "2": {
-          "name": "Sukbum Hong",
+          "name": "Sukbom Hong",
           "education": {
             "0": "Seoul Science High School",
-            "1": "B.S./Ph.D. in Electrical & Computer Engineering,\nSeoul National University"
+            "1": "B.S. & Ph.D. in Electrical and Computer Engineering,\nSeoul National University"
           },
           "career": {
-            "0": "Former Samsung Electronics",
-            "1": "Former CTO (Co-founder), Fripy"
+            "0": "Samsung Electronics",
+            "1": "Co-founder & CTO, Frifee"
           }
         },
         "3": {
           "name": "Hyunkyu Lee",
           "education": {
-            "0": "B.A. in Architectural Engineering, Yonsei University"
+            "0": "B.S. in Architectural Engineering, Yonsei University"
           },
           "career": {
-            "0": "Former NICE Information Service, Business Planning Team",
-            "1": "Former BCG Consultant"
+            "0": "Business Planning Group, NICE Information Service",
+            "1": "Consultant, BCG"
           }
         }
       }
     },
     "people": {
-      "title": "People",
-      "subtitle": "Meet the members of Fainders.AI",
+      "title": "Team",
+      "subtitle": "Meet the people behind Fainders.AI",
       "cards": {
         "0": {
-          "title": "Building technology that makes the world better with AI",
-          "name": "Sukbum Hong",
+          "title": "We build AI that leaves the world better than we found it",
+          "name": "Sukbom Hong",
           "role": "CTO"
         },
         "1": {
-          "title": "Working with people who solve problems all the way through, without avoiding them",
+          "title": "We work with people who run toward hard problems, not away from them",
           "name": "Minkwon Wang",
           "role": "CEO"
         },
         "2": {
-          "title": "Thinking about the problem before the technology, the direction before the speed, the experience before the implementation",
+          "title": "Problems over tech, direction over speed, experience over deployment",
           "name": "Sungbin Park",
-          "role": "BE Engineer"
+          "role": "Backend Engineer"
         },
         "3": {
-          "title": "Building a new future for Japan's retail market",
+          "title": "Building a new future for retail in Japan",
           "name": "Jimin Lee",
           "role": "CEO"
         }
@@ -439,7 +440,7 @@
       "interviewAriaLabel": "View {name}’s job interview"
     },
     "meta": {
-      "title": "About Us",
+      "title": "About",
       "description": "About Fainders.AI — Realizing store automation with multi-view 3D Vision AI."
     }
   },
@@ -452,63 +453,63 @@
       "title": "FAI News",
       "items": {
         "0": {
-          "title": "Fainders.AI Raises KRW 5B in Pre-Series B, Expanding AI Unmanned Store Solutions",
-          "description": "AI retail solution startup Fainders.AI has raised approximately KRW 5 billion in its Pre-Series B round.",
+          "title": "Fainders.AI Raises ₩5B Pre-Series B to Scale AI Unmanned Stores",
+          "description": "Fainders.AI, an AI-powered retail solutions startup, has raised approximately ₩5 billion in its pre-Series B round.",
           "thumbnailAlt": "Fainders.AI raises KRW 5B in Pre-Series B funding, expanding AI unmanned store solutions"
         },
         "1": {
-          "title": "Fainders.AI Partners with Samsung Welstory on 'AI Self-Checkout,' Upgrading Unmanned Payment for Ready-to-Eat Meals",
-          "description": "AI retail solution company Fainders.AI has partnered with Samsung Welstory to apply its 'AI self-checkout (VCO)' to Samsung Welstory's unmanned payment system for ready-to-eat meals.",
+          "title": "Fainders.AI Brings AI Self-Checkout to Samsung Welstory's Stores",
+          "description": "Fainders.AI has partnered with Samsung Welstory to deploy its AI self-checkout, VCO (Vision Check-Out).",
           "thumbnailAlt": "Fainders.AI partners with Samsung Welstory on 'AI self-checkout'"
         },
         "2": {
-          "title": "Fainders.AI Deploys Fully Unmanned AI Convenience Store at 7-Eleven Singapore",
-          "description": "Fainders.AI announced it has supplied its fully unmanned AI store technology to a 7-Eleven store in Singapore, which is now in operation.",
+          "title": "Fainders.AI Powers a Fully Unmanned 7-Eleven in Singapore",
+          "description": "Fainders.AI has supplied the AI technology behind a fully unmanned 7-Eleven store in Singapore.",
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store at 7-Eleven Singapore"
         },
         "3": {
-          "title": "Tokyu Land and Partners Launch AI Self-Checkout PoC at 'NEST813' Restaurant in Niseko Tokyu Grand Hirafu",
-          "description": "Tokyu Land Corporation, Tokyu Resorts & Stays, and Fainders.AI Japan have begun a PoC to introduce the AI self-checkout 'VISION CHECK-OUT' at the new restaurant 'NEST813.'",
+          "title": "Tokyu Land Begins AI Self-Checkout PoC at Niseko Tokyu Grand Hirafu",
+          "description": "Tokyu Land Corporation, Tokyu Resorts & Stays and Fainders.AI Japan are launching a PoC of the VISION CHECK-OUT AI self-checkout at NEST813, a new restaurant opening in December 2025 inside the all-season mountain resort Niseko Tokyu Grand Hirafu.",
           "thumbnailAlt": "Tokyu Land and partners launch AI self-checkout PoC at 'NEST813' restaurant in Niseko"
         },
         "4": {
-          "title": "Fainders.AI Selected for Global Acceleration Program 'HFX'",
-          "description": "AI store automation company Fainders.AI was selected for the global acceleration program 'Hokkaido F-Village X (HFX),' held in Hokkaido, Japan.",
+          "title": "Fainders.AI Selected for the HFX Global Acceleration Program",
+          "description": "Fainders.AI, an AI store automation company, has been selected for Hokkaido F Village X (HFX), a global acceleration program running in Hokkaido, Japan.",
           "thumbnailAlt": "Fainders.AI selected for global acceleration program 'HFX'"
         },
         "5": {
-          "title": "Korean Retail AI Startup Opens PoC Store at Lifestyle Lab 'TOYONOMA'",
-          "description": "At the lifestyle lab 'TOYONOMA' in Toyosu, Tokyo, Korean startup Fainders.AI has officially opened Japan's first PoC store featuring its next-generation AI self-checkout.",
+          "title": "Korean Retail AI Startup Opens PoC Store at LIFE STYLE LAB TOYONOMA",
+          "description": "Korean startup Fainders.AI opened its first PoC store in Japan on November 6, 2025 at LIFE STYLE LAB TOYONOMA in Toyosu, Tokyo, showcasing its next-generation VISION CHECK-OUT AI self-checkout, and marked the occasion with a launch event.",
           "thumbnailAlt": "Korean retail AI startup opens PoC store at lifestyle lab 'TOYONOMA'"
         },
         "6": {
-          "title": "\"Pick Up and Walk Out, Payment Done\"... Fainders.AI Opens Second Unmanned Store",
-          "description": "Fainders.AI announced it has opened its second AI unmanned micro store at the Spoany Hwagok branch and begun operations.",
+          "title": "\"Pick It Up and Walk Out\": Fainders.AI Opens Its Second Unmanned Store",
+          "description": "Fainders.AI has opened its second AI unmanned micro store at Spoany.",
           "thumbnailAlt": "Fainders.AI opens second unmanned store"
         },
         "7": {
-          "title": "Fainders.AI Opens AI Unmanned Micro Store",
-          "description": "Store automation AI startup Fainders.AI officially announced the opening of Korea's first AI unmanned micro store.",
+          "title": "Fainders.AI Opens an AI Unmanned Micro Store",
+          "description": "Fainders.AI, a store automation AI startup, has opened Korea's first AI unmanned micro store.",
           "thumbnailAlt": "Fainders.AI opens AI unmanned micro store"
         },
         "8": {
-          "title": "Fainders.AI Selected as a 'Baby Unicorn' by the Ministry of SMEs, Accelerating Global Expansion",
-          "description": "Fainders.AI has been selected this year as a 'Baby Unicorn' by Korea's Ministry of SMEs and Startups, a first for the AI unmanned store solution sector.",
+          "title": "Fainders.AI Named a Baby Unicorn, Setting Up Global Expansion",
+          "description": "Fainders.AI has been named a Baby Unicorn by Korea's Ministry of SMEs and Startups this year, the first company in AI unmanned store solutions to receive the designation.",
           "thumbnailAlt": "Fainders.AI selected as a 'Baby Unicorn' by the Ministry of SMEs"
         },
         "9": {
-          "title": "Fainders.AI Deploys Fully Unmanned AI Convenience Store with GS Retail",
-          "description": "Store automation AI technology company Fainders.AI is supplying unmanned store technology to GS Retail's future-format convenience store, GS25 DX LAB Store No. 2.",
+          "title": "Fainders.AI and GS Retail Launch a Fully Unmanned AI Convenience Store",
+          "description": "Fainders.AI, a store automation AI company, has supplied unmanned store technology to the second GS25 DX LAB, GS Retail's future-format convenience store.",
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store with GS Retail"
         },
         "10": {
-          "title": "AI Unmanned Store Startup Fainders.AI Raises KRW 7.1B in Series A Funding",
-          "description": "Fainders.AI, developer of AI unmanned store solutions, has successfully raised approximately KRW 7.1 billion in its Series A round.",
+          "title": "Store Automation AI Startup Fainders.AI Raises ₩7.1B Series A",
+          "description": "Fainders.AI, which develops AI unmanned store solutions, has raised ₩7.1 billion in a Series A round.",
           "thumbnailAlt": "Fainders.AI raises KRW 7.1B in Series A funding"
         },
         "11": {
-          "title": "AI Unmanned Store Startup Fainders.AI Raises KRW 600M in Seed Funding",
-          "description": "Fainders.AI, developer of AI-based offline retail store automation technology, has raised KRW 600 million in seed funding from Kkeullim Ventures.",
+          "title": "Store Automation AI Startup Fainders.AI Raises ₩600M Seed",
+          "description": "Fainders.AI (CEO Myungwon Ham), which develops AI-based automation for offline retail stores, has raised ₩600 million in seed funding from Klim Ventures.",
           "thumbnailAlt": "Fainders.AI raises KRW 600M in seed funding"
         }
       }
@@ -542,7 +543,7 @@
       "videoOverrides": {
         "lLDFJ-3rs2U": {
           "title": "[Intro] Fainders.AI's unmanned stores",
-          "description": "Hey guys!\n\nWe are Fainders.AI  :)\nCome take a look at our AI-powered checkout-free stores!"
+          "description": "Hey guys!\n\nWe are Fainders.AI :)\nCome take a look at our AI-powered checkout-free stores!"
         },
         "VJSlS3ujdEo": {
           "title": "Super Swift store powered by Fainders.AI",
@@ -553,114 +554,114 @@
           "description": "Meet our store's new part-time employee💁🏻‍♀️\nThis smart staff member's name is VCO🪄\n\n\n #FaindersAI  #shorts  #bakerylovers #bakerycafestartup #ai #retail #unmannedcafe #bakeryshop #bakery #brunchcafe #cafeowner"
         },
         "K2ueKcophSc": {
-          "title": "Bakery Update These Days [Lucifer Appears in Bread Lovers' Paradise...(read more)]",
-          "description": "You can buy bread even without the owner around⁉️\nWe visited Secret Bakery's Seoul Arts Center branch and found an amazing checkout counter that finishes payment the moment you set your tray down👀🥐\n\n\n#FaindersAI #ai #bakerylovers #aiadoption #secretbakery #gyodaebranch"
+          "title": "Bakery Watch: Pastry Heaven Just Got an Upgrade...",
+          "description": "Wait, you can buy pastries with nobody at the counter⁉️\nWe stopped by Secret Bakery at Seoul Arts Center and found a checkout that rings everything up the second you put your tray down👀🥐"
         },
         "8_zRbYyScQQ": {
-          "title": "VCO Bakery Pilgrimage [ep2. Secret Bakery, Seoul Arts Center Branch]",
-          "description": "It's surprisingly hard to find good food near the Seoul Arts Center😢 Right in front of it, Secret Bakery was full of delicious bread🥯 And a bonus: fast checkout with no waiting in line!\n\n\n\n#SeoulArtsCenter #FaindersAI #bakerylovers #secretbakery #gyodaefood #gyodaecafe #trend #breadlover"
+          "title": "Bakery Crawl [ep2. Secret Bakery, Seoul Arts Center]",
+          "description": "Surprisingly hard to find a good spot to eat near Seoul Arts Center😢 But Secret Bakery, right out front, was packed with amazing pastries🥯 Fast checkout with no line? So cool!"
         },
         "6mdVuqYxWI8": {
-          "title": "Spot the Difference (ep2. Artisée)",
+          "title": "Can AI Tell These Look-Alike Pastries Apart? (ep2. Spot the Difference: Artisee)",
           "description": "They may look alike, but every one tastes different!!🥖\nAn AI scanner checkout that knows exactly what we want and tells the bread apart precisely\n\n\n\n#FaindersAI #Artisee #bakerypilgrimage #saltbreadlovers #friedsoboro #bakerylovers #trendshorts  #trend"
         },
         "SQVWhX_U3f4": {
-          "title": "Can AI Tell Mango Cakes Apart? (ep1. Spot the Difference, Toujours Mango Cake)",
+          "title": "Can AI Tell Mango Cakes Apart? (ep1. Spot the Difference at Toujours)",
           "description": "No two mangoes under the sky are the same🥭💛 We found an AI checkout that easily tells apart even cakes that look alike🤖‼️\n#trend #bakerytour #breadlover #bakerypilgrimage #ai #FaindersAI #Toujours"
         },
         "hPLD6RDw64M": {
-          "title": "VCO Challenge [The Magic Technology That Cuts Bakery Wait Times]",
-          "description": "How long could it possibly take to check out all this bread??🍞🥐🥖🥨 We tried out the magic technology that finishes payment the moment you set it down⚡"
+          "title": "The VCO Challenge [ep1. How Fast Is AI?]",
+          "description": "How long does it take to ring up ALL these pastries??🍞🥐🥖🥨 We tried the magic tech that finishes checkout the second you set it down⚡"
         },
         "EAJYPdhpTAo": {
-          "title": "VCO Bakery Pilgrimage [ep1. Han Sang-min Bakery, Singeomdan Jungang Station Branch]",
-          "description": "We went on a bakery pilgrimage to Han Sang-min Bakery, said to be a true local favorite among Incheon Geomdan residents🍞🥖\nEven a quick glance showed such an overwhelming variety of bread that it was hard to choose😋\nA place that will win you over twice — once with its dazzling variety of bread, and again with its smart checkout?\n\n📍 Han Sang-min Bakery, Singeomdan Jungang Station Branch"
+          "title": "VCO Bakery Crawl [ep1. Hansangmin Bakery]",
+          "description": "We took our bakery crawl to Hansangmin Bakery, a genuine local favorite in Geomdan, Incheon🍞🥖\nOne look around and there were so many pastries we couldn't choose😋\nWe fell for the selection first and the smart checkout second"
         },
         "M44Ig8m4BfU": {
-          "title": "Fainders.AI VCO On-Site Case Studies｜Toujours Bakery in Cheonan, Niseko Resort in Hokkaido, Japan",
+          "title": "Fainders.AI VCO in the Field | Toujours Cheonan and Niseko Resort, Japan",
           "description": "Fainders.AI's AI unmanned checkout solution, VCO.\nActive across bakeries, resorts, and more, delivering a new retail experience.\n\n⑴99.7% checkout accuracy\nFlawless vision AI with zero margin for error: accurately recognizes even complex, overlapping bread and products in one second, cutting off loss at the source.\n\n⑵75% reduction in customer wait time\nUltra-fast checkout that prevents walkaways: no need to find and scan barcodes — just place the whole tray down and checkout is done.\n\n⑶15% increase in sales\nMaximizes turnover during peak hours: eliminates checkout bottlenecks during the busiest times, fully capturing additional sales that were previously being missed."
         },
         "20XzJavnjyY": {
-          "title": "Fainders.AI｜AI Unmanned Store Super Swift",
-          "description": "Are you still standing in line scanning barcodes one by one?\nWe introduce the next-generation AI unmanned store — a new shopping paradigm with no checkout waiting and no barcode scanning.\nSee in this video the future of retail that retail tech will transform."
+          "title": "Fainders.AI | Super Swift, an AI Unmanned Store",
+          "description": "Still standing in line to scan barcodes one by one?\nNo waiting, no scanning. Meet the next-generation AI unmanned store, and a whole new way to shop.\nSee how retail tech is reshaping the future of commerce."
         },
         "SRBp_bmPk5o": {
-          "title": "Fainders.AI｜How to Use VCO at a Bakery (Including Pager & Checkout Process)",
-          "description": "Vision Check Out is an AI unmanned checkout that automatically creates your purchase list the moment you place your bread and drinks down.\nNo tedious scanning or product searches — just set your items down and pay, for a convenient shopping experience from start to finish."
+          "title": "Fainders.AI | How to Use VCO at a Bakery (with pager and payment)",
+          "description": "Vision Check Out is an AI self-checkout that builds your basket the moment you set your pastries and drinks down.\nNo tedious scanning, no searching for items. Set it down, pay, and you're done."
         },
         "XZ3gEzfrWN0": {
-          "title": "What Makes Fainders.AI VCO Different? ③: Products That Look the Same From Above, VCO Sees Differently!",
-          "description": "What makes Fainders.AI's AI unmanned checkout VCO (Vision Check Out) different, and how?\nCan it tell apart products that look identical when viewed from directly above?\n\n[Other Companies]\nOnly top-view recognition is possible, so if you place items that look identical from above, they can't be told apart properly.\n\n[Fainders.AI VCO]\n14 cameras recognize every angle, including side views, without any blind spots — so it tells apart even products that look identical from above."
+          "title": "Why VCO Is Different ③: Look-Alike From Above, Not to VCO",
+          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\nCan it really tell apart items that look identical from above?\n\n[Other solutions]\nTop-view recognition only, so items that look the same from above are hard to tell apart.\n\n[Fainders.AI VCO]\n14 cameras read the sides as well as the top, so even items that look identical from above are identified correctly."
         },
         "_0FCk3XMS5w": {
-          "title": "What Makes Fainders.AI VCO Different? ②: Accurately Tells Apart Even Similar-Looking Breads!",
-          "description": "What makes Fainders.AI's AI unmanned checkout VCO (Vision Check Out) different, and how?\n\n[Other Companies]\nPlain salt bread, basil salt bread, hard salt bread — similar in appearance but different in name and price... Other systems struggle to tell these different products apart, causing errors during checkout.\n\n[Fainders.AI VCO]\n99% recognition accuracy for similar-looking products. VCO accurately recognizes breads that look alike but are actually different."
+          "title": "Why VCO Is Different ②: It Tells Look-Alike Pastries Apart",
+          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\n\n[Other solutions]\nPlain salt pastry, basil salt pastry, hard salt pastry. They look alike but have different names and prices, and systems that can't tell them apart cause checkout errors.\n\n[Fainders.AI VCO]\n99% accuracy on look-alike items. VCO correctly identifies breads that look the same but aren't."
         },
         "1E0bPZMJZ-o": {
-          "title": "What Makes Fainders.AI VCO Different? ①: Customers Can Resolve Product-Overlap Errors Themselves!",
-          "description": "What makes Fainders.AI's AI unmanned checkout VCO (Vision Check Out) different, and how?\n\n[Other Companies]\nIf an error occurs from overlapping products, a staff member has to step in and resolve it directly.\n\n[Fainders.AI VCO]\nIf an error occurs from overlapping products, the customer can simply resolve it themselves just by rearranging the items."
+          "title": "Why VCO Is Different ①: Customers Fix Overlap Errors Themselves",
+          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\n\n[Other solutions]\nWhen overlapping items cause an error, a staff member has to step in and fix it.\n\n[Fainders.AI VCO]\nWhen overlapping items cause an error, the customer just rearranges them and it clears."
         },
         "NZf1qo6LS8w": {
-          "title": "Fainders.AI｜How to Use VCO, the Bakery AI Unmanned Checkout",
-          "description": "The start of checkout with no distinction between bakery goods and packaged products.\nWe introduce VCO, the AI unmanned checkout that can even recognize products without barcodes."
+          "title": "Fainders.AI | How the VCO AI Self-Checkout Works at a Bakery",
+          "description": "One checkout for bakery items and packaged goods alike.\nMeet VCO, the AI self-checkout that recognizes products with no barcode."
         },
         "DSTIFkS5Nw8": {
-          "title": "Fainders.AI Store Unmanned Solution Introduction Video (Korean Subtitles)",
-          "description": "Fainders.AI develops unmanned store solutions using computer vision and AI technology."
+          "title": "Fainders.AI Store Automation Solutions (Korean subtitles)",
+          "description": "Fainders.AI retail automation solutions powered by Vision AI."
         },
         "Qon4TWeBsdQ": {
-          "title": "VCO (Vision Check-out) Bakery Introduction Video",
-          "description": "The start of checkout with no distinction between bakery goods and packaged products.\nWe introduce VCO, the AI unmanned checkout that can even recognize products without barcodes.\n\n⑴ 99% accurate recognition of similar products\n⑵ More accurate judgment through multi-angle recognition\n⑶ A checkout experience where customers can quickly resolve errors themselves"
+          "title": "VCO (Vision Check-Out) for Bakeries",
+          "description": "One checkout for bakery items and packaged goods alike.\nMeet VCO, the AI self-checkout that recognizes products with no barcode.\n\n⑴ 99% accuracy on look-alike items\n⑵ Multi-angle recognition for more accurate reads\n⑶ Errors customers can clear in seconds"
         },
         "OetI0X56u3k": {
-          "title": "Fainders.AI｜Introducing VCO (Vision Check-out), the AI Unmanned Checkout",
-          "description": "Freely choose your items at the cafeteria and just place them on the checkout counter — payment complete.\nWe introduce VCO, the AI unmanned checkout that can even recognize products without barcodes."
+          "title": "Fainders.AI | Introducing the VCO, AI Self-Checkout",
+          "description": "Pick whatever you like in the cafeteria, set it on the counter, and payment is done.\nMeet VCO, the AI self-checkout that recognizes products with no barcode."
         }
       }
     },
     "retailTechLetter": {
       "title": "Retail Tech Letter",
       "description": "A newsletter covering retail technology trends and the latest news from Fainders.AI. Read past letters and subscribe.",
-      "ctaLabel": "Subscribe to the Letter",
+      "ctaLabel": "Subscribe",
       "letterTitles": {
-        "1": "[Retail Tech Letter] A Glimpse of the Future of Convenience Stores in Japan",
-        "2": "[Retail Tech Letter] Did Amazon Go Stores Really Grow by 50%?",
-        "3": "[Retail Tech Letter] 3 Outlooks for the Global Fully Unmanned Store Industry in 2024",
-        "4": "[Retail Tech Letter] At NRF 2024, Retailers Worldwide Focus on 'AI Unmanned Stores'",
-        "5": "[Retail Tech Letter] AI Unmanned Stores Expand — Why the UK Is Fast and Italy Is Slow",
-        "6": "[Retail Tech Letter] The Evolution of Vision AI Stores — Beyond the 2nd Generation to the 3rd",
-        "7": "[Retail Tech Letter] The Future of AI Unmanned Stores: Micro Stores",
-        "8": "[Retail Tech Letter] The Start of FAI's Entry into the Japanese Market — 'SUSHI TECH TOKYO 2024'",
-        "9": "[Retail Tech Letter] Global AI Unmanned Retail Market — A Strategic Analysis of Key Players",
-        "10": "[Retail Tech Letter] Introducing FAI's AI Micro Store, PX24",
-        "11": "[Retail Tech Letter] An Integrated AI Unmanned Store Solution the Offline Market Needs",
-        "12": "[Retail Tech Letter] The Present and Future of Store Automation in the Retail Industry",
-        "13": "[Retail Tech Letter] Fainders.AI Launches 'AI Self-Checkout'",
-        "14": "[Retail Tech Letter] 'AI Self-Checkout' — Confidence and Expectations for Next Year's Commercialization",
-        "15": "[Retail Tech Letter] Fainders.AI: \"2025, the Year We Go Global to Expand Unmanned Stores\"",
-        "16": "[Retail Tech Letter] Fainders.AI Opens Second 'PX24' AI Micro Store!",
-        "17": "[Retail Tech Letter] Fainders.AI Joins Japan's Largest Retail Tech Exhibition, Accelerating Local Expansion",
-        "18": "[Retail Tech Letter] First Milestone in Japan — FAI and AVITA Begin Collaborative PoC!",
-        "19": "[Retail Tech Letter] VCO's First PoC Records 99.1% Real-World Operating Accuracy!",
-        "20": "[Retail Tech Letter] Why Are Chinese Companies Interested in AI Self-Checkout?",
-        "21": "[Retail Tech Letter] Fainders.AI Opens Its First AI Unmanned Store in Singapore",
-        "22": "[Retail Tech Letter] One Month After the Changi Airport Demo, a Commercial Store Opens! Is the Client 7-Eleven?",
-        "23": "[Retail Tech Letter] VCO Expands Beyond Bakeries and Cafeterias — Now Into Japan!",
-        "24": "[Retail Tech Letter] In an Era of Shrinking Workforce, the Story of Fainders.AI's VCO",
-        "25": "[Retail Tech Letter] One Step Closer to Unmanned Bakeries! VCO's Opportunity at Seoul Cafe Show",
-        "26": "[Retail Tech Letter] From 'Possibility' to 'Proof' — How Was Fainders.AI's 2025?",
-        "27": "[Retail Tech Letter] In 2026, Retail Tech's Battleground Isn't 'Novelty' Anymore",
-        "28": "[Retail Tech Letter] FAI's Growing Presence in the Japanese Market — RetailTech Japan 2026",
-        "29": "[Retail Tech Letter] Pre-Series B Funding Secured, Strengthening Synergy with Retailers",
-        "30": "[Retail Tech Letter] Bakeries Using VCO Report 99% Satisfaction... \"No Reason Not to Adopt It\"",
-        "31": "[Retail Tech Letter] 'The Answer for Queuing Bakeries: AI Checkout' — Cheonan Toujours Case"
+        "1": "Seeing the Future of Convenience Stores in Japan",
+        "2": "Amazon Go Grew Its Store Count by 50%?",
+        "3": "Three Outlooks for the Global Unmanned Store Industry in 2024",
+        "4": "At NRF 2024, Retailers Worldwide Had One Focus: AI Automation",
+        "5": "Why AI Unmanned Stores Are Scaling Fast in the UK and Slowly in Italy",
+        "6": "The Evolution of Vision AI Stores: From Second Generation to Third",
+        "7": "The Future of AI Unmanned Stores: Micro Stores",
+        "8": "Where FAI's Push into Japan Began: SusHi Tech Tokyo 2024",
+        "9": "Inside the Global AI Automation Market: How the Key Players Are Playing It",
+        "10": "Introducing PX24, FAI's AI Micro Store",
+        "11": "What Offline Retail Needs: One Integrated AI Unmanned Store Solution",
+        "12": "Store Automation in Retail: Where It Stands and Where It's Going",
+        "13": "Fainders.AI Launches Its AI Self-Checkout",
+        "14": "AI Self-Checkout: Why We're Confident About Commercializing Next Year",
+        "15": "Fainders.AI: \"2025 Is Year One of Our Global Push to Scale Unmanned Stores\"",
+        "16": "Fainders.AI Opens the Second PX24 AI Micro Store",
+        "17": "Fainders.AI at Japan's Largest Retail Tech Expo, Accelerating Local Expansion",
+        "18": "A First Win in Japan: FAI and AVITA Begin a Joint PoC",
+        "19": "VCO's First PoC Records 99.1% Accuracy in Live Operation",
+        "20": "Why Chinese Companies Are Eyeing AI Self-Checkout",
+        "21": "Fainders.AI Opens Its First AI Unmanned Store in Singapore",
+        "22": "The Second unmanned store in Singpaore opens with 7-Eleven",
+        "23": "VCO Goes Beyond Bakeries and Cafeterias, All the Way to Japan",
+        "24": "As the Workforce Shrinks: The Story Behind VCO",
+        "25": "One Step Closer to Unmanned Bakeries: What We Saw at Seoul Cafe Show",
+        "26": "From Potential to Proven: How Was 2025 for Fainders.AI?",
+        "27": "In 2026, Retail Tech Won't Be Won on Novelty",
+        "28": "A Bigger FAI Presence in Japan: RetailTech Japan 2026",
+        "29": "Pre-Series B Closed: Deeper Ties with Retailers Ahead",
+        "30": "Bakeries Using VCO Report 99% Satisfaction: \"There's No Reason Not To\"",
+        "31": "The Answer for Bakeries with Long Lines: Inside Toujours"
       }
     }
   },
   "contact": {
     "meta": {
       "title": "Contact",
-      "description": "From adoption questions to custom solution proposals, our experts answer you directly."
+      "description": "Questions about getting started?\nNeed a custom solution?\nTalk to our experts directly"
     },
     "title": [
       "From adoption questions",
@@ -668,17 +669,17 @@
       "our experts answer you directly"
     ],
     "subCopy": {
-      "highlight": "a tailored solution proposal",
-      "rest": ", just fill out the inquiry form and",
-      "line2": "our team will get back to you promptly"
+      "highlight": "Tell us a bit about your business",
+      "rest": ",",
+      "line2": "and we'll revert ASAP"
     },
     "form": {
-      "connectTitle": "Enter your contact details",
+      "connectTitle": "How can we reach you?",
       "requiredLabel": "Required",
-      "selectTitle": "Select the information you'd like to inquire about",
-      "submitLabel": "Submit inquiry",
+      "selectTitle": "What are you interested in?",
+      "submitLabel": "Contact",
       "privacyNotice": {
-        "before": "I agree to the ",
+        "before": "I agree to the Privacy Policy and to being contacted about my inquiry",
         "link": "Privacy Policy",
         "after": " regarding the data collected to respond to your inquiry"
       }
@@ -708,17 +709,17 @@
     "interests": {
       "vco": {
         "group": "VCO",
-        "multipleLabel": "(multiple selection allowed)",
+        "multipleLabel": "(select all that apply)",
         "options": {
           "bakery": "Bakery",
-          "catering": "Catering",
-          "special-venue": "Special venue (stadium/arena/resort)",
+          "catering": "Cafeteria",
+          "special-venue": "Special venues (stadiums, concert halls, resorts)",
           "etc": "Other"
         }
       },
       "store": {
         "group": "STORE",
-        "multipleLabel": "(multiple selection allowed)",
+        "multipleLabel": "(select all that apply)",
         "options": {
           "standard-store": "STANDARD STORE",
           "micro-store": "MICRO STORE"
@@ -726,18 +727,18 @@
       }
     },
     "toast": {
-      "text": "For quick solution inquiries, please use our KakaoTalk channel",
+      "text": "Got a quick question? Message us on KakaoTalk",
       "textShort": "Ask us on the KakaoTalk channel",
-      "buttonLabel": "Quick consultation"
+      "buttonLabel": "Chat with Us"
     },
     "complete": {
-      "title": "Thank you so much for reaching out",
+      "title": "Thanks for reaching out!",
       "subCopy": {
-        "before": "We'll review your message and ",
-        "highlight": "within 2–3 days on average",
-        "after": " our team will get in touch"
+        "before": "We'll review your message and get back to you within ",
+        "highlight": "2–3 days",
+        "after": ""
       },
-      "buttonLabel": "Keep exploring"
+      "buttonLabel": "Keep Exploring"
     }
   }
 }

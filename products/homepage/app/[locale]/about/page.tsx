@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { getPageDescription } from "@/config/seo";
 import { aboutConfig } from "@/config/site";
 import { AboutHero } from "@/components/sections/about/AboutHero";
 import { AboutPartners } from "@/components/sections/about/AboutPartners";
@@ -15,14 +16,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations("about.meta");
-  return {
+  // 설명은 노션 SEO 명세(④ 사이트 링크)의 페이지별 문구를 쓴다(HOM-74).
+  return pageMetadata({
+    locale,
+    path: "about",
     title: t("title"),
-    description: t("description"),
-    // 기본 로케일만 색인 대상이므로 self-canonical도 거기서만 부여(noindex 로케일과 신호 충돌 방지).
-    ...(locale === routing.defaultLocale
-      ? { alternates: { canonical: `/${locale}/about/` } }
-      : {}),
-  };
+    description: getPageDescription("about", locale),
+  });
 }
 
 export default async function AboutPage({

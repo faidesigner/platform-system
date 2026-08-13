@@ -128,7 +128,14 @@ export interface ProductIndustry {
 }
 
 /** Reviews */
+import type { ReviewKey } from "./locale-policy";
+
 export interface ProductReview {
+  /**
+   * 카드 식별자 — 로케일별 정렬(HOM-80)의 안정 키.
+   * icon은 ja 전용 리테일 카드가 'cafeteria'를 재사용해 고유하지 않으므로 별도 키를 둔다.
+   */
+  key: ReviewKey;
   category: string;
   categoryColorVar: string;
   iconBgVar: string;
@@ -373,6 +380,14 @@ export interface CompanyConfig {
   address: string;
   businessNumber: string;
   representative: string;
+}
+
+/** 홈 고객사 롤링(마퀴)에 쓰는 현장 사진 한 장. */
+export interface CustomerImage {
+  /** 안정 식별자 — 파일명이 바뀌어도 항목을 추적할 수 있게 한다. */
+  name: string;
+  src: string;
+  alt: string;
 }
 
 /** 사이트 전체 데이터 계약 */

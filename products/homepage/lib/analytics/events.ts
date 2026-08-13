@@ -8,7 +8,9 @@ export type GaLocation =
   | "media_showcase"
   | "footer"
   | "contact_form"
-  | "contact_kakao";
+  | "contact_kakao"
+  // ja 상담 채널은 LINE이다(HOM-72). contact_kakao로 뭉뚱그리면 유입 채널 분석이 틀어진다.
+  | "contact_line";
 
 export type GaEventName =
   | "interest_click"

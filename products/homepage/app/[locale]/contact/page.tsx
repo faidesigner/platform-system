@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { setRequestLocale, getTranslations } from "next-intl/server";
-import { routing } from "@/i18n/routing";
+import { pageMetadata } from "@/lib/seo";
+import { getPageDescription } from "@/config/seo";
 import { ContactUsSection } from "@/components/sections/contact/ContactUsSection";
 
 export async function generateMetadata({
@@ -10,14 +11,13 @@ export async function generateMetadata({
 }): Promise<Metadata> {
   const { locale } = await params;
   const t = await getTranslations("contact.meta");
-  return {
-    // 루트 title 템플릿(%s | FAI)이 접미사를 붙이므로 여기선 페이지명만.
+  // 설명은 노션 SEO 명세(④ 사이트 링크)의 페이지별 문구를 쓴다(HOM-74).
+  return pageMetadata({
+    locale,
+    path: "contact",
     title: t("title"),
-    description: t("description"),
-    ...(locale === routing.defaultLocale
-      ? { alternates: { canonical: `/${locale}/contact/` } }
-      : {}),
-  };
+    description: getPageDescription("contact", locale),
+  });
 }
 
 export default async function ContactPage({

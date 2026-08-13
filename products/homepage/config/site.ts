@@ -1,7 +1,9 @@
+import { SITE_SEO, type SeoLocale } from "./seo";
 import type {
   AboutConfig,
   SiteConfig,
   ClientLogoItem,
+  CustomerImage,
   EffectCard,
   EffectListItem,
   StoreTypeTab,
@@ -22,55 +24,15 @@ import type {
    - keywords는 배열(Next Metadata API 규격)
    - en/ja 검색제목·키워드, ja ogTitle은 Notion 미기재분을 합리적으로 완성한 값
 ────────────────────────────────────────── */
-export type Locale = "ko" | "en" | "ja";
+export type Locale = SeoLocale;
 
-export interface SeoEntry {
-  title: string;
-  description: string;
-  keywords: string[];
-  ogTitle: string;
-  ogDescription: string;
-}
-
-export const seo: Record<Locale, SeoEntry> = {
-  ko: {
-    title: "파인더스에이아이 | AI 무인 결제 솔루션 | 리테일 무인화 솔루션",
-    description:
-      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
-    keywords: ["파인더스에이아이", "무인 결제 솔루션", "AI", "키오스크", "무인매장", "리테일", "리테일테크"],
-    ogTitle: "파인더스에이아이 | 리테일 무인화 솔루션",
-    ogDescription:
-      "Fainders.AI는 세상에서 가장 경제적인 AI 무인매장 솔루션을 제공함으로써, 오프라인 리테일의 수익성을 향상시키고자 합니다.",
-  },
-  en: {
-    // TODO(marketing): Notion 미확정, 검수 필요
-    title: "Fainders.AI | Autonomous Store & Self-Checkout Solution",
-    description:
-      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
-    // TODO(marketing): Notion 미확정, 검수 필요
-    keywords: ["Fainders.AI", "autonomous store", "AI-powered retail", "self-checkout", "unmanned store", "retail tech"],
-    ogTitle: "Fainders.AI | Autonomous Store Solution",
-    ogDescription:
-      "Fainders.AI: Offering the Most Economical Vision AI-Powered Autonomous Store Solution to Maximize Profits.",
-  },
-  ja: {
-    // TODO(marketing): Notion 미확정, 검수 필요
-    title: "Fainders.AI | AI無人決済・無人店舗ソリューション",
-    description:
-      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
-    // TODO(marketing): Notion 미확정, 검수 필요
-    keywords: ["Fainders.AI", "無人店舗", "無人決済", "AI", "キオスク", "リテール", "リテールテック"],
-    // TODO(marketing): Notion 미확정, 검수 필요
-    ogTitle: "Fainders.AI | 無人店舗ソリューション",
-    ogDescription:
-      "Fainders.AIは世界一経済的な無人店舗ソリューションを提供し、オフラインリテールの収益性向上を図ります。",
-  },
-};
-
-/** 로케일별 SEO 엔트리 반환. 알 수 없는 로케일은 ko로 폴백. */
-export function getSeo(locale: string): SeoEntry {
-  return seo[locale as Locale] ?? seo.ko;
-}
+/**
+ * SEO 콘텐츠는 config/seo.ts가 단일 소스다(HOM-74).
+ * 과거 이 파일에 2024/2026-v3.0.0 판 문구가 별도로 살아 있었고, 노션 명세가 갱신돼도
+ * 여기가 갱신되지 않아 구버전이 그대로 서빙됐다. 하위호환용 재노출만 남긴다.
+ */
+export { SITE_SEO, getSiteSeo } from "./seo";
+export type { SeoLocale, SiteSeoEntry } from "./seo";
 
 export const clientLogos = [
   { id: "samsung-welstory", name: "Samsung Welstory", src: "/logos/logo-samsung-welstory-white.png" },
@@ -81,12 +43,30 @@ export const clientLogos = [
   { id: "orange-planet",    name: "Orange Planet",     src: "/logos/logo-orange-planet-white-2.png" },
 ] satisfies ClientLogoItem[];
 
+/**
+ * 홈 고객사 롤링 이미지 — **단일 소스**.
+ *
+ * 과거 이 배열이 app/[locale]/page.tsx와 CustomersSection.tsx의 기본값으로 **두 벌 복제**돼 있어,
+ * 한쪽만 고치면 조용히 어긋나는 상태였다(HOM-69에서 실제로 교체 대상이 양쪽에 존재). 여기로 통합한다.
+ */
+export const customerImages = [
+  { name: "bakery-mannamil",    src: "/images/customers/01-bakery-mannamil.jpg",    alt: "베이커리 만나밀" },
+  { name: "bakery-hansangmin",  src: "/images/customers/02-bakery-hansangmin.jpg",  alt: "베이커리 한상민" },
+  { name: "foodCourt-niseko-1", src: "/images/customers/03-foodCourt-niseko-2.jpg", alt: "푸드코트 니세코 1" },
+  // HOM-69: 인물 얼굴이 노출된 컷 → 블러 처리본으로 교체(도입 후기 섹션과 동일 에셋 재사용).
+  { name: "foodCourt-niseko-2", src: "/images/products/review/vco-review-resort-final.webp", alt: "푸드코트 니세코 2" },
+  { name: "retail-hibinoma",    src: "/images/customers/05-retail-hibinoma.jpg",    alt: "리테일 히비노마" },
+  { name: "retail-wellstory",   src: "/images/customers/06-retail-wellstory.jpeg",  alt: "리테일 웰스토리" },
+  { name: "retail-shokunoma",   src: "/images/customers/07-retail-shokunoma.jpg",   alt: "리테일 쇼쿠노마" },
+  { name: "bakery-toujours",    src: "/images/customers/08-bakery-toujours.jpg",    alt: "뚜쥬루 베이커리" },
+] satisfies CustomerImage[];
+
 export const siteConfig = {
   name: "FAI",
   url: "https://www.fainders.ai",
   // backward-compat: 메타데이터는 seo.* 맵이 단일 소스. 아래 값은 seo.ko를 가리킨다.
-  description: seo.ko.description,
-  keywords: seo.ko.keywords,
+  description: SITE_SEO.ko.description,
+  keywords: SITE_SEO.ko.keywords,
 
   nav: [
     { label: "서비스", href: "/services" },
@@ -192,6 +172,7 @@ export const siteConfig = {
       reviewsTitle: "고객사 도입 후기",
       reviews: [
         {
+          key: "bakery",
           category: "베이커리",
           categoryColorVar: "--color-text-tag-category-yellow",
           iconBgVar: "--color-filled-tag-category-yellow-secondary",
@@ -208,6 +189,7 @@ export const siteConfig = {
           ],
         },
         {
+          key: "cafeteria",
           category: "급식",
           categoryColorVar: "--color-text-basic-positive",
           iconBgVar: "--color-filled-basic-positive-secondary",
@@ -223,6 +205,7 @@ export const siteConfig = {
           ],
         },
         {
+          key: "resort",
           category: "리조트",
           categoryColorVar: "--color-text-tag-category-grape",
           iconBgVar: "--color-filled-tag-category-grape-secondary",

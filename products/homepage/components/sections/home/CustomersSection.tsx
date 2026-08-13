@@ -5,12 +5,11 @@ import { Link } from '@/i18n/navigation';
 import { useTranslations } from 'next-intl';
 import { Marquee } from '@fai/ui';
 import { trackEvent } from '@/lib/analytics/track';
+import { customerImages } from '@/config/site';
+import type { CustomerImage } from '@/config/types';
 
-export interface CustomerImage {
-  name: string;
-  src: string;
-  alt: string;
-}
+// 타입·데이터 모두 config가 단일 소스다. 기존 소비자를 위해 타입은 여기서도 재노출한다.
+export type { CustomerImage };
 
 export interface CustomersSectionProps {
   title?: string;
@@ -21,22 +20,11 @@ export interface CustomersSectionProps {
   speed?: number;
 }
 
-const DEFAULT_IMAGES: CustomerImage[] = [
-  { name: 'bakery-mannamil',    src: '/images/customers/01-bakery-mannamil.jpg',    alt: '베이커리 만나밀' },
-  { name: 'bakery-hansangmin',  src: '/images/customers/02-bakery-hansangmin.jpg',  alt: '베이커리 한상민' },
-  { name: 'foodCourt-niseko-1', src: '/images/customers/03-foodCourt-niseko-2.jpg', alt: '푸드코트 니세코 1' },
-  { name: 'foodCourt-niseko-2', src: '/images/customers/04-foodCourt-niseko-1.jpg', alt: '푸드코트 니세코 2' },
-  { name: 'retail-hibinoma',    src: '/images/customers/05-retail-hibinoma.jpg',    alt: '리테일 히비노마' },
-  { name: 'retail-wellstory',   src: '/images/customers/06-retail-wellstory.jpeg',  alt: '리테일 웰스토리' },
-  { name: 'retail-shokunoma',   src: '/images/customers/07-retail-shokunoma.jpg',   alt: '리테일 쇼쿠노마' },
-  { name: 'bakery-toujours',    src: '/images/customers/08-bakery-toujours.jpg',    alt: '뚜쥬루 베이커리' },
-];
-
 export default function CustomersSection({
   title,
   linkLabel,
   linkHref  = '/customers',
-  images    = DEFAULT_IMAGES,
+  images    = customerImages,
   speed     = 40,
 }: CustomersSectionProps) {
   const t = useTranslations('home.customers');

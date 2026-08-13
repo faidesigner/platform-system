@@ -46,7 +46,7 @@ const SNS = [
 const VALUES = {
   ceo:     '함명원ㆍ왕민권',
   tel:     '02-6191-0049',
-  address: '0662 서울특별시 서초구 강남대로51길 1, 511타워 13층',
+  address: '06628 서울특별시 서초구 강남대로51길 1, 511타워 13층',
   bizNo:   '809-86-01657',
   email:   'contact@fainders.ai',
 };
@@ -55,7 +55,6 @@ const VALUES = {
 // 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
 const POLICY_HREFS = {
   privacy: '/document/privacy-policy.pdf',
-  cctv:    '/document/cctv-policy.pdf',
 };
 
 /**
@@ -72,9 +71,15 @@ export interface FooterLabels {
   bizNo?:        string;
   email?:        string;
   privacy?:      string;
-  cctv?:         string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
+  /**
+   * 전화 실데이터 값(로케일별). ko는 국내 표기(02-…), en·ja는 국가코드 포함(+82-2-…)이다(HOM-67).
+   * 미지정 시 한국어 기본값 사용.
+   */
+  telValue?:     string;
+  /** 이메일 실데이터 값(로케일별). ja는 일본팀 주소(contact_jp@)를 쓴다(HOM-67). */
+  emailValue?:   string;
 }
 
 const DEFAULT_LABELS: Required<FooterLabels> = {
@@ -86,8 +91,9 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   bizNo:        '사업자등록번호',
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
-  cctv:         '영상정보처리기기 운영 · 관리 방침',
   ceoValue:     VALUES.ceo,
+  telValue:     VALUES.tel,
+  emailValue:   VALUES.email,
 };
 
 /* ── SNS 버튼 공용 ── */
@@ -136,14 +142,17 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
 /* ── 회사 정보 행 공용 (desktop row1·row2 동일 구조) ── */
 // grid-cols-[max-content_1fr]: 타이틀 컬럼이 해당 그룹 내 가장 긴 라벨에 맞게 자동 조정.
 // 고정 px 폭 없이 KO·EN·JA 모든 언어에서 줄바꿈 없이 1행 보장.
-function InfoRow({ items, className }: { items: { title: string; text: string }[]; className?: string }) {
+function InfoRow({ items, className }: { items: { title: string; text: string; noWrapValue?: boolean }[]; className?: string }) {
   return (
     <div className={`grid grid-cols-[max-content_1fr] gap-y-s gap-x-2xl ${className ?? ''}`}>
       {items.flatMap((item) => [
         <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
           {item.title}
         </span>,
-        <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+        <span
+          key={`${item.title}-v`}
+          className={`text-[13px] font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
+        >
           {item.text}
         </span>,
       ])}
@@ -153,30 +162,52 @@ function InfoRow({ items, className }: { items: { title: string; text: string }[
 
 /* ── Component ── */
 
+/** 추가 정보 행(로케일 전용). 소비자가 무엇을 덧붙일지 결정한다 — @fai/ui는 로케일을 모른다. */
+export interface FooterInfoRow {
+  title: string;
+  text: string;
+  noWrapValue?: boolean;
+}
+
 interface FooterProps {
   onSocialClick?: (label: string) => void;
   /** 회사정보·정책 라벨 오버라이드(번역 주입용). 미지정 값은 한국어 기본값 사용. */
   labels?: FooterLabels;
-  /** true이면 이메일 문의 행을 숨긴다(JA 로케일 전용). */
-  hideEmail?: boolean;
+  /** 이메일 문의 행 노출 여부(HOM-67). 미지정 시 노출. */
+  showEmail?: boolean;
+  /** 사업자등록번호 행 노출 여부(HOM-67). 한국 사업자번호라 ja에서는 숨긴다. 미지정 시 노출. */
+  showBizNo?: boolean;
+  /**
+   * 회사정보 뒤에 덧붙일 추가 행(HOM-67). ja의 일본 법인 정보(법인명·대표·전화)에 쓰인다.
+   * 로케일 판단은 소비자(FooterBridge)가 하고 여기서는 받은 행을 그대로 렌더한다.
+   */
+  extraInfo?: readonly FooterInfoRow[];
 }
 
-export default function Footer({ onSocialClick, labels, hideEmail = false }: FooterProps = {}) {
+export default function Footer({
+  onSocialClick,
+  labels,
+  showEmail = true,
+  showBizNo = true,
+  extraInfo = [],
+}: FooterProps = {}) {
   const l = { ...DEFAULT_LABELS, ...labels };
 
   const companyName = l.company;
   const row1Info = [
     { title: l.ceo,     text: l.ceoValue },
-    { title: l.tel,     text: VALUES.tel },
+    { title: l.tel,     text: l.telValue },
     { title: l.address, text: l.addressValue },
   ];
+  // 사업자번호·이메일은 값 자체가 코드성 문자열이라, 라벨이 길어져도(예: ja "事業者登録番号（韓国）")
+  // 고정폭 컬럼 안에서 중간에 줄바꿈되면 안 된다 — noWrapValue로 값 칸만 nowrap 고정.
   const row2Info = [
-    { title: l.bizNo, text: VALUES.bizNo },
-    ...(!hideEmail ? [{ title: l.email, text: VALUES.email }] : []),
+    ...(showBizNo ? [{ title: l.bizNo, text: VALUES.bizNo, noWrapValue: true }] : []),
+    ...(showEmail ? [{ title: l.email, text: l.emailValue, noWrapValue: true }] : []),
+    ...extraInfo,
   ];
   const policies: PolicyItem[] = [
     { label: l.privacy, href: POLICY_HREFS.privacy },
-    { label: l.cctv,    href: POLICY_HREFS.cctv },
   ];
 
   return (
