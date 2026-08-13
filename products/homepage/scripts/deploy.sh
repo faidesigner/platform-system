@@ -29,6 +29,7 @@ echo "▶ 타깃: $TARGET"
 echo "  S3: $S3_DEST"
 echo "  CloudFront: $CLOUDFRONT_ID  ($PREVIEW_URL)"
 echo "  noindex=$NOINDEX  flat_html=$FLAT_HTML  delete=$DELETE"
+echo "  제외: *_original* ${SYNC_EXCLUDES:-}"
 
 # PRD 안전 확인
 if [ "$TARGET" = "prd" ]; then
@@ -94,6 +95,13 @@ EOF
 # S3 동기화 (_original 백업은 항상 제외)
 echo "▶ S3 업로드..."
 SYNC_ARGS=(--exclude "*_original*")
+# 타깃별 추가 제외 경로(공백 구분, <target>.env 의 SYNC_EXCLUDES).
+#
+# PRD는 버킷 **루트**에 --delete 로 sync 하는데, dev 프리뷰가 같은 버킷의
+# homepage_v2/ prefix 에 산다. 제외하지 않으면 PRD 배포 때마다 프리뷰 537개 객체가
+# 통째로 삭제되고, 매번 dev 를 수동 재배포해야 복구된다(2026-08-05에도 PRD 3분 뒤
+# dev 를 다시 올린 흔적이 있음). 배포 순서에 의존하는 대신 구조로 막는다.
+for ex in ${SYNC_EXCLUDES:-}; do SYNC_ARGS+=(--exclude "$ex"); done
 [ "$DELETE" = "true" ] && SYNC_ARGS+=(--delete)
 aws s3 sync "$OUT" "$S3_DEST" "${SYNC_ARGS[@]}" --only-show-errors --region "$AWS_REGION"
 
