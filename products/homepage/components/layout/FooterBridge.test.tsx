@@ -69,6 +69,14 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     expect(en).not.toContain("Co., Ltd.");
   });
 
+  it("세 로케일 모두 우편번호를 노출한다", () => {
+    // ja만 우편번호가 빠져 있었다. 일본어에서 한국 주소의 우편번호를 생략하는 관례는 없고
+    // (한국은 2015-08부터 5자리), ko·en은 이미 06628을 싣고 있어 ja만 정보가 누락된 상태였다.
+    for (const locale of ["ko", "en", "ja"] as const) {
+      expect(renderAt(locale).container.textContent, `${locale}: 우편번호 누락`).toContain("06628");
+    }
+  });
+
   it("ja 주소의 '길'은 표준 표기 キル를 쓴다 (ギル 아님)", () => {
     // 도로명주소 신청지원센터의 번역 규정이 카타카나 「キル」로 정했고 일본어권 번역·지도 서비스
     // (코네스트 등)도 「江南大路98キル 25」처럼 キル + 건물번호 앞 공백으로 표기한다.
