@@ -57,13 +57,18 @@ cd products/homepage
 | **prd** | `s3://www.fainders.ai` (루트) | `E3GUSL3ADNKGFD` | https://www.fainders.ai | 실서비스 컷오버 — 아래 주의 |
 
 공통: region `ap-northeast-2`, 계정 `406460793488`. `out/`의 `*_original.*`(미디어 원본 백업)은 sync에서 항상 제외된다.
+추가 제외 경로는 `deploy/<target>.env` 의 `SYNC_EXCLUDES`(공백 구분)로 지정한다.
 
 #### ⚠️ PRD 배포 전 반드시
 - **CloudFront 함수 비호환**: 라이브 dist의 `rewriteForHomepageSSG` 함수는 `/foo/ → /foo.html` 로 재작성한다.
   새 홈페이지는 `dir/index.html` 구조라, `prd.env` 의 `FLAT_HTML=true` 가 flat `<dir>.html` 을 생성해 호환시킨다.
   (정석은 함수를 `/foo/ → /foo/index.html` 로 바꾸는 것.)
-- **`DELETE=false`(기본)**: 루트에서 `--delete` 는 구 사이트 파일(`company.html`, `assets/`, `career/` 등)을 지운다.
-  완전 컷오버를 원할 때만 `prd.env` 에서 `true` 로. 켜기 전 `aws s3 ls s3://www.fainders.ai/` 로 무엇이 지워질지 확인.
+- **`DELETE=true`(현재 설정)**: 2026-07-20 컷오버 이후 켜져 있다. 루트에서 `--delete` 는 산출물에 없는
+  객체를 지우므로, `prd.env` 를 건드릴 때는 `aws s3 ls s3://www.fainders.ai/` 로 무엇이 지워질지 먼저 확인할 것.
+- **`SYNC_EXCLUDES="homepage_v2/*"` 를 지우지 말 것**: dev 프리뷰가 **같은 버킷의 `homepage_v2/` prefix**에 산다.
+  제외하지 않으면 PRD 배포마다 프리뷰 500여 개 객체가 통째로 삭제되고 dev 재배포로 수동 복구해야 한다.
+  (실제로 2026-08-05 배포 때 그렇게 됐다 — PRD 06:31 → dev 06:34 재배포.)
+  `contact-us/`·`document/` 등은 `public/` 에 있어 산출물에 포함되므로 `--delete` 대상이 아니다.
 - 미디어 영상 최신화가 필요하면 배포 전에 `node scripts/sync-youtube.mjs` 실행(별도 가이드: `docs/youtube-showcase-sync.md`).
 
 ---
