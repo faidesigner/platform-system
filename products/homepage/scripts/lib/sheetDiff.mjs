@@ -98,3 +98,100 @@ export function classify({ key, locale, codeValue, sheetValue, ambiguous, decisi
   if (ambiguous) return "AMBIGUOUS";
   return "CONTENT";
 }
+
+const LOCALES = ["en", "ja"];
+
+/**
+ * 한 시트 셀을 대응 키들과 비교해 diff를 쌓는다.
+ * 지시문 셀도 리포트에는 남긴다 — 어느 티켓에서 처리됐는지 추적하려면 보여야 하고,
+ * 걸러내는 책임은 classify의 INSTRUCTION 버킷에 있다.
+ */
+function pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab }) {
+  const ambiguous = keys.length > 1;
+  for (const key of keys) {
+    const codeValue = messages[locale]?.[key];
+    if (codeValue === undefined) continue;
+    if (normalize(codeValue) === normalize(sheetValue)) continue;
+    out.push({
+      key,
+      locale,
+      codeValue,
+      sheetValue,
+      rowId,
+      tab,
+      ambiguous,
+      bucket: classify({ key, locale, codeValue, sheetValue, ambiguous, decisions }),
+    });
+  }
+}
+
+/**
+ * IA 탭(nav/footer/main/product/aboutUs/media/contactUs) 대조.
+ * ko 원문을 조인 키로 쓰되, 여러 키에 걸리면 AMBIGUOUS로 표시해 사람이 확인하게 한다.
+ * ko가 코드에 없는 행은 여기서 걸러지고 CLI가 별도 '미매칭' 목록으로 보고한다.
+ */
+export function diffIaRows({ rows, messages, decisions, tab = "" }) {
+  const koIndex = buildKoIndex(messages.ko);
+  const out = [];
+  for (const row of rows ?? []) {
+    const ko = normalize(row.ko);
+    if (!ko || ko === "번역x") continue;
+    const keys = koIndex.get(ko);
+    if (!keys) continue;
+    const rowId = `${row.IA ?? ""}/${row.screen ?? ""}/${row.property ?? ""}/${row.key ?? ""}`;
+    for (const locale of LOCALES) {
+      const sheetValue = row[locale];
+      if (!normalize(sheetValue)) continue;
+      pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab });
+    }
+  }
+  return out;
+}
+
+/**
+ * 유튜브·뉴스·레터 탭 대조. 이 탭은 스키마가 달라(contents/ko_타이틀/ko_디스크립션)
+ * IA 탭 로직으로는 대조되지 않는다 — 기존 대조표가 media.* 를 통째로 놓친 원인이다.
+ *
+ * ko 타이틀 → media.showcase.videoOverrides.<id> / media.news.items.<i> / retailTechLetter.letterTitles.<id>
+ * 레터는 제목만 있고 설명 키가 없다.
+ */
+export function diffMediaRows({ rows, messages, decisions }) {
+  /** @type {Map<string, {base: string, hasDescription: boolean}>} */
+  const byKoTitle = new Map();
+  for (const [key, value] of Object.entries(messages.ko ?? {})) {
+    let base = null;
+    let hasDescription = true;
+    if (/^media\.showcase\.videoOverrides\.[\w-]+\.title$/.test(key)) base = key.slice(0, -".title".length);
+    else if (/^media\.news\.items\.\d+\.title$/.test(key)) base = key.slice(0, -".title".length);
+    else if (/^media\.retailTechLetter\.letterTitles\.\d+$/.test(key)) {
+      base = key;
+      hasDescription = false;
+    }
+    if (base) byKoTitle.set(normalize(value), { base, hasDescription });
+  }
+
+  const out = [];
+  for (const row of rows ?? []) {
+    const hit = byKoTitle.get(normalize(row.ko_타이틀));
+    if (!hit) continue;
+    const rowId = `${row.contents ?? ""}/${normalize(row.ko_타이틀).slice(0, 24)}`;
+    for (const locale of LOCALES) {
+      const fields = hit.hasDescription
+        ? [
+            [`${hit.base}.title`, row[`${locale}_타이틀`]],
+            [`${hit.base}.description`, row[`${locale}_디스크립션`]],
+          ]
+        : [[hit.base, row[`${locale}_타이틀`]]];
+      for (const [key, sheetValue] of fields) {
+        if (!normalize(sheetValue)) continue;
+        pushDiffs({ out, keys: [key], locale, sheetValue, messages, decisions, rowId, tab: "media" });
+      }
+    }
+  }
+  return out;
+}
+
+/** 버킷별 건수 집계 */
+export function summarize(diffs) {
+  return (diffs ?? []).reduce((acc, d) => ({ ...acc, [d.bucket]: (acc[d.bucket] ?? 0) + 1 }), {});
+}
