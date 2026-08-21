@@ -87,7 +87,7 @@ export const siteConfig = {
       featuresTitle: "VCO는 무엇이 다를까요?",
       features: [
         {
-          title: "빈틈없이 스캔하는\n14대의 AI 카메라",
+          title: "빈틈없이 스캔하는\n7대의 AI 카메라",
           description: "국내 유일 멀티뷰 3D 인식 기술을 적용했어요",
           image: "/images/products/vco/vco-feature-camera.webp",
           imagePosition: "bottom",

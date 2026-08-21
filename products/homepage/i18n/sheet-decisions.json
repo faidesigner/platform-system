@@ -70,6 +70,34 @@
       "codeValue": "Minkwon Wang（ワン・ミングォン）",
       "reason": "위와 동일.",
       "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.2.name",
+      "locale": "en",
+      "codeValue": "Sukbum Hong",
+      "reason": "로마자 표기를 Sukbum으로 통일(사용자 결정 2026-08-21). 시트는 Sukbom — 시트 수정 요청 대상.",
+      "decidedAt": "2026-08-21"
+    },
+    {
+      "key": "about.people.cards.0.name",
+      "locale": "en",
+      "codeValue": "Sukbum Hong",
+      "reason": "위와 동일.",
+      "decidedAt": "2026-08-21"
+    },
+    {
+      "key": "products.visionCheckout.features.0.title",
+      "locale": "en",
+      "codeValue": "7 AI Cameras,\nNothing Gets Missed",
+      "reason": "카메라 대수를 3개 로케일 모두 7대로 통일(사용자 결정 2026-08-21). ja가 이미 7台였고 ko/en만 14였다. 시트는 en 카드 구성 자체가 다른 값('Scan With 99.9% Accuracy')이라 별도 판정 보류 중 — 시트 수정 요청 대상.",
+      "decidedAt": "2026-08-21"
+    },
+    {
+      "key": "products.visionCheckout.features.0.description",
+      "locale": "en",
+      "codeValue": "Sees every item in 3D, from every angle",
+      "reason": "시트 값 'Nothing gets past 14 AI cameras'는 (a) 14대 표기가 폐기됐고 (b) 코드 features.0.title의 뒷부분과 같아 행 밀림이 의심된다. 판정 전까지 코드 유지.",
+      "decidedAt": "2026-08-21"
     }
   ]
 }

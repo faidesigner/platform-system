@@ -739,8 +739,8 @@
         "group": "無人店舗「WALK-THROUGH」",
         "multipleLabel": "（複数選択可）",
         "options": {
-          "standard-store": "標準店舗",
-          "micro-store": "小型店舗（5坪以下）"
+          "standard-store": "STANDARD STORE",
+          "micro-store": "MICRO STORE"
         }
       }
     },

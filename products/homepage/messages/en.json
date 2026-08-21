@@ -44,7 +44,7 @@
       "featuresTitle": "What Makes VCO Different?",
       "features": {
         "0": {
-          "title": "14 AI Cameras,\nNothing Gets Missed",
+          "title": "7 AI Cameras,\nNothing Gets Missed",
           "description": "Sees every item in 3D, from every angle"
         },
         "1": {
@@ -390,7 +390,7 @@
           }
         },
         "2": {
-          "name": "Sukbom Hong",
+          "name": "Sukbum Hong",
           "education": {
             "0": "Seoul Science High School",
             "1": "B.S. & Ph.D. in Electrical and Computer Engineering,\nSeoul National University"
@@ -418,7 +418,7 @@
       "cards": {
         "0": {
           "title": "We build AI that leaves the world better than we found it",
-          "name": "Sukbom Hong",
+          "name": "Sukbum Hong",
           "role": "CTO"
         },
         "1": {
@@ -591,7 +591,7 @@
         },
         "XZ3gEzfrWN0": {
           "title": "Why VCO Is Different ③: Look-Alike From Above, Not to VCO",
-          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\nCan it really tell apart items that look identical from above?\n\n[Other solutions]\nTop-view recognition only, so items that look the same from above are hard to tell apart.\n\n[Fainders.AI VCO]\n14 cameras read the sides as well as the top, so even items that look identical from above are identified correctly."
+          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\nCan it really tell apart items that look identical from above?\n\n[Other solutions]\nTop-view recognition only, so items that look the same from above are hard to tell apart.\n\n[Fainders.AI VCO]\n7 cameras read the sides as well as the top, so even items that look identical from above are identified correctly."
         },
         "_0FCk3XMS5w": {
           "title": "Why VCO Is Different ②: It Tells Look-Alike Pastries Apart",
