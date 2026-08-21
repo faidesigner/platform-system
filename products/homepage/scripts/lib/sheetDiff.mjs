@@ -61,3 +61,40 @@ export function buildKoIndex(koFlat) {
   }
   return index;
 }
+
+/**
+ * 번역값이 아니라 "이 로케일에서는 숨겨라" 같은 지시가 적힌 셀.
+ * 그대로 반영하면 화면에 한국어 지시문이 노출된다.
+ * 실제 사례: nav.careers("언어 전환시 미노출"), contact.toast.text("*영어로 언어 전환시 토스트 제거").
+ */
+const INSTRUCTION_PATTERNS = [/미노출/, /제거/, /노출되는 영역/, /^번역x$/, /^\*/];
+
+export function isInstructionCell(value) {
+  const v = normalize(value);
+  if (!v) return false;
+  return INSTRUCTION_PATTERNS.some((re) => re.test(v));
+}
+
+/** sheet-decisions.json의 decisions 배열 → `"<key> <locale>"` 조회용 Set */
+export function loadDecisionSet(decisions) {
+  return new Set((decisions ?? []).map((d) => `${d.key} ${d.locale}`));
+}
+
+/**
+ * 불일치 1건을 처리 버킷으로 분류한다. 우선순위가 곧 안전 순서다.
+ *
+ * 1. INSTRUCTION — 번역값이 아니므로 어떤 경우에도 반영 금지(최우선)
+ * 2. DECIDED     — 코드가 확정안. 시트가 옛 값이므로 반영 금지
+ * 3. WHITESPACE  — 문구는 같고 줄바꿈만 다름(디자인 확인 후 반영)
+ * 4. AMBIGUOUS   — ko 원문이 여러 키에 걸림. 오배치 위험이 있어 수동 확인
+ * 5. CONTENT     — 실제 문구 차이. 반영 검토 대상
+ *
+ * @returns {"INSTRUCTION"|"DECIDED"|"WHITESPACE"|"AMBIGUOUS"|"CONTENT"}
+ */
+export function classify({ key, locale, codeValue, sheetValue, ambiguous, decisions }) {
+  if (isInstructionCell(sheetValue)) return "INSTRUCTION";
+  if (decisions?.has(`${key} ${locale}`)) return "DECIDED";
+  if (sameIgnoringWhitespace(codeValue, sheetValue)) return "WHITESPACE";
+  if (ambiguous) return "AMBIGUOUS";
+  return "CONTENT";
+}
