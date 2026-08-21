@@ -107,6 +107,25 @@ node scripts/optimize-videos.mjs   # public/videos: ≤1080p, H.264 CRF28, 무�
 - 루트(`/`)는 `public/index.html`이 `navigator.languages` 우선순위로 `/ko`·`/en`·`/ja` 리다이렉트(매칭 실패 시 ko).
 - ⚠️ `config/site.ts` `seo` 맵의 `// TODO(marketing)`(en/ja 검색제목·키워드, ja OG제목)은 마케팅 확정 카피로 교체 필요.
 
+### 번역 시트 대조 (`scripts/sync-messages.mjs`)
+
+마케팅 번역 시트 `Homepage text source`와 `messages/{ko,en,ja}.json`의 이격을 검출한다.
+
+```bash
+node scripts/sync-messages.mjs                       # 시트에서 CSV로 받아 대조 (인증 불필요)
+node scripts/sync-messages.mjs --fixture <dir>       # 로컬 CSV로 대조 (오프라인)
+node scripts/sync-messages.mjs --save-fixture <dir>  # 받은 CSV를 보관
+```
+
+리포트는 `docs/HOM75_diff_<YYYYMMDD>.md`로 저장된다. **messages를 자동 수정하지 않는다** — 시트가 항상 정답이 아니기 때문이다:
+
+- **코드가 확정안**인 항목은 `i18n/sheet-decisions.json`에 근거와 함께 선언되어 `C. 코드 확정안`으로 분류된다. 선언값이 실제 messages와 어긋나면 `i18n/sheetDecisions.test.ts`가 실패한다.
+- 시트에는 `언어 전환시 미노출` 같은 **지시문 셀**이 섞여 있어 `D. 지시문 셀`로 걸러진다. 그대로 반영하면 화면에 한국어 지시문이 노출된다.
+- **ja는 ko의 번역이 아니다.** 일본 시장용 콘텐츠 변형이 포함된다(예: 카메라 대수, 관리시스템 소구).
+- ko 원문을 조인 키로 쓰므로, 같은 ko가 여러 키에 걸리면 `B. 중복매칭`으로 표시된다. 확인 없이 반영하면 다른 키의 번역이 잘못 복사된다.
+
+반영 후 `pnpm test`(특히 `i18n/messageConsistency.test.ts`)를 반드시 통과시킬 것.
+
 ## 문의 폼 (Zapier)
 
 - `ContactUsSection` 제출 시 라이브 `contact-us`와 동일한 Zapier 웹훅으로 전송.
