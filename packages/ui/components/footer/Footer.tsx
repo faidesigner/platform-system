@@ -53,10 +53,13 @@ const VALUES = {
 };
 
 // 정책 문서(PDF) — 저장소에 자체 호스팅(public/document/). 상대경로라 환경 독립(프리뷰·PRD 모두 동작).
-// 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
+// 기존 /privacy 는 존재하지 않는 경로라 404였음.
+//
+// cctv(영상정보처리기기 운영·관리 방침)는 HOM-61에서 푸터에서 제거됐다 —
+// 무인매장이 아닌 super swift 내용이라 홈페이지에 불필요하다는 판단(2026-07-28 김성태).
+// 폴백으로라도 남겨두면 cookieHref 미주입 시 그 링크가 되살아나므로 상수 자체를 두지 않는다.
 const POLICY_HREFS = {
   privacy: '/document/privacy-policy.pdf',
-  cctv:    '/document/cctv-policy.pdf',
 };
 
 /**
@@ -73,7 +76,8 @@ export interface FooterLabels {
   bizNo?:        string;
   email?:        string;
   privacy?:      string;
-  cctv?:         string;
+  /** '맞춤형 광고 설정' 라벨. HOM-61에서 제거된 cctv 슬롯을 재활용한 것이 아니라 별개 항목이다. */
+  adSettings?:   string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
   /**
@@ -94,7 +98,7 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   bizNo:        '사업자등록번호',
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
-  cctv:         '맞춤형 광고 설정',
+  adSettings:   '맞춤형 광고 설정',
   ceoValue:     VALUES.ceo,
   telValue:     VALUES.tel,
   emailValue:   VALUES.email,
@@ -203,9 +207,9 @@ interface FooterProps {
    */
   privacyModalContent?: (onClose: () => void) => React.ReactNode;
   /**
-   * '쿠키 및 광고 설정' 클릭 시 이동할 URL(로케일별).
-   * 소비자(FooterBridge)가 locale별 개인정보 처리방침 PDF + 페이지 앵커를 주입한다.
-   * 미지정 시 POLICY_HREFS.cctv로 폴백.
+   * '맞춤형 광고 설정' 클릭 시 이동할 URL(로케일별).
+   * 소비자(FooterBridge)가 locale별 개인정보 처리방침 2조 5항 페이지를 주입한다.
+   * **미지정 시 해당 행을 렌더하지 않는다** — 폴백 링크를 두면 갈 곳 없는 항목이 노출된다.
    */
   cookieHref?: string;
 }
@@ -255,7 +259,7 @@ export default function Footer({
     privacyModalContent
       ? { label: l.privacy, onClick: () => setModalOpen(true) }
       : { label: l.privacy, href: POLICY_HREFS.privacy },
-    { label: l.cctv, href: cookieHref ?? POLICY_HREFS.cctv },
+    ...(cookieHref ? [{ label: l.adSettings, href: cookieHref }] : []),
   ];
 
   return (

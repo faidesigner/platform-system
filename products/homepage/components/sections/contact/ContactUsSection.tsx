@@ -385,6 +385,9 @@ export function ContactUsSection() {
                               <span className="shrink-0">{t("form.privacyInfo.retentionLabel")}</span>
                               <span>{t("form.privacyInfo.retention")}</span>
                             </div>
+                            {/* 거부권·불이익 고지 — 법 제15조 제2항 제4호. 목적·항목·보유기간만으로는
+                                요건이 충족되지 않는다(2026-08-06 검토 지적). 문구는 번역 시트 확정본. */}
+                            <p className="mt-[var(--spacing-XS,6px)]">{t("form.privacyInfo.refusal")}</p>
                           </div>
                         </div>
                       </div>

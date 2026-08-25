@@ -34,7 +34,7 @@
     },
     "policies": {
       "privacy": "プライバシーポリシー",
-      "cctv": "パーソナライズ広告の設定"
+      "adSettings": "パーソナライズ広告の設定"
     },
     "telValue": "+82-2-6191-0049",
     "emailValue": "contact_jp@fainders.ai",
@@ -698,19 +698,20 @@
       "selectTitle": "お問い合わせ内容を選択してください",
       "submitLabel": "お問い合わせ",
       "privacyNotice": {
-        "before": "[必須] 個人情報の収集・",
+        "before": "［必須］個人情報の取り扱いおよび",
         "link": "プライバシーポリシー",
         "after": "に同意します",
         "errorMessage": "プライバシーポリシーに同意してください。"
       },
       "privacyInfo": {
-        "purposeLabel": "- 目的 :",
-        "purpose": "お問い合わせの受付・回答、導入相談の対応",
-        "itemsLabel": "- 項目 :",
-        "itemsRequired": "(必須) 会社名、お名前、メールアドレス",
-        "itemsOptional": "(任意) 電話番号、関心製品・業種",
-        "retentionLabel": "- 保有期間 :",
-        "retention": "お問い合わせ完了後1年間"
+        "purposeLabel": "- 利用目的 :",
+        "purpose": "お問い合わせへの対応・回答、導入相談の実施",
+        "itemsLabel": "- 取得項目 :",
+        "itemsRequired": "（必須）会社名、氏名、メールアドレス",
+        "itemsOptional": "（任意）電話番号、検討中の製品・業種",
+        "retentionLabel": "- 保管期間 :",
+        "retention": "お問い合わせ対応完了後1年間",
+        "refusal": "同意は任意ですが、ご同意いただけない場合、お問い合わせ・ご相談サービスをご利用いただけないことがあります"
       }
     },
     "fields": {

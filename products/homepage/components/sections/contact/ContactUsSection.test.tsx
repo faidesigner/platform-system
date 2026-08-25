@@ -86,6 +86,10 @@ describe("ContactUsSection 제출", () => {
     expect(screen.getByText("(필수) 회사명, 성함, 이메일")).toBeInTheDocument();
     expect(screen.getByText("(선택) 전화번호, 관심 제품 및 업종")).toBeInTheDocument();
     expect(screen.getByText("문의 처리 완료 후 1년")).toBeInTheDocument();
+    // 제4호 거부권·불이익 고지. 목적·항목·보유기간만으로는 요건 미충족이다.
+    expect(
+      screen.getByText("동의를 거부하실 수 있으나, 거부 시 문의·상담 서비스 이용이 제한됩니다."),
+    ).toBeInTheDocument();
   });
 
   it("필수값 입력 후 제출하면 Zapier 웹훅으로 규격대로 전송하고 inquiry_complete를 발화한다", async () => {
