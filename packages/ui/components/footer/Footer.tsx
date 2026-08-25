@@ -8,6 +8,7 @@
  *   ≤ 960px → .fai-footer__compact
  */
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ScrollTopButton } from '../ScrollTopButton';
 import './footer.css';
@@ -55,6 +56,7 @@ const VALUES = {
 // 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
 const POLICY_HREFS = {
   privacy: '/document/privacy-policy.pdf',
+  cctv:    '/document/cctv-policy.pdf',
 };
 
 /**
@@ -71,6 +73,7 @@ export interface FooterLabels {
   bizNo?:        string;
   email?:        string;
   privacy?:      string;
+  cctv?:         string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
   /**
@@ -91,6 +94,7 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   bizNo:        '사업자등록번호',
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
+  cctv:         '맞춤형 광고 설정',
   ceoValue:     VALUES.ceo,
   telValue:     VALUES.tel,
   emailValue:   VALUES.email,
@@ -110,8 +114,8 @@ function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void
           onClick={() => onSocialClick?.(sns.label)}
           className="flex flex-col items-center justify-center rounded-full p-[var(--padding-XS)] bg-filled-optional-brand-secondaryBtn"
         >
-          <span className="flex items-center justify-center w-4 h-4">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="text-secondary">
+          <span className="flex items-center justify-center w-4 h-4 min-[1600px]:w-5 min-[1600px]:h-5">
+            <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" aria-hidden className="text-secondary">
               {sns.path}
             </svg>
           </span>
@@ -121,18 +125,25 @@ function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void
   );
 }
 
-type PolicyItem = { label: string; href: string };
+type PolicyItem = { label: string; href?: string; onClick?: () => void };
 
 /* ── 정책 링크 공용 ── */
 function PolicyLinks({ policies, className }: { policies: PolicyItem[]; className?: string }) {
+  const linkCls = 'text-body-s min-[1440px]:text-body font-normal text-text-basic-secondary leading-[150%]';
   return (
     <div className={`flex items-center gap-m ${className ?? ''}`}>
       {policies.map((p, i) => (
-        <span key={p.href} className="flex items-center gap-m">
+        <span key={p.label} className="flex items-center gap-m">
           {i > 0 && <span className="text-border-secondary">|</span>}
-          <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
-            {p.label}
-          </a>
+          {p.onClick ? (
+            <button type="button" onClick={p.onClick} className={`${linkCls} cursor-pointer`}>
+              {p.label}
+            </button>
+          ) : (
+            <a href={p.href} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              {p.label}
+            </a>
+          )}
         </span>
       ))}
     </div>
@@ -141,17 +152,19 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
 
 /* ── 회사 정보 행 공용 (desktop row1·row2 동일 구조) ── */
 // grid-cols-[max-content_1fr]: 타이틀 컬럼이 해당 그룹 내 가장 긴 라벨에 맞게 자동 조정.
-// 고정 px 폭 없이 KO·EN·JA 모든 언어에서 줄바꿈 없이 1행 보장.
+// 값(value) 컬럼의 whitespace-nowrap은 noWrapValue=true인 항목(사업자번호·이메일·전화 등
+// 코드성 문자열)에만 적용한다. 주소처럼 길어질 수 있는 값은 줄바꿈을 허용해야
+// KO·EN·JA 모든 언어에서 패딩 영역 밖으로 텍스트가 넘치지 않는다.
 function InfoRow({ items, className }: { items: { title: string; text: string; noWrapValue?: boolean }[]; className?: string }) {
   return (
     <div className={`grid grid-cols-[max-content_1fr] gap-y-s gap-x-2xl ${className ?? ''}`}>
-      {items.flatMap((item) => [
-        <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+      {items.flatMap((item, i) => [
+        <span key={`${i}-t`} className="text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
           {item.title}
         </span>,
         <span
-          key={`${item.title}-v`}
-          className={`text-[13px] font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
+          key={`${i}-v`}
+          className={`text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px]${item.noWrapValue ? ' whitespace-nowrap' : ''}`}
         >
           {item.text}
         </span>,
@@ -182,6 +195,19 @@ interface FooterProps {
    * 로케일 판단은 소비자(FooterBridge)가 하고 여기서는 받은 행을 그대로 렌더한다.
    */
   extraInfo?: readonly FooterInfoRow[];
+  /**
+   * 개인정보 처리방침 클릭 시 표시할 모달 콘텐츠 팩토리(로케일별).
+   * 소비자(FooterBridge)가 `(onClose) => ReactNode` 형태로 주입한다.
+   * onClose는 Footer의 setModalOpen(false)를 래핑하므로, 내부 확인 버튼에 연결하면 된다.
+   * 미지정 시 기존 PDF 링크(POLICY_HREFS.privacy)로 폴백.
+   */
+  privacyModalContent?: (onClose: () => void) => React.ReactNode;
+  /**
+   * '쿠키 및 광고 설정' 클릭 시 이동할 URL(로케일별).
+   * 소비자(FooterBridge)가 locale별 개인정보 처리방침 PDF + 페이지 앵커를 주입한다.
+   * 미지정 시 POLICY_HREFS.cctv로 폴백.
+   */
+  cookieHref?: string;
 }
 
 export default function Footer({
@@ -190,7 +216,26 @@ export default function Footer({
   showEmail = true,
   showBizNo = true,
   extraInfo = [],
+  privacyModalContent,
+  cookieHref,
 }: FooterProps = {}) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달 열릴 때 body 스크롤 잠금 (position:fixed 방식 — Safari 포함 전 브라우저 호환)
+  useEffect(() => {
+    if (!modalOpen) return;
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, [modalOpen]);
+
   const l = { ...DEFAULT_LABELS, ...labels };
 
   const companyName = l.company;
@@ -207,7 +252,10 @@ export default function Footer({
     ...extraInfo,
   ];
   const policies: PolicyItem[] = [
-    { label: l.privacy, href: POLICY_HREFS.privacy },
+    privacyModalContent
+      ? { label: l.privacy, onClick: () => setModalOpen(true) }
+      : { label: l.privacy, href: POLICY_HREFS.privacy },
+    { label: l.cctv, href: cookieHref ?? POLICY_HREFS.cctv },
   ];
 
   return (
@@ -223,7 +271,7 @@ export default function Footer({
         {/* =====================================================
             1. 데스크톱 섹션 (> 960px)
             ===================================================== */}
-        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between py-4xl px-[var(--padding-8XL)]">
+        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between py-4xl">
 
           {/* logoArea */}
           <div className="flex flex-col items-start justify-between self-stretch gap-6">
@@ -231,27 +279,27 @@ export default function Footer({
             <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
-          {/* contentsArea */}
-          <div className="flex flex-col items-start pt-[var(--spacing-MS)] px-[var(--spacing-MS)] pb-0 gap-[var(--size-48)]">
-            <div className="flex flex-col items-start w-[718px] max-w-full gap-[var(--size-48)]">
-              <div className="flex flex-col gap-[var(--spacing-MS)]">
-                <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                  {companyName}
-                </p>
-                <div className="flex flex-row justify-between items-start gap-[var(--size-80)] self-stretch">
-                  <InfoRow items={row1Info} />
-                  <InfoRow items={row2Info} className="w-[256px]" />
+          {/* contentsArea — min-w-0: flex child가 컨테이너 밖으로 넘치지 않도록 허용 */}
+          <div className="flex flex-col items-start pt-[var(--spacing-MS)] gap-[var(--size-48)] min-w-0">
+            <div className="flex flex-col items-start gap-[var(--size-48)]">
+              <div className="flex flex-col gap-[var(--spacing-XL,24px)]">
+                <div className="flex flex-col gap-[var(--spacing-MS)]">
+                  <p className="text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]">
+                    {companyName}
+                  </p>
+                  <div className="flex flex-row justify-between items-start gap-5xl min-[1440px]:gap-7xl self-stretch">
+                    <InfoRow items={row1Info} className="min-w-0 shrink" />
+                    <InfoRow items={row2Info} className="w-max shrink-0" />
+                  </div>
                 </div>
+                {/* 정책 링크 — contentsArea 내부 (fai-footer__desktop 섹션이 ≤960px에서 숨겨짐) */}
+                <PolicyLinks policies={policies} />
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* 데스크톱 정책 링크 */}
-        <div className="fai-footer__desktop-policies px-[var(--padding-8XL)] pb-4xl">
-          <PolicyLinks policies={policies} />
-        </div>
 
         {/* =====================================================
             2. Compact 섹션 (≤ 960px)
@@ -269,7 +317,7 @@ export default function Footer({
           </div>
 
           {/* contentsArea */}
-          <div className="flex flex-col items-start self-stretch w-full pt-[var(--padding-ml,18px)] pr-[var(--padding-ms,12px)] pb-[var(--padding-none,0px)] pl-[var(--padding-ms,12px)] gap-[var(--spacing-3XL,40px)]">
+          <div className="flex flex-col items-start self-stretch w-full pt-[var(--padding-ml,18px)] gap-[var(--spacing-3XL,40px)]">
 
             {/* companyInfo */}
             <div className="fai-footer__info flex flex-col items-start gap-[var(--spacing-MS,12px)]">
@@ -277,11 +325,11 @@ export default function Footer({
                 {companyName}
               </p>
               <div className="grid grid-cols-[max-content_1fr] gap-y-[var(--spacing-MS,12px)] gap-x-2xl w-full">
-                {[...row1Info, ...row2Info].flatMap((item) => [
-                  <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+                {[...row1Info, ...row2Info].flatMap((item, i) => [
+                  <span key={`${i}-t`} className="text-body-s font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
                     {item.title}
                   </span>,
-                  <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
+                  <span key={`${i}-v`} className="text-body-s font-normal text-text-basic-primary leading-[20px]">
                     {item.text}
                   </span>,
                 ])}
@@ -290,14 +338,19 @@ export default function Footer({
 
             {/* policies */}
             <div className="fai-footer__policies flex justify-end items-center gap-[var(--spacing-MS,12px)]">
-              {policies.map((p, i) => (
-                <span key={p.href} className="flex items-center gap-m">
-                  {i > 0 && <span className="text-border-secondary">|</span>}
-                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
-                    {p.label}
-                  </a>
-                </span>
-              ))}
+              {policies.map((p, i) => {
+                const cls = 'text-body-s font-normal text-text-basic-secondary leading-[150%]';
+                return (
+                  <span key={p.label} className="flex items-center gap-m">
+                    {i > 0 && <span className="text-border-secondary">|</span>}
+                    {p.onClick ? (
+                      <button type="button" onClick={p.onClick} className={`${cls} cursor-pointer`}>{p.label}</button>
+                    ) : (
+                      <a href={p.href} target="_blank" rel="noopener noreferrer" className={cls}>{p.label}</a>
+                    )}
+                  </span>
+                );
+              })}
             </div>
 
           </div>
@@ -305,6 +358,29 @@ export default function Footer({
         </div>
 
       </div>
+
+      {/* ── 개인정보 처리방침 개정 안내 모달 ──
+          스크림: Tailwind 클래스 미의존 — overflow:hidden으로 스크롤 컨테이너가 되지 않게 해야
+          InfoItem의 wheel 이벤트가 가로채이지 않고 InfoItem 자체가 스크롤됨.
+          딤 클릭 닫힘 없음(onClick 미부여).
+      */}
+      {modalOpen && privacyModalContent && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0, right: 0, bottom: 0, left: 0,
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            background: 'var(--color-bg-scrim, rgba(0, 0, 0, 0.52))',
+          }}
+        >
+          {privacyModalContent(() => setModalOpen(false))}
+        </div>
+      )}
+
     </footer>
   );
 }

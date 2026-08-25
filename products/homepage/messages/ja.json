@@ -33,7 +33,8 @@
       "email": "メールでのお問い合わせ"
     },
     "policies": {
-      "privacy": "プライバシーポリシー"
+      "privacy": "プライバシーポリシー",
+      "cctv": "パーソナライズ広告の設定"
     },
     "telValue": "+82-2-6191-0049",
     "emailValue": "contact_jp@fainders.ai",
@@ -193,7 +194,7 @@
           "description": "最小限の人員で店舗運営を実現します"
         },
         "1": {
-          "title": "決済の無人化",
+          "title": "AI自動決済",
           "description": "バーコードスキャンは\n不要です"
         },
         "2": {
@@ -697,9 +698,19 @@
       "selectTitle": "お問い合わせ内容を選択してください",
       "submitLabel": "お問い合わせ",
       "privacyNotice": {
-        "before": "お問い合わせにおける個人情報の取扱いについて、プライバシーポリシーに同意します",
+        "before": "[必須] 個人情報の収集・",
         "link": "プライバシーポリシー",
-        "after": "に同意します"
+        "after": "に同意します",
+        "errorMessage": "プライバシーポリシーに同意してください。"
+      },
+      "privacyInfo": {
+        "purposeLabel": "- 目的 :",
+        "purpose": "お問い合わせの受付・回答、導入相談の対応",
+        "itemsLabel": "- 項目 :",
+        "itemsRequired": "(必須) 会社名、お名前、メールアドレス",
+        "itemsOptional": "(任意) 電話番号、関心製品・業種",
+        "retentionLabel": "- 保有期間 :",
+        "retention": "お問い合わせ完了後1年間"
       }
     },
     "fields": {

@@ -2,6 +2,65 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-25 (v3 sync: 8/20~8/24)
+
+### 🔄 Changed
+
+#### HOM-73 ImageSection 스크롤 안 넘어감 버그 수정 (products/homepage)
+- `page.tsx` `ImageSection`에 `pinDuration="70vh"` 추가
+- `HeroSection.tsx` lenis snap `distanceThreshold: "30%" → "10%"` + 섹션 높이 `h-[180vh] → h-[125vh]`
+
+#### HOM-71 EfficiencySection JA 언어 전환 시 정렬 수정 (products/homepage)
+- stat 너비 고정(`laptop:w-[326px]`, `desktop:w-[361px]`) + `justify-between`
+- `desktop-s`(961px~1279px) 세로 배치 + `laptop`(1280px+) 가로 배치, bar `flex-1`
+
+#### HOM-85 RetailTechLetterSection ISSUE NO 라벨 제거 (products/homepage)
+- 항목별 ISSUE NO. 라벨·번호 제거, `Label` import 정리
+
+#### ProductIndustries 768px 이하 카드 간격 수정 (products/homepage)
+- `gap-m` → `gap-5xl`(80px)
+
+#### HeroSection 반응형 비디오 박스·타이틀 개선 (products/homepage)
+- 1440px+ `min(480px)`, 1600px+ `min(568px)·466px·font-display-l`
+
+#### WhyFaiSection 1600px+ 카드 높이 조정 (products/homepage)
+- `min-[1600px]:h-[480px]` 추가
+
+#### ContactUsSection 개인정보 동의 폼 개선 (products/homepage)
+- `Checkbox` 컴포넌트로 교체 + `privacyInfo` 목적·항목·보유기간 테이블 추가
+
+#### StoreEffects 그래픽·텍스트 수정 (packages/ui + products/homepage)
+- `EffectGraphic.tsx`: `payment-2.svg` → `payment-3.svg`, `remote.svg` → `remote-2.svg`
+- SVG 자산 추가: `root/assets/graphics/payment-3.svg`, `remote-2.svg`
+- 결제 카드 타이틀: `'결제 무인화'` → `'AI 자동 결제'`
+
+#### Footer 전면 개선 (packages/ui + products/homepage)
+- `footer.css` 데스크톱 `padding-inline: var(--padding-8XL)` CSS 이관 (Tailwind arbitrary 불안정 해소)
+- `InfoRow` whitespace-nowrap 조건부, contentsArea `min-w-0`, row2Info `w-max`, gap 토큰 정비
+- 1440px+ 폰트 위계 상향, InfoRow gap 120px, SNS 아이콘 1600px+ M 사이즈
+- `cookieHref` prop 추가, flatMap key index 기반으로 JA 중복 key 해소
+- `PrivacyRevisionModal` 컴포넌트 추가 (packages/ui), index.ts export 등록
+- `FooterBridge.tsx`: MODAL_CONFIG KO·EN·JA 개정 안내 모달, `policies.cctv` 연결, privacy-cookie URL 주입
+
+#### privacy-cookie 중간 HTML + 개인정보 PDF 추가 (products/homepage)
+- `public/privacy-cookie/ko·en·ja.html`: embed #page 방식으로 Chrome PDF 버그 우회
+- `public/contact-us/` KO·EN·JA 2026-1·2023 버전 PDF 추가
+
+#### i18n ko·en·ja.json 갱신 (products/homepage)
+- `footer.policies.cctv` 번역 키 추가 (ko: "맞춤형 광고 설정" / en: "Personalized Ad Settings" / ja: "パーソナライズ広告の設定")
+- `effectCards[1].title` 갱신 (ko: "AI 자동 결제" / en: "AI Auto Checkout" / ja: "AI自動決済")
+- `contactUs.privacyNotice` 텍스트 개편 + `privacyInfo` 목적·항목·보유기간 키 추가
+- `en.json` AboutManagement CEO·CTO·CSO 학력·경력 줄바꿈 처리
+
+#### ShowcaseSection 유튜브 썸네일 UI 개선 + Shorts 영상 제거 (products/homepage)
+- 썸네일 영역 데스크톱 고정 `w-[672px] h-[520px] flex-none` 적용
+- 썸네일 표시 방식 `object-cover` → `object-contain` + `bg-black` 레터박스
+- 썸네일 wrapper 좌우 2px 클리핑: `inset-0` → `inset-y-0 -left-[2px] -right-[2px]`
+- `youtube-curation.json` exclude에 Shorts 영상 7개 추가
+- `youtube-showcase.json` Shorts 7개 제거 (21개 → 14개)
+
+---
+
 ## [Unreleased] - 2026-07-15
 
 ### 🔄 Changed

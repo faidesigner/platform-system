@@ -8,6 +8,8 @@ export { default as NavigationBar } from './components/NavigationBar';
 export { default as Header } from './components/Header';
 export { default as Footer } from './components/footer/Footer';
 export type { FooterLabels } from './components/footer/Footer';
+export { PrivacyRevisionModal } from './components/footer/PrivacyRevisionModal';
+export type { PrivacyRevisionModalProps } from './components/footer/PrivacyRevisionModal';
 
 /* ── Navigation sub-components ── */
 export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';
