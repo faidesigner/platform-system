@@ -249,7 +249,7 @@ export const siteConfig = {
       effectsTitle: "WALK-THROUGH의 효과를 경험해 보세요",
       effectCards: [
         { title: "인건비 절감",    description: "최소 인력으로 운영해요",     icon: "인건비 절감" },
-        { title: "결제 무인화",    description: "바코드를 찍을 필요 없어요",  icon: "결제 무인화" },
+        { title: "AI 자동 결제",  description: "바코드를 찍을 필요 없어요",  icon: "AI 자동 결제" },
         { title: "원격 운영 가능", description: "실시간으로 현황을 알려줘요", icon: "원격 운영 가능" },
       ],
       effectList: [

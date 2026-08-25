@@ -85,7 +85,7 @@ export async function EfficiencySection({ pinDuration = '200vh' }: EfficiencySec
         {/* ── 컨텐츠 박스
               padding: mobile px-[--padding-XL] pt-6xl pb-5xl → 961+ px-[--padding-8XL]
         ── */}
-        <div className="flex w-full h-full flex-col items-start shrink-0 relative z-10 pl-[var(--padding-XL)] pr-[var(--padding-XL)] pt-6xl pb-5xl min-[961px]:pl-[var(--padding-8XL)] min-[961px]:pr-[var(--padding-8XL)]">
+        <div className="flex w-full h-full flex-col items-start shrink-0 relative z-10 pl-[var(--padding-XL)] pr-[var(--padding-XL)] pt-6xl pb-5xl desktop-s:pl-[var(--padding-4XL)] desktop-s:pr-[var(--padding-4XL)] laptop:pl-[var(--padding-8XL)] laptop:pr-[var(--padding-8XL)] desktop:py-[var(--padding-8XL)]">
           <div className="flex flex-1 flex-col items-start justify-between self-stretch w-full">
 
             {/* ── 타이틀 영역 ── */}
@@ -106,16 +106,16 @@ export async function EfficiencySection({ pinDuration = '200vh' }: EfficiencySec
                   mobile:  flex-col, gap-2xl
                   961+:    flex-row, justify-between, items-end
             ── */}
-            <div className="flex flex-col gap-2xl desktop-s:flex-row desktop-s:justify-between desktop-s:items-end desktop-s:gap-0 self-stretch w-full">
+            <div className="flex flex-col gap-2xl laptop:flex-row laptop:justify-between laptop:items-end laptop:gap-0 self-stretch w-full">
               {stats.map((stat) => (
                 <div
                   key={stat.label}
-                  className="w-full desktop-s:w-[311px] flex items-center gap-2xl"
+                  className="w-full laptop:flex-none laptop:w-[326px] desktop:w-[361px] flex items-center gap-2xl"
                 >
 
                   {/* 커스텀 라운드 보더 */}
-                  <div className="flex pb-[3px] items-end self-stretch" aria-hidden>
-                    <div className="w-[3px] desktop:w-[5px] h-[105px] desktop:h-[118px] rounded-fai-circle bg-icon-basic-inverse shrink-0" />
+                  <div className="flex flex-col pb-[3px] self-stretch" aria-hidden>
+                    <div className="w-[3px] desktop:w-[5px] flex-1 rounded-fai-circle bg-icon-basic-inverse shrink-0" />
                   </div>
 
                   {/* 텍스트 묶음 */}

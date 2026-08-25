@@ -23,7 +23,7 @@ export default function ProductIndustries({ title, description, industries }: Pr
           </p>
         </div>
 
-        <div className="flex flex-col tablet:flex-row items-center gap-m w-full self-stretch">
+        <div className="flex flex-col tablet:flex-row items-center gap-5xl tablet:gap-m w-full self-stretch">
           {industries.map((industry, i) => (
             <div key={i} className="flex flex-col items-start gap-xl w-full tablet:flex-1 tablet:min-w-0">
               <div className="relative flex flex-col items-start w-full self-stretch aspect-[369/420] rounded-fai-s overflow-hidden">

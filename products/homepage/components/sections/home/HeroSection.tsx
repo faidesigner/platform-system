@@ -93,7 +93,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
       snap?.destroy();
       snap = new Snap(lenis, {
         type: "proximity",
-        distanceThreshold: "30%",
+        distanceThreshold: "10%",
         duration: 1.4,
         easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       });
@@ -114,14 +114,14 @@ export default function HeroSection({ logos }: HeroSectionProps) {
   }, []);
 
   return (
-    <section ref={sectionRef} className="relative h-[180vh] w-full">
+    <section ref={sectionRef} className="relative h-[125vh] w-full">
       <div className="sticky top-0 relative h-screen w-full overflow-hidden bg-surface">
 
         {/* 상단 카피 — 확장 전에만 표시. z-40: 비디오 박스(z-30)보다 위에 그려 어떤 height에서도 텍스트가 가려지지 않도록 하는 안전망 (HOM-57) */}
         {!isExpanded && (
-          <div className="absolute left-0 right-0 top-0 z-40 mx-auto flex flex-col items-center gap-s pt-[clamp(var(--padding-8XL),22.22vh,200px)] text-center pointer-events-none">
-            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title1")}</h2>
-            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m font-bold tracking-tight text-primary">{t("title2")}</h2>
+          <div className="absolute left-0 right-0 top-0 z-40 h-[calc(100vh-374px)] desktop:h-[calc(100vh-480px)] min-[1600px]:h-[calc(100vh-568px)] flex flex-col items-center justify-center gap-s pt-[var(--padding-8XL)] text-center pointer-events-none">
+            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m min-[1600px]:text-display-l font-bold tracking-tight text-primary">{t("title1")}</h2>
+            <h2 className="text-title-xl max-[421px]:text-title-l tablet:text-display-s desktop:text-display-m min-[1600px]:text-display-l font-bold tracking-tight text-primary">{t("title2")}</h2>
           </div>
         )}
 
@@ -142,7 +142,7 @@ export default function HeroSection({ logos }: HeroSectionProps) {
           className={
             isExpanded
               ? "absolute inset-0 z-30 overflow-hidden bg-fill-strong"
-              : "absolute bottom-0 left-[calc(50%-200px)] w-[400px] h-[min(374px,calc(100vh-var(--hero-title-clear)))] [--hero-title-clear:316px] min-[422px]:[--hero-title-clear:342px] tablet:[--hero-title-clear:364px] desktop:[--hero-title-clear:374px] z-30 overflow-hidden bg-fill-strong"
+              : "absolute bottom-0 left-[calc(50%-200px)] min-[1600px]:left-[calc(50%-233px)] w-[400px] min-[1600px]:w-[466px] h-[min(374px,calc(100vh-var(--hero-title-clear)))] desktop:h-[min(480px,calc(100vh-var(--hero-title-clear)))] min-[1600px]:h-[min(568px,calc(100vh-var(--hero-title-clear)))] [--hero-title-clear:316px] min-[422px]:[--hero-title-clear:342px] tablet:[--hero-title-clear:364px] desktop:[--hero-title-clear:374px] z-30 overflow-hidden bg-fill-strong"
           }
         >
           {/* z-0: 비디오 */}

@@ -68,7 +68,7 @@ function WhyFaiCard({ item, index }: { item: WhyFaiItem; index: number }) {
     <motion.li
       onMouseEnter={() => setHovered(true)}
       onMouseLeave={() => setHovered(false)}
-      className="relative flex flex-col items-start h-[320px] tablet:flex-1 tablet:h-[var(--size-320)] p-2xl rounded-fai-s border border-sand-400 bg-sand-filled-tertiary overflow-hidden"
+      className="relative flex flex-col items-start h-[320px] tablet:flex-1 tablet:h-[var(--size-320)] min-[1600px]:h-[480px] p-2xl rounded-fai-s border border-sand-400 bg-sand-filled-tertiary overflow-hidden"
       variants={scrollFadeInUp}
       initial="initial"
       whileInView="animate"

@@ -30,11 +30,12 @@ export default async function HomePage({
         src={localePolicy(locale).homeHeroImage}
         alt={t("alt")}
         priority
+        pinDuration="70vh"
       />
       <WhyFaiSection />
       {/* images는 config/site.ts의 customerImages가 단일 소스 — 여기서 다시 넘기지 않는다(HOM-69) */}
       <CustomersSection linkHref="/products/vision-check-out#product-reviews" />
-      <EfficiencySection />
+      <EfficiencySection pinDuration="70vh" />
       <CtaBanner />
     </>
   );
