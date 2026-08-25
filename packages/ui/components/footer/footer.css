@@ -8,6 +8,12 @@
   display: none;
 }
 
+/* 데스크톱 좌우 패딩 — Tailwind arbitrary 클래스(px-[var(--padding-8XL)])는 빌드 환경에
+   따라 생성이 불안정하므로 CSS 파일로 고정. footer.css는 Footer.tsx에서 직접 import되어 항상 보장됨. */
+.fai-footer__desktop {
+  padding-inline: var(--padding-8XL); /* 150px */
+}
+
 /* ≤ 420px: logoArea 숨김 + ScrollTopButton 숨김 + 폰트 위계 한 단계 축소 */
 @media (max-width: 420px) {
   .fai-footer__compact-top {
@@ -26,6 +32,37 @@
     font-size: var(--font-size-12, 12px);
     line-height: var(--font-lineHeight-12, 18px);
   }
+}
+
+/* ── PrivacyRevisionModal 커스텀 스크롤바 ──
+   스펙: thumb width 6px / track padding 10px(상하) 4px(좌우)
+   우측 40px 여백은 card px-[40px]이 InfoItem 외부에서 확보 — CSS 추가 조치 불필요
+   ─────────────────────────────────────────────────────────── */
+
+/* Firefox */
+.fai-privacy-scroll {
+  scrollbar-width: thin;
+  scrollbar-color: var(--color-filled-basic-tertiary, #E4E6E7) transparent;
+}
+
+/* Chrome / Safari / Edge */
+/* 스크롤바 전체 너비 = thumb 6px + 좌우 여백(border) 4px × 2 = 14px */
+.fai-privacy-scroll::-webkit-scrollbar {
+  width: 14px;
+}
+/* 트랙: 상하 10px 여백 */
+.fai-privacy-scroll::-webkit-scrollbar-track {
+  background: transparent;
+  margin-block: 10px;
+}
+/* 썸: width 6px (border trick) · circle radius · #E4E6E7
+   border 4px transparent → background-clip: padding-box 로
+   thumb 실너비 = 14 - 4×2 = 6px, 좌우 여백 4px 시뮬레이션 */
+.fai-privacy-scroll::-webkit-scrollbar-thumb {
+  background: var(--color-filled-basic-tertiary, #E4E6E7);
+  border-radius: var(--cornerRadius-circle, 999px);
+  border: 4px solid transparent;
+  background-clip: padding-box;
 }
 
 /* ≤ 960px: desktop 숨기고 compact 표시 */
