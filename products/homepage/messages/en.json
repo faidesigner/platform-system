@@ -6,7 +6,7 @@
       "learnMore": "Learn More",
       "more": "More",
       "quickChat": "Chat with Us",
-      "reviewsMore": "More Customer Stories",
+      "reviewsMore": "Case Studies",
       "mediaMore": "Learn More"
     },
     "a11y": {
@@ -40,7 +40,7 @@
   },
   "products": {
     "visionCheckout": {
-      "heroSubtitle": "The Next Generation of AI Self-Checkout",
+      "heroSubtitle": "Powerful AI Self-Checkout with 14 Cameras",
       "featuresTitle": "What Makes VCO Different?",
       "features": {
         "0": {
@@ -102,7 +102,7 @@
         }
       },
       "industriesTitle": "Industries",
-      "industriesDescription": "Fast checkout for crowded venues, barcode or not",
+      "industriesDescription": "Where Crowds Surge and Self-Checkout Kiosks Fall Short",
       "industries": {
         "0": {
           "label": "Bakery&Cafe"
@@ -114,7 +114,7 @@
           "label": "Hospitality"
         }
       },
-      "reviewsTitle": "Customer Stories",
+      "reviewsTitle": "Case Studies",
       "reviews": {
         "0": {
           "category": "Bakery",
@@ -134,7 +134,7 @@
         },
         "1": {
           "category": "Cafeteria",
-          "store": "Manager, major foodservice operator 'W'",
+          "store": "Manager, major cafeteria operator 'W'",
           "role": "",
           "quote": {
             "0": {
@@ -149,7 +149,7 @@
           }
         },
         "2": {
-          "category": "Resort",
+          "category": "Ski Resort",
           "store": "Manager, Niseko Resort, Hokkaido, Japan",
           "role": "",
           "quote": {
@@ -168,24 +168,24 @@
     },
     "unmannedStore": {
       "heroSubtitle": "The World's Most Economical Unmanned Store",
-      "effectsTitle": "What You Get With WALK-THROUGH",
+      "effectsTitle": "What Can You Expect?",
       "effectCards": {
         "0": {
           "title": "Save on OPEX",
-          "description": "Runs without extra hires"
+          "description": "Staff smarter"
         },
         "1": {
-          "title": "Automated Checkout",
+          "title": "Unmanned Checkout",
           "description": "Nothing to scan"
         },
         "2": {
           "title": "Remote Operation",
-          "description": "Real-time status, wherever you are"
+          "description": "Monitor real-time status from anywhere"
         }
       },
       "effectList": {
         "0": {
-          "title": "How Our VISION-AI Is Different",
+          "title": "Fits Any Venue",
           "description": "Multiple cameras powered by AI\nbringing unmanned operation to brick and mortal stores"
         },
         "1": {
@@ -209,11 +209,11 @@
             },
             "1": {
               "title": "Proven Accuracy",
-              "description": "Launch with accuracy already proven in live stores"
+              "description": "Trust the solution with a proven track record"
             },
             "2": {
-              "title": "Smarter Store Operations",
-              "description": "Run offline like online, letting in-store data drive your decisions"
+              "title": "Store Operations at Your Fingertips",
+              "description": "Read the data on the app, and run your store like an online one"
             }
           }
         },
@@ -224,14 +224,14 @@
           "cards": {
             "0": {
               "title": "Low Setup Cost",
-              "description": "Standardized pre-assembly makes it the most affordable way to go unmanned"
+              "description": "Standardized and modular"
             },
             "1": {
               "title": "Fast Installation",
               "description": "Pick a format, and it's installed in a day\nGo live the next morning"
             },
             "2": {
-              "title": "Monetize Idle Space",
+              "title": "Flexible Layout",
               "description": "Make every last square foot count\nConcessions across hotels, malls, and stadiums: an unmanned shop fits anywhere"
             }
           }
@@ -287,8 +287,8 @@
     "hero": {
       "title1": "Retail AI",
       "title2": "At Your Store",
-      "tagline": "Trouble Finding Staff? No Problem.",
-      "subtitle": "Next-Gen AI Retail Automation"
+      "tagline": "Trouble Finding Staff?",
+      "subtitle": "Start with AI Retail Automation"
     },
     "whyFai": {
       "headline": "Why FAI",
@@ -299,11 +299,11 @@
           "description": "Customers place their items, pay, and go\nShorter lines sell more"
         },
         "1": {
-          "title": "Still Running, Even Short-Handed",
-          "description": "AI handles the checkout, your staff handles the store"
+          "title": "Smarter Staffing",
+          "description": "AI handles the checkout\nYour staff handles the store"
         },
         "2": {
-          "title": "Seamless Customer Experience",
+          "title": "Seamless Shopping",
           "description": "Satisfied customers turn into regulars"
         }
       }
@@ -313,7 +313,7 @@
     },
     "efficiency": {
       "title": "Efficiency",
-      "subtitle": "The numbers speak for themselves",
+      "subtitle": "Proven in live stores",
       "stats": {
         "0": {
           "label": "Checkout accuracy",
@@ -340,7 +340,7 @@
   },
   "about": {
     "hero": {
-      "eyebrow": "Retail Innovation",
+      "eyebrow": "Retail AI",
       "title": [
         "Enable Retailers to Focus",
         "on What Really Matters"
@@ -356,10 +356,10 @@
     "investors": {
       "groups": {
         "0": {
-          "caption": "₩12.7B raised to date, backing our global growth"
+          "caption": "₩12.7B raised to date"
         },
         "1": {
-          "caption": "Selected for Korea's deep-tech support programs."
+          "caption": "Selected for Korea's deep-tech support programs"
         }
       }
     },
@@ -393,7 +393,7 @@
           "name": "Sukbum Hong",
           "education": {
             "0": "Seoul Science High School",
-            "1": "B.S. & Ph.D. in Electrical and Computer Engineering,\nSeoul National University"
+            "1": "B.S. & Ph.D. in ECE,\nSeoul National University"
           },
           "career": {
             "0": "Samsung Electronics",
@@ -417,7 +417,7 @@
       "subtitle": "Meet the people behind Fainders.AI",
       "cards": {
         "0": {
-          "title": "We build AI that leaves the world better than we found it",
+          "title": "We want to build AI that moves the world forward",
           "name": "Sukbum Hong",
           "role": "CTO"
         },
@@ -427,7 +427,7 @@
           "role": "CEO"
         },
         "2": {
-          "title": "Problems over tech, direction over speed, experience over deployment",
+          "title": "Problems over tech, customer experience over deployment",
           "name": "Sungbin Park",
           "role": "Backend Engineer"
         },
@@ -550,8 +550,8 @@
           "description": "Fainders.AI debuts an unmanned flagship store powered by computer vision AI in Seoul"
         },
         "am92ZPQxrmo": {
-          "title": "AI Part-Timer~ [From bread recognition to ordering and checkout, how can I help you?]",
-          "description": "Meet our store's new part-time employee💁🏻‍♀️\nThis smart staff member's name is VCO🪄\n\n\n #FaindersAI  #shorts  #bakerylovers #bakerycafestartup #ai #retail #unmannedcafe #bakeryshop #bakery #brunchcafe #cafeowner"
+          "title": "Meet Our New AI Staff - How Can I Help Today?",
+          "description": "Introducing our new member👩🏻\nSay hello to VCO 🎉"
         },
         "K2ueKcophSc": {
           "title": "Bakery Watch: Pastry Heaven Just Got an Upgrade...",
@@ -562,15 +562,15 @@
           "description": "Surprisingly hard to find a good spot to eat near Seoul Arts Center😢 But Secret Bakery, right out front, was packed with amazing pastries🥯 Fast checkout with no line? So cool!"
         },
         "6mdVuqYxWI8": {
-          "title": "Can AI Tell These Look-Alike Pastries Apart? (ep2. Spot the Difference: Artisee)",
-          "description": "They may look alike, but every one tastes different!!🥖\nAn AI scanner checkout that knows exactly what we want and tells the bread apart precisely\n\n\n\n#FaindersAI #Artisee #bakerypilgrimage #saltbreadlovers #friedsoboro #bakerylovers #trendshorts  #trend"
+          "title": "Can AI Tell These Look-Alike Pastries Apart? (ep2. Spot the Difference at Artisee)",
+          "description": "They look the same, but they all taste different!!🥖\n An AI checkout that gets it, and tells every single pastry apart"
         },
         "SQVWhX_U3f4": {
           "title": "Can AI Tell Mango Cakes Apart? (ep1. Spot the Difference at Toujours)",
-          "description": "No two mangoes under the sky are the same🥭💛 We found an AI checkout that easily tells apart even cakes that look alike🤖‼️\n#trend #bakerytour #breadlover #bakerypilgrimage #ai #FaindersAI #Toujours"
+          "description": "No two mangoes are ever quite the same🥭💛 We found an AI checkout that sorts out even the most identical-looking cakes🤖‼️"
         },
         "hPLD6RDw64M": {
-          "title": "The VCO Challenge [ep1. How Fast Is AI?]",
+          "title": "VCO Challenge [ep1. Just How Fast Is AI?]",
           "description": "How long does it take to ring up ALL these pastries??🍞🥐🥖🥨 We tried the magic tech that finishes checkout the second you set it down⚡"
         },
         "EAJYPdhpTAo": {
@@ -591,7 +591,7 @@
         },
         "XZ3gEzfrWN0": {
           "title": "Why VCO Is Different ③: Look-Alike From Above, Not to VCO",
-          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\nCan it really tell apart items that look identical from above?\n\n[Other solutions]\nTop-view recognition only, so items that look the same from above are hard to tell apart.\n\n[Fainders.AI VCO]\n7 cameras read the sides as well as the top, so even items that look identical from above are identified correctly."
+          "description": "What actually sets VCO (Vision Check Out) from Fainders.AI apart?\n Can it really tell apart items that look identical from above?\n \n [Other solutions]\n Top-view recognition only, so items that look the same from above are hard to tell apart.\n \n [Fainders.AI VCO]\n 14 cameras read the sides as well as the top, so even items that look identical from above are identified correctly."
         },
         "_0FCk3XMS5w": {
           "title": "Why VCO Is Different ②: It Tells Look-Alike Pastries Apart",

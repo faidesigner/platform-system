@@ -53,6 +53,19 @@ const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
     "products.visionCheckout.reviews.1.category",
     "contact.interests.vco.options.catering",
   ],
+  // 아래 3그룹은 번역 시트(2026-08-12)가 en만 같은 표현으로 통일한 건이다(HOM-75).
+  // 판별 근거: 세 건 모두 **ja는 서로 다른 번역**이라 오배치가 아니라 en 카피 의도다.
+  //
+  // "실제 도입 후기 더보기"(MA01/19) / "고객사 도입 후기"(PR01/41) → en 둘 다 "Case Studies"
+  //   ja는 導入事例を見る / 導入事例・お客様の声 로 구분됨
+  ["common.cta.reviewsMore", "products.visionCheckout.reviewsTitle"],
+  // "막힘없는 고객 경험"(MA01/16) / "간편한 고객 경험"(PR02/26) → en 둘 다 "Seamless Shopping"
+  //   ja는 また訪れたくなる店舗体験 / 簡単な顧客体験 로 구분됨
+  ["home.whyFai.items.2.title", "products.unmannedStore.storeTypes.0.cards.0.title"],
+  // "리테일의 미래"(MA01/7 앞부분) / "리테일 혁신"(IN01/1) → en 둘 다 "Retail AI"
+  //   시트 MA01/7은 "Retail AI  At Your Store" 한 행이고 코드가 title1/title2로 쪼개 쓴다.
+  //   ja는 リテールの未来を / リテールイノベーション 로 구분됨
+  ["home.hero.title1", "about.hero.eyebrow"],
 ];
 
 function allowedDuplicate(keys: string[]): boolean {
