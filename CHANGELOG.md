@@ -2,6 +2,19 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-25
+
+### 🔄 Changed
+
+#### ShowcaseSection 유튜브 썸네일 UI 개선 + Shorts 영상 제거 (products/homepage)
+- 썸네일 영역 데스크톱 고정 `w-[672px] h-[520px] flex-none` 적용
+- 썸네일 표시 방식 `object-cover` → `object-contain` + `bg-black` 레터박스
+- 썸네일 wrapper 좌우 2px 클리핑: `inset-0` → `inset-y-0 -left-[2px] -right-[2px]`
+- `youtube-curation.json` exclude에 Shorts 영상 7개 추가
+- `youtube-showcase.json` Shorts 7개 제거 (21개 → 14개)
+
+---
+
 ## [Unreleased] - 2026-07-15
 
 ### 🔄 Changed

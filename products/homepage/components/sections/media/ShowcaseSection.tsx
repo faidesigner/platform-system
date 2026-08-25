@@ -59,8 +59,8 @@ function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
       src={sources[level]}
       alt={alt}
       fill
-      className="object-cover"
-      sizes="(max-width: 1280px) 100vw, 580px"
+      className="object-contain"
+      sizes="(max-width: 1280px) 100vw, 672px"
       onError={() => setLevel((l) => l + 1)}
       onLoad={(e) => {
         // maxresdefault가 없는 영상은 YouTube가 120x90 회색 플레이스홀더를 HTTP 200으로 반환해
@@ -236,7 +236,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단). 스와이프는 카드 전체에서 처리. */}
       <div
-        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto max-[421px]:p-[var(--padding-XL)]">
+        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:w-[672px] min-[961px]:h-[520px] min-[961px]:flex-none min-[961px]:aspect-auto min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto max-[421px]:p-[var(--padding-XL)]">
 
         {/* 슬라이드 키프레임 */}
         <style>{`
@@ -248,7 +248,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
         {/* 현재 이미지 — 애니메이션 시 이동 방향으로 이탈 */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-y-0 -left-[2px] -right-[2px] bg-black"
           style={animating ? { animation: `${outAnim} ${ANIM_MS}ms ease-in-out forwards` } : undefined}
         >
           <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
@@ -257,7 +257,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
         {/* 다음 이미지 — 애니메이션 시 우측 진입 */}
         {animating && nextIdx !== null && (
           <div
-            className="absolute inset-0"
+            className="absolute inset-y-0 -left-[2px] -right-[2px] bg-black"
             style={{ animation: `${inAnim} ${ANIM_MS}ms ease-in-out forwards` }}
           >
             <YoutubeThumb videoId={videos[nextIdx].videoId} alt={videos[nextIdx].thumbnailAlt} />
