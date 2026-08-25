@@ -2,6 +2,61 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-25 (PR#10 develop 머지 + 후속 정정)
+
+develop `0b62b9a` / dev 프리뷰 배포 완료 / `pnpm test` 209 PASS.
+PR#10(`feat/v3-sync-0820-0825`)을 develop에 머지하고, 리뷰에서 나온 결함을 정정했다.
+
+### 🐛 Fixed
+
+#### 개정 안내 모달 시행일 오류 (HOM-66) — `440b2c8`
+모달 문구가 8/6 초안값을 담고 있어 **법정 고지 오류** 상태였다. 공식 PDF 실물과 대조해 정정.
+- 시행일자 `2026년 8월 12일` → **`2026년 8월 28일`**
+- PDF 링크 라벨 `(2026. 8. 13. 시행)` → `(2026. 8. 28. 시행)`
+  ※ 같은 본문 안에서 "12일 시행"과 "8.13. 시행"이 어긋나 있었다(시트 원문의 모순 — 시트도 정정 필요)
+- 공고일 `2026년 8월 6일` → **`2026년 8월 21일`** (사전고지 7일 요건에 맞춘 간격)
+- 문의 메일 `sbhong@fainders.ai` → `contact@fainders.ai` (PDF에는 이미 반영됐던 값)
+- 회귀 가드 4종 추가(`FooterBridge.test.tsx`) — 날짜·연락처·ko-only 노출 고정
+
+#### ja 개인정보처리방침 PDF가 수정 전 버전 (HOM-91) — `02a617d`
+- 연락처 `+82-2-6191-0049` → `03-6821-7191` (사업자정보는 일본법인인데 연락처만 한국 번호였다)
+- 이메일 `contact@fainders.ai` → `contact_jp@fainders.ai`
+- 일본어 한자 깨짐 → Noto Sans JP 계열
+- 변환: docx → pandoc HTML → headless Chrome print-to-PDF.
+  xelatex 경로는 폐기 — `contact_jp`의 `_`가 결합문자 U+0332로 깨지고 표 행 구조가 붕괴했다.
+
+#### 동의 문구 법 요건 미충족 (HOM-78) — `a0509a5`
+- **거부권·불이익 고지 신설**(`contact.form.privacyInfo.refusal`, ko/en/ja).
+  법 제15조 제2항 제4호 — 목적·항목·보유기간 3요소만으로는 요건 미충족(2026-08-06 검토 지적)
+- 문구를 번역 시트 확정본(`contactUs` CU01 27·28행, 8/25 14:29 확정)으로 교체
+- 회귀 테스트 3종 — 동의 미체크 시 전송 차단 / 4요소 화면 표시 / fillRequired 동의 포함
+  ※ PR#10이 필수 체크박스를 추가하면서 기존 제출 테스트를 갱신하지 않아 깨져 있었다
+
+#### footer cctv 키 잠복 회귀 (HOM-61) — `a0509a5`
+`POLICY_HREFS.cctv = '/document/cctv-policy.pdf'` 폴백이 남아 있어, `cookieHref` 미주입 시
+**HOM-61에서 제거한 영상정보처리기기 방침 링크가 되살아났다**(파일이 아직 존재해 404도 아니다).
+- `footer.policies.cctv` → `footer.policies.adSettings` (ko/en/ja + `FooterLabels` + `FooterBridge`)
+- `POLICY_HREFS.cctv` 상수 삭제. `cookieHref`가 없으면 폴백이 아니라 **행 자체를 렌더하지 않는다**
+
+### 🔄 Changed
+
+#### 시트 정합 en 2건 (HOM-75) — `a0509a5`
+- `footer.policies.adSettings` `Personalized Ad Settings` → `Ad Preferences`
+- `products.unmannedStore.effectCards.1.title` `AI Auto Checkout` → `AI Checkout`
+- 시트 대조 CONTENT 26 → 24건
+
+#### 개정 안내 en/ja 본문 제거 (HOM-66) — `440b2c8`
+`modalConfig = MODAL_CONFIG.ko`로 이미 항상 한국어만 노출해 en/ja 76행은 도달 불가능한 죽은 코드였다.
+근거: 2026-08-25 김진영(개인정보 담당) "개정 안내는 한국어로만 진행해주시면 됩니다".
+처리방침 PDF 자체는 ko/en/ja 3종 유지 — 고지문만 한국어다.
+
+#### 머지 충돌 해소 2건 — `cc90e79`
+PR#10 base(`79b544f`)가 HOM-75 번역 반영분보다 앞서 갈라져 같은 키를 양쪽에서 건드렸다.
+- en `effectCards.1.title`: 8/24 시트 기준인 PR#10 채택
+- ja `effectCards.1`: title은 PR#10, description은 develop(HOM-75 승인 줄바꿈)을 결합
+
+---
+
 ## [Unreleased] - 2026-08-25 (v3 sync: 8/20~8/24)
 
 ### 🔄 Changed
