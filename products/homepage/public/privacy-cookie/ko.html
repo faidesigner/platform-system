@@ -1,4 +1,19 @@
 <!DOCTYPE html>
+<!--
+  ⚠️ 이 페이지의 #page=3 는 PDF 페이지네이션에 직접 결합돼 있다.
+     대상 조항: 제2조 쿠키 및 행태정보의 수집·이용·거부
+     대상 PDF : FaindersAI_개인정보처리방침_2026-1.pdf
+
+     PDF를 재생성·교체하면 페이지 수가 바뀌어 이 앵커가 엉뚱한 조항으로 착지한다.
+     실제 사고: 2026-08-25 ja PDF를 7페이지 → 5페이지로 재생성했더니 #page=5 가
+     Cookie 조항이 아니라 第10条 お問い合わせ窓口 로 착지했다.
+
+     PDF 교체 시 반드시 확인:
+       pdftotext -enc UTF-8 -f <N> -l <N> "public/contact-us/<PDF>" - | head -20
+     → 조항 제목이 그 페이지에 있는지 눈으로 확인하고 #page=N 을 맞춰라.
+
+     ※ 조항 번호는 로케일별로 다르다 — ko/en 은 2조, ja 는 8조다. 복붙하지 말 것.
+-->
 <html lang="ko">
 <head>
   <meta charset="utf-8">
