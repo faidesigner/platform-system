@@ -34,7 +34,7 @@
     },
     "policies": {
       "privacy": "Privacy Policy",
-      "cctv": "Personalized Ad Settings"
+      "adSettings": "Ad Preferences"
     },
     "telValue": "+82-2-6191-0049",
     "emailValue": "contact@fainders.ai"
@@ -176,7 +176,7 @@
           "description": "Staff smarter"
         },
         "1": {
-          "title": "AI Auto Checkout",
+          "title": "AI Checkout",
           "description": "Nothing to scan"
         },
         "2": {
@@ -680,19 +680,20 @@
       "selectTitle": "What are you interested in?",
       "submitLabel": "Contact",
       "privacyNotice": {
-        "before": "[Required] I agree to the collection of personal information and ",
+        "before": "[Required] I agree to the collection of my personal information and to the ",
         "link": "Privacy Policy",
-        "after": "",
+        "after": ".",
         "errorMessage": "Please agree to the Privacy Policy."
       },
       "privacyInfo": {
         "purposeLabel": "- Purpose :",
-        "purpose": "Processing and responding to inquiries",
-        "itemsLabel": "- Items :",
-        "itemsRequired": "(Required) Company, Name, Email",
-        "itemsOptional": "(Optional) Phone, Products of Interest",
-        "retentionLabel": "- Retention :",
-        "retention": "1 year after inquiry is resolved"
+        "purpose": "To respond to your inquiry and provide a consultation on adopting our products",
+        "itemsLabel": "- Information collected :",
+        "itemsRequired": "(Required) Company name, Name, Email",
+        "itemsOptional": "(Optional) Phone number, Product of interest, Industry",
+        "retentionLabel": "- Retention period :",
+        "retention": "1 year after your inquiry is closed",
+        "refusal": "Consent is optional, but we can't respond to your inquiry without it."
       }
     },
     "fields": {

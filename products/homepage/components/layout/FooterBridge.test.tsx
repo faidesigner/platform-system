@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, fireEvent, screen } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import koMessages from "@/messages/ko.json";
 import enMessages from "@/messages/en.json";
@@ -83,6 +83,58 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     const ja = renderAt("ja").container.textContent ?? "";
     expect(ja).toContain("江南大路51キル 1");
     expect(ja).not.toContain("ギル");
+  });
+
+  // ── 개인정보 처리방침 개정 안내 모달 (HOM-66) ────────────────────────────
+  //
+  // 날짜는 공식 PDF(public/contact-us/FaindersAI_개인정보처리방침_2026-1.pdf)와 반드시 일치해야 한다.
+  // 공고일 2026-08-21 / 시행일 2026-08-28. 개정 시 최소 7일 전 사전고지 요건 때문에 간격이 7일이다.
+  // 초기 구현에 8월 12일(8/6 초안값)이 박혀 있었고 본문 안에서 "8. 13. 시행"과도 어긋났다 —
+  // 실서비스에 나가면 법정 고지 오류이므로 날짜를 테스트로 못박는다.
+  describe("개정 안내 모달", () => {
+    function openModal(locale: keyof typeof MESSAGES) {
+      const view = renderAt(locale);
+      const buttons = view.container.querySelectorAll("button");
+      const trigger = Array.from(buttons).find((b) =>
+        /개인정보 처리방침|Privacy Policy|プライバシーポリシー/.test(b.textContent ?? ""),
+      );
+      expect(trigger, `${locale}: 개정 안내 모달 트리거 버튼을 찾지 못했다`).toBeTruthy();
+      fireEvent.click(trigger!);
+      return view;
+    }
+
+    it("시행일은 2026년 8월 28일, 공고일은 2026년 8월 21일이다", () => {
+      const text = openModal("ko").container.textContent ?? "";
+      expect(text).toContain("■ 시행일자 : 2026년 8월 28일");
+      expect(text).toContain("개정된 처리방침은 2026년 8월 28일부터 적용되며");
+      expect(text).toContain("▶ 개인정보 처리방침 (2026. 8. 28. 시행)");
+      expect(text).toContain("2026년 8월 21일");
+    });
+
+    it("폐기된 날짜(8월 12일·8. 13.·8월 6일)가 남아 있지 않다", () => {
+      const text = openModal("ko").container.textContent ?? "";
+      for (const stale of ["8월 12일", "8. 13. 시행", "2026년 8월 6일"]) {
+        expect(text, `폐기된 날짜 '${stale}'가 남아 있다`).not.toContain(stale);
+      }
+    });
+
+    it("문의 연락처는 공식 PDF와 같은 contact@fainders.ai를 쓴다", () => {
+      // 초안의 sbhong@는 2026-08-06 검토에서 contact@로 정정됐고 PDF에도 그렇게 반영됐다.
+      const text = openModal("ko").container.textContent ?? "";
+      expect(text).toContain("contact@fainders.ai");
+      expect(text).not.toContain("sbhong@");
+    });
+
+    it("en·ja로 전환해도 개정 안내는 한국어로만 노출한다", () => {
+      // 2026-08-25 김진영(개인정보 담당) — "개정 안내는 한국어로만 진행해주시면 됩니다".
+      // 개정 고지는 한국 개인정보보호법상 의무이고 en/ja는 대상이 아니다.
+      for (const locale of ["en", "ja"] as const) {
+        const text = openModal(locale).container.textContent ?? "";
+        expect(text).toContain("■ 시행일자 : 2026년 8월 28일");
+        expect(text).not.toContain("Effective Date");
+        expect(text).not.toContain("施行日：");
+      }
+    });
   });
 
   it("영상정보처리기기 방침 링크는 어느 로케일에도 남아 있지 않다 (HOM-61 회귀)", () => {

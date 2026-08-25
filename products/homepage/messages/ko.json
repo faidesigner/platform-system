@@ -34,7 +34,7 @@
     },
     "policies": {
       "privacy": "개인정보 처리방침",
-      "cctv": "맞춤형 광고 설정"
+      "adSettings": "맞춤형 광고 설정"
     },
     "telValue": "02-6191-0049",
     "emailValue": "contact@fainders.ai"
@@ -692,7 +692,8 @@
         "itemsRequired": "(필수) 회사명, 성함, 이메일",
         "itemsOptional": "(선택) 전화번호, 관심 제품 및 업종",
         "retentionLabel": "- 보유기간 :",
-        "retention": "문의 처리 완료 후 1년"
+        "retention": "문의 처리 완료 후 1년",
+        "refusal": "동의를 거부하실 수 있으나, 거부 시 문의·상담 서비스 이용이 제한됩니다."
       }
     },
     "fields": {
