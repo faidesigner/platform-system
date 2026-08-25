@@ -120,11 +120,12 @@ node scripts/sync-messages.mjs --save-fixture <dir>  # 받은 CSV를 보관
 리포트는 `docs/HOM75_diff_<YYYYMMDD>.md`로 저장된다. **messages를 자동 수정하지 않는다** — 시트가 항상 정답이 아니기 때문이다:
 
 - **코드가 확정안**인 항목은 `i18n/sheet-decisions.json`에 근거와 함께 선언되어 `C. 코드 확정안`으로 분류된다. 선언값이 실제 messages와 어긋나면 `i18n/sheetDecisions.test.ts`가 실패한다.
+  `loadDecisionSet()`은 `(key, locale)`만 조회 키로 쓰고 `codeValue`는 버린다. 그래서 코드 값이 나중에 바뀌어도 선언은 계속 `DECIDED`를 반환하고, **그때부터 도구가 실제 이격을 조용히 숨긴다.** 그 상태를 막는 게 위 테스트다 — 선언을 추가·수정할 때 `codeValue`를 실제 값과 맞춰라.
 - 시트에는 `언어 전환시 미노출` 같은 **지시문 셀**이 섞여 있어 `D. 지시문 셀`로 걸러진다. 그대로 반영하면 화면에 한국어 지시문이 노출된다.
 - **ja는 ko의 번역이 아니다.** 일본 시장용 콘텐츠 변형이 포함된다(예: 카메라 대수, 관리시스템 소구).
 - ko 원문을 조인 키로 쓰므로, 같은 ko가 여러 키에 걸리면 `B. 중복매칭`으로 표시된다. 확인 없이 반영하면 다른 키의 번역이 잘못 복사된다.
 
-반영 후 `pnpm test`(특히 `i18n/messageConsistency.test.ts`)를 반드시 통과시킬 것.
+반영 후 `pnpm test`(특히 `i18n/messageConsistency.test.ts`, `i18n/sheetDecisions.test.ts`)를 반드시 통과시킬 것.
 
 ## 문의 폼 (Zapier)
 
@@ -136,6 +137,7 @@ node scripts/sync-messages.mjs --save-fixture <dir>  # 받은 CSV를 보관
 
 - **vitest** (`pnpm test`) — jsdom + @testing-library/react.
 - 커버리지: 순수 로직(`buildEvent`/`trackEvent`/`buildContactPayload`/`parseUtm`) 단위 + 문의 폼 제출 대표 흐름.
+- i18n 가드: `i18n/messageConsistency.test.ts`(ko/en/ja 키 동기 + 오배치 번역 검출), `i18n/sheetDecisions.test.ts`(시트 확정안 선언이 실제 messages와 일치하는지).
 - jsdom 공용 폴리필(`scrollIntoView`/`scrollTo`)은 `vitest.setup.ts`.
 - ⚠️ `pnpm lint`는 현재 `eslint-config-next` ↔ `@eslint/eslintrc` 순환참조로 깨져 있음(사전 이슈). 커밋 게이트는 `pnpm build && pnpm test`.
 
