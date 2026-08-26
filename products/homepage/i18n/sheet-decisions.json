@@ -98,6 +98,34 @@
       "codeValue": "Powerful AI Self-Checkout with 7 Cameras",
       "reason": "카메라 대수 7대 통일(2026-08-21 결정, 2026-08-26 재확인). 시트는 14 Cameras로 남아 있어 수정 요청 대상. 이 값이 14로 되돌아가면 같은 화면의 features.0.description(7대)과 모순된다.",
       "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "contact.interests.vco.options.bakery",
+      "locale": "ja",
+      "codeValue": "ベーカリー・カフェ",
+      "reason": "시트 contactUs 13행 ja = ベーカリー・カフェ. ko 원문 \"베이커리\"가 product-vco 42행(reviews.0.category, ja=ベーカリー)과 중복돼 대조 도구가 상대 탭 행과 교차 비교한다. 탭이 다르면 값도 다르므로 이 키는 contactUs 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.visionCheckout.reviews.0.category",
+      "locale": "ja",
+      "codeValue": "ベーカリー",
+      "reason": "시트 product-vco 42행 ja = ベーカリー. ko 원문 \"베이커리\"가 contactUs 13행(options.bakery, ja=ベーカリー・カフェ)과 중복돼 교차 비교된다. 이 키는 product-vco 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.visionCheckout.benefits.1.items.0.subtitle",
+      "locale": "ja",
+      "codeValue": "人件費を削減",
+      "reason": "시트 product-vco 26행 ja = 人件費を削減. ko 원문 \"인건비 절감\"이 product-store 10행(effectCards.0.title, ja=人件費の削減)과 중복돼 교차 비교된다. 이 키는 product-vco 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.unmannedStore.effectCards.0.title",
+      "locale": "ja",
+      "codeValue": "人件費の削減",
+      "reason": "시트 product-store 10행 ja = 人件費の削減. ko 원문 \"인건비 절감\"이 product-vco 26행(benefits.1.items.0.subtitle, ja=人件費を削減)과 중복돼 교차 비교된다. 이 키는 product-store 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
     }
   ]
 }

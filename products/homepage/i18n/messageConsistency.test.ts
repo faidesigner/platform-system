@@ -47,6 +47,14 @@ const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
     "media.showcase.videoOverrides.VJSlS3ujdEo.title",
     "media.showcase.videoOverrides.20XzJavnjyY.title",
   ],
+  // "베이커리" ↔ "Bakery&Cafe" — 업종 라벨과 문의 폼 관심분야가 같은 업종을 가리킨다.
+  // ja는 둘 다 ベーカリー・カフェ(카페 포함)로 통일. 아래 급식 그룹과 같은 구조다.
+  // 판별 근거: 시트 contactUs 13행 ja = ベーカリー・カフェ (product-vco 42행 reviews.0.category는
+  // ベーカリー로 별개 값이라 이 그룹에 넣지 않는다 — 탭이 다르면 값도 다르다).
+  [
+    "products.visionCheckout.industries.0.label",
+    "contact.interests.vco.options.bakery",
+  ],
   // "급식" ↔ "Cafeteria&Canteen" — 일본어권에서는 사내·학생 식당으로 풀어 쓰는 것이 마케팅 확정안
   [
     "products.visionCheckout.industries.1.label",
