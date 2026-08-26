@@ -86,18 +86,18 @@
       "decidedAt": "2026-08-21"
     },
     {
-      "key": "products.visionCheckout.features.0.title",
-      "locale": "en",
-      "codeValue": "7 AI Cameras,\nNothing Gets Missed",
-      "reason": "카메라 대수를 3개 로케일 모두 7대로 통일(사용자 결정 2026-08-21). ja가 이미 7台였고 ko/en만 14였다. 시트는 en 카드 구성 자체가 다른 값('Scan With 99.9% Accuracy')이라 별도 판정 보류 중 — 시트 수정 요청 대상.",
-      "decidedAt": "2026-08-21"
-    },
-    {
       "key": "products.visionCheckout.features.0.description",
       "locale": "en",
-      "codeValue": "Sees every item in 3D, from every angle",
-      "reason": "시트 값 'Nothing gets past 14 AI cameras'는 (a) 14대 표기가 폐기됐고 (b) 코드 features.0.title의 뒷부분과 같아 행 밀림이 의심된다. 판정 전까지 코드 유지.",
-      "decidedAt": "2026-08-21"
+      "codeValue": "Nothing gets past 7 AI cameras",
+      "reason": "시트의 en 카드 재구성은 채택했으나(마케팅 확정, 2026-08-26) 카메라 대수는 3개 로케일 모두 7대로 통일한 결정을 따른다(2026-08-21 결정, 2026-08-26 재확인). 시트는 14로 남아 있어 수정 요청 대상.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.visionCheckout.heroSubtitle",
+      "locale": "en",
+      "codeValue": "Powerful AI Self-Checkout with 7 Cameras",
+      "reason": "카메라 대수 7대 통일(2026-08-21 결정, 2026-08-26 재확인). 시트는 14 Cameras로 남아 있어 수정 요청 대상. 이 값이 14로 되돌아가면 같은 화면의 features.0.description(7대)과 모순된다.",
+      "decidedAt": "2026-08-26"
     }
   ]
 }

@@ -41,63 +41,63 @@
   },
   "products": {
     "visionCheckout": {
-      "heroSubtitle": "Powerful AI Self-Checkout with 14 Cameras",
+      "heroSubtitle": "Powerful AI Self-Checkout with 7 Cameras",
       "featuresTitle": "What Makes VCO Different?",
       "features": {
         "0": {
-          "title": "7 AI Cameras,\nNothing Gets Missed",
-          "description": "Sees every item in 3D, from every angle"
+          "title": "Scan With\n99.9% Accuracy",
+          "description": "Nothing gets past 7 AI cameras"
         },
         "1": {
-          "title": "Plugs Into Your\nExisting POS",
+          "title": "Plug Into Your\nExisting POS",
           "description": "No need to switch POS"
         },
         "2": {
-          "title": "99.9% Accuracy",
-          "description": "A full scan takes a single second"
+          "title": "Sell Any Items",
+          "description": "From packaged goods to cafeteria food to pastries"
         }
       },
-      "benefitsTitle": "What Changes for Your Store?",
+      "benefitsTitle": "What Can You Expect?",
       "benefits": {
         "0": {
-          "eyebrow": "Frictionless Checkout",
-          "title": "Barcode or Not,\nCheckout Just Works",
+          "eyebrow": "Seamless Checkout",
+          "title": "Keep Your Customers Happy",
           "items": {
             "0": {
-              "subtitle": "Easy to Use",
-              "description": "Place the tray, and you're done!"
+              "subtitle": "Intuitive UX",
+              "description": "Place the tray and let AI do the checkout"
             },
             "1": {
-              "subtitle": "Whatever You Sell, AI Reads It",
-              "description": "Pastries, salads, cafeteria meals, even nuts and bolts: Vision AI rings them all up"
+              "subtitle": "Customer-Friendly Self-Service",
+              "description": "Easier to use than self-checkout"
             }
           }
         },
         "1": {
-          "eyebrow": "The Staffing Issue? No Problem",
-          "title": "Short-Staffed? No Problem",
+          "eyebrow": "Smarter Staffing",
+          "title": "Optimize Your Store Operation",
           "items": {
             "0": {
               "subtitle": "Save on OPEX",
-              "description": "VCO covers the checkout, Your staff focus elsewhere"
+              "description": "VCO covers the checkout, your staff focuses elsewhere"
             },
             "1": {
-              "subtitle": "Never Needs Hiring or Training",
-              "description": "VCO is up to speed from day one\nShort-staffed, frequent turnover? Your store keeps running"
+              "subtitle": "Up to Speed From Day One",
+              "description": "Whoever comes and goes,\n Your store keeps running reliably"
             }
           }
         },
         "2": {
-          "eyebrow": "Sell More, Spend Less",
-          "title": "No Instructions Needed",
+          "eyebrow": "Boost Your Margins",
+          "title": "See the Instant Impact",
           "items": {
             "0": {
               "subtitle": "Higher Throughput",
               "description": "Faster checkout, shorter lines, more sales in the peak-hour rush"
             },
             "1": {
-              "subtitle": "Self-Service Everyone Can Use",
-              "description": "Easier and faster than a standard self-checkout kiosk"
+              "subtitle": "Longer Working Hours",
+              "description": "Keep your store open longer"
             }
           }
         }
