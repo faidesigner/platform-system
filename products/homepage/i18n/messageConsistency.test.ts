@@ -53,6 +53,16 @@ const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
     "products.visionCheckout.reviews.1.category",
     "contact.interests.vco.options.catering",
   ],
+  // 아래 2그룹은 번역 시트의 en 카드 재구성(2026-08-26 마케팅 확정)이 만든 중복이다.
+  // 오배치가 아니라는 판별 근거: **시트 자체가 양쪽 행에 같은 en을 배정**하고 있다.
+  //
+  // "어떻게 달라질까요?"(product-vco 17) / "WALK-THROUGH의 효과를 경험해 보세요"(product-store 9)
+  //   → 시트 en 둘 다 "What Can You Expect?"
+  ["products.visionCheckout.benefitsTitle", "products.unmannedStore.effectsTitle"],
+  // "인력 리스크 관리"(product-vco 24) / "최소 인력으로 최대 효율을"(main 14)
+  //   → 시트 en 둘 다 "Smarter Staffing"
+  ["products.visionCheckout.benefits.1.eyebrow", "home.whyFai.items.1.title"],
+
   // 아래 3그룹은 번역 시트(2026-08-12)가 en만 같은 표현으로 통일한 건이다(HOM-75).
   // 판별 근거: 세 건 모두 **ja는 서로 다른 번역**이라 오배치가 아니라 en 카피 의도다.
   //
