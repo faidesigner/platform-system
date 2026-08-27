@@ -510,3 +510,89 @@ body {
 @utility animate-fai-marquee {
   animation: fai-marquee var(--marquee-duration, 30s) linear infinite;
 }
+
+/* ── Footer 반응형 CSS ──────────────────────────────────────────────────────
+   packages/ui/footer.css가 Turbopack 심링크 핫리로드 미감지로 변경이 반영 안
+   되는 문제를 회피하기 위해 homepage globals.css에서 관리한다.
+   ─────────────────────────────────────────────────────────────────────── */
+
+/* 데스크톱 좌우 패딩 */
+.fai-footer__desktop {
+  padding-inline: var(--padding-8XL); /* 150px */
+}
+
+/* 로고 영역 — 80px 우측 패딩 + flex 축소 방지 */
+.fai-footer__logo-area {
+  padding-right: var(--spacing-5XL, 80px);
+  flex-shrink: 0;
+}
+
+/* compact 로고 — flex 축소 방지 */
+.fai-footer__logo {
+  flex-shrink: 0;
+}
+
+/* 데스크톱 콘텐츠 영역 gap 48px (named token 없음) */
+.fai-footer__contents {
+  gap: var(--size-48); /* 48px */
+}
+.fai-footer__contents-inner {
+  gap: var(--size-48); /* 48px */
+}
+
+/* EN·JA: ≤1100px → compact */
+@media (max-width: 1100px) {
+  .fai-footer--wide .fai-footer__desktop,
+  .fai-footer--wide .fai-footer__desktop-policies {
+    display: none;
+  }
+  .fai-footer--wide .fai-footer__compact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3XL, 40px);
+    padding: var(--padding-3XL) var(--padding-XL);
+  }
+}
+
+/* EN·JA: 1101~1280px → desktop 복원 */
+@media (min-width: 1101px) {
+  .fai-footer--wide .fai-footer__desktop {
+    display: flex;
+  }
+  .fai-footer--wide .fai-footer__desktop-policies {
+    display: block;
+  }
+  .fai-footer--wide .fai-footer__compact {
+    display: none;
+  }
+}
+
+/* KO: ≤1280px → compact */
+@media (max-width: 1280px) {
+  .fai-footer__desktop,
+  .fai-footer__desktop-policies {
+    display: none !important;
+  }
+  .fai-footer__compact {
+    display: flex !important;
+    flex-direction: column;
+    gap: var(--spacing-3XL, 40px);
+    padding: var(--padding-3XL) var(--padding-XL);
+  }
+}
+
+/* ≤420px: compact-top·스크롤버튼 숨김 + 폰트 축소 */
+@media (max-width: 420px) {
+  .fai-footer__compact-top {
+    display: none;
+  }
+  .fai-footer__scroll-top {
+    display: none;
+  }
+  .fai-footer__info span,
+  .fai-footer__policies a,
+  .fai-footer__policies button {
+    font-size: var(--font-size-12, 12px);
+    line-height: var(--font-lineHeight-12, 18px);
+  }
+}

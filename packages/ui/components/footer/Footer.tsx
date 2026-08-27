@@ -208,6 +208,11 @@ interface FooterProps {
    * 미지정 시 POLICY_HREFS.cctv로 폴백.
    */
   cookieHref?: string;
+  /**
+   * EN·JA처럼 콘텐츠 영역이 넓은 로케일에서 로고↔콘텐츠 최소 여백 80px 보장 +
+   * 여백을 유지할 수 없는 시점(≤1100px)부터 compact 레이아웃으로 전환.
+   */
+  wideCompact?: boolean;
 }
 
 export default function Footer({
@@ -218,6 +223,7 @@ export default function Footer({
   extraInfo = [],
   privacyModalContent,
   cookieHref,
+  wideCompact = false,
 }: FooterProps = {}) {
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -259,31 +265,31 @@ export default function Footer({
   ];
 
   return (
-    <footer className="relative w-full bg-bg-200">
+    <footer className={`relative w-full bg-bg-200${wideCompact ? ' fai-footer--wide' : ''}`}>
 
-      {/* 스크롤 버튼 — 절대 위치, > 960px 에서만 표시 */}
-      <div className="fai-footer__scroll-top absolute bottom-[var(--size-56)] right-[var(--size-56)] z-10">
+      {/* 스크롤 버튼 — 절대 위치, desktop compact 미만에서 숨김(footer.css) */}
+      <div className="fai-footer__scroll-top absolute bottom-4xl right-4xl z-10">
         <ScrollTopButton />
       </div>
 
       <div className="w-full">
 
         {/* =====================================================
-            1. 데스크톱 섹션 (> 960px)
+            1. 데스크톱 섹션 (> 1280px KO / > 1100px EN·JA)
             ===================================================== */}
-        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between py-4xl">
+        <div className="fai-footer__desktop flex w-full flex-row justify-between items-start py-4xl">
 
           {/* logoArea */}
-          <div className="flex flex-col items-start justify-between self-stretch gap-6">
+          <div className="fai-footer__logo-area flex flex-col items-start justify-between self-stretch gap-xl shrink-0" style={{ paddingRight: 'var(--spacing-5XL, 80px)' }}>
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
-          {/* contentsArea — min-w-0: flex child가 컨테이너 밖으로 넘치지 않도록 허용 */}
-          <div className="flex flex-col items-start pt-[var(--spacing-MS)] gap-[var(--size-48)] min-w-0">
-            <div className="flex flex-col items-start gap-[var(--size-48)]">
-              <div className="flex flex-col gap-[var(--spacing-XL,24px)]">
-                <div className="flex flex-col gap-[var(--spacing-MS)]">
+          {/* contentsArea — gap·min-w-0 (footer.css) */}
+          <div className="fai-footer__contents flex flex-col items-start pt-ms min-w-0">
+            <div className="fai-footer__contents-inner flex flex-col items-start">
+              <div className="flex flex-col gap-xl">
+                <div className="flex flex-col gap-ms">
                   <p className="text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]">
                     {companyName}
                   </p>
@@ -302,13 +308,13 @@ export default function Footer({
 
 
         {/* =====================================================
-            2. Compact 섹션 (≤ 960px)
+            2. Compact 섹션 (≤ 1280px KO / ≤ 1100px EN·JA)
             ===================================================== */}
         <div className="fai-footer__compact">
 
           {/* logoArea */}
           <div className="fai-footer__compact-top flex justify-between items-center self-stretch w-full">
-            <div className="fai-footer__logo">
+            <div className="fai-footer__logo shrink-0">
               <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             </div>
             <div className="fai-footer__socials">
@@ -317,14 +323,14 @@ export default function Footer({
           </div>
 
           {/* contentsArea */}
-          <div className="flex flex-col items-start self-stretch w-full pt-[var(--padding-ml,18px)] gap-[var(--spacing-3XL,40px)]">
+          <div className="flex flex-col items-start self-stretch w-full pt-ml gap-3xl">
 
             {/* companyInfo */}
-            <div className="fai-footer__info flex flex-col items-start gap-[var(--spacing-MS,12px)]">
+            <div className="fai-footer__info flex flex-col items-start gap-ms">
               <p className="text-body font-bold text-text-basic-primary leading-[150%]">
                 {companyName}
               </p>
-              <div className="grid grid-cols-[max-content_1fr] gap-y-[var(--spacing-MS,12px)] gap-x-2xl w-full">
+              <div className="grid grid-cols-[max-content_1fr] gap-y-ms gap-x-2xl w-full">
                 {[...row1Info, ...row2Info].flatMap((item, i) => [
                   <span key={`${i}-t`} className="text-body-s font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
                     {item.title}
@@ -337,7 +343,7 @@ export default function Footer({
             </div>
 
             {/* policies */}
-            <div className="fai-footer__policies flex justify-end items-center gap-[var(--spacing-MS,12px)]">
+            <div className="fai-footer__policies flex justify-end items-center gap-ms">
               {policies.map((p, i) => {
                 const cls = 'text-body-s font-normal text-text-basic-secondary leading-[150%]';
                 return (

@@ -203,6 +203,7 @@ Fainders AI株式会社`}</p>
       extraInfo={extraInfo}
       privacyModalContent={privacyModalContent}
       cookieHref={cookieHref}
+      wideCompact={locale !== 'ko'}
       onSocialClick={(label) => trackEvent("interest_click", { location: "footer", label })}
     />
   );

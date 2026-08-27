@@ -14,7 +14,7 @@
 "use client";
 
 import Image from 'next/image';
-import { useTranslations } from 'next-intl';
+import { useTranslations, useLocale } from 'next-intl';
 import { useRouter } from '@/i18n/navigation';
 import { IcoTxtButton } from '@fai/ui';
 import { trackEvent } from '@/lib/analytics/track';
@@ -28,6 +28,7 @@ export function CtaBanner({
   const router = useRouter();
   const t = useTranslations('home.ctaBanner');
   const tCommon = useTranslations('common');
+  const locale = useLocale();
   const handleCta = () => {
     trackEvent('lead_acquisition_click', { location, label: tCommon('cta.requestDemo') });
     router.push('/contact');
@@ -57,7 +58,7 @@ export function CtaBanner({
 
       {/* Layer 3: 콘텐츠 — dark 컨텍스트 주입 (배너 배경 항상 어두움) */}
       <div className="dark relative z-10 flex flex-col items-center min-[961px]:flex-row min-[961px]:items-center justify-center gap-l min-[961px]:gap-[var(--size-48)] w-full h-[216px] py-5xl px-[var(--padding-XL)] min-[961px]:px-[var(--padding-8XL)]">
-        <h2 className="flex-1 text-center min-[961px]:text-left text-title-s min-[961px]:text-title-m desktop:text-title-l font-bold text-text-inverse">
+        <h2 className={`flex-1 text-center min-[961px]:text-left text-title-s min-[961px]:text-title-m desktop:text-title-l font-bold text-text-inverse${locale === 'ja' ? ' max-[419px]:text-body-xl' : ''}`}>
           {t('titleLine1')}<br className="min-[769px]:hidden" /> {t('titleLine2')}
         </h2>
 

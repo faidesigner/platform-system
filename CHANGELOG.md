@@ -2,6 +2,31 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-27
+
+### 🔄 Changed
+
+#### Footer 반응형 브레이크포인트 + 로고 영역 개선 (packages/ui + products/homepage)
+- `footer.css` + `globals.css` compact 브레이크포인트: KO ≤1280px / EN·JA ≤1100px (기존 ≤960px 통일 → 로케일별 분리)
+- `wideCompact` prop 추가 — `.fai-footer--wide` 클래스 토글로 EN·JA 전용 브레이크포인트 분기
+- `FooterBridge`: `wideCompact={locale !== 'ko'}` 주입
+- 로고 영역 우측 패딩 80px 전 로케일 공통 적용 (`--spacing-5XL`), 로고 `flex-shrink:0` 원본 크기 고정
+- compact 로고도 `shrink-0` 추가로 SNS 버튼에 밀려 축소되지 않도록 고정
+- 420px 이하 정책 링크 폰트 축소 대상에 `button` 추가 (기존 `a`만 → `a, button` 공통 적용)
+
+#### Footer 토큰 정비 (packages/ui)
+- `gap-6` → `gap-xl` (Tailwind default scale → named token)
+- `bottom/right-[var(--size-56)]` → `bottom-4xl / right-4xl` (arbitrary CSS var → named token)
+- `pt/gap-[var(--spacing-*)]` → `pt-ms / gap-ms / gap-xl / gap-3xl` (named token 치환)
+- `pt-[var(--padding-ml,18px)]` → `pt-ml`, `gap-y-[var(--spacing-MS)]` → `gap-y-ms`
+- `gap-[var(--size-48)]` (named token 없음) → `.fai-footer__contents` / `.fai-footer__contents-inner` BEM 클래스 + CSS 파일로 이관
+- `globals.css` footer 섹션 `:first-of-type` 셀렉터 방식 → BEM 클래스 방식으로 정리
+
+#### CtaBanner JA locale 초소형 화면 폰트 축소 (products/homepage)
+- JA locale + ≤419px: `text-title-s` → `text-body-xl` (한 단계 축소)
+
+---
+
 ## [Unreleased] - 2026-08-25 (v3 sync: 8/20~8/24)
 
 ### 🔄 Changed
