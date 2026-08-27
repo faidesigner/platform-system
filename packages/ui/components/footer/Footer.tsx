@@ -283,30 +283,18 @@ export default function Footer({
         {/* =====================================================
             1. 데스크톱 섹션 (> 1280px KO / > 1100px EN·JA)
             ===================================================== */}
-        {/* gap-5xl: 로고 컬럼과 콘텐츠 컬럼 사이 **최소 여백 바닥값**.
-            justify-between만으로는 콘텐츠가 요구 폭을 키울 때 둘이 맞붙는다(HOM-94). */}
-        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between gap-5xl py-4xl">
+        <div className="fai-footer__desktop flex w-full flex-row justify-between items-start py-4xl">
 
-          {/* logoArea — fai-footer__logo-area: flex-shrink:0(CSS).
-              shrink-0 필수: en/ja처럼 라벨이 긴 로케일에서 contentsArea의 축소 압력이
-              로고 컬럼으로 전가돼 로고가 203px → 165px로 찌그러진다(HOM-94).
-              로고는 브랜드 마크라 어떤 로케일·해상도에서도 축소되면 안 된다.
-              scripts/check-footer-layout.mjs가 로케일 간 로고 폭 동일성을 강제한다. */}
-          <div className="fai-footer__logo-area flex shrink-0 flex-col items-start justify-between self-stretch gap-xl">
+          {/* logoArea */}
+          <div className="fai-footer__logo-area flex flex-col items-start justify-between self-stretch gap-xl shrink-0" style={{ paddingRight: 'var(--spacing-5XL, 80px)' }}>
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
-          {/* contentsArea
-              - fai-footer__contents: gap(CSS), flex-1, min-w-0
-              - flex-1: 남는 폭을 채운다. 이게 없으면 콘텐츠 폭이 max-content로 고정돼
-                뷰포트가 넓어져도 콘텐츠는 그대로고 로고와의 빈 공간만 벌어진다(HOM-94).
-              - min-w-0: flex child가 컨테이너 밖으로 넘치지 않도록 허용 */}
-          <div className="fai-footer__contents flex flex-1 min-w-0 flex-col items-start pt-ms">
-            {/* self-stretch: 부모(contentsArea)가 items-start라 이게 없으면 래퍼가 max-content로
-                고정돼, contentsArea만 넓어지고 안쪽 InfoRow는 폭을 물려받지 못한다. */}
-            <div className="fai-footer__contents-inner flex self-stretch flex-col items-start">
-              <div className="flex self-stretch flex-col gap-xl">
+          {/* contentsArea — gap·min-w-0 (footer.css) */}
+          <div className="fai-footer__contents flex flex-col items-start pt-ms min-w-0">
+            <div className="fai-footer__contents-inner flex flex-col items-start">
+              <div className="flex flex-col gap-xl">
                 <div className="flex flex-col gap-ms">
                   <p className="text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]">
                     {companyName}

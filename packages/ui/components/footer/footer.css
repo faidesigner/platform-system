@@ -15,9 +15,10 @@
   padding-inline: var(--padding-8XL); /* 150px */
 }
 
-/* 로고 영역 — flex-shrink:0으로 어떤 로케일·해상도에서도 로고가 축소되지 않도록 고정(HOM-94).
-   80px 간격은 parent의 gap-5xl이 담당하므로 padding-right 불필요. */
+/* 로고 영역 우측 패딩 — 전 로케일(ko·en·ja) 공통, 로고↔콘텐츠 최소 여백 80px 확보
+   flex-shrink:0 — 어떤 해상도에서도 로고 영역이 축소되지 않도록 고정 */
 .fai-footer__logo-area {
+  padding-right: var(--spacing-5XL, 80px);
   flex-shrink: 0;
 }
 

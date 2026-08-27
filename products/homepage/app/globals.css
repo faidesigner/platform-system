@@ -525,13 +525,9 @@ body {
   padding-inline: var(--padding-8XL); /* 150px */
 }
 
-/* 로고 영역 — flex-shrink:0으로 축소 방지(HOM-94). 80px 간격은 parent gap-5xl 담당. */
+/* 로고 영역 — 80px 우측 패딩 + flex 축소 방지 */
 .fai-footer__logo-area {
-  flex-shrink: 0;
-}
-
-/* compact 로고 — flex 축소 방지 */
-.fai-footer__logo {
+  padding-right: var(--spacing-5XL, 80px);
   flex-shrink: 0;
 }
 
@@ -541,6 +537,11 @@ body {
 }
 .fai-footer__contents-inner {
   gap: var(--size-48); /* 48px */
+}
+
+/* compact 로고 — flex 축소 방지 */
+.fai-footer__logo {
+  flex-shrink: 0;
 }
 
 /* EN·JA: ≤1100px → compact */
