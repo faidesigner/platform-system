@@ -291,10 +291,18 @@ export default function Footer({
             <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
-          {/* contentsArea — min-w-0: flex child가 컨테이너 밖으로 넘치지 않도록 허용 */}
-          <div className="flex flex-col items-start pt-[var(--spacing-MS)] gap-[var(--size-48)] min-w-0">
-            <div className="flex flex-col items-start gap-[var(--size-48)]">
-              <div className="flex flex-col gap-[var(--spacing-XL,24px)]">
+          {/* contentsArea
+              - flex-1: 남는 폭을 채운다. 이게 없으면 콘텐츠 폭이 max-content로 고정돼
+                뷰포트가 넓어져도 콘텐츠는 그대로고 로고와의 빈 공간만 벌어진다
+                (1920에서 566px 구멍). footer 컨테이너는 좌우 패딩만 고정된 유동 폭이므로
+                콘텐츠도 같이 늘어나야 페이지의 나머지 섹션과 동작이 일치한다.
+              - min-w-0: flex child가 컨테이너 밖으로 넘치지 않도록 허용 */}
+          <div className="flex flex-1 min-w-0 flex-col items-start pt-[var(--spacing-MS)] gap-[var(--size-48)]">
+            {/* self-stretch: 부모(contentsArea)가 items-start라 이게 없으면 래퍼가 max-content로
+                고정돼, contentsArea만 넓어지고 안쪽 InfoRow는 폭을 물려받지 못한다.
+                그러면 뷰포트를 넓혀도 콘텐츠 배치가 그대로라 반응형으로 보이지 않는다. */}
+            <div className="flex self-stretch flex-col items-start gap-[var(--size-48)]">
+              <div className="flex self-stretch flex-col gap-[var(--spacing-XL,24px)]">
                 <div className="flex flex-col gap-[var(--spacing-MS)]">
                   <p className="text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]">
                     {companyName}
