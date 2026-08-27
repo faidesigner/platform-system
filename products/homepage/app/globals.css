@@ -104,6 +104,10 @@
   --padding-XL:  var(--size-24);   /* 24px  */
   --padding-2XL: var(--size-32);   /* 32px  */
   --padding-3XL: var(--size-40);   /* 40px  */
+  /* 4XL 누락 사고(HOM-71): EfficiencySection이 961~1279px 구간 좌우 패딩으로 이 토큰을
+     참조하는데 정의가 빠져 있어 패딩이 0px이 됐다. foundation spacing.json의
+     padding.4XL = size.56 을 그대로 방출한다. app/cssTokens.test.ts가 스케일 연속성을 강제한다. */
+  --padding-4XL: var(--size-56);   /* 56px  */
   --padding-5XL: var(--size-80);   /* 80px  */
   --padding-8XL: var(--size-150);  /* 150px */
   --spacing-MS:  var(--size-12);  /* 12px */

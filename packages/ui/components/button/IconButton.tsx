@@ -25,7 +25,7 @@ const PRIMARY =
   "focus:after:bg-[var(--color-interaction-light-white-focus)] " +
   "active:after:bg-[var(--color-interaction-light-white-pressed)] " +
   "disabled:bg-fill-disabled disabled:after:hidden " +
-  "data-[impact=true]:border data-[impact=true]:border-solid data-[impact=true]:border-[var(--gradient-basic-light-accent-primary)]";
+  "data-[impact=true]:border data-[impact=true]:border-solid data-[impact=true]:border-[var(--gradient-basic-light-accent-primary,#4A9DF7)]";
 
 const SECONDARY =
   "bg-filled-optional-brand-secondaryBtn text-text-basic-primary " +
@@ -43,7 +43,7 @@ const TERTIARY =
   "focus:after:bg-[var(--color-interaction-light-black-focus)] " +
   "active:after:bg-[var(--color-interaction-light-black-pressed)] " +
   "disabled:border-border-disabled disabled:bg-fill-disabled/40 disabled:after:hidden " +
-  "data-[impact=true]:border-[var(--gradient-basic-light-accent-primary)]";
+  "data-[impact=true]:border-[var(--gradient-basic-light-accent-primary,#4A9DF7)]";
 
 const ASSISTIVE =
   "bg-transparent text-primary " +
