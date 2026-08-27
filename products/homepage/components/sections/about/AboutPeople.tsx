@@ -67,7 +67,10 @@ export function AboutPeople({
           >
             <article className="flex flex-col gap-3xl">
               {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}
-              <div className="relative h-[400px] w-[720px] max-[961px]:h-[378px] max-[961px]:w-[680px] max-[421px]:h-[190px] max-[421px]:w-[342px] overflow-hidden rounded-fai-m">
+              {/* 비율 9/5(=1.8) 고정 — 720×400 / 680×378 / 342×190 이 모두 1.8:1이라 기존 디자인 비율 그대로다.
+                  높이를 폭에서 파생시켜야 폭이 줄 때 사진이 찌그러지지 않는다.
+                  min()으로 뷰포트 상한을 걸어 422~703px 구간에서 카드가 화면을 벗어나는 것을 막는다(캐러셀 좌우 패딩 24px×2). */}
+              <div className="relative aspect-[9/5] w-[720px] max-[961px]:w-[min(680px,calc(100vw_-_2_*_var(--padding-XL)))] max-[421px]:w-[min(342px,calc(100vw_-_2_*_var(--padding-XL)))] overflow-hidden rounded-fai-m">
                 <Image
                   src={card.image.src}
                   alt={card.image.alt}
@@ -82,17 +85,21 @@ export function AboutPeople({
               </div>
 
               {/* textBox: 세로 gap-ms */}
-              <div className="flex w-[720px] max-[961px]:w-[680px] max-[421px]:w-[342px] flex-col gap-ms">
+              <div className="flex w-[720px] max-[961px]:w-[min(680px,calc(100vw_-_2_*_var(--padding-XL)))] max-[421px]:w-[min(342px,calc(100vw_-_2_*_var(--padding-XL)))] flex-col gap-ms">
                 <h3 className="text-title-s max-[961px]:text-body-xl max-[421px]:text-body-l desktop:text-title-m font-bold text-primary">
                   {card.title}
                 </h3>
                 {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
-                <div className="flex items-center gap-ms">
+                {/* justify-between: 라벨을 카드 우측에 붙여 사람마다 위치가 달라지는 것을 막는다.
+                    이전에는 `이름 ㅣ 직책` 바로 뒤 인라인이라 이름 길이만큼 라벨이 밀렸다
+                    (실측 편차 ko 21px / en 141px / ja 228px). 카드 폭이 분기점마다 고정이므로
+                    우측 정렬하면 같은 언어에서 4장 모두 동일 위치가 된다. */}
+                <div className="flex items-center justify-between gap-ms">
                   <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
                     {card.name} ㅣ {card.role}
                   </p>
                   {/* 라벨: mint-400 배경 고정 승인, px-s */}
-                  <span className="flex items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
+                  <span className="flex shrink-0 items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
                     {card.label}
                   </span>
                 </div>
