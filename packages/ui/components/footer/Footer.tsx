@@ -245,7 +245,9 @@ export default function Footer({
   const companyName = l.company;
   const row1Info = [
     { title: l.ceo,     text: l.ceoValue },
-    { title: l.tel,     text: l.telValue },
+    // 전화번호도 코드성 문자열이라 중간 줄바꿈 금지(HOM-94). logoArea에 shrink-0를 넣어
+    // 축소 압력이 콘텐츠로 오게 되자 ja에서 `+82-2-6191-` / `0049` 로 끊겼다.
+    { title: l.tel,     text: l.telValue, noWrapValue: true },
     { title: l.address, text: l.addressValue },
   ];
   // 사업자번호·이메일은 값 자체가 코드성 문자열이라, 라벨이 길어져도(예: ja "事業者登録番号（韓国）")
@@ -275,10 +277,16 @@ export default function Footer({
         {/* =====================================================
             1. 데스크톱 섹션 (> 960px)
             ===================================================== */}
-        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between py-4xl">
+        {/* gap-5xl: 로고 컬럼과 콘텐츠 컬럼 사이 **최소 여백 바닥값**.
+            justify-between만으로는 콘텐츠가 요구 폭을 키울 때 둘이 맞붙는다(HOM-94). */}
+        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between gap-5xl py-4xl">
 
-          {/* logoArea */}
-          <div className="flex flex-col items-start justify-between self-stretch gap-6">
+          {/* logoArea — shrink-0 필수.
+              이게 없으면 en/ja처럼 라벨이 긴 로케일에서 contentsArea의 축소 압력이
+              로고 컬럼으로 전가돼 로고가 203px → 165px로 찌그러진다(HOM-94).
+              로고는 브랜드 마크라 어떤 로케일·해상도에서도 축소되면 안 된다.
+              scripts/check-footer-layout.mjs가 로케일 간 로고 폭 동일성을 강제한다. */}
+          <div className="flex shrink-0 flex-col items-start justify-between self-stretch gap-6">
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             <SnsButtons onSocialClick={onSocialClick} />
           </div>

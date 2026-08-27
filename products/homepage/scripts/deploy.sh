@@ -48,6 +48,10 @@ echo "▶ 빌드..."
 echo "▶ 모바일 가로 오버플로우 검사..."
 ( cd "$HERE" && node scripts/check-mobile-overflow.mjs )
 
+# 데스크톱 footer 레이아웃 게이트 — 로고 축소·회사명 접촉·전화번호 줄바꿈 시 배포 중단(HOM-94).
+echo "▶ 데스크톱 footer 레이아웃 검사..."
+( cd "$HERE" && node scripts/check-footer-layout.mjs )
+
 # noindex 주입(프리뷰 색인 방지)
 if [ "$NOINDEX" = "true" ]; then
   echo "▶ noindex 메타 주입..."
