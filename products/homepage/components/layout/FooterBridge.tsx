@@ -133,6 +133,7 @@ export default function FooterBridge() {
       extraInfo={extraInfo}
       privacyModalContent={privacyModalContent}
       cookieHref={cookieHref}
+      wideCompact={locale !== 'ko'}
       onSocialClick={(label) => trackEvent("interest_click", { location: "footer", label })}
     />
   );

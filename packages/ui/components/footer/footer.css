@@ -1,6 +1,7 @@
 /* ── fai-footer 반응형 토글 ──
-   > 960px : .fai-footer__desktop + .fai-footer__desktop-policies 표시
-   ≤ 960px : .fai-footer__compact 표시
+   > 1280px : .fai-footer__desktop 표시 (전 로케일 공통)
+   ≤ 1280px : .fai-footer__compact 표시 (KO 기준 브레이크포인트)
+   ≤ 1100px : .fai-footer__compact 표시 (EN·JA — .fai-footer--wide)
 */
 
 /* 기본(desktop): compact 숨김 */
@@ -12,6 +13,52 @@
    따라 생성이 불안정하므로 CSS 파일로 고정. footer.css는 Footer.tsx에서 직접 import되어 항상 보장됨. */
 .fai-footer__desktop {
   padding-inline: var(--padding-8XL); /* 150px */
+}
+
+/* 로고 영역 — flex-shrink:0으로 어떤 로케일·해상도에서도 로고가 축소되지 않도록 고정(HOM-94).
+   80px 간격은 parent의 gap-5xl이 담당하므로 padding-right 불필요. */
+.fai-footer__logo-area {
+  flex-shrink: 0;
+}
+
+/* 데스크톱 콘텐츠 영역 — gap 48px(named token 없음, CSS 관리) */
+.fai-footer__contents {
+  gap: var(--size-48); /* 48px */
+}
+.fai-footer__contents-inner {
+  gap: var(--size-48); /* 48px */
+}
+
+/* compact 로고 — flex-shrink:0으로 SNS 버튼 영역에 밀려 축소되지 않도록 고정 */
+.fai-footer__logo {
+  flex-shrink: 0;
+}
+
+/* EN·JA: 80px 여백을 유지할 수 없는 시점(≤1100px)부터 compact로 전환 */
+@media (max-width: 1100px) {
+  .fai-footer--wide .fai-footer__desktop,
+  .fai-footer--wide .fai-footer__desktop-policies {
+    display: none;
+  }
+  .fai-footer--wide .fai-footer__compact {
+    display: flex;
+    flex-direction: column;
+    gap: var(--spacing-3XL, 40px);
+    padding: var(--padding-3XL) var(--padding-XL);
+  }
+}
+
+/* EN·JA: 전역 1280px compact 규칙이 적용되는 1101~1280px 구간에서 desktop 복원 */
+@media (min-width: 1101px) {
+  .fai-footer--wide .fai-footer__desktop {
+    display: flex;
+  }
+  .fai-footer--wide .fai-footer__desktop-policies {
+    display: block;
+  }
+  .fai-footer--wide .fai-footer__compact {
+    display: none;
+  }
 }
 
 /* ≤ 420px: logoArea 숨김 + ScrollTopButton 숨김 + 폰트 위계 한 단계 축소 */
@@ -28,7 +75,8 @@
     line-height: var(--font-lineHeight-12, 18px);
   }
   /* 정책 링크: text-body-s(14px) → text-caption-s(12px) */
-  .fai-footer__policies a {
+  .fai-footer__policies a,
+  .fai-footer__policies button {
     font-size: var(--font-size-12, 12px);
     line-height: var(--font-lineHeight-12, 18px);
   }
@@ -65,8 +113,8 @@
   background-clip: padding-box;
 }
 
-/* ≤ 960px: desktop 숨기고 compact 표시 */
-@media (max-width: 960px) {
+/* ≤ 1280px: desktop 숨기고 compact 표시 (KO 기준 브레이크포인트) */
+@media (max-width: 1280px) {
   .fai-footer__desktop,
   .fai-footer__desktop-policies {
     display: none;
