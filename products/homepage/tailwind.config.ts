@@ -22,7 +22,11 @@ const config: Config = {
     './config/**/*.{ts,tsx}',
     './root/components/**/*.{ts,tsx,js,jsx}',
     '../../packages/ui/components/**/*.{ts,tsx,js,jsx}',
-    // 테스트 파일은 스캔에서 제외 — 주석/정규식 속 클래스 리터럴이 프로덕션 CSS로 새는 것 방지.
+    // ⚠️ 아래 negation(!...) 패턴은 **Tailwind v4에서 적용되지 않는다.** 남겨두었을 뿐 효력이 없다.
+    //    실제 스캔 범위 제한은 app/globals.css의 `@import "tailwindcss" source(none)` + @source 목록이
+    //    담당한다. v4는 @config의 content를 자동 소스 감지에 더하는 방식이라, source(none) 없이는
+    //    .gitignore 밖 모든 파일(scripts/·docs/·테스트)이 스캔돼 주석 속 클래스까지 CSS로 새어 들어온다.
+    //    실제 사고(HOM-100 조사 중): 배포 게이트 주석에 적은 클래스명이 CSS로 유입되어 그 게이트를 무력화했다.
     '!./**/*.{test,spec}.{ts,tsx,js,jsx}',
     '!../../packages/ui/**/*.{test,spec}.{ts,tsx,js,jsx}',
   ],

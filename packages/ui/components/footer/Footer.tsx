@@ -168,7 +168,7 @@ function InfoRow({ items, className }: { items: { title: string; text: string; n
         </span>,
         <span
           key={`${i}-v`}
-          className={`text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px]${item.noWrapValue ? ' whitespace-nowrap' : ''}`}
+          className={`text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
         >
           {item.text}
         </span>,
@@ -271,7 +271,7 @@ export default function Footer({
   ];
 
   return (
-    <footer className={`relative w-full bg-bg-200${wideCompact ? ' fai-footer--wide' : ''}`}>
+    <footer className={`relative w-full bg-bg-200 ${wideCompact ? 'fai-footer--wide' : ''}`}>
 
       {/* 스크롤 버튼 — 절대 위치, desktop compact 미만에서 숨김(footer.css) */}
       <div className="fai-footer__scroll-top absolute bottom-4xl right-4xl z-10">
