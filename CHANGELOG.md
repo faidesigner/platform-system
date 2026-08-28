@@ -2,6 +2,55 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-28 (2)
+
+### 🛠 Fixed
+
+#### 루트 산출물 유실 — Meta 도메인 인증·언어 감지 (products/homepage)
+- `app/page.tsx`(useEffect → /ko 리다이렉트) 제거. 정적 export에서 **Next 라우트가 `public/index.html`을 덮어쓴다** (주석의 서술과 반대)
+- 실측: `out/index.html` 5,456 bytes(Next 빈 페이지) → `facebook-domain-verification`·`navigator.language` 둘 다 소실. 제거 후 1,905 bytes로 복구
+- 영향: iOS 전환 광고 성과 누락(2026-08-05 김진영 요청 항목) / en·ja 방문자 전원 `/ko` 강제 / 크롤러가 루트에서 읽을 내용 없음
+
+#### AboutPeople 라벨 위치 편차 (HOM-99 재발, products/homepage)
+- PR #11이 라벨을 `<p>` 인라인으로 합치며 우측 정렬이 빠져 ja@1440 편차 **227px**로 회귀 (379/408/534/307)
+- `justify-between` + `shrink-0`으로 우측 정렬 복구 → 7폭 × 3로케일 편차 **0px**
+- `ㅣ` 간격 통일(PR #11 의도)과 위치 고정은 한 줄에서 양립 불가 — 라벨을 다음 줄로 내리는 대안을 코드 주석에 남김(디자인 판단 대기)
+
+#### ESLint가 실행조차 되지 않던 상태 (products/homepage)
+- `pnpm lint`가 `TypeError: Converting circular structure to JSON`으로 실패 → **"커밋 전 lint 통과" 규칙이 조용히 무력화**돼 있었다
+- 원인: eslint-config-next 16은 flat config를 직접 export하는데 구식 `FlatCompat`으로 extends 해 configs가 자기참조
+- 복구 후 드러난 9 errors / 4 warnings 전부 정리 → **0 problems**
+  - `ShowcaseSection`: `YoutubeThumb` 리셋 effect 제거 → `key={videoId}` 재마운트 리셋 / `startSlide` 선언 순서 정정
+  - `StoreCaseStudies`: `useEffect(() => setActive(0), [cases])` → 렌더 중 클램프. `cases`는 참조 비교라 부모가 매 렌더 새 배열을 주면 **매 렌더 선택 초기화**되는 잠재 버그였다
+  - `StoreEffects`: 삼항 문장 → if/else / `AnimatedStat`·`RetailTechLetterSection`: 근거 주석 + 국소 disable
+  - `scripts/**/*.js`(Node CJS)·테스트 파일(next/image mock) config 예외
+
+#### 번역 시트 정합 2건 (HOM-75, products/homepage)
+- `effectCards.0.title` en 줄바꿈: 레이아웃 목적이므로 `i18n/sheet-decisions.json`에 선언(시트 수정 아님)
+- `about.people.cards.1.title` ko: `…사람들과 함께` → `…사람들과 함께해요` (시트 기준)
+- 대조 도구가 **ko를 조인 키로 쓰므로** ko가 어긋난 행은 en/ja 불일치도 함께 못 본다 — PR #11이 en을 고치며 드러났다
+
+### ➕ Added
+
+#### 배포 게이트 2종 신설 (products/homepage) — 총 4종
+- `scripts/check-root-html.mjs` — **산출물** `out/index.html`의 Meta 인증·언어 감지 존재 + 루트 점유 라우트 부재
+  - 기존 `tests/landingTags.test.ts`는 `public/index.html`(소스)만 읽어 vitest 212개가 통과한 채 회귀했다. 검사 대상이 한 단계 앞이었다
+  - 정적 테스트("루트 라우트 점유 금지")도 함께 추가해 빌드 전 조기 실패
+- `scripts/check-about-layout.mjs` — 라벨 우측 정렬 편차 ≤1px / 카드 화면 이탈 금지(HOM-98) / 이미지 비율 9:5
+  - 좌측 x가 아니라 **우측 여백**으로 측정 — 라벨 텍스트 길이가 사람마다 달라 우측 정렬이 맞아도 좌측 x는 다르다
+  - 7폭 × 3로케일 21개 조합. PR #11 상태로 되돌리면 21개 전부 실패함을 확인
+- 두 게이트 모두 주입 손상으로 실제 실패하는지 검증 후 `deploy.sh` 배선
+
+### 🔄 Changed
+
+#### 배포 게이트 공용 인프라 추출 (products/homepage)
+- `scripts/lib/staticPreview.mjs` 신설 — `withPreview()` / `measurePage()`
+- 기존 두 게이트에 MIME 표·`resolveFile`·`startServer`·`findChrome`이 글자 단위로 중복돼 있었다. 세 번째 추가 시점에 3중복이 되므로 추출
+- 서빙 규칙(trailingSlash 해석 등)이 게이트마다 갈라지면 "게이트는 통과하는데 배포물은 다르다"가 발생한다 — 한 곳에만 둔다
+- 이관 전후 출력 동일 확인: 오버플로우 3×7 / footer 3×3
+
+---
+
 ## [Unreleased] - 2026-08-28
 
 ### 🔄 Changed
