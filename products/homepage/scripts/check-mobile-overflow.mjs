@@ -12,126 +12,53 @@
  * 실행: node scripts/check-mobile-overflow.mjs   (deploy.sh 빌드 직후 자동 호출)
  * 사전조건: out/ 존재, 시스템 Chrome(또는 PUPPETEER_EXECUTABLE_PATH). Chrome 없으면 경고 후 skip.
  */
-import http from "node:http";
-import { readFile, stat } from "node:fs/promises";
-import path from "node:path";
-import { existsSync } from "node:fs";
+import { withPreview, measurePage } from "./lib/staticPreview.mjs";
 
-const OUT = path.resolve(process.cwd(), "out");
 const PORT = 43219;
 const VIEWPORT = { width: 390, height: 844 };
 const LOCALES = ["ko", "en", "ja"];
 const PATHS = ["", "about", "contact", "media", "products", "products/vision-check-out", "products/unmanned-store"];
 
-const MIME = {
-  ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json",
-  ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-  ".webp": "image/webp", ".woff2": "font/woff2", ".woff": "font/woff", ".txt": "text/plain",
-  ".ico": "image/x-icon", ".mp4": "video/mp4", ".xml": "application/xml",
-};
-
-async function resolveFile(urlPath) {
-  let p = decodeURIComponent(urlPath.split("?")[0]);
-  let fp = path.join(OUT, p);
-  try {
-    const s = await stat(fp);
-    if (s.isDirectory()) fp = path.join(fp, "index.html");
-  } catch {
-    if (existsSync(fp + ".html")) fp = fp + ".html";
-    else fp = path.join(fp, "index.html"); // trailingSlash 라우트
-  }
-  return fp;
-}
-
-function startServer() {
-  const server = http.createServer(async (req, res) => {
-    try {
-      const fp = await resolveFile(req.url);
-      const buf = await readFile(fp);
-      res.setHeader("Content-Type", MIME[path.extname(fp)] || "application/octet-stream");
-      res.end(buf);
-    } catch {
-      res.statusCode = 404;
-      res.end("not found");
-    }
-  });
-  return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
-}
-
-function findChrome() {
-  const envPath = process.env.PUPPETEER_EXECUTABLE_PATH || process.env.CHROME_PATH;
-  const candidates = [
-    envPath,
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/Applications/Chromium.app/Contents/MacOS/Chromium",
-    "/usr/bin/google-chrome",
-    "/usr/bin/chromium-browser",
-  ].filter(Boolean);
-  return candidates.find((c) => existsSync(c)) || null;
-}
-
-async function run() {
-  if (!existsSync(OUT)) {
-    console.error("✗ out/ 없음 — 먼저 빌드하세요(pnpm build).");
-    process.exit(1);
-  }
-  const executablePath = findChrome();
-  if (!executablePath) {
-    console.warn("⚠ Chrome을 찾지 못해 오버플로우 검사를 건너뜁니다(배포는 계속). PUPPETEER_EXECUTABLE_PATH 설정 권장.");
-    process.exit(0);
-  }
-
-  let puppeteer;
-  try {
-    puppeteer = (await import("puppeteer-core")).default;
-  } catch {
-    console.warn("⚠ puppeteer-core 미설치 — 검사 skip(배포 계속).");
-    process.exit(0);
-  }
-
-  const server = await startServer();
-  const browser = await puppeteer.launch({ executablePath, headless: "new", args: ["--no-sandbox"] });
-  const offenders = [];
-  try {
-    for (const loc of LOCALES) {
-      for (const rt of PATHS) {
-        const url = `http://localhost:${PORT}/${loc}/${rt ? rt + "/" : ""}`;
-        const page = await browser.newPage();
-        await page.setViewport(VIEWPORT);
-        await page.goto(url, { waitUntil: "networkidle2", timeout: 30000 }).catch(() => {});
-        await new Promise((r) => setTimeout(r, 400));
-        const info = await page.evaluate(() => {
-          const vw = window.innerWidth;
-          const sw = document.documentElement.scrollWidth;
-          let worst = null;
-          if (sw > vw) {
-            const isClipped = (el) => { let p = el.parentElement; while (p) { if (/(auto|scroll|hidden|clip)/.test(getComputedStyle(p).overflowX)) return true; p = p.parentElement; } return false; };
-            document.querySelectorAll("*").forEach((el) => {
-              const r = el.getBoundingClientRect();
-              if (r.right > vw + 1 && !isClipped(el) && (!worst || r.right > worst.right)) {
-                worst = { right: Math.round(r.right), cls: (el.className?.toString?.() || "").slice(0, 60), tag: el.tagName };
-              }
-            });
-          }
-          return { vw, sw, worst };
-        });
-        await page.close();
-        const over = info.sw > info.vw;
-        console.log(`${over ? "✗" : "✓"} /${loc}/${rt}  (scrollWidth ${info.sw} / vw ${info.vw})`);
-        if (over) offenders.push({ url: `/${loc}/${rt}`, ...info });
+/**
+ * 브라우저 컨텍스트: scrollWidth가 뷰포트를 넘으면, 넘긴 요소 중 **클리핑되지 않은** 가장 오른쪽
+ * 요소를 범인으로 지목한다. overflow-x가 걸린 조상 안에 있는 요소는 실제로 문서를 넓히지 않는다.
+ */
+function measure() {
+  const vw = window.innerWidth;
+  const sw = document.documentElement.scrollWidth;
+  let worst = null;
+  if (sw > vw) {
+    const isClipped = (el) => {
+      let p = el.parentElement;
+      while (p) { if (/(auto|scroll|hidden|clip)/.test(getComputedStyle(p).overflowX)) return true; p = p.parentElement; }
+      return false;
+    };
+    document.querySelectorAll("*").forEach((el) => {
+      const r = el.getBoundingClientRect();
+      if (r.right > vw + 1 && !isClipped(el) && (!worst || r.right > worst.right)) {
+        worst = { right: Math.round(r.right), cls: (el.className?.toString?.() || "").slice(0, 60), tag: el.tagName };
       }
+    });
+  }
+  return { vw, sw, worst };
+}
+
+await withPreview({ port: PORT, what: "모바일 오버플로우 검사" }, async ({ browser, origin }) => {
+  const offenders = [];
+
+  for (const loc of LOCALES) {
+    for (const rt of PATHS) {
+      const info = await measurePage(browser, `${origin}/${loc}/${rt ? rt + "/" : ""}`, VIEWPORT, measure);
+      const over = info.sw > info.vw;
+      console.log(`${over ? "\u2717" : "\u2713"} /${loc}/${rt}  (scrollWidth ${info.sw} / vw ${info.vw})`);
+      if (over) offenders.push({ url: `/${loc}/${rt}`, ...info });
     }
-  } finally {
-    await browser.close();
-    server.close();
   }
 
   if (offenders.length) {
-    console.error(`\n✗ 가로 오버플로우 ${offenders.length}건 — 모바일에서 우측 메뉴가 밀릴 수 있음:`);
+    console.error(`\n\u2717 \uac00\ub85c \uc624\ubc84\ud50c\ub85c\uc6b0 ${offenders.length}\uac74 \u2014 \ubaa8\ubc14\uc77c\uc5d0\uc11c \uc6b0\uc0b0 \uba54\ub274\uac00 \ubc00\ub9b4 \uc218 \uc788\uc74c:`);
     offenders.forEach((o) => console.error(`  ${o.url}: scrollWidth=${o.sw} > ${o.vw}  worst=${JSON.stringify(o.worst)}`));
     process.exit(1);
   }
-  console.log(`\n✓ 오버플로우 없음 — ${LOCALES.length}×${PATHS.length}개 라우트 통과.`);
-}
-
-run().catch((e) => { console.error("검사 실패:", e.message || e); process.exit(1); });
+  console.log(`\n\u2713 \uc624\ubc84\ud50c\ub85c\uc6b0 \uc5c6\uc74c \u2014 ${LOCALES.length}\u00d7${PATHS.length}\uac1c \ub77c\uc6b0\ud2b8 \ud1b5\uacfc.`);
+});
