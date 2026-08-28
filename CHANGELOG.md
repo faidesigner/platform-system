@@ -2,6 +2,41 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-28 (3)
+
+### 🛠 Fixed
+
+#### footer 배경색 유실 (HOM-100, Critical — packages/ui + products/homepage)
+- 원인은 CSS도 토큰도 아니라 **Tailwind 클래스 추출 실패**였다. 클래스 문자 바로 뒤에 공백 없이 `${...}` 보간이 붙으면 추출기가 보는 토큰이 잘려 **유틸리티가 생성되지 않는다** — 클래스는 HTML에 붙어 있고 CSS 규칙만 없으므로 스타일이 조용히 사라진다
+- 같은 패턴 6곳을 전수 정정. 그중 **2곳이 실제 유실 상태**였다
+  - `packages/ui .../Footer.tsx:274` — footer 배경 (HOM-100)
+  - `.../StoreEffects.tsx:107` — desktop 높이(1440px↑). PR #11의 3열 카드 제목 높이 통일이 **1440px 이상에서 작동하지 않고 있었다**
+  - 나머지 4곳(Footer:171 / CtaBanner:61 / StoreTypes:77 / ProductFeatures:152)은 같은 클래스를 다른 파일에서도 써서 우연히 살아 있었다 — 그 사용처가 사라지면 똑같이 터진다
+- 검증: footer computed background `rgb(245,245,245)` (= `#F5F5F5`, 카드 기대값) / dev 실배포 CSS에 `.bg-bg-200{background-color:var(--color-bg-200)}` 존재 확인
+
+#### Tailwind 스캔 범위 — 주석 속 클래스가 프로덕션 CSS로 새던 문제
+- **게이트가 자기 주석 때문에 스스로 무력화됐다.** 배경색 게이트를 넣고 사고 형태로 되돌려 테스트했는데 통과했다 — 그 게이트 스크립트 주석에 적은 클래스명이 CSS로 유입돼 "유실이 없는 것처럼" 만들었다
+- v4의 자동 소스 감지는 `.gitignore` 밖 모든 파일을 훑는다. `tailwind.config.ts`의 negation 패턴은 **v4에서 적용되지 않으며**, 그 사실이 주석과 어긋난 채 방치돼 있었다 (테스트 파일 카나리 클래스로 실증)
+- `globals.css`에서 `@import "tailwindcss" source(none)` + `@source` 화이트리스트로 범위 고정
+  - `@source not "..."`은 postcss 8.4.31이 prelude를 파싱하지 못해 빌드가 깨진다(`CssSyntaxError: Unknown word`)
+  - CSS 주석 안에 glob(별표 두 개 + 슬래시 + 별표)을 쓰면 `*/`가 포함돼 주석이 조기 종료된다 — 한 번 밟았다
+- 과다 배제 검증: 소스의 단순 클래스 **275개 전수 대조 → 누락 0건** (오탐 4건은 템플릿 변수명 파편 3 + Tailwind marker `peer` 1)
+
+### ➕ Added
+
+#### 재발 방지 가드 (products/homepage)
+- `app/tailwindExtraction.test.ts` 🆕 — 클래스 뒤 공백 없는 `${...}` 보간 금지. 유실 여부와 무관하게 **패턴 자체**를 막는다(산출 CSS 사후 대조는 variant 이스케이프로 오탐이 많다)
+  - ⚠️ 이 파일에는 실제 클래스명을 쓰지 않았다 — 테스트 파일도 스캔 대상이라 여기 적은 클래스가 지키려는 회귀를 되살린다(실제로 한 번 밟았다)
+- `check-footer-layout.mjs` 불변식 ④ — footer **computed** backgroundColor가 투명이면 배포 중단
+- 두 가드 모두 사고 형태로 되돌려 실제 실패 확인 (정적 가드는 `Footer.tsx:274`를 정확히 지목 / 게이트는 9개 조합 전부 `rgba(0,0,0,0)`로 exit=1)
+
+### ✅ Verified (QA 카드 실측 검증)
+- **HOM-102** 개처방 모달 반응형 — 768/430/390/360px 전부 여백 24px · 버튼 화면 내
+- **HOM-103** ShowcaseSection 썸네일 — 1920→1000px에서 비율 **1.292 일정** 유지 (768px 이하 모바일 레이아웃 전환)
+- **HOM-99** about 라벨 정렬 — 7폭 × 3로케일 우측 여백 편차 **0px**
+
+---
+
 ## [Unreleased] - 2026-08-28 (2)
 
 ### 🛠 Fixed
