@@ -94,6 +94,10 @@ export default function RetailTechLetterSection({
                     const thumbBg = issueNum >= 1 && issueNum <= 6 ? "var(--color-bg-200)" : "var(--color-filled-basic-primary)";
                     return (
                       <div className="relative shrink-0 w-[160px] aspect-video overflow-hidden rounded-fai-s p-[var(--padding-S,8px)]" style={{ background: thumbBg }}>
+                        {/* 뉴스레터 썸네일은 외부 호스트 URL이다. 정적 export(output: 'export')에서는
+                            next/image 최적화 서버가 없어 remote 이미지를 최적화할 수 없고,
+                            unoptimized로 감싸도 <img>와 동일한 결과라 그대로 쓴다. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={letter.thumbnailUrl}
                           alt=""
