@@ -7,6 +7,9 @@
  *
  *   ① 로고 폭 로케일 불변  — 같은 뷰포트 폭에서 로고 크기는 ko·en·ja가 동일해야 한다.
  *   ② 로고~회사명 최소 여백 — 두 요소가 붙거나 겹치면 안 된다.
+ *   ③ 전화번호 한 줄 — 코드성 값이 숫자 중간에서 끊기면 읽을 수 없다.
+ *   ④ 배경색 존재 (HOM-100) — Tailwind 유틸이 생성되지 않으면 클래스는 붙어 있고 CSS 규칙만
+ *      없어 배경이 조용히 투명해진다. computed 값으로 확인해야 잡힌다.
  *
  * 왜 필요한가(HOM-94): logoArea에 shrink-0가 없어, en/ja처럼 라벨이 긴 로케일에서
  * contentsArea가 요구 폭을 키우면 **축소 압력이 로고 컬럼으로 전가**됐다.
@@ -70,7 +73,15 @@ function measure() {
     telWrapped = { txt: telEl.textContent.trim(), lines: Math.round(b.height / lh), h: Math.round(b.height), lh: Math.round(lh) };
   }
 
-  return { logo, nameLeft: Math.round(ink.left), gap: Math.round(ink.left) - logo.r, tel: telWrapped };
+  // ④ footer 배경색이 실제로 칠해져 있어야 한다 (HOM-100).
+  //    Tailwind 유틸이 생성되지 않으면 클래스는 붙어 있고 CSS 규칙만 없어 조용히 투명해진다.
+  const bg = getComputedStyle(footer).backgroundColor;
+  const transparent = !bg || bg === "transparent" || /rgba\(\s*0\s*,\s*0\s*,\s*0\s*,\s*0\s*\)/.test(bg);
+
+  return {
+    logo, nameLeft: Math.round(ink.left), gap: Math.round(ink.left) - logo.r, tel: telWrapped,
+    bg, bgTransparent: transparent,
+  };
 }
 
 await withPreview({ port: PORT, what: "footer 레이아웃 검사" }, async ({ browser, origin }) => {
@@ -91,6 +102,13 @@ await withPreview({ port: PORT, what: "footer 레이아웃 검사" }, async ({ b
       if (m.tel && m.tel.lines > 1) {
         failures.push({ width, loc, msg: `전화번호 "${m.tel.txt}" 가 ${m.tel.lines}줄로 끊김 — 코드성 값은 한 줄이어야 한다` });
       }
+      if (m.bgTransparent) {
+        failures.push({
+          width, loc,
+          msg: `footer 배경색이 투명하다 (computed: ${m.bg}) — 배경 유틸리티가 생성되지 않았을 가능성 (HOM-100). ` +
+               `템플릿 리터럴에서 클래스 뒤에 공백 없이 \${...} 보간이 붙었는지 확인할 것.`,
+        });
+      }
     }
 
     // ② 같은 폭에서 로고 크기는 로케일과 무관해야 한다 (ko를 기준으로 삼는다)
@@ -108,7 +126,8 @@ await withPreview({ port: PORT, what: "footer 레이아웃 검사" }, async ({ b
   for (const r of results) {
     const bad = r.gap < MIN_GAP;
     const telInfo = r.tel ? ` · 전화 ${r.tel.lines}줄` : "";
-    console.log(`${bad || (r.tel && r.tel.lines > 1) ? "✗" : "✓"} ${String(r.width).padStart(4)}px /${r.loc}/  로고 ${String(r.logo.w).padStart(3)}px · 여백 ${String(r.gap).padStart(4)}px${telInfo}`);
+    const ok = !bad && !(r.tel && r.tel.lines > 1) && !r.bgTransparent;
+    console.log(`${ok ? "✓" : "✗"} ${String(r.width).padStart(4)}px /${r.loc}/  로고 ${String(r.logo.w).padStart(3)}px · 여백 ${String(r.gap).padStart(4)}px${telInfo} · 배경 ${r.bg}`);
   }
 
   if (failures.length) {
