@@ -89,20 +89,10 @@ export function AboutPeople({
                 <h3 className="text-title-s max-[961px]:text-body-xl max-[421px]:text-body-l desktop:text-title-m font-bold text-primary">
                   {card.title}
                 </h3>
-                {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
-                {/* justify-between: 라벨을 카드 우측에 붙여 사람마다 위치가 달라지는 것을 막는다.
-                    이전에는 `이름 ㅣ 직책` 바로 뒤 인라인이라 이름 길이만큼 라벨이 밀렸다
-                    (실측 편차 ko 21px / en 141px / ja 228px). 카드 폭이 분기점마다 고정이므로
-                    우측 정렬하면 같은 언어에서 4장 모두 동일 위치가 된다. */}
-                <div className="flex items-center justify-between gap-ms">
-                  <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
-                    {card.name} ㅣ {card.role}
-                  </p>
-                  {/* 라벨: mint-400 배경 고정 승인, px-s */}
-                  <span className="flex shrink-0 items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
-                    {card.label}
-                  </span>
-                </div>
+                {/* description: 이름ㅣ직책ㅣ라벨 — 구분선을 모두 텍스트 공백으로 통일해 간격 일치 */}
+                <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
+                  {card.name} ㅣ {card.role} ㅣ <span className="inline-flex items-center bg-mint-400 px-s text-body-xs font-medium text-primary">{card.label}</span>
+                </p>
               </div>
             </article>
           </a>
