@@ -36,7 +36,7 @@ export function PrivacyRevisionModal({ title, body, confirmLabel, onConfirm }: P
     // 카드 — layout 핵심값(display·flexDirection·width·height·padding)을 inline style로 고정.
     // Tailwind arbitrary 클래스가 packages/ui 스캔 경로 밖에서 생성되지 않아도 레이아웃이 깨지지 않는다.
     <div
-      className="rounded-fai-m bg-bg-100"
+      className="fai-privacy-modal__card rounded-fai-m bg-bg-100"
       style={{
         display: 'flex',
         flexDirection: 'column',
@@ -91,6 +91,7 @@ export function PrivacyRevisionModal({ title, body, confirmLabel, onConfirm }: P
 
       {/* btnItem */}
       <div
+        className="fai-privacy-modal__btn"
         style={{
           flexShrink: 0,
           display: 'flex',

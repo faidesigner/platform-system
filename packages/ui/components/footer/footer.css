@@ -114,6 +114,21 @@
   background-clip: padding-box;
 }
 
+/* ≤ 840px: 모달 카드 상하좌우 24px 여백 확보
+   오버레이가 center 정렬이므로 카드 크기를 뷰포트 - 2×padding-xl로 제한하면
+   상하좌우 모두 var(--padding-xl, 24px) 여백이 보장된다. */
+@media (max-width: 840px) {
+  .fai-privacy-modal__card {
+    width: calc(100vw - 2 * var(--padding-xl, 24px)) !important;
+    height: min(816px, calc(100dvh - 2 * var(--padding-xl, 24px))) !important;
+    padding-top: var(--padding-xl, 24px) !important;
+    padding-inline: var(--padding-xl, 24px) !important;
+  }
+  .fai-privacy-modal__btn {
+    padding-bottom: var(--padding-xl, 24px) !important;
+  }
+}
+
 /* ≤ 1280px: desktop 숨기고 compact 표시 (KO 기준 브레이크포인트) */
 @media (max-width: 1280px) {
   .fai-footer__desktop,

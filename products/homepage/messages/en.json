@@ -172,7 +172,7 @@
       "effectsTitle": "What Can You Expect?",
       "effectCards": {
         "0": {
-          "title": "Save on Operating Costs",
+          "title": "Save on\nOperating Costs",
           "description": "Staff smarter"
         },
         "1": {
@@ -423,7 +423,7 @@
           "role": "CTO"
         },
         "1": {
-          "title": "We work with people who run toward hard problems, not away from them",
+          "title": "We focus on hiring people who do not shy away from hard problems",
           "name": "Minkwon Wang",
           "role": "CEO"
         },

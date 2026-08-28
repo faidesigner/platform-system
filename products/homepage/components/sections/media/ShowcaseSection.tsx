@@ -236,7 +236,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단). 스와이프는 카드 전체에서 처리. */}
       <div
-        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:w-[672px] min-[961px]:h-[520px] min-[961px]:flex-none min-[961px]:aspect-auto min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto max-[421px]:p-[var(--padding-XL)]">
+        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-none min-[961px]:w-[min(672px,58.95%)] min-[961px]:aspect-[672/520] min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[421px]:p-[var(--padding-XL)]">
 
         {/* 슬라이드 키프레임 */}
         <style>{`

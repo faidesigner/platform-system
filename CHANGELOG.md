@@ -2,6 +2,31 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-28
+
+### 🔄 Changed
+
+#### AboutPeople 라벨 인라인 정렬 (products/homepage)
+- 이름·직책·라벨을 별도 flex row 대신 `<p>` 인라인으로 통합 — `ㅣ` 구분선 간격 완전 일치
+- 라벨 `<span>`: `inline-flex items-center bg-mint-400 px-s text-body-xs font-medium`
+
+#### ShowcaseSection 데스크탑 썸네일 반응형 대응 (products/homepage)
+- 고정값 `w-[672px] h-[520px] aspect-auto` → `w-[min(672px,58.95%)] aspect-[672/520]` 비율 유지 반응형으로 교체
+- 모바일 고정 높이(`max-[768px]:h-[335px] aspect-auto`) 제거 → `aspect-[960/472]`로 통일
+
+#### StoreEffects 첫 번째 카드 타이틀 2줄 처리 및 전체 높이 정렬 (products/homepage)
+- 첫 번째 카드 h3에 음수 마진(`-mx-xl desktop-s:-mx-4xl`) 적용 — 카드 패딩 영역까지 타이틀 너비 확장
+- `\n` + `style={{ whiteSpace: 'pre-wrap' }}`으로 "Save on / Operating Costs" 줄바꿈 위치 고정
+- 전체 h3 고정 높이를 3×line-height → **2×line-height** 기준으로 하향 조정
+  - base `4.5rem` → `3rem` / tablet `5.625rem` → `3.75rem` / desktop-s `6.75rem` → `4.5rem` / desktop `7.3125rem` → `4.875rem`
+- 2·3번 카드 h3: `items-center` → `items-start` 상단 정렬 변경
+
+#### en.json 문구 수정 (products/homepage)
+- StoreEffects 첫 번째 카드 타이틀: `"Save on Operating Costs"` → `"Save on\nOperating Costs"`
+- AboutPeople 두 번째 카드 타이틀: `"We work with people who run toward hard problems, not away from them"` → `"We focus on hiring people who do not shy away from hard problems"`
+
+---
+
 ## [Unreleased] - 2026-08-27
 
 ### 🔄 Changed
