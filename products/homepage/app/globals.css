@@ -7,7 +7,20 @@
 /* M PLUS 2 — 일본어(ja) 로케일 폰트 */
 @import url('https://fonts.googleapis.com/css2?family=M+PLUS+2:wght@400;500;600;700&display=swap');
 
-@import "tailwindcss";
+/* 스캔 범위를 명시 목록으로 고정한다.
+   source(none)이 없으면 Tailwind v4의 자동 소스 감지가 .gitignore 밖 모든 파일을 훑는다 —
+   scripts/·docs/·테스트 파일의 **주석 속 클래스 리터럴까지** 프로덕션 CSS로 새어 들어온다.
+   tailwind.config.ts의 content negation(테스트 파일 제외 패턴)은 v4에서 적용되지 않고,
+   @source 의 not 형태는 postcss 8.4.31이 prelude를 파싱하지 못해 빌드가 깨진다.
+
+   실제 사고(HOM-100 조사 중 발견): 배포 게이트 scripts/check-footer-layout.mjs 주석에 적은
+   클래스명이 CSS로 유입되어, **그 게이트가 검사하려던 유실을 스스로 되살려** 통과시켰다. */
+@import "tailwindcss" source(none);
+@source ".";
+@source "../components";
+@source "../config";
+@source "../root/components";
+@source "../../../packages/ui/components";
 
 /* ============================================================
    LAYER 1 — Primitive Tokens  (원시 수치, 직접 사용 금지)
