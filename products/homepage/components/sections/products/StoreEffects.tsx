@@ -66,8 +66,10 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
         ([entry]) => {
           if (entry.isIntersecting) {
             if (!pendingQueue.includes(i)) {
-              const at = pendingQueue.findIndex(q => q > i);
-              at === -1 ? pendingQueue.push(i) : pendingQueue.splice(at, 0, i);
+              // 큐를 인덱스 오름차순으로 유지한다 — 스크롤 방향과 무관하게 위→아래 순서로 등장시키기 위함
+              const at = pendingQueue.findIndex((q) => q > i);
+              if (at === -1) pendingQueue.push(i);
+              else pendingQueue.splice(at, 0, i);
             }
             if (!timer) processNext();
             observer.disconnect();

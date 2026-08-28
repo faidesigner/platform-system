@@ -89,9 +89,18 @@ export function AboutPeople({
                 <h3 className="text-title-s max-[961px]:text-body-xl max-[421px]:text-body-l desktop:text-title-m font-bold text-primary">
                   {card.title}
                 </h3>
-                {/* description: 이름ㅣ직책ㅣ라벨 — 구분선을 모두 텍스트 공백으로 통일해 간격 일치 */}
-                <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
-                  {card.name} ㅣ {card.role} ㅣ <span className="inline-flex items-center bg-mint-400 px-s text-body-xs font-medium text-primary">{card.label}</span>
+                {/* description: `이름 ㅣ 직책` + 라벨.
+                    라벨은 카드 우측에 고정한다(justify-between). 라벨을 인라인 흐름에 두면
+                    앞 텍스트 길이만큼 밀려 사람마다 위치가 달라진다 — ja 1440px 실측 편차 227px
+                    (홍석범 379 / 왕민권 408 / 박성빈 534 / 이지민 307). HOM-99가 그 건이다.
+
+                    ⚠️ PR #11의 "ㅣ 구분선 간격 통일"(직책↔라벨 사이에도 ㅣ를 넣어 간격을 맞추는 것)과는
+                    한 줄에서 양립하지 않는다. 라벨이 인라인에 있어야 간격이 고정되고,
+                    우측 정렬이어야 위치가 고정된다. 둘 다 만족하려면 라벨을 다음 줄로 내려야 한다
+                    (그러면 ㅣ가 하나만 남아 간격 문제가 사라지고 라벨 x도 0으로 일정) — 디자인 판단 대기. */}
+                <p className="flex items-center justify-between gap-ms text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
+                  <span>{card.name} ㅣ {card.role}</span>
+                  <span className="inline-flex shrink-0 items-center bg-mint-400 px-s text-body-xs font-medium text-primary">{card.label}</span>
                 </p>
               </div>
             </article>

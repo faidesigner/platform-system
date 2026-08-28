@@ -126,6 +126,13 @@
       "codeValue": "人件費の削減",
       "reason": "시트 product-store 10행 ja = 人件費の削減. ko 원문 \"인건비 절감\"이 product-vco 26행(benefits.1.items.0.subtitle, ja=人件費を削減)과 중복돼 교차 비교된다. 이 키는 product-store 탭 값이 정답이다.",
       "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.unmannedStore.effectCards.0.title",
+      "locale": "en",
+      "codeValue": "Save on\nOperating Costs",
+      "reason": "StoreEffects 3열 카드에서 타이틀 높이를 2×line-height로 통일하기 위한 레이아웃 목적 줄바꿈(PR #11, 2026-08-28). 문구 자체는 시트와 동일하며 시트 en에는 줄바꿈이 없다(\"Save on Operating Costs\"). 내용 변경이 아니므로 시트를 고치지 않고 코드 확정안으로 선언한다.",
+      "decidedAt": "2026-08-28"
     }
   ]
 }

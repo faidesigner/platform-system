@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import Image from "next/image";
 
 interface CaseStudy {
@@ -21,11 +21,13 @@ const ITEM_HEIGHT = 350;
 export default function StoreCaseStudies({ eyebrow, cases }: StoreCaseStudiesProps) {
   const [active, setActive] = useState(0);
 
-  useEffect(() => { setActive(0); }, [cases]);
-
   if (!cases || cases.length === 0) return null;
 
-  const current = cases[active] || cases[0];
+  // cases가 교체되면 이전 인덱스가 범위를 벗어날 수 있다. 이를 effect의 setActive(0)로 처리하면
+  // `cases`가 부모에서 매 렌더 새 배열로 오는 순간 **매 렌더 선택이 초기화**되는 잠재 버그가 된다
+  // (참조 비교이므로 내용이 같아도 재실행). 렌더 중 클램프가 동일 목적을 부수효과 없이 만족한다.
+  const activeIdx = Math.min(active, cases.length - 1);
+  const current = cases[activeIdx] || cases[0];
   const hasValidImage = current.image && current.image !== "MISSING_FROM_DESIGN";
 
   const go = (dir: 1 | -1) => {
@@ -79,10 +81,10 @@ export default function StoreCaseStudies({ eyebrow, cases }: StoreCaseStudiesPro
           <div className="h-[350px] overflow-hidden">
             <div
               className="transition-transform duration-500 ease-in-out"
-              style={{ transform: `translateY(-${active * ITEM_HEIGHT}px)` }}
+              style={{ transform: `translateY(-${activeIdx * ITEM_HEIGHT}px)` }}
             >
               {cases.map((c, i) => {
-                const isActive = i === active;
+                const isActive = i === activeIdx;
                 const titleLabel = c.brand && c.store ? `${c.brand} / ${c.store}` : c.brand;
                 return (
                   <div

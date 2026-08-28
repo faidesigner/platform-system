@@ -20,12 +20,8 @@
  * 실행: node scripts/check-footer-layout.mjs   (deploy.sh 빌드 직후 자동 호출)
  * 사전조건: out/ 존재, 시스템 Chrome(또는 PUPPETEER_EXECUTABLE_PATH). Chrome 없으면 경고 후 skip.
  */
-import http from "node:http";
-import { readFile, stat } from "node:fs/promises";
-import path from "node:path";
-import { existsSync } from "node:fs";
+import { withPreview, measurePage } from "./lib/staticPreview.mjs";
 
-const OUT = path.resolve(process.cwd(), "out");
 const PORT = 43221;
 const LOCALES = ["ko", "en", "ja"];
 /** 데스크톱 레이아웃(fai-footer__desktop)이 적용되는 구간만 본다. ≤960px는 compact 레이아웃이라 별개다. */
@@ -36,52 +32,6 @@ const WIDTHS = [1440, 1600, 1920];
  * 하한선이며 디자인 값을 고정하려는 수치가 아니다 — 접촉(0px) 회귀만 확실히 잡는다.
  */
 const MIN_GAP = 24;
-
-const MIME = {
-  ".html": "text/html", ".js": "text/javascript", ".css": "text/css", ".json": "application/json",
-  ".svg": "image/svg+xml", ".png": "image/png", ".jpg": "image/jpeg", ".jpeg": "image/jpeg",
-  ".webp": "image/webp", ".woff2": "font/woff2", ".woff": "font/woff", ".txt": "text/plain",
-  ".ico": "image/x-icon", ".mp4": "video/mp4", ".xml": "application/xml",
-};
-
-async function resolveFile(urlPath) {
-  const p = decodeURIComponent(urlPath.split("?")[0]);
-  let fp = path.join(OUT, p);
-  try {
-    const s = await stat(fp);
-    if (s.isDirectory()) fp = path.join(fp, "index.html");
-  } catch {
-    if (existsSync(fp + ".html")) fp = fp + ".html";
-    else fp = path.join(fp, "index.html");
-  }
-  return fp;
-}
-
-function startServer() {
-  const server = http.createServer(async (req, res) => {
-    try {
-      const fp = await resolveFile(req.url);
-      const buf = await readFile(fp);
-      res.setHeader("Content-Type", MIME[path.extname(fp)] || "application/octet-stream");
-      res.end(buf);
-    } catch {
-      res.statusCode = 404;
-      res.end("not found");
-    }
-  });
-  return new Promise((resolve) => server.listen(PORT, () => resolve(server)));
-}
-
-function findChrome() {
-  const envPath = process.env.PUPPETEER_EXECUTABLE_PATH || process.env.CHROME_PATH;
-  return [
-    envPath,
-    "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome",
-    "/Applications/Chromium.app/Contents/MacOS/Chromium",
-    "/usr/bin/google-chrome",
-    "/usr/bin/chromium-browser",
-  ].filter(Boolean).find((c) => existsSync(c)) || null;
-}
 
 /**
  * 브라우저 컨텍스트에서 실행 — footer 로고 박스와 회사명 텍스트의 실제 잉크 좌측을 잰다.
@@ -123,65 +73,36 @@ function measure() {
   return { logo, nameLeft: Math.round(ink.left), gap: Math.round(ink.left) - logo.r, tel: telWrapped };
 }
 
-async function run() {
-  if (!existsSync(OUT)) {
-    console.error("✗ out/ 없음 — 먼저 빌드하세요(pnpm build).");
-    process.exit(1);
-  }
-  const executablePath = findChrome();
-  if (!executablePath) {
-    console.warn("⚠ Chrome을 찾지 못해 footer 레이아웃 검사를 건너뜁니다(배포는 계속). PUPPETEER_EXECUTABLE_PATH 설정 권장.");
-    process.exit(0);
-  }
-  let puppeteer;
-  try {
-    puppeteer = (await import("puppeteer-core")).default;
-  } catch {
-    console.warn("⚠ puppeteer-core 미설치 — 검사 skip(배포 계속).");
-    process.exit(0);
-  }
-
-  const server = await startServer();
-  const browser = await puppeteer.launch({ executablePath, headless: "new", args: ["--no-sandbox"] });
+await withPreview({ port: PORT, what: "footer 레이아웃 검사" }, async ({ browser, origin }) => {
   const failures = [];
   const results = [];
 
-  try {
-    for (const width of WIDTHS) {
-      for (const loc of LOCALES) {
-        const page = await browser.newPage();
-        await page.setViewport({ width, height: 900 });
-        await page.goto(`http://localhost:${PORT}/${loc}/`, { waitUntil: "networkidle2", timeout: 30000 }).catch(() => {});
-        await new Promise((r) => setTimeout(r, 300));
-        const m = await page.evaluate(measure);
-        await page.close();
+  for (const width of WIDTHS) {
+    for (const loc of LOCALES) {
+      const m = await measurePage(browser, `${origin}/${loc}/`, { width }, measure);
 
-        if (m.error) { failures.push({ width, loc, msg: m.error }); continue; }
-        if (m.skip) continue;
-        results.push({ width, loc, ...m });
+      if (m.error) { failures.push({ width, loc, msg: m.error }); continue; }
+      if (m.skip) continue;
+      results.push({ width, loc, ...m });
 
-        if (m.gap < MIN_GAP) {
-          failures.push({ width, loc, msg: `로고~회사명 여백 ${m.gap}px < ${MIN_GAP}px (로고 우측 ${m.logo.r} / 회사명 좌측 ${m.nameLeft})` });
-        }
-        if (m.tel && m.tel.lines > 1) {
-          failures.push({ width, loc, msg: `전화번호 "${m.tel.txt}" 가 ${m.tel.lines}줄로 끊김 — 코드성 값은 한 줄이어야 한다` });
-        }
+      if (m.gap < MIN_GAP) {
+        failures.push({ width, loc, msg: `로고~회사명 여백 ${m.gap}px < ${MIN_GAP}px (로고 우측 ${m.logo.r} / 회사명 좌측 ${m.nameLeft})` });
       }
+      if (m.tel && m.tel.lines > 1) {
+        failures.push({ width, loc, msg: `전화번호 "${m.tel.txt}" 가 ${m.tel.lines}줄로 끊김 — 코드성 값은 한 줄이어야 한다` });
+      }
+    }
 
-      // ② 같은 폭에서 로고 크기는 로케일과 무관해야 한다 (ko를 기준으로 삼는다)
-      const atWidth = results.filter((r) => r.width === width);
-      const ref = atWidth.find((r) => r.loc === "ko");
-      if (ref) {
-        for (const r of atWidth) {
-          if (r.loc !== "ko" && r.logo.w !== ref.logo.w) {
-            failures.push({ width, loc: r.loc, msg: `로고 폭 ${r.logo.w}px ≠ ko ${ref.logo.w}px — 로케일에 따라 로고가 축소되고 있다` });
-          }
+    // ② 같은 폭에서 로고 크기는 로케일과 무관해야 한다 (ko를 기준으로 삼는다)
+    const atWidth = results.filter((r) => r.width === width);
+    const ref = atWidth.find((r) => r.loc === "ko");
+    if (ref) {
+      for (const r of atWidth) {
+        if (r.loc !== "ko" && r.logo.w !== ref.logo.w) {
+          failures.push({ width, loc: r.loc, msg: `로고 폭 ${r.logo.w}px ≠ ko ${ref.logo.w}px — 로케일에 따라 로고가 축소되고 있다` });
         }
       }
     }
-  } finally {
-    await browser.close();
-    server.close();
   }
 
   for (const r of results) {
@@ -196,6 +117,4 @@ async function run() {
     process.exit(1);
   }
   console.log(`\n✓ footer 레이아웃 정상 — ${WIDTHS.length}×${LOCALES.length}개 조합 통과.`);
-}
-
-run().catch((e) => { console.error("검사 실패:", e.message || e); process.exit(1); });
+});
