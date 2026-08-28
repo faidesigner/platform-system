@@ -104,7 +104,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
             >
               <div className="flex flex-col items-center self-stretch gap-[var(--size-48)]">
                 <h3
-                className={`flex justify-center text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary h-[3rem] tablet:h-[3.75rem] desktop-s:h-[4.5rem] desktop:h-[4.875rem]${i === 0 ? ' items-center -mx-xl desktop-s:-mx-4xl' : ' items-start'}`}
+                className={`flex justify-center text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary h-[3rem] tablet:h-[3.75rem] desktop-s:h-[4.5rem] desktop:h-[4.875rem] ${i === 0 ? 'items-center -mx-xl desktop-s:-mx-4xl' : 'items-start'}`}
                 style={i === 0 ? { whiteSpace: 'pre-wrap' } : undefined}
               >
                   {card.title}

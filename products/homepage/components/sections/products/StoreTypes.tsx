@@ -74,7 +74,7 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
               >
                 {/* 이미지 */}
                 {card.image && card.image !== "MISSING_FROM_DESIGN" ? (
-                  <Image src={card.image} alt={card.title} fill className={`object-cover${card.wide ? " fai-storetype-wide-img" : ""}`} style={{ objectPosition: card.objectPosition || "center" }} />
+                  <Image src={card.image} alt={card.title} fill className={`object-cover ${card.wide ? "fai-storetype-wide-img" : ""}`} style={{ objectPosition: card.objectPosition || "center" }} />
                 ) : (
                   <div className="absolute inset-0 bg-filled-sand-tertiary" />
                 )}
