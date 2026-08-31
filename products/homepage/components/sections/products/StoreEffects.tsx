@@ -117,7 +117,10 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 >
                   <EffectGraphic name={card.icon as import('@fai/ui/components/common/Icon/EffectGraphic').EffectIconKey} />
                 </div>
-                <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary">
+                {/* whitespace-pre-line: 번역문의 개행을 **지정한 위치에서** 끊는다.
+                    없으면 CJK는 컨테이너 폭에 따라 임의 위치에서 자동 줄바꿈된다 — 2줄로는 보이지만
+                    시트가 의도한 줄 나눔이 아니다(2026-08-31 일본팀 지적). */}
+                <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary whitespace-pre-line">
                   {card.description}
                 </p>
               </div>
