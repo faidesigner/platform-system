@@ -103,10 +103,13 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
               className="flex flex-col items-start w-full tablet:flex-1 p-xl desktop-s:p-4xl gap-[10px] rounded-fai-s bg-fill-faint"
             >
               <div className="flex flex-col items-center self-stretch gap-[var(--size-48)]">
-                <h3
-                className={`flex justify-center text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary h-[3rem] tablet:h-[3.75rem] desktop-s:h-[4.5rem] desktop:h-[4.875rem] ${i === 0 ? 'items-center -mx-xl desktop-s:-mx-4xl' : 'items-start'}`}
-                style={i === 0 ? { whiteSpace: 'pre-wrap' } : undefined}
-              >
+                {/* 높이는 2×line-height로 고정하고 **세 카드 모두 상단 정렬**한다.
+                    예전엔 en 첫 카드가 2줄(`Save on / Operating Costs`)이라 i===0만
+                    items-center + 음수 마진 특례를 뒀는데, 시트가 문구를 1줄로 줄이자
+                    첫 카드 제목만 가운데로 내려와 정렬이 깨졌다(QA 2026-08-31).
+                    인덱스에 레이아웃 특례를 박지 말 것 — 문구 길이는 언제든 바뀐다.
+                    whitespace-pre-line: 개행은 번역문이 지정한 위치에서만 끊는다(개행 정책 통일). */}
+                <h3 className="flex items-start justify-center whitespace-pre-line text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary h-[3rem] tablet:h-[3.75rem] desktop-s:h-[4.5rem] desktop:h-[4.875rem]">
                   {card.title}
                 </h3>
                 <div

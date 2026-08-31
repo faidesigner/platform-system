@@ -15,7 +15,7 @@
 - **로고**: 110×26px
 - **메뉴**: tablet 이상 노출 / mobile 햄버거
 - **드롭다운**: 제품 메뉴 hover 서브메뉴
-- **언어선택**: KO / EN / JP
+- **언어선택**: KO / EN / JA (ISO 639-1 언어코드. `KR`/`JP`는 국가코드라 쓰지 않는다 — 라우팅 locale·`<html lang>`과 표기를 일치시킨다)
 
 ## 4. 🎨 Token Mapping
 ```json

@@ -2,6 +2,44 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-31 (3)
+
+### 🛠 Fixed
+
+#### QA 재신고 8건 처리 — 실배포본 대조 후 실이격 3건만 수정
+
+QA가 올린 8건을 **dev 실배포본(`f1c8101`) HTML을 내려받아 전수 대조**했다. 5건은 이미 반영돼 있었고(재현 실패), 실제로 남아 있던 건 3건이다. "미반영"으로 보고된 항목을 코드만 보고 다시 고치면 오히려 이미 확정된 문구를 되돌린다.
+
+**❶ 언어 스위처 라벨 — 국가코드가 언어코드 자리에 있었다 (`KO/EN/JP`·`KR/EN/JP` → `KO/EN/JA`)**
+- 스위처가 **세 벌** 있었고 셋 다 자기 배열을 들고 있었다: 데스크톱 드롭다운(homepage) `KO/EN/JP`, 모바일 드로어(`@fai/ui`) `KR/EN/JP`, `NavigationBar` 폴백 `KO/EN/JA`. 한 곳만 고치면 나머지가 남는 구조라 실제로 과거에 `NavigationBar`만 고쳐진 채 방치돼 있었다
+- `KR`·`JP`는 ISO 3166-1 **국가코드**다. 라우팅 locale·메시지 파일·`<html lang>`이 전부 ISO 639-1 언어코드(`ko`/`en`/`ja`)이므로 라벨도 언어코드로 통일한다
+- 잠재 결함: `NavigationBar`의 폴백 스위처가 **라벨을 소문자로 내려 `document.documentElement.lang`을 채우고** 있었다. 라벨이 `KR`/`JP`였다면 `lang="kr"`·`lang="jp"` — BCP-47상 무효한 서브태그가 조용히 박힌다. 라벨이 아니라 **코드**를 쓰도록 정정
+- `packages/ui/components/navigation/locales.ts` 🆕 — `LOCALE_OPTIONS` 단일 출처. 세 컴포넌트가 전부 여기를 본다
+- 디자인 문서도 함께 정정: `root/components/web/layout/navigation-bar.md`(언어선택 `JP`→`JA`), `root/foundation/docs/typography-w.md`(`JP`→`JA`)
+
+**❷ 무인매장 3열 카드 세로 정렬 어긋남 — 문구 길이에 결합된 인덱스 특례**
+- `StoreEffects`의 첫 카드 제목만 `items-center` + 음수 좌우 마진 특례를 받고 있었다. en 문구가 `Save on / Operating Costs` **2줄**이던 시절, 2줄 높이 박스 안에서는 center와 start가 같아 티가 안 났다
+- 시트 갱신(`5301cd9`)이 문구를 `Save on Costs` **1줄**로 줄이자 첫 카드 제목만 세로 가운데로 내려와 2·3번과 어긋났다. 문구를 고친 쪽은 레이아웃 특례의 존재를 알 수 없다
+- 인덱스 특례를 제거하고 세 카드 모두 상단 정렬 + `whitespace-pre-line`으로 통일
+
+**❸ `/about` 왕민권 이력 — 한 줄 압축 과정에서 `VC-backed`가 소실**
+- 2026-08-31 시트 갱신분이 `Founded & exited a / VC-backed startup (CEO)` 2줄을 `Founded & exited a startup (CEO)`로 바꿨다. 줄바꿈만 없애면 되는데 **`VC-backed`까지 떨어졌다** — ko 원문 `전 Funded 창업(CEO)&매각`의 'Funded'가 사라진 셈
+- `Founded & exited a VC-backed startup (CEO)` 한 줄로 정정 + `sheet-decisions.json`에 선언(시트 재제안 차단)
+
+**재현 실패(이미 반영됨) 5건** — dev 실배포본에서 확인
+- 컨택트 폼 동의문구·`Ad Preferences` 링크 정상 / 푸터 로고·사명 간격 정상(HOM-94 게이트가 지키는 중)
+- `/products/unmanned-store` en 히어로 `WALK-THROUGH` · 첫 카드 `Save on Costs` 반영됨 (ko·ja 히어로가 `What is WALK-THROUGH?`인 것은 시트 지정값이라 의도된 차이)
+- STANDARD/MICRO STORE 카피는 `5301cd9`에서 `Tailor to your layout` → `Tailored to your layout`로 이미 갱신 — QA가 본 화면이 그 직전 배포본이었다. storeTypes 재정렬 반영건과 **동일 건 맞다**
+- Efficiency 통계 ko·ja `(VCO 도입 전후 비교)` 괄호 **중복 아님** — 실배포본 DOM에서 1회만 렌더
+
+### 🧪 Tests
+- `components/layout/LanguageSwitcher.locales.test.tsx` 🆕 — 단일 출처 값 + 데스크톱·모바일 두 스위처의 **실제 렌더 결과**를 함께 강제. 상수만 검사하면 한쪽 컴포넌트가 자기 배열로 되돌아가는 걸 못 잡는다
+- `components/sections/products/StoreEffects.test.tsx` 🆕 — 세 카드 제목의 클래스 동일성·인라인 style 부재·음수 마진 부재. 문구가 몇 줄이 되든 인덱스 특례가 다시 들어오면 실패한다
+
+**검증:** vitest **247 PASS** / lint 0 problems / 게이트 4종 통과 / 빌드 산출물에서 `KO·EN·JA`, h3 클래스 3개 동일, `VC-backed` 직접 확인
+
+---
+
 ## [Unreleased] - 2026-08-31 (2)
 
 ### 🛠 Fixed
