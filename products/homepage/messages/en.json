@@ -351,8 +351,8 @@
     "hero": {
       "eyebrow": "Retail AI",
       "title": [
-        "Enable Retailers to Focus",
-        "on What Really Matters"
+        "Enable Retailers to",
+        "Focus on What Really Matters"
       ]
     },
     "partners": {
@@ -425,17 +425,17 @@
       "subtitle": "Meet the people behind Fainders.AI",
       "cards": {
         "0": {
-          "title": "We want to build AI that moves the world forward",
+          "title": "We're building AI to make the world better",
           "name": "Sukbum Hong",
           "role": "CTO"
         },
         "1": {
-          "title": "We focus on hiring people who do not shy away from hard problems",
+          "title": "We hire people who don't shy away from hard problems",
           "name": "Minkwon Wang",
           "role": "CEO"
         },
         "2": {
-          "title": "Problems over tech, customer experience over deployment",
+          "title": "Problems over tech, experience over deployment",
           "name": "Sungbin Park",
           "role": "Backend Engineer"
         },

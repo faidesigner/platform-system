@@ -56,6 +56,10 @@ echo "▶ 데스크톱 footer 레이아웃 검사..."
 echo "▶ About 인물 카드 레이아웃 검사..."
 ( cd "$HERE" && node scripts/check-about-layout.mjs )
 
+# 번역 키 노출 게이트 — next-intl이 메시지를 못 찾으면 키 이름을 화면에 렌더한다(HOM-75).
+echo "▶ 번역 키 노출 검사..."
+( cd "$HERE" && node scripts/check-i18n-keys.mjs )
+
 # 루트 산출물 게이트 — Meta 도메인 인증·언어 감지 리다이렉트 유실 시 배포 중단(PR #11 사고).
 echo "▶ 루트 산출물(out/index.html) 무결성 검사..."
 ( cd "$HERE" && node scripts/check-root-html.mjs )
