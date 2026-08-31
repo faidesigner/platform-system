@@ -147,7 +147,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 }`}
               >
                 <div className="overflow-hidden flex flex-col items-start self-stretch">
-                  <p className="text-body-ms tablet:text-body desktop-s:text-body-l desktop:text-body-xl font-medium whitespace-pre-wrap text-secondary">
+                  <p className="text-body-ms tablet:text-body desktop-s:text-body-l desktop:text-body-xl font-medium whitespace-pre-line text-secondary">
                     {item.description}
                   </p>
                 </div>
