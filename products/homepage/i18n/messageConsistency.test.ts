@@ -108,13 +108,22 @@ describe("messages 로케일 정합성", () => {
     //   MISSING_MESSAGE가 나고, 그게 이 결정이 깨졌다는 신호다.
     const jaIntentionallyOmitted = new Set(["footer.emailValue", "footer.labels.email"]);
 
+    // 줄 배열은 로케일마다 줄 수가 달라도 된다. AboutPartners는 description 배열의 각 요소를
+    // <span class="block"> 한 줄로 렌더하므로, 요소 수 = 줄 수다.
+    // en 카피는 시트에서 한 줄로 재편됐고(`Serve global market leaders`), ko·ja는 두 줄이다
+    // (2026-08-31 시트 aboutUs 4행). 억지로 두 줄로 쪼개면 어색한 줄바꿈이 생긴다.
+    // ⚠️ 예외는 **키를 명시**한다 — "배열이면 길이 달라도 됨"으로 일반화하면 한 줄이 통째로
+    //    누락된 진짜 사고를 못 잡는다.
+    const lineCountMayDiffer = new Set(["about.partners.description.1"]);
+
     expect(Object.keys(EN).filter((k) => !(k in KO))).toEqual([]);
-    expect(koKeys.filter((k) => !(k in EN))).toEqual([]);
+    expect(koKeys.filter((k) => !(k in EN) && !lineCountMayDiffer.has(k))).toEqual([]);
     expect(Object.keys(JA).filter((k) => !(k in KO) && !jaOnlyAllowed.test(k))).toEqual([]);
-    expect(koKeys.filter((k) => !(k in JA) && !jaIntentionallyOmitted.has(k))).toEqual([]);
+    expect(koKeys.filter((k) => !(k in JA) && !jaIntentionallyOmitted.has(k) && !lineCountMayDiffer.has(k))).toEqual([]);
 
     // 예외 목록이 썩는 것을 막는다 — 키가 ko에서 사라졌는데 예외만 남으면 의미가 없다.
     expect([...jaIntentionallyOmitted].filter((k) => !(k in KO))).toEqual([]);
+    expect([...lineCountMayDiffer].filter((k) => !(k in KO))).toEqual([]);
   });
 
   // 스프레드시트 일괄 번역 반영 시 다른 키의 번역문이 잘못 복사돼 들어오는 사고를 구조적으로 차단한다.
