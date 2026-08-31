@@ -77,10 +77,13 @@ describe("HOM-76 — 리테일테크레터 구독 CTA", () => {
 });
 
 describe("HOM-67 — 푸터 로케일 대응", () => {
-  it("ja는 이메일 행을 노출하고 사업자등록번호를 감춘다", () => {
-    // 기존 hideEmail={locale === 'ja'} 를 뒤집는 변경 — ja 메일은 일본팀 주소로 노출한다.
+  it("ja는 이메일과 사업자등록번호를 모두 감춘다 (HOM-101로 이메일 규칙 변경)", () => {
+    // 이전(HOM-67): ja 메일을 일본팀 주소(contact_jp@)로 **노출**했다.
+    // 변경(HOM-101, 2026-08-28 JP-BD 요청): 일본 법인 정보 블록이 별도로 붙으면서 본사 이메일이
+    //   그 위에 놓여 위계가 어색해졌다 — 메일 행을 빼고 일본 법인 전화로 안내한다.
+    // 사업자등록번호는 한국 사업자번호라 계속 감춘다(HOM-67 그대로).
     const ja = localePolicy("ja").footer;
-    expect(ja.showEmail).toBe(true);
+    expect(ja.showEmail).toBe(false);
     expect(ja.showBizNo).toBe(false);
   });
 

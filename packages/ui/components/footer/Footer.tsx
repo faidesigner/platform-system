@@ -52,15 +52,15 @@ const VALUES = {
   email:   'contact@fainders.ai',
 };
 
-// 정책 문서(PDF) — 저장소에 자체 호스팅(public/document/). 상대경로라 환경 독립(프리뷰·PRD 모두 동작).
-// 기존 /privacy 는 존재하지 않는 경로라 404였음.
+// 정책 문서 경로는 **소비자가 주입한다**(privacyHref / cookieHref) — @fai/ui는 로케일을 모른다.
 //
-// cctv(영상정보처리기기 운영·관리 방침)는 HOM-61에서 푸터에서 제거됐다 —
-// 무인매장이 아닌 super swift 내용이라 홈페이지에 불필요하다는 판단(2026-07-28 김성태).
-// 폴백으로라도 남겨두면 cookieHref 미주입 시 그 링크가 되살아나므로 상수 자체를 두지 않는다.
-const POLICY_HREFS = {
-  privacy: '/document/privacy-policy.pdf',
-};
+// 하드코딩 폴백을 두지 않는 이유(HOM-101): 과거 `privacy: '/document/privacy-policy.pdf'` 상수가
+// 있었고, 이는 **구버전 한국어 PDF**였다. en·ja에서 개정 안내 모달을 끄자 이 폴백으로 떨어져
+// 일본·영어 사용자에게 한국어 문서가 열렸다 (2026-08-28 Hyeyoung Shin 지적).
+// 폴백은 "조용히 틀린 문서"를 만든다 — 미주입이면 아예 링크를 렌더하지 않는 편이 안전하다.
+//
+// cctv(영상정보처리기기 운영·관리 방침)도 같은 이유로 상수를 제거했다 — HOM-61에서 푸터에서
+// 제거됐는데 폴백이 남아 있으면 되살아난다(2026-07-28 김성태).
 
 /**
  * Footer 라벨 세트 — i18n 비결합(@fai/ui는 next-intl을 import하지 않음).
@@ -177,6 +177,31 @@ function InfoRow({ items, className }: { items: { title: string; text: string; n
   );
 }
 
+/** compact 레이아웃의 정보 그리드. 본사와 추가 법인이 공유한다(HOM-101). */
+function CompactInfoGrid({ items }: { items: { title: string; text: string }[] }) {
+  return (
+    <div className="grid grid-cols-[max-content_1fr] gap-y-ms gap-x-2xl w-full">
+      {items.flatMap((item, i) => [
+        <span key={`${i}-t`} className="text-body-s font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+          {item.title}
+        </span>,
+        <span key={`${i}-v`} className="text-body-s font-normal text-text-basic-primary leading-[20px]">
+          {item.text}
+        </span>,
+      ])}
+    </div>
+  );
+}
+
+/**
+ * 법인명 헤더 클래스. 본사와 추가 법인(extraEntity)이 **같은 상수를 공유**해야 한다 —
+ * JP-BD 요청("한국 법인과 동일하게 볼드처리")을 문자열 복사로 맞추면 한쪽만 바뀌어 어긋난다.
+ * desktop은 1440px 이상에서 한 단계 크고, compact는 고정이라 둘을 분리한다.
+ */
+const ENTITY_NAME_CLS_DESKTOP =
+  'text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]';
+const ENTITY_NAME_CLS_COMPACT = 'text-body font-bold text-text-basic-primary leading-[150%]';
+
 /* ── Component ── */
 
 /** 추가 정보 행(로케일 전용). 소비자가 무엇을 덧붙일지 결정한다 — @fai/ui는 로케일을 모른다. */
@@ -184,6 +209,20 @@ export interface FooterInfoRow {
   title: string;
   text: string;
   noWrapValue?: boolean;
+}
+
+/**
+ * 별도 법인 블록(HOM-101). 본사 블록과 **동일한 구조**로 렌더된다 — 볼드 법인명 헤더 + 하위 정보 행.
+ *
+ * 왜 `extraInfo`(평평한 행)로 부족한가: 일본 법인을 `日本法人 | 株式会社…` 처럼 라벨-값 한 행으로
+ * 넣으면 본사 정보와 위계가 달라 보인다. JP-BD 요청이 정확히 그 지점이었다 —
+ * "법인명(日本法人도 삭제)을 한국 법인과 동일하게 볼드처리하고 같은 위치에 정렬"
+ * (2026-08-28 Hyeyoung Shin). 그래서 '법인'을 1급 개념으로 올렸다.
+ */
+export interface FooterEntity {
+  /** 볼드 헤더로 렌더될 법인명. 라벨을 붙이지 않는다. */
+  name: string;
+  rows: readonly FooterInfoRow[];
 }
 
 interface FooterProps {
@@ -199,6 +238,16 @@ interface FooterProps {
    * 로케일 판단은 소비자(FooterBridge)가 하고 여기서는 받은 행을 그대로 렌더한다.
    */
   extraInfo?: readonly FooterInfoRow[];
+  /**
+   * 본사와 별개인 법인 블록(HOM-101). ja의 일본 법인에 쓰인다.
+   * 본사 블록과 같은 구조(볼드 법인명 + 정보 행)로 렌더되어 위계가 맞는다.
+   */
+  extraEntity?: FooterEntity;
+  /**
+   * 개인정보 처리방침 문서 경로(로케일별). `privacyModalContent`가 없을 때 이 링크로 이동한다.
+   * **미지정 시 링크 자체를 렌더하지 않는다** — 틀린 문서로 보내느니 없는 편이 낫다(HOM-101).
+   */
+  privacyHref?: string;
   /**
    * 개인정보 처리방침 클릭 시 표시할 모달 콘텐츠 팩토리(로케일별).
    * 소비자(FooterBridge)가 `(onClose) => ReactNode` 형태로 주입한다.
@@ -225,6 +274,8 @@ export default function Footer({
   showEmail = true,
   showBizNo = true,
   extraInfo = [],
+  extraEntity,
+  privacyHref,
   privacyModalContent,
   cookieHref,
   wideCompact = false,
@@ -263,10 +314,15 @@ export default function Footer({
     ...(showEmail ? [{ title: l.email, text: l.emailValue, noWrapValue: true }] : []),
     ...extraInfo,
   ];
+  // 개정 안내 모달이 주입된 로케일(ko)은 모달, 그 외(en·ja)는 로케일 문서로 직행한다(HOM-101).
+  // 둘 다 없으면 링크를 만들지 않는다 — 폴백으로 한국어 문서를 열던 회귀를 구조적으로 막는다.
+  const privacyPolicy: PolicyItem | null = privacyModalContent
+    ? { label: l.privacy, onClick: () => setModalOpen(true) }
+    : privacyHref
+      ? { label: l.privacy, href: privacyHref }
+      : null;
   const policies: PolicyItem[] = [
-    privacyModalContent
-      ? { label: l.privacy, onClick: () => setModalOpen(true) }
-      : { label: l.privacy, href: POLICY_HREFS.privacy },
+    ...(privacyPolicy ? [privacyPolicy] : []),
     ...(cookieHref ? [{ label: l.adSettings, href: cookieHref }] : []),
   ];
 
@@ -296,14 +352,20 @@ export default function Footer({
             <div className="fai-footer__contents-inner flex flex-col items-start">
               <div className="flex flex-col gap-xl">
                 <div className="flex flex-col gap-ms">
-                  <p className="text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]">
-                    {companyName}
-                  </p>
+                  <p className={ENTITY_NAME_CLS_DESKTOP}>{companyName}</p>
                   <div className="flex flex-row justify-between items-start gap-5xl min-[1440px]:gap-7xl self-stretch">
                     <InfoRow items={row1Info} className="min-w-0 shrink" />
                     <InfoRow items={row2Info} className="w-max shrink-0" />
                   </div>
                 </div>
+
+                {/* 추가 법인(HOM-101) — 본사와 동일한 구조·클래스로 위계를 맞춘다 */}
+                {extraEntity && (
+                  <div className="flex flex-col gap-ms">
+                    <p className={ENTITY_NAME_CLS_DESKTOP}>{extraEntity.name}</p>
+                    <InfoRow items={[...extraEntity.rows]} className="min-w-0 shrink" />
+                  </div>
+                )}
                 {/* 정책 링크 — contentsArea 내부 (fai-footer__desktop 섹션이 ≤960px에서 숨겨짐) */}
                 <PolicyLinks policies={policies} />
               </div>
@@ -333,20 +395,17 @@ export default function Footer({
 
             {/* companyInfo */}
             <div className="fai-footer__info flex flex-col items-start gap-ms">
-              <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                {companyName}
-              </p>
-              <div className="grid grid-cols-[max-content_1fr] gap-y-ms gap-x-2xl w-full">
-                {[...row1Info, ...row2Info].flatMap((item, i) => [
-                  <span key={`${i}-t`} className="text-body-s font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
-                    {item.title}
-                  </span>,
-                  <span key={`${i}-v`} className="text-body-s font-normal text-text-basic-primary leading-[20px]">
-                    {item.text}
-                  </span>,
-                ])}
-              </div>
+              <p className={ENTITY_NAME_CLS_COMPACT}>{companyName}</p>
+              <CompactInfoGrid items={[...row1Info, ...row2Info]} />
             </div>
+
+            {/* 추가 법인(HOM-101) — 본사와 동일한 구조 */}
+            {extraEntity && (
+              <div className="fai-footer__info flex flex-col items-start gap-ms">
+                <p className={ENTITY_NAME_CLS_COMPACT}>{extraEntity.name}</p>
+                <CompactInfoGrid items={[...extraEntity.rows]} />
+              </div>
+            )}
 
             {/* policies */}
             <div className="fai-footer__policies flex justify-end items-center gap-ms">

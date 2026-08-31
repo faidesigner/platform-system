@@ -99,7 +99,10 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     showCareers: false,
     contactChat: { show: true, url: LINE_CHANNEL_URL, channel: "line" },
     showLetterSubscribeCta: false,
-    footer: { showEmail: true, showBizNo: false, showJapanEntity: true },
+    // 메일 주소 미노출(HOM-101) — JP-BD 요청. 일본 법인 정보 블록이 별도로 붙으면서
+    // 본사 이메일이 그 위에 놓여 위계가 어색해졌다(2026-08-28 Hyeyoung Shin).
+    // 일본 문의 경로는 일본 법인 전화번호로 안내한다.
+    footer: { showEmail: false, showBizNo: false, showJapanEntity: true },
     vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 일본어 자막 버전 압축본으로 교체
     reviewOrder: ["resort", "retail", "bakery", "cafeteria"],
     homeHeroImage: "/images/main/imageSection-hero-ja.webp",

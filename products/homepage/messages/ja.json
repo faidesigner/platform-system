@@ -39,12 +39,13 @@
     "telValue": "+82-2-6191-0049",
     "emailValue": "contact_jp@fainders.ai",
     "japanEntity": {
-      "companyLabel": "日本法人",
       "companyValue": "株式会社ファインダーズＡＩジャパン",
       "ceoLabel": "代表取締役",
       "ceoValue": "Jimin Lee（イ・ジミン）",
       "telLabel": "電話",
-      "telValue": "03-6821-7191"
+      "telValue": "03-6821-7191",
+      "addressLabel": "所在地",
+      "addressValue": "〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階"
     }
   },
   "products": {
