@@ -23,7 +23,7 @@ interface StatConfig {
 }
 
 const STAT_CONFIGS: StatConfig[] = [
-  { target: 99.7, decimals: 1, suffix: '%' },
+  { target: 99.7, decimals: 2, suffix: '%' },  // 시트 표기가 99.70% (소수점 2자리) — main 22행
   { target: 75, suffix: '%' },
   { target: 15, suffix: '%' },
 ];

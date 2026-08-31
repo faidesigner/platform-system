@@ -319,7 +319,7 @@
       "title": "Customers"
     },
     "efficiency": {
-      "title": "Efficiency",
+      "title": "Key Numbers",
       "subtitle": "숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다",
       "stats": {
         "0": {
@@ -327,7 +327,7 @@
           "description": "오차 없는 완벽한 비전 AI"
         },
         "1": {
-          "label": "고객 대기시간 감소 (VCO 도입 전후 비교)",
+          "label": "고객 대기시간 감소",
           "labelCaption": "(VCO 도입 전후 비교)",
           "description": "이탈을 막는 초고속 결제"
         },
