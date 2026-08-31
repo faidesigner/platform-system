@@ -9,7 +9,7 @@ import { siteConfig } from "@/config/site";
 import { localePolicy } from "@/config/locale-policy";
 import type { GaLocation } from "@/lib/analytics/events";
 import { trackEvent } from "@/lib/analytics/track";
-import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
+import { buildContactPayload, parseUtm, zapierContactUrl } from "@/lib/contact/payload";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
 import { Checkbox } from "@fai/ui/components/Checkbox";
@@ -123,7 +123,8 @@ export function ContactUsSection() {
       referrer: typeof document !== "undefined" ? document.referrer : "",
     });
     try {
-      await fetch(ZAPIER_CONTACT_URL, {
+      // lang 쿼리에 **제출 로케일**을 담는다 — 고정값이면 en·ja 리드가 ko로 흘러간다(HOM-75).
+      await fetch(zapierContactUrl(locale), {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: JSON.stringify(payload),

@@ -2,7 +2,7 @@ import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import messages from "@/messages/ko.json";
-import { ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
+import { zapierContactUrl } from "@/lib/contact/payload";
 
 // scrollIntoView/scrollTo jsdom 폴리필은 vitest.setup.ts에서 전역 처리.
 
@@ -28,9 +28,9 @@ import { ContactUsSection } from "./ContactUsSection";
 
 // ContactUsSection이 useTranslations를 호출하므로 intl 컨텍스트 필수.
 // ko 메시지로 감싸면 기존 한국어 문자열 단언이 그대로 통과.
-function renderSection() {
+function renderSection(locale: "ko" | "en" | "ja" = "ko") {
   return render(
-    <NextIntlClientProvider locale="ko" messages={messages}>
+    <NextIntlClientProvider locale={locale} messages={messages}>
       <ContactUsSection />
     </NextIntlClientProvider>,
   );
@@ -92,6 +92,23 @@ describe("ContactUsSection 제출", () => {
     ).toBeInTheDocument();
   });
 
+  /**
+   * lang 쿼리가 고정값이면 en·ja 리드가 ko 쪽으로 흘러간다. 전송 자체는 200으로 성공하고
+   * 완료 화면도 뜨므로 화면만 봐서는 알 수 없다 — "영문으로 제출했는데 도달하지 않았다"로
+   * 나타났다(2026-08-31). 메시지는 ko 번들을 쓰되 **로케일만 바꿔** 전송 URL을 고정한다.
+   */
+  it.each(["ko", "en", "ja"] as const)("%s 제출은 lang=%s 로 전송한다", async (locale) => {
+    renderSection(locale);
+    fillRequired();
+    fireEvent.click(screen.getByRole("button", { name: "문의하기" }));
+    await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
+    const [url] = fetchMock.mock.calls[0] as [string, RequestInit];
+    expect(url).toBe(zapierContactUrl(locale));
+    expect(url).toContain(`lang=${locale}`);
+    // 훅 경로는 로케일과 무관하게 같아야 한다 — Zap 매핑이 경로 기준이다.
+    expect(url.split("?")[0]).toBe("https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/");
+  });
+
   it("필수값 입력 후 제출하면 Zapier 웹훅으로 규격대로 전송하고 inquiry_complete를 발화한다", async () => {
     renderSection();
     fillRequired();
@@ -100,7 +117,7 @@ describe("ContactUsSection 제출", () => {
     await waitFor(() => expect(fetchMock).toHaveBeenCalledTimes(1));
 
     const [url, init] = fetchMock.mock.calls[0] as [string, RequestInit];
-    expect(url).toBe(ZAPIER_CONTACT_URL);
+    expect(url).toBe(zapierContactUrl("ko"));
     expect(init.method).toBe("POST");
     expect((init.headers as Record<string, string>)["Content-Type"]).toBe(
       "application/x-www-form-urlencoded",

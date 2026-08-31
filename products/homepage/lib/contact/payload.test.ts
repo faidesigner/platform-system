@@ -1,5 +1,5 @@
 import { describe, it, expect } from "vitest";
-import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "./payload";
+import { buildContactPayload, parseUtm, zapierContactUrl } from "./payload";
 
 describe("parseUtm", () => {
   it("URL 쿼리에서 utm_* 파라미터를 추출하고 없는 값은 빈 문자열로 채운다", () => {
@@ -78,10 +78,36 @@ describe("buildContactPayload", () => {
   });
 });
 
-describe("ZAPIER_CONTACT_URL", () => {
-  it("라이브 contact-us와 동일한 Zapier catch hook", () => {
-    expect(ZAPIER_CONTACT_URL).toBe(
+describe("zapierContactUrl", () => {
+  /**
+   * `lang`은 **제출 로케일**이어야 한다.
+   *
+   * 예전에는 `?lang=ko`가 상수에 박혀 있어 en·ja 페이지에서 제출해도 ko로 전송됐다.
+   * 전송 자체는 성공하므로(요청 200, 완료 화면 도달) 아무 오류도 보이지 않고,
+   * 다운스트림에서 로케일별로 분기하면 en·ja 리드가 ko 쪽으로 흘러간다 —
+   * "영문으로 제출했는데 도달하지 않았다"로 나타난다 (2026-08-31 실측 확인).
+   */
+  it("로케일이 lang 쿼리로 들어간다", () => {
+    expect(zapierContactUrl("ko")).toBe(
       "https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/?lang=ko",
     );
+    expect(zapierContactUrl("en")).toBe(
+      "https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/?lang=en",
+    );
+    expect(zapierContactUrl("ja")).toBe(
+      "https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/?lang=ja",
+    );
+  });
+
+  it("훅 경로는 로케일과 무관하게 동일하다 (Zap 매핑 보존)", () => {
+    const paths = (["ko", "en", "ja"] as const).map((l) => zapierContactUrl(l).split("?")[0]);
+    expect(new Set(paths).size).toBe(1);
+    expect(paths[0]).toBe("https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/");
+  });
+
+  it("알 수 없는 로케일은 ko로 떨어진다", () => {
+    // 리드를 잃는 것보다 ko로라도 들어가는 편이 낫다.
+    expect(zapierContactUrl("zz")).toContain("lang=ko");
+    expect(zapierContactUrl(undefined)).toContain("lang=ko");
   });
 });
