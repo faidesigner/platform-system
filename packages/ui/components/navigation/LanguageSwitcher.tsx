@@ -3,11 +3,10 @@
 import { useState } from 'react';
 import { useLocale } from 'next-intl';
 
-const LOCALES = [
-  { code: 'ko', label: 'KR' },
-  { code: 'en', label: 'EN' },
-  { code: 'ja', label: 'JP' },
-] as const;
+import { LOCALE_OPTIONS } from './locales';
+
+/** 라벨은 packages/ui/components/navigation/locales.ts가 단일 출처다 — 여기서 재정의하지 말 것. */
+const LOCALES = LOCALE_OPTIONS;
 
 /* ---------------- 구분선 컴포넌트 ---------------- */
 const LineDivider = () => (

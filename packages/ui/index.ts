@@ -12,6 +12,8 @@ export { PrivacyRevisionModal } from './components/footer/PrivacyRevisionModal';
 export type { PrivacyRevisionModalProps } from './components/footer/PrivacyRevisionModal';
 
 /* ── Navigation sub-components ── */
+export { LOCALE_OPTIONS, localeLabel } from './components/navigation/locales';
+export type { LocaleOption, LocaleCode } from './components/navigation/locales';
 export { LanguageSwitcher } from './components/navigation/LanguageSwitcher';
 export { default as MegaNavMenu } from './components/navigation/MegaNavMenu';
 export type { NavItem, MegaNavMenuProps } from './components/navigation/MegaNavMenu';

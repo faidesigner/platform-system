@@ -10,6 +10,7 @@ import { ChevronDown } from "lucide-react";
 import MegaNavMenu, { type NavItem } from "./navigation/MegaNavMenu";
 import { TabletDrawerMenu, type DrawerLabels } from "./navigation/TabletDrawerMenu";
 import { Drawer } from "./ui/Drawer";
+import { LOCALE_OPTIONS, localeLabel, type LocaleCode } from "./navigation/locales";
 
 /* ──────────────────────────────────────────
    데이터
@@ -35,8 +36,8 @@ const NAV_ITEMS: readonly NavItem[] = [
   },
 ];
 
-const LANGUAGES = ["KO", "EN", "JA"] as const;
-type Language = (typeof LANGUAGES)[number];
+/** 라벨·코드는 navigation/locales.ts가 단일 출처다 — 여기서 배열을 재정의하지 말 것. */
+type Language = LocaleCode;
 
 /* ──────────────────────────────────────────
    Props
@@ -99,7 +100,7 @@ export default function NavigationBar({
 
   const [isTransparent, setIsTransparent] = useState(!isHome && !isMedia);
   const [langOpen, setLangOpen] = useState(false);
-  const [lang,     setLang]     = useState<Language>("KO");
+  const [lang,     setLang]     = useState<Language>("ko");
   // 960px 이하 공용 드로어
   const [drawerOpen, setDrawerOpen] = useState(false);
   // 스크롤 100px 초과 + 투명 구간일 때 그림자 활성화 (navShadow)
@@ -215,7 +216,9 @@ export default function NavigationBar({
   const handleLangSelect = (selected: Language) => {
     setLang(selected);
     setLangOpen(false);
-    document.documentElement.lang = selected.toLowerCase();
+    // 라벨이 아니라 **코드**를 쓴다. 예전엔 라벨을 소문자로 내려 lang을 채웠는데,
+    // 라벨이 국가코드(KR/JP)로 바뀌면 lang="kr"처럼 BCP-47상 무효한 값이 조용히 박힌다.
+    document.documentElement.lang = selected;
   };
 
   return (
@@ -280,7 +283,7 @@ export default function NavigationBar({
                   ].join(" ")}
                   aria-label="언어 선택"
                 >
-                  <span className="text-body font-semibold">{lang}</span>
+                  <span className="text-body font-semibold">{localeLabel(lang)}</span>
                   <ChevronDown
                     className={`h-m w-m transition-transform duration-200 ${langOpen ? "rotate-180" : ""}`}
                     aria-hidden
@@ -289,18 +292,18 @@ export default function NavigationBar({
 
                 {langOpen && (
                   <ul className="absolute right-0 top-full mt-2xs w-[94px] bg-surface border border-border-subtle rounded-fai-s overflow-hidden z-10">
-                    {LANGUAGES.map((l) => (
-                      <li key={l}>
+                    {LOCALE_OPTIONS.map(({ code, label }) => (
+                      <li key={code}>
                         <button
                           type="button"
-                          onClick={() => handleLangSelect(l)}
+                          onClick={() => handleLangSelect(code)}
                           className={[
                             "w-full text-left px-m py-xs text-body-s",
                             "hover:bg-interaction-light-black-hover transition-colors duration-200",
-                            l === lang ? "text-primary font-bold" : "text-secondary",
+                            code === lang ? "text-primary font-bold" : "text-secondary",
                           ].join(" ")}
                         >
-                          {l}
+                          {label}
                         </button>
                       </li>
                     ))}

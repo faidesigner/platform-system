@@ -5,17 +5,15 @@ import { useLocale } from 'next-intl';
 import { useRouter, usePathname } from '@/i18n/navigation';
 import GlobeIcon from '@fai/ui/components/common/Icon/GlobeIcon';
 import ChevronIcon from '@fai/ui/components/common/Icon/ChevronIcon';
+import { LOCALE_OPTIONS } from '@fai/ui/components/navigation/locales';
 import { markLocaleSwitchScroll } from '@/lib/localeScroll';
 
 /* ──────────────────────────────────────────
    상수
 ────────────────────────────────────────── */
 
-const LANGUAGES = [
-  { code: 'ko', label: 'KO' },
-  { code: 'en', label: 'EN' },
-  { code: 'ja', label: 'JP' },
-] as const;
+/** 라벨은 @fai/ui의 locales.ts가 단일 출처다 — 여기서 재정의하면 모바일 드로어와 갈린다. */
+const LANGUAGES = LOCALE_OPTIONS;
 
 /* ──────────────────────────────────────────
    드롭다운 스타일 객체
