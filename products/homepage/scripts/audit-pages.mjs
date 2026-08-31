@@ -72,6 +72,27 @@ const flat = (s) => norm(s).replace(/\s+/g, " ");
  * 정적 크롤로는 도달할 수 없는 화면 상태. **문구가 없다는 뜻이 아니라 이 도구로 못 본다**는 뜻이다.
  * 예외로 두는 대신 무엇을 못 봤는지 요약에 찍어, 사람이 눈으로 확인할 목록이 되게 한다.
  */
+/**
+ * 시트가 옛값이라 **화면과 달라야 정상**인 문구. sheet-decisions.json은 키 기준이라
+ * 화면 텍스트만 보는 이 도구가 참조할 수 없어 따로 적는다. 근거를 반드시 남길 것.
+ */
+const SHEET_STALE = [
+  { match: /14대의 AI 카메라/, why: "카메라 대수는 3로케일 7대 통일 확정 (en·ja는 시트도 정정됨, ko 셀만 옛값)" },
+  { match: /Sukbom/, why: "로마자 표기 `Sukbum` 확정 — 시트가 옛값" },
+  { match: /훗카이도/, why: "표준 표기 `홋카이도` — 시트 오타" },
+  { match: /경험을 해보세요/, why: "`경험해 보세요`가 맞다 — 시트 오타" },
+  { match: /영상情?報|영상정보처리기기|映像情報処理機器|이 부분은 제거/, why: "CCTV 방침은 HOM-61에서 푸터에서 제거됨" },
+  { match: /メールでのお問い合わせ|contact_jp@fainders\.ai/, why: "ja 메일 행은 HOM-101에서 미노출 처리 (JP-BD 요청)" },
+  { match: /2026년 8월 12일 시행|안녕하세요, ㈜파인더스에이아이입니다/, why: "개정 안내 모달은 ko 전용이고 시행일은 8월 28일로 정정됨 — 시트가 옛값" },
+  { match: /^(일본법인명|03-6821-7191)$/, why: "시트 ko 셀은 항목 설명용 라벨 (ja에만 실제 값이 있다)" },
+  { match: /ISSUE NO\.\{NN\}/, why: "레터 이슈 번호 라벨은 HOM-85에서 제거됨" },
+];
+
+function sheetStaleReason(value) {
+  const v = norm(value);
+  return SHEET_STALE.find((s) => s.match.test(v))?.why ?? null;
+}
+
 const UNREACHABLE = [
   { match: /문의 주셔서|Thanks for reaching out|お問い合わせいただき|내용을 확인하고|We'll review your message|内容を確認のうえ|계속 둘러보기|Keep Exploring|トップページへ戻る/,
     why: "문의 폼 제출 완료 화면 (실제 전송이 필요)" },
@@ -126,22 +147,30 @@ async function collectPageText(browser, url) {
       return true;
     }, needle);
 
-  // 내비게이션 드롭다운 — 호버해야 제품 하위 메뉴가 뜬다. 열지 않으면 nav 탭 문구가 전부 미반영으로 잡힌다.
-  for (const menu of ["Product", "제품", "プロダクト"]) {
-    const opened = await page.evaluate((m) => {
-      const el = [...document.querySelectorAll("nav button, nav a, header button, header a")]
-        .find((e) => (e.textContent || "").trim() === m);
-      if (!el) return false;
-      for (const type of ["pointerenter", "mouseenter", "mouseover", "focus"]) {
+  // 내비게이션 드롭다운 — 호버해야 제품 하위 메뉴가 뜬다.
+  // 라벨 텍스트로 찾던 방식은 로케일마다 라벨이 달라 실패했다(en/ja 9건 오탐).
+  // 상단 내비의 앞쪽 요소에 일괄 호버하는 편이 확실하다.
+  await page.evaluate(() => {
+    const cands = [...document.querySelectorAll("header button, header a, nav button, nav a")]
+      .filter((e) => e.offsetParent !== null);
+    for (const el of cands.slice(0, 5)) {
+      for (const type of ["pointerenter", "pointerover", "mouseenter", "mouseover", "focus"]) {
         el.dispatchEvent(new Event(type, { bubbles: true }));
       }
-      el.click();
-      return true;
-    }, menu);
-    if (!opened) continue;
-    await new Promise((r) => setTimeout(r, 500));
-    chunks.push(await snapshot());
+    }
+  });
+  await new Promise((r) => setTimeout(r, 800));
+  chunks.push(await snapshot());
+
+  // 카운트업 통계는 뷰포트에 들어와야 애니메이션이 끝난다 — 스크롤하지 않으면 `0`으로 읽힌다.
+  for (const frac of [0.3, 0.5, 0.7]) {
+    await page.evaluate((f) => window.scrollTo(0, document.body.scrollHeight * f), frac);
+    await new Promise((r) => setTimeout(r, 600));
   }
+  await new Promise((r) => setTimeout(r, 1500));
+  chunks.push(await snapshot());
+  await page.evaluate(() => window.scrollTo(0, 0));
+  await new Promise((r) => setTimeout(r, 300));
 
   // 스토어 타입 탭 → 각 탭 안의 케이스 항목을 하나씩
   for (const tab of ["STANDARD", "MICRO"]) {
@@ -187,6 +216,7 @@ async function run() {
     const missing = [];
     const partial = [];
     const unreachable = [];
+    const staleSkipped = [];
     let checked = 0, skipped = 0;
 
     for (const sheet of sheets) {
@@ -195,6 +225,8 @@ async function run() {
           const raw = row[loc];
           const reason = skipReason(raw);
           if (reason) { if (norm(raw)) skipped++; continue; }
+          const stale = sheetStaleReason(raw);
+          if (stale) { staleSkipped.push({ rowId: `${sheet.name}/${row.key ?? ""}`, loc, why: stale }); continue; }
           const blocked = unreachableReason(raw);
           if (blocked) { unreachable.push({ rowId: `${sheet.name}/${row.key ?? ""}`, loc, why: blocked, want: flat(raw).slice(0, 60) }); continue; }
           checked++;
@@ -209,6 +241,17 @@ async function run() {
           const hit = lines.filter((l) => sheet.routes.some((r) => (pageText[loc][r] ?? "").includes(l.replace(/\s+/g, " "))));
           const rowId = `${sheet.name}/${row.key ?? ""}`;
           if (lines.length > 1 && hit.length === lines.length) { partial.push({ rowId, loc, note: "줄 단위로는 전부 일치(여러 키로 분할된 셀)" }); continue; }
+          // 한 줄 셀이 여러 키로 쪼개지는 경우 — `PX24 화곡점`(brand + store),
+          // `판교 Alphadom "Worker Shop"`, hero title1/title2 등. 화면에서는 두 조각이 서로 떨어져
+          // 렌더되고 사이에 날짜 같은 다른 텍스트가 끼어, 셀 전체로도 압축 비교로도 잡히지 않는다.
+          // 조각이 **각각** 화면에 있으면 분할 렌더로 본다(2자 미만 조각은 우연 일치가 많아 제외).
+          if (lines.length === 1) {
+            const parts = want.split(/\s+/).filter((w) => w.replace(/["'"'「」]/g, "").length >= 2);
+            if (parts.length >= 2 && parts.every((w) => sheet.routes.some((r) => (pageText[loc][r] ?? "").includes(w)))) {
+              partial.push({ rowId: `${sheet.name}/${row.key ?? ""}`, loc, note: "조각이 각각 화면에 존재(여러 키로 분할)" });
+              continue;
+            }
+          }
           // 공백·구두점을 지우고 한 번 더 본다 — brand+store 처럼 두 키가 화면에서 붙어 렌더되는 경우.
           const squash = (s) => s.replace(/[\s.,·ㆍ"'"'「」（）()]/g, "");
           if (sheet.routes.some((r) => squash(pageText[loc][r] ?? "").includes(squash(want)))) {
@@ -221,6 +264,12 @@ async function run() {
     }
 
     console.log(`\n검사 ${checked}건 / 건너뜀 ${skipped}건 (지시문·플레이스홀더·짧은 값)`);
+    if (staleSkipped.length) {
+      const byWhy = new Map();
+      for (const s of staleSkipped) byWhy.set(s.why, (byWhy.get(s.why) ?? 0) + 1);
+      console.log(`\n◻ 시트가 옛값(코드가 정답) ${staleSkipped.length}건:`);
+      for (const [why, n] of byWhy) console.log(`   · ${why} — ${n}건`);
+    }
     if (unreachable.length) {
       console.log(`\n◻ 이 도구로 도달 불가 ${unreachable.length}건 — 눈으로 확인할 목록:`);
       const byWhy = new Map();
