@@ -106,7 +106,7 @@ const LOCALES = ["en", "ja"];
  * 지시문 셀도 리포트에는 남긴다 — 어느 티켓에서 처리됐는지 추적하려면 보여야 하고,
  * 걸러내는 책임은 classify의 INSTRUCTION 버킷에 있다.
  */
-function pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab }) {
+function pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab, viaBackMatch = false }) {
   const ambiguous = keys.length > 1;
   for (const key of keys) {
     const codeValue = messages[locale]?.[key];
@@ -120,15 +120,43 @@ function pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, 
       rowId,
       tab,
       ambiguous,
+      viaBackMatch,
       bucket: classify({ key, locale, codeValue, sheetValue, ambiguous, decisions }),
     });
   }
 }
 
 /**
+ * ko 이외 로케일 값으로 코드 키를 역추적한다 (ko 조인 맹점 보완).
+ *
+ * ko를 조인 키로 쓰면 **ko가 수정된 행은 영원히 대조되지 않는다.** 그 행의 en·ja 이격까지
+ * 함께 사라지므로, 도구는 "이격 0"이라고 보고하는데 실제 화면은 시트와 다르다.
+ *
+ * 실제 사고(2026-08-31): product-store 23행이 ko 미매칭이었고, 그 안에 en 6건·ja 8건의
+ * 실이격이 숨어 있었다. 리뷰 인용문이 en·ja에서 두 번 반복 렌더되던 것도 여기 묻혀 있었다.
+ * 일본 BD가 "unmannedStore 페이지는 수정 내용이 전부 반영되어 있지 않다"고 지적해서야 드러났다.
+ *
+ * ja·en 값은 보통 ko보다 덜 바뀌므로, 그 값으로 키를 찾으면 ko가 바뀐 행도 식별된다.
+ */
+function backMatchKeys({ row, messages }) {
+  const found = new Set();
+  for (const locale of ["ja", "en"]) {
+    const value = normalize(row[locale]);
+    if (!value || value.length < 2) continue;
+    for (const [key, codeValue] of Object.entries(messages[locale] ?? {})) {
+      if (normalize(codeValue) === value) found.add(key);
+    }
+  }
+  return [...found];
+}
+
+/**
  * IA 탭(nav/footer/main/product/aboutUs/media/contactUs) 대조.
- * ko 원문을 조인 키로 쓰되, 여러 키에 걸리면 AMBIGUOUS로 표시해 사람이 확인하게 한다.
- * ko가 코드에 없는 행은 여기서 걸러지고 CLI가 별도 '미매칭' 목록으로 보고한다.
+ *
+ * 1차: ko 원문을 조인 키로 쓴다. 여러 키에 걸리면 AMBIGUOUS로 표시해 사람이 확인하게 한다.
+ * 2차: ko가 코드에 없으면 **ja·en 값으로 역추적**한다(위 backMatchKeys 참조).
+ *      역추적으로 찾은 행은 ko 자체가 이격이라는 뜻이므로 ko도 대조 대상에 포함한다.
+ * 둘 다 실패한 행만 CLI가 '미매칭' 목록으로 보고한다.
  */
 export function diffIaRows({ rows, messages, decisions, tab = "" }) {
   const koIndex = buildKoIndex(messages.ko);
@@ -136,13 +164,18 @@ export function diffIaRows({ rows, messages, decisions, tab = "" }) {
   for (const row of rows ?? []) {
     const ko = normalize(row.ko);
     if (!ko || ko === "번역x") continue;
-    const keys = koIndex.get(ko);
-    if (!keys) continue;
+    let keys = koIndex.get(ko);
+    let viaBackMatch = false;
+    if (!keys) {
+      keys = backMatchKeys({ row, messages });
+      if (!keys.length) continue;
+      viaBackMatch = true;
+    }
     const rowId = `${row.IA ?? ""}/${row.screen ?? ""}/${row.property ?? ""}/${row.key ?? ""}`;
     for (const locale of LOCALES) {
       const sheetValue = row[locale];
       if (!normalize(sheetValue)) continue;
-      pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab });
+      pushDiffs({ out, keys, locale, sheetValue, messages, decisions, rowId, tab, viaBackMatch });
     }
   }
   return out;

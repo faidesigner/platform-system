@@ -149,6 +149,9 @@ export default async function ProductDetailPage({
         ...cs,
         brand: t(`caseStudies.${key}.${i}.brand`),
         store: t(`caseStudies.${key}.${i}.store`),
+        // 도입 시점 표기도 번역 대상이다(HOM-75). en은 `Oct '23` 처럼 영문 표기를 쓰는데,
+        // site.ts 값을 그대로 흘리면 전 로케일에 한국식 `'23.10`이 나간다 — 실제로 그랬다.
+        date: t(`caseStudies.${key}.${i}.date`),
         description: t(`caseStudies.${key}.${i}.description`),
       })),
     ]),
