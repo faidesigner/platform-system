@@ -34,6 +34,9 @@ const TABS = [
   { gid: "800210217",  name: "aboutUs",       routes: ["about"] },
   { gid: "2084621727", name: "media",         routes: ["media"] },
   { gid: "3671350",    name: "contactUs",     routes: ["contact"] },
+  // ⚠️ contents 탭(gid 2103530687)은 여기 넣지 않는다. 유튜브·뉴스·레터는 캐러셀/목록에서
+  //    **현재 선택된 항목만** 렌더되므로 화면 기준으로는 대부분이 "미반영"으로 잡힌다(227건 오탐).
+  //    그 탭은 코드 기준으로 대조하는 scripts/audit-contents.mjs가 담당한다.
 ];
 
 const fixtureDir = process.argv.includes("--fixture")
@@ -222,7 +225,13 @@ async function run() {
     for (const sheet of sheets) {
       for (const row of sheet.rows) {
         for (const loc of LOCALES) {
-          const raw = row[loc];
+          // 스키마에 따라 로케일 값을 꺼내는 방법이 다르다.
+          // 기본: `ko`/`en`/`ja` 컬럼. contents 탭: `ko_타이틀`·`ko_디스크립션` 두 컬럼.
+          const cells =
+            sheet.schema === "perColumnLocale"
+              ? [row[`${loc}_타이틀`], row[`${loc}_디스크립션`]]
+              : [row[loc]];
+          for (const raw of cells) {
           const reason = skipReason(raw);
           if (reason) { if (norm(raw)) skipped++; continue; }
           const stale = sheetStaleReason(raw);
@@ -239,7 +248,7 @@ async function run() {
           // 한 셀이 여러 키로 나뉜 경우(brand+store, subtitle+description)는 줄 단위로는 맞는다.
           const lines = norm(raw).split("\n").map((l) => l.trim()).filter((l) => l.replace(/\s/g, "").length >= 4);
           const hit = lines.filter((l) => sheet.routes.some((r) => (pageText[loc][r] ?? "").includes(l.replace(/\s+/g, " "))));
-          const rowId = `${sheet.name}/${row.key ?? ""}`;
+          const rowId = `${sheet.name}/${row.key ?? row.contents ?? ""}`;
           if (lines.length > 1 && hit.length === lines.length) { partial.push({ rowId, loc, note: "줄 단위로는 전부 일치(여러 키로 분할된 셀)" }); continue; }
           // 한 줄 셀이 여러 키로 쪼개지는 경우 — `PX24 화곡점`(brand + store),
           // `판교 Alphadom "Worker Shop"`, hero title1/title2 등. 화면에서는 두 조각이 서로 떨어져
@@ -259,6 +268,7 @@ async function run() {
             continue;
           }
           missing.push({ rowId, loc, want: flat(raw).slice(0, 110), hit: hit.length, total: lines.length });
+          }
         }
       }
     }
