@@ -94,7 +94,11 @@ export default function FooterBridge() {
     confirmLabel: '확인',
   } as const;
 
-  const privacyModalContent = modalConfig
+  // 개정 안내 모달은 **ko에서만** 띄운다(HOM-101).
+  // 근거: 2026-08-28 김진영(개인정보 담당) — "한국어 개정 공지 유지 / 영어·일본어는 한국어 공지
+  // 삭제 후 바로 개인정보 처리방침 페이지로 이동". 개정 고지는 한국 개인정보보호법상 의무이고
+  // en·ja는 대상이 아닌데, 한국어 모달만 뜨면 그 사용자에게는 읽을 수 없는 안내가 된다.
+  const privacyModalContent = locale === 'ko'
     ? (onClose: () => void) => (
         <PrivacyRevisionModal
           title={modalConfig.title}
@@ -117,21 +121,43 @@ export default function FooterBridge() {
   };
   const cookieHref = COOKIE_HREF[locale];
 
-  const extraInfo = footerPolicy.showJapanEntity
-    ? [
-        { title: t("japanEntity.companyLabel"), text: t("japanEntity.companyValue") },
-        { title: t("japanEntity.ceoLabel"),     text: t("japanEntity.ceoValue") },
-        { title: t("japanEntity.telLabel"),     text: t("japanEntity.telValue"), noWrapValue: true },
-      ]
-    : [];
+  // 개인정보 처리방침 문서 — 로케일별 최신본(2026-08-28 시행).
+  // ⚠️ 여기서 주입하지 않으면 링크가 아예 렌더되지 않는다. @fai/ui의 하드코딩 폴백을 제거했기
+  //    때문인데(HOM-101), 그 폴백이 구버전 **한국어** PDF라 en·ja에서 한국어 문서가 열렸다.
+  // `#page=N`을 붙이지 않는다 — 처리방침은 1페이지부터 봐야 한다(2026-08-28 Hyeyoung Shin).
+  //  조항 점프는 '맞춤형 광고 설정'(COOKIE_HREF) 전용이다.
+  //
+  // ⚠️ encodeURI 필수: en 파일명에 **공백**이 있다. 로컬 정적 서버는 관대해서 그냥 열리지만
+  //    CloudFront는 raw 공백 URL을 거부한다(실측: 공백 그대로 HTTP 000 / %20 HTTP 200).
+  //    즉 로컬·테스트만 보면 통과하고 배포에서만 깨지는 종류다.
+  const PRIVACY_DOC: Record<string, string> = {
+    ko: '/contact-us/FaindersAI_개인정보처리방침_2026-1.pdf',
+    en: '/contact-us/FaindersAI_Privacy Policy_2026-1.pdf',
+    ja: '/contact-us/FaindersAI_プライバシーポリシー_個人情報保護方針_2026-1.pdf',
+  };
+  const privacyHref = PRIVACY_DOC[locale] ? encodeURI(PRIVACY_DOC[locale]) : undefined;
+
+  // 일본 법인은 본사와 **동일한 블록 구조**로 렌더한다(HOM-101) — 볼드 법인명 + 하위 정보 행.
+  // 라벨(日本法人)을 붙이지 않는 것이 요청사항이며, 그래야 본사 블록과 위계가 맞는다.
+  const extraEntity = footerPolicy.showJapanEntity
+    ? {
+        name: t("japanEntity.companyValue"),
+        rows: [
+          { title: t("japanEntity.ceoLabel"),     text: t("japanEntity.ceoValue") },
+          { title: t("japanEntity.telLabel"),     text: t("japanEntity.telValue"), noWrapValue: true },
+          { title: t("japanEntity.addressLabel"), text: t("japanEntity.addressValue") },
+        ],
+      }
+    : undefined;
 
   return (
     <Footer
       labels={labels}
       showEmail={footerPolicy.showEmail}
       showBizNo={footerPolicy.showBizNo}
-      extraInfo={extraInfo}
+      extraEntity={extraEntity}
       privacyModalContent={privacyModalContent}
+      privacyHref={privacyHref}
       cookieHref={cookieHref}
       wideCompact={locale !== 'ko'}
       onSocialClick={(label) => trackEvent("interest_click", { location: "footer", label })}
