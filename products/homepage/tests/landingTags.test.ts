@@ -1,4 +1,4 @@
-import { readFileSync } from "node:fs";
+import { existsSync, readFileSync } from "node:fs";
 import { join } from "node:path";
 
 import { describe, expect, it } from "vitest";
@@ -15,6 +15,23 @@ const read = (file: string) => readFileSync(join(LANDING_DIR, file), "utf-8");
 
 const GA_MEASUREMENT_ID = "G-GCQKJ5TF6R";
 const META_PIXEL_ID = "1050256220905747";
+
+/**
+ * 루트 `/`는 Next 라우트가 아니라 public/index.html 이 담당한다.
+ * app/page.tsx 같은 루트 라우트가 생기면 Next가 out/index.html 을 생성해 그 파일을 **덮어쓰고**,
+ * 그러면 Meta 도메인 인증 태그와 언어 감지 리다이렉트가 함께 사라진다(실제 사고: PR #11).
+ *
+ * 이 테스트는 소스 단계에서 그 상황을 막는다. 산출물(out/index.html) 기준 검증은
+ * scripts/check-root-html.mjs 가 배포 게이트로 담당한다 — 이 테스트만으로는 부족했다.
+ */
+describe("루트 라우트 점유 금지", () => {
+  it("app/page.tsx 등 루트 Next 라우트가 없다", () => {
+    const occupying = ["app/page.tsx", "app/page.jsx", "app/page.js", "app/index.tsx"].filter((rel) =>
+      existsSync(join(__dirname, "..", rel)),
+    );
+    expect(occupying).toEqual([]);
+  });
+});
 
 describe("랜딩 페이지 측정 태그", () => {
   for (const file of ["contact-bakery-vco.html", "contact-van-vco.html"]) {

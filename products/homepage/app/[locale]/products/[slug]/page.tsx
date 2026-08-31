@@ -18,7 +18,11 @@ import { CtaBanner } from '@/components/sections/CtaBanner'
 
 const PRODUCT_SLUGS = Object.keys(siteConfig.products) as ProductSlug[]
 
-/** slug → messages namespace (products.*). heroTitle/label 등 제품 고유명사는 config 유지. */
+/** slug → messages namespace (products.*). `label` 등 식별자는 config 유지.
+ *
+ * heroTitle은 2026-08-31에 **번역 대상으로 이관**했다. 시트가 로케일별로 다른 값을 지정하기
+ * 때문이다 — en만 `WALK-THROUGH`(store) / `VISION CHECK-OUT (VCO)`(vco)로 짧게 쓴다.
+ * config 단일값으로 두면 en에 ko 문구가 그대로 나가고, 시트 대조에서 매번 이격으로 올라온다. */
 const SLUG_NS: Record<ProductSlug, string> = {
   'vision-check-out': 'products.visionCheckout',
   'unmanned-store': 'products.unmannedStore',
@@ -149,6 +153,9 @@ export default async function ProductDetailPage({
         ...cs,
         brand: t(`caseStudies.${key}.${i}.brand`),
         store: t(`caseStudies.${key}.${i}.store`),
+        // 도입 시점 표기도 번역 대상이다(HOM-75). en은 `Oct '23` 처럼 영문 표기를 쓰는데,
+        // site.ts 값을 그대로 흘리면 전 로케일에 한국식 `'23.10`이 나간다 — 실제로 그랬다.
+        date: t(`caseStudies.${key}.${i}.date`),
         description: t(`caseStudies.${key}.${i}.description`),
       })),
     ]),
@@ -163,14 +170,14 @@ export default async function ProductDetailPage({
       {product.heroType === 'video' ? (
         <ProductHero
           subtitle={t('heroSubtitle')}
-          title={product.heroTitle}
+          title={t('heroTitle')}
           ctaLabel={ctaLabel}
           videoSrc={heroVideoSrc}
         />
       ) : (
         <StoreHero
           subtitle={t('heroSubtitle')}
-          title={product.heroTitle}
+          title={t('heroTitle')}
           ctaLabel={product.ctaLabel}
           imageSrc={product.heroImage}
         />

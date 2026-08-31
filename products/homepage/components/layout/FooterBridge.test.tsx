@@ -1,5 +1,5 @@
 import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { render, fireEvent } from "@testing-library/react";
 import { NextIntlClientProvider } from "next-intl";
 import koMessages from "@/messages/ko.json";
 import enMessages from "@/messages/en.json";
@@ -46,9 +46,16 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     }
   });
 
-  it("ja 이메일은 일본팀 주소를 쓴다", () => {
-    expect(renderAt("ja").container.textContent).toContain("contact_jp@fainders.ai");
+  // 2026-08-28 HOM-101로 **ja는 이메일 행 자체를 노출하지 않게** 바뀌었다(JP-BD 요청).
+  // 원래 이 테스트는 "ja 이메일은 일본팀 주소(contact_jp@)를 쓴다"였고, 로케일 무관 하드코딩
+  // 회귀를 막던 것이다. 규칙이 바뀌었을 뿐 그 회귀 방어는 여전히 필요하므로,
+  // ko·en의 주소 구분은 남기고 ja는 '미노출'로 조건을 갱신한다.
+  it("이메일은 ko·en만 노출하고 ja에서는 감춘다 (HOM-101)", () => {
     expect(renderAt("ko").container.textContent).toContain("contact@fainders.ai");
+    expect(renderAt("en").container.textContent).toContain("contact@fainders.ai");
+    const ja = renderAt("ja").container.textContent ?? "";
+    expect(ja).not.toContain("contact_jp@fainders.ai");
+    expect(ja).not.toContain("@fainders.ai");
   });
 
   it("일본 법인 정보는 ja에서만 노출한다", () => {
@@ -85,10 +92,206 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     expect(ja).not.toContain("ギル");
   });
 
+  // ── 개인정보 처리방침 개정 안내 모달 (HOM-66) ────────────────────────────
+  //
+  // 날짜는 공식 PDF(public/contact-us/FaindersAI_개인정보처리방침_2026-1.pdf)와 반드시 일치해야 한다.
+  // 공고일 2026-08-21 / 시행일 2026-08-28. 개정 시 최소 7일 전 사전고지 요건 때문에 간격이 7일이다.
+  // 초기 구현에 8월 12일(8/6 초안값)이 박혀 있었고 본문 안에서 "8. 13. 시행"과도 어긋났다 —
+  // 실서비스에 나가면 법정 고지 오류이므로 날짜를 테스트로 못박는다.
+  describe("개정 안내 모달", () => {
+    function openModal(locale: keyof typeof MESSAGES) {
+      const view = renderAt(locale);
+      const buttons = view.container.querySelectorAll("button");
+      const trigger = Array.from(buttons).find((b) =>
+        /개인정보 처리방침|Privacy Policy|プライバシーポリシー/.test(b.textContent ?? ""),
+      );
+      expect(trigger, `${locale}: 개정 안내 모달 트리거 버튼을 찾지 못했다`).toBeTruthy();
+      fireEvent.click(trigger!);
+      return view;
+    }
+
+    it("시행일은 2026년 8월 28일, 공고일은 2026년 8월 21일이다", () => {
+      const text = openModal("ko").container.textContent ?? "";
+      expect(text).toContain("■ 시행일자 : 2026년 8월 28일");
+      expect(text).toContain("개정된 처리방침은 2026년 8월 28일부터 적용되며");
+      expect(text).toContain("▶ 개인정보 처리방침 (2026. 8. 28. 시행)");
+      expect(text).toContain("2026년 8월 21일");
+    });
+
+    it("폐기된 날짜(8월 12일·8. 13.·8월 6일)가 남아 있지 않다", () => {
+      const text = openModal("ko").container.textContent ?? "";
+      for (const stale of ["8월 12일", "8. 13. 시행", "2026년 8월 6일"]) {
+        expect(text, `폐기된 날짜 '${stale}'가 남아 있다`).not.toContain(stale);
+      }
+    });
+
+    it("문의 연락처는 공식 PDF와 같은 contact@fainders.ai를 쓴다", () => {
+      // 초안의 sbhong@는 2026-08-06 검토에서 contact@로 정정됐고 PDF에도 그렇게 반영됐다.
+      const text = openModal("ko").container.textContent ?? "";
+      expect(text).toContain("contact@fainders.ai");
+      expect(text).not.toContain("sbhong@");
+    });
+
+    it("en·ja에는 개정 안내를 아예 띄우지 않는다 (HOM-101로 규칙 변경)", () => {
+      // 이전 규칙(2026-08-25 김진영): "개정 안내는 한국어로만 진행" → en·ja에도 **한국어 모달**이 떴다.
+      // 변경 규칙(2026-08-28 김진영, HOM-101): "영어·일본어는 한국어 공지 삭제 후 바로
+      //   개인정보 처리방침 페이지로 이동".
+      // 이유는 같다 — 개정 고지는 한국 개인정보보호법상 의무이고 en·ja는 대상이 아니다.
+      // 다만 읽을 수 없는 한국어 안내를 띄우느니 문서로 직행시키는 편이 낫다는 판단이다.
+      // 번역본을 만들지 않는다는 원칙은 그대로다(법무 미검토 문구 노출·시행일 정정 지점 증가 방지).
+      for (const locale of ["en", "ja"] as const) {
+        const { container } = renderAt(locale);
+        expect(container.textContent, `${locale}`).not.toContain("개정 안내");
+        expect(container.textContent, `${locale}`).not.toContain("■ 시행일자");
+      }
+    });
+  });
+
   it("영상정보처리기기 방침 링크는 어느 로케일에도 남아 있지 않다 (HOM-61 회귀)", () => {
     for (const locale of ["ko", "en", "ja"] as const) {
       const { container } = renderAt(locale);
       expect(container.innerHTML).not.toContain("cctv");
     }
+  });
+});
+
+/**
+ * HOM-101 — JP-BD 요청사항 (2026-08-28 Slack #prj_homepage, Hyeyoung Shin / 김진영 확정).
+ *
+ * ❶ 개인정보 처리방침 노출 — 김진영(개인정보 담당) 2026-08-28 12:01 확정:
+ *      "한국어 — 개정 공지 유지 / 영어, 일본어 — 한국어 공지 삭제 후 바로 개인정보 처리방침 페이지로 이동"
+ *    개정 고지는 한국 개인정보보호법상 의무이고 en·ja는 대상이 아니다. 다만 en·ja 사용자가
+ *    한국어 공지 모달을 보게 되는 것은 막아야 하므로, 그 로케일에서는 **로케일별 처리방침 문서로 직행**한다.
+ *
+ *    ⚠️ 모달만 없애면 안 된다 — 그러면 하드코딩된 한국어 PDF 폴백으로 떨어진다.
+ *    Hyeyoung Shin이 지적한 문제가 정확히 그것이다("[개인정보 처리방침] 페이지가 한국어로만 나와서").
+ *    로케일별 문서 경로를 함께 주입해야 한다.
+ *
+ * ❷ footer 일본법인 정보 — Hyeyoung Shin 2026-08-28 11:30:
+ *      "메일주소를 삭제하고 법인명(日本法人도 삭제)을 한국 법인과 동일하게 볼드처리하고
+ *       같은 내용으로 같은 위치에 정렬하는 편이 일관성 있고 깔끔해 보일 것 같습니다."
+ *    요청 원문 형태:
+ *      株式会社ファインダーズＡＩジャパン   ← 볼드, 라벨 없음
+ *      代表取締役 Jimin Lee（イ・ジミン）
+ *      電話 03-6821-7191
+ *      所在地 〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階
+ */
+describe("FooterBridge — JP-BD 요청 (HOM-101)", () => {
+  describe("❶ 개인정보 처리방침 노출", () => {
+    it("ko는 개정 안내 모달을 띄운다", () => {
+      const { container } = renderAt("ko");
+      const trigger = [...container.querySelectorAll("button, a")].find((el) =>
+        /개인정보\s*처리방침/.test(el.textContent ?? ""),
+      );
+      expect(trigger, "ko 개인정보 처리방침 트리거").toBeTruthy();
+      expect(trigger!.tagName).toBe("BUTTON"); // 링크가 아니라 모달 트리거
+      fireEvent.click(trigger!);
+      expect(container.textContent).toContain("개인정보 처리방침 개정 안내");
+    });
+
+    it("en·ja는 모달 없이 처리방침 문서로 직행한다", () => {
+      for (const locale of ["en", "ja"] as const) {
+        const { container } = renderAt(locale);
+        const trigger = [...container.querySelectorAll("button, a")].find((el) =>
+          /Privacy Policy|プライバシーポリシー/.test(el.textContent ?? ""),
+        );
+        expect(trigger, `${locale} 처리방침 트리거`).toBeTruthy();
+        expect(trigger!.tagName, `${locale}는 모달이 아니라 링크여야 한다`).toBe("A");
+        // 한국어 개정 공지가 노출되면 안 된다
+        expect(container.textContent).not.toContain("개정 안내");
+      }
+    });
+
+    it("en·ja 처리방침 링크는 해당 로케일 문서를 가리킨다 (한국어 PDF 폴백 금지)", () => {
+      const EXPECTED: Record<string, string> = {
+        en: "Privacy%20Policy_2026-1.pdf",
+        ja: "%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf",
+      };
+      for (const locale of ["en", "ja"] as const) {
+        const { container } = renderAt(locale);
+        const link = [...container.querySelectorAll("a")].find((el) =>
+          /Privacy Policy|プライバシーポリシー/.test(el.textContent ?? ""),
+        );
+        const href = decodeURI(link?.getAttribute("href") ?? "");
+        expect(href, `${locale} 처리방침 href`).toContain(decodeURI(EXPECTED[locale]));
+        // 구버전 한국어 PDF 하드코딩 폴백으로 떨어지면 안 된다
+        expect(href).not.toContain("/document/privacy-policy.pdf");
+      }
+    });
+
+    it("처리방침 링크는 URL 인코딩되어 있다 (CloudFront가 raw 공백을 거부한다)", () => {
+      // en 파일명에 공백이 있다. 로컬 정적 서버는 raw 공백도 200을 주지만 CloudFront는 거부한다
+      // (실측: 공백 그대로 HTTP 000 / %20 HTTP 200). 로컬만 보면 통과하고 배포에서만 깨진다.
+      for (const locale of ["en", "ja"] as const) {
+        const { container } = renderAt(locale);
+        const link = [...container.querySelectorAll("a")].find((el) =>
+          /Privacy Policy|プライバシーポリシー/.test(el.textContent ?? ""),
+        );
+        const href = link?.getAttribute("href") ?? "";
+        expect(href, `${locale} href에 raw 공백이 있으면 CloudFront에서 404`).not.toMatch(/ /);
+        expect(href, `${locale} href`).toMatch(/^\/contact-us\/[^\s]+\.pdf$/);
+      }
+    });
+
+    it("처리방침 링크는 첫 페이지부터 연다 (#page 지정 금지)", () => {
+      // Hyeyoung Shin: "개인정보 처리방침 페이지가 열렸을 때 1페이지부터 표시되면 좋겠다(현재 4페이지)".
+      // #page=N 은 '맞춤형 광고 설정'(해당 조항으로 점프) 전용이다.
+      for (const locale of ["en", "ja"] as const) {
+        const { container } = renderAt(locale);
+        const link = [...container.querySelectorAll("a")].find((el) =>
+          /Privacy Policy|プライバシーポリシー/.test(el.textContent ?? ""),
+        );
+        expect(link?.getAttribute("href") ?? "", `${locale}`).not.toContain("#page=");
+      }
+    });
+  });
+
+  describe("❷ footer 일본법인 정보", () => {
+    it("일본 법인명을 라벨 없이 볼드로 노출한다 (日本法人 라벨 제거)", () => {
+      const { container } = renderAt("ja");
+      const name = "株式会社ファインダーズＡＩジャパン";
+      expect(container.textContent).toContain(name);
+      expect(container.textContent, "日本法人 라벨은 제거한다").not.toContain("日本法人");
+
+      // 한국 법인명과 동일한 렌더(볼드 헤더)여야 한다 — 같은 클래스를 쓰는지로 확인
+      const krName = [...container.querySelectorAll("p")].find(
+        (p) => p.textContent?.trim() === "Fainders.ai Inc.",
+      );
+      const jpName = [...container.querySelectorAll("p")].find((p) => p.textContent?.trim() === name);
+      expect(krName, "한국 법인명 헤더").toBeTruthy();
+      expect(jpName, "일본 법인명 헤더").toBeTruthy();
+      expect(jpName!.className).toContain("font-bold");
+      expect(jpName!.className).toBe(krName!.className);
+    });
+
+    it("일본 법인 소재지를 노출한다", () => {
+      const text = renderAt("ja").container.textContent ?? "";
+      expect(text).toContain("所在地");
+      expect(text).toContain("〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階");
+    });
+
+    it("ja 메시지 번들에 메일 주소가 남아 있지 않다", () => {
+      // 화면에서 감추는 것만으로는 부족하다 — next-intl은 메시지 번들을 HTML script 페이로드로
+      // 직렬화하므로, 키가 남아 있으면 주소 문자열이 **페이지 소스에 그대로 실린다**.
+      // 스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다. "메일주소를 삭제"라는 요청을 충족하려면
+      // 번들에서 빼야 한다. (실측: dev 배포본 /ja/ 소스에 contact_jp@ 가 남아 있었다.)
+      const footer = jaMessages.footer as Record<string, unknown>;
+      expect(footer.emailValue, "ja footer.emailValue").toBeUndefined();
+      expect(JSON.stringify(jaMessages)).not.toContain("contact_jp@");
+    });
+
+    it("ja에서는 메일 주소를 노출하지 않는다", () => {
+      const text = renderAt("ja").container.textContent ?? "";
+      expect(text).not.toContain("contact_jp@fainders.ai");
+      // ko·en은 그대로 유지된다
+      expect(renderAt("ko").container.textContent).toContain("@fainders.ai");
+      expect(renderAt("en").container.textContent).toContain("@fainders.ai");
+    });
+
+    it("일본 법인 대표·전화는 유지한다", () => {
+      const text = renderAt("ja").container.textContent ?? "";
+      expect(text).toContain("Jimin Lee（イ・ジミン）");
+      expect(text).toContain("03-6821-7191");
+    });
   });
 });

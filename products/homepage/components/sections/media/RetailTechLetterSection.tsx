@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { IcoTxtButton, Label } from "@fai/ui";
+import { IcoTxtButton } from "@fai/ui";
 
 // scripts/sync-stibee.mjs가 Stibee API에서 생성하는 레터 목록 항목 shape(config/retail-tech-letter.json).
 interface Letter {
@@ -82,7 +82,6 @@ export default function RetailTechLetterSection({
                   className="flex items-center gap-[var(--spacing-XL,24px)] py-[var(--spacing-M,16px)] transition-opacity hover:opacity-60"
                 >
                   <div className="flex flex-col gap-xs flex-1 min-w-0">
-                    <Label shape="square" size="S" className="self-start !text-caption-m !text-text-basic-tertiary !font-semibold !px-[var(--padding-S,8px)]">ISSUE NO.{letter.id}</Label>
                     <h3 className="line-clamp-2 text-body-l font-semibold text-text-basic-primary">
                       {letter.title}
                     </h3>
@@ -95,6 +94,10 @@ export default function RetailTechLetterSection({
                     const thumbBg = issueNum >= 1 && issueNum <= 6 ? "var(--color-bg-200)" : "var(--color-filled-basic-primary)";
                     return (
                       <div className="relative shrink-0 w-[160px] aspect-video overflow-hidden rounded-fai-s p-[var(--padding-S,8px)]" style={{ background: thumbBg }}>
+                        {/* 뉴스레터 썸네일은 외부 호스트 URL이다. 정적 export(output: 'export')에서는
+                            next/image 최적화 서버가 없어 remote 이미지를 최적화할 수 없고,
+                            unoptimized로 감싸도 <img>와 동일한 결과라 그대로 쓴다. */}
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img
                           src={letter.thumbnailUrl}
                           alt=""

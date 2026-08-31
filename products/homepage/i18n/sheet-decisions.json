@@ -1,0 +1,194 @@
+{
+  "$comment": "코드 값이 정답이고 번역 시트가 옛 값인 항목의 선언. scripts/sync-messages.mjs가 이 목록을 DECIDED로 분류해 재제안을 막는다. 항목 추가 시 반드시 reason과 decidedAt을 남길 것. i18n/sheetDecisions.test.ts가 codeValue와 실제 messages 값의 일치를 강제한다. (HOM-75)",
+  "decisions": [
+    {
+      "key": "contact.interests.vco.options.catering",
+      "locale": "ja",
+      "codeValue": "社員食堂・学生食堂",
+      "reason": "reviews.1.category와 동일 표기로 통일. 시트는 옛 값 '給食'.",
+      "decidedAt": "2026-07-16"
+    },
+    {
+      "key": "footer.addressValue",
+      "locale": "ja",
+      "codeValue": "〒06628 韓国 ソウル特別市 瑞草区 江南大路51キル 1 511タワー13階",
+      "reason": "HOM-86 우편번호 추가 + 도로명 '길'의 표준 カタカナ 표기 キル 적용. 시트는 우편번호 없는 옛 값.",
+      "decidedAt": "2026-08-14"
+    },
+    {
+      "key": "footer.labels.bizNo",
+      "locale": "ja",
+      "codeValue": "事業者登録番号（韓国）",
+      "reason": "HOM-67 — 일본 사용자에게 한국 사업자번호임을 명시. 시트 셀은 '일본어 번역시 미노출' 지시문.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.0.name",
+      "locale": "ja",
+      "codeValue": "Myungwon Ham（ハム・ミョンウォン）",
+      "reason": "일본어권 가독성을 위한 카타카나 병기. 시트는 로마자만.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.1.name",
+      "locale": "ja",
+      "codeValue": "Minkwon Wang（ワン・ミングォン）",
+      "reason": "위와 동일.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.2.name",
+      "locale": "ja",
+      "codeValue": "Sukbum Hong（ホン・ソクボム）",
+      "reason": "위와 동일. 로마자 표기는 Sukbum으로 통일(시트는 Sukbom).",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.3.name",
+      "locale": "ja",
+      "codeValue": "Hyunkyu Lee（イ・ヒョンギュ）",
+      "reason": "위와 동일.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.people.cards.0.name",
+      "locale": "ja",
+      "codeValue": "Sukbum Hong（ホン・ソクボム）",
+      "reason": "management.members와 동일 인물이 people 섹션에도 노출된다. 표기 통일.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.people.cards.1.name",
+      "locale": "ja",
+      "codeValue": "Minkwon Wang（ワン・ミングォン）",
+      "reason": "위와 동일.",
+      "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.2.name",
+      "locale": "en",
+      "codeValue": "Sukbum Hong",
+      "reason": "로마자 표기를 Sukbum으로 통일(사용자 결정 2026-08-21). 시트는 Sukbom — 시트 수정 요청 대상.",
+      "decidedAt": "2026-08-21"
+    },
+    {
+      "key": "about.people.cards.0.name",
+      "locale": "en",
+      "codeValue": "Sukbum Hong",
+      "reason": "위와 동일.",
+      "decidedAt": "2026-08-21"
+    },
+    {
+      "key": "contact.interests.vco.options.bakery",
+      "locale": "ja",
+      "codeValue": "ベーカリー・カフェ",
+      "reason": "시트 contactUs 13행 ja = ベーカリー・カフェ. ko 원문 \"베이커리\"가 product-vco 42행(reviews.0.category, ja=ベーカリー)과 중복돼 대조 도구가 상대 탭 행과 교차 비교한다. 탭이 다르면 값도 다르므로 이 키는 contactUs 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.visionCheckout.reviews.0.category",
+      "locale": "ja",
+      "codeValue": "ベーカリー",
+      "reason": "시트 product-vco 42행 ja = ベーカリー. ko 원문 \"베이커리\"가 contactUs 13행(options.bakery, ja=ベーカリー・カフェ)과 중복돼 교차 비교된다. 이 키는 product-vco 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.visionCheckout.benefits.1.items.0.subtitle",
+      "locale": "ja",
+      "codeValue": "人件費を削減",
+      "reason": "시트 product-vco 26행 ja = 人件費を削減. ko 원문 \"인건비 절감\"이 product-store 10행(effectCards.0.title, ja=人件費の削減)과 중복돼 교차 비교된다. 이 키는 product-vco 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "products.unmannedStore.effectCards.0.title",
+      "locale": "ja",
+      "codeValue": "人件費の削減",
+      "reason": "시트 product-store 10행 ja = 人件費の削減. ko 원문 \"인건비 절감\"이 product-vco 26행(benefits.1.items.0.subtitle, ja=人件費を削減)과 중복돼 교차 비교된다. 이 키는 product-store 탭 값이 정답이다.",
+      "decidedAt": "2026-08-26"
+    },
+    {
+      "key": "common.cta.reviewsMore",
+      "locale": "ja",
+      "codeValue": "導入事例を見る",
+      "reason": "시트 product-store 32/54행은 케이스 스터디 섹션의 eyebrow(영문 고정 \"Case Studies\")를 가리킨다. ko 원문이 영문이라 조인 키가 되지 못하고 \"실제 도입 후기 더보기\"·\"고객사 도입 후기\" 같은 다른 CTA/타이틀 키에 잘못 매칭된다. eyebrow는 site.ts의 caseStudiesEyebrow가 3개 로케일 모두 영문으로 고정 렌더하므로 이 두 키는 시트 대상이 아니다 (2026-08-31 확인).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.reviewsTitle",
+      "locale": "ja",
+      "codeValue": "導入事例・お客様の声",
+      "reason": "시트 product-store 32/54행은 케이스 스터디 섹션의 eyebrow(영문 고정 \"Case Studies\")를 가리킨다. ko 원문이 영문이라 조인 키가 되지 못하고 \"실제 도입 후기 더보기\"·\"고객사 도입 후기\" 같은 다른 CTA/타이틀 키에 잘못 매칭된다. eyebrow는 site.ts의 caseStudiesEyebrow가 3개 로케일 모두 영문으로 고정 렌더하므로 이 두 키는 시트 대상이 아니다 (2026-08-31 확인).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "about.partners.description.0",
+      "locale": "ja",
+      "codeValue": "グローバル市場をリードするパートナーとともに",
+      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 2요소(줄당 1요소)로 나눠 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "home.efficiency.stats.1.label",
+      "locale": "ja",
+      "codeValue": "待ち時間短縮",
+      "reason": "시트 main 26행의 한 셀(`待ち時間短縮 (VCO導入前後の比較)`)이 label + labelCaption 두 키로 나뉜다. label에 괄호까지 넣으면 화면에 괄호가 두 번 나온다(2026-08-31 실제 발생, 즉시 정정). 괄호는 labelCaption이 전담한다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.reviews.1.category",
+      "locale": "ja",
+      "codeValue": "給食",
+      "reason": "ko 원문이 `급식`으로 두 곳(product-vco 43행 / contactUs 14행)에 중복돼 조인이 양쪽에 걸린다. 리뷰 카테고리는 **product-vco 43행 기준 `給食`**이고, contactUs 14행의 `社員食堂・学生食堂`은 문의 관심분야 선택 옵션(contact.interests.vco.options.catering)용이다. 2026-07-16에 두 자리를 `社員食堂・学生食堂`으로 통일하는 선언이 있었으나, 시트가 자리마다 다른 표기를 의도한 것으로 확인돼(2026-08-31 일본팀 지적) 리뷰는 시트대로 되돌렸다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.benefits.1.items.0.subtitle",
+      "locale": "en",
+      "codeValue": "Save on Operating Costs",
+      "reason": "ko 원문 `인건비 절감`이 product-vco 26행과 product-store 10행에 중복돼 조인이 양쪽에 걸린다. VCO benefits는 **product-vco 26행 기준 `Save on Operating Costs`**이고, product-store 10행의 `Save on Costs`는 무인매장 effectCards용이다 (2026-08-31 시트 갱신에서 무인매장 쪽만 짧아졌다).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.unmannedStore.effectCards.0.title",
+      "locale": "en",
+      "codeValue": "Save on Costs",
+      "reason": "ko 원문 `인건비 절감` 중복의 반대편이다. 무인매장 effectCards는 **product-store 10행 기준 `Save on Costs`**(2026-08-31 시트 갱신에서 짧아졌다)이고, product-vco 26행의 `Save on Operating Costs`는 VCO benefits용이다. 두 키는 같은 ko를 공유하지만 값이 다르다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.heroTitle",
+      "locale": "en",
+      "codeValue": "VISION CHECK-OUT (VCO)",
+      "reason": "ko 원문 `VISION CHECK-OUT`이 nav 28행(내비 메뉴 항목)과 product-vco 8행(제품 히어로 타이틀)에 중복돼 조인이 양쪽에 걸린다. 히어로 타이틀은 **product-vco 8행 기준 `VISION CHECK-OUT (VCO)`**이고, nav 메뉴는 약어 없이 짧게 쓴다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "contact.title.0",
+      "locale": "en",
+      "codeValue": "Questions about getting started?",
+      "reason": "시트 contactUs 1행은 한 셀에 세 줄이 들어 있고, 코드는 contact.title 배열 3요소로 나눠 갖는다(ContactUsSection이 요소마다 한 줄을 렌더한다). 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다. about.partners.description.0과 같은 구조.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "contact.form.privacyInfo.purposeLabel",
+      "locale": "ko",
+      "codeValue": "- 목적 :",
+      "reason": "시트 contactUs 28행은 스프레드시트 안에서 공백으로 라벨을 정렬해 적었다(`목적    :`). 화면에서는 공백 정렬이 유지되지 않으므로 코드가 `- ` 목록 접두어로 항목을 구분한다. 접두어는 디자인 요소이고 문구 자체는 시트와 같다 — 시트를 고칠 필요도 없다 (2026-08-31).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "contact.form.privacyInfo.itemsLabel",
+      "locale": "ko",
+      "codeValue": "- 항목 :",
+      "reason": "시트 contactUs 28행은 스프레드시트 안에서 공백으로 라벨을 정렬해 적었다(`목적    :`). 화면에서는 공백 정렬이 유지되지 않으므로 코드가 `- ` 목록 접두어로 항목을 구분한다. 접두어는 디자인 요소이고 문구 자체는 시트와 같다 — 시트를 고칠 필요도 없다 (2026-08-31).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "contact.form.privacyInfo.retentionLabel",
+      "locale": "ko",
+      "codeValue": "- 보유기간 :",
+      "reason": "시트 contactUs 28행은 스프레드시트 안에서 공백으로 라벨을 정렬해 적었다(`목적    :`). 화면에서는 공백 정렬이 유지되지 않으므로 코드가 `- ` 목록 접두어로 항목을 구분한다. 접두어는 디자인 요소이고 문구 자체는 시트와 같다 — 시트를 고칠 필요도 없다 (2026-08-31).",
+      "decidedAt": "2026-08-31"
+    }
+  ]
+}

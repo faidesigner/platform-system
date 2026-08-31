@@ -2,10 +2,31 @@ import { siteConfig } from "@/config/site";
 
 /**
  * 라이브 contact-us와 동일한 Zapier catch hook.
- * 다운스트림 Zap이 이 URL·필드 포맷 기준으로 매핑돼 있어 값/포맷을 임의 변경하면 안 됨.
+ * 다운스트림 Zap이 이 URL 경로·필드 포맷 기준으로 매핑돼 있어 **경로와 payload 필드는
+ * 임의로 변경하면 안 된다.** 로케일에 따라 달라지는 것은 `lang` 쿼리뿐이다.
  */
-export const ZAPIER_CONTACT_URL =
-  "https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/?lang=ko";
+const ZAPIER_HOOK = "https://hooks.zapier.com/hooks/catch/21523474/2fqxxmt/";
+
+/** `lang` 쿼리에 쓸 수 있는 값 — 사이트가 지원하는 로케일. */
+const LANGS = ["ko", "en", "ja"] as const;
+const DEFAULT_LANG = "ko";
+
+/**
+ * 제출 로케일을 담은 웹훅 URL.
+ *
+ * ⚠️ 예전에는 `?lang=ko`가 상수에 박혀 있어 **en·ja에서 제출해도 ko로 전송**됐다.
+ *    전송 자체는 성공하고(요청 200 · 완료 화면 도달) 오류도 로그도 남지 않아,
+ *    다운스트림에서 로케일별로 분기하면 en·ja 리드가 ko 쪽으로 조용히 흘러간다.
+ *    "영문으로 제출했는데 도달하지 않았다"로 나타났다 (2026-08-31 실측 확인).
+ *
+ * 알 수 없는 로케일은 ko로 떨어뜨린다 — 리드를 잃는 것보다 낫다.
+ */
+export function zapierContactUrl(locale?: string): string {
+  const lang = LANGS.includes(locale as (typeof LANGS)[number])
+    ? (locale as (typeof LANGS)[number])
+    : DEFAULT_LANG;
+  return `${ZAPIER_HOOK}?lang=${lang}`;
+}
 
 export interface ContactFormValues {
   company?: string;

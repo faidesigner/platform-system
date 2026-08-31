@@ -9,9 +9,10 @@ import { siteConfig } from "@/config/site";
 import { localePolicy } from "@/config/locale-policy";
 import type { GaLocation } from "@/lib/analytics/events";
 import { trackEvent } from "@/lib/analytics/track";
-import { buildContactPayload, parseUtm, ZAPIER_CONTACT_URL } from "@/lib/contact/payload";
+import { buildContactPayload, parseUtm, zapierContactUrl } from "@/lib/contact/payload";
 import { LineInput } from "@fai/ui/components/LineInput";
 import { CheckboxField } from "@fai/ui/components/CheckboxField";
+import { Checkbox } from "@fai/ui/components/Checkbox";
 import { IcoTxtButton } from "@fai/ui/components/button/IcoTxtButton";
 import { CustomerSupportGraphic } from "@fai/ui/components/CustomerSupportGraphic";
 import { IcRequiredDot } from "@fai/ui/components/common/Icon/IcRequiredDot";
@@ -30,6 +31,12 @@ const EMPTY_STATE: FormState = { values: {}, interests: {}, errors: {} };
 // 구조/option value는 config 유지, 표시 텍스트만 messages에서 로드.
 const INTEREST_GROUP_KEYS = ["vco", "store"] as const;
 
+const PRIVACY_POLICY_HREFS: Record<string, string> = {
+  ko: "/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf",
+  en: "/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf",
+  ja: "/contact-us/FaindersAI_%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC_%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf",
+};
+
 export function ContactUsSection() {
   const t = useTranslations("contact");
   const locale = useLocale();
@@ -37,10 +44,13 @@ export function ContactUsSection() {
 
   // 상담 토스트 채널은 로케일마다 다르다(HOM-72): ko=카카오톡, ja=LINE, en=미노출.
   const { contactChat } = localePolicy(locale);
+  const privacyHref = PRIVACY_POLICY_HREFS[locale] ?? PRIVACY_POLICY_HREFS.ko;
   // GA location도 채널을 따라간다 — 토스트는 channel이 있을 때만 렌더되므로 kakao가 안전한 기본값.
   const chatLocation: GaLocation = contactChat.channel === "line" ? "contact_line" : "contact_kakao";
   const [state, setState] = React.useState<FormState>(EMPTY_STATE);
   const [submitted, setSubmitted] = React.useState(false);
+  const [privacyChecked, setPrivacyChecked] = React.useState(false);
+  const [privacyError, setPrivacyError] = React.useState(false);
 
   const sectionRef = React.useRef<HTMLElement>(null);
   const formRef = React.useRef<HTMLFormElement>(null);
@@ -87,7 +97,9 @@ export function ContactUsSection() {
       newErrors.email = t("fields.email.errorMessage");
     }
 
-    if (Object.keys(newErrors).length > 0) {
+    if (!privacyChecked) setPrivacyError(true);
+
+    if (Object.keys(newErrors).length > 0 || !privacyChecked) {
       flushSync(() => {
         setState((s) => ({ ...s, errors: newErrors }));
       });
@@ -111,7 +123,8 @@ export function ContactUsSection() {
       referrer: typeof document !== "undefined" ? document.referrer : "",
     });
     try {
-      await fetch(ZAPIER_CONTACT_URL, {
+      // lang 쿼리에 **제출 로케일**을 담는다 — 고정값이면 en·ja 리드가 ko로 흘러간다(HOM-75).
+      await fetch(zapierContactUrl(locale), {
         method: "POST",
         headers: { "Content-Type": "application/x-www-form-urlencoded" },
         body: JSON.stringify(payload),
@@ -331,15 +344,53 @@ export function ContactUsSection() {
                         })}
                       </div>
 
-                      {/* textBox: 개인정보 처리방침 안내 */}
-                      <div className="flex flex-1 justify-start items-start self-stretch text-quaternary text-caption-m font-normal">
-                        <p>
-                          {t("form.privacyNotice.before")}
-                          <a href={contact.form.privacyNotice.href} target="_blank" rel="noopener noreferrer" className="underline decoration-solid">
-                            {t("form.privacyNotice.link")}
-                          </a>
-                          {t("form.privacyNotice.after")}
-                        </p>
+                      {/* 개인정보 동의 체크박스 + 상세 안내 */}
+                      <div className="flex flex-col items-start self-stretch gap-[var(--spacing-MS,12px)]">
+                        {/* textBox: 개인정보 처리방침 안내 */}
+                        <div className="flex flex-col items-start gap-[var(--spacing-2XS,4px)] self-stretch">
+                          <label className="flex flex-1 justify-start items-center self-stretch gap-[var(--spacing-XS,6px)] text-quaternary text-body-s font-normal cursor-pointer">
+                            <Checkbox
+                              checked={privacyChecked}
+                              error={privacyError}
+                              onChange={(c) => { setPrivacyChecked(c); if (c) setPrivacyError(false); }}
+                            />
+                            <p>
+                              {t("form.privacyNotice.before")}
+                              <a href={privacyHref} target="_blank" rel="noopener noreferrer" className="underline decoration-solid" onClick={(e) => e.stopPropagation()}>
+                                {t("form.privacyNotice.link")}
+                              </a>
+                              {t("form.privacyNotice.after")}
+                            </p>
+                          </label>
+                          {privacyError && (
+                            <p className="text-body-s font-normal text-[var(--color-text-negative,#EA3B2A)] pl-[var(--padding-3XL,40px)]">
+                              {t("form.privacyNotice.errorMessage")}
+                            </p>
+                          )}
+                        </div>
+                        {/* textArea: 개인정보 수집 상세 안내 */}
+                        <div className="flex py-[var(--padding-M,16px)] px-[var(--padding-L,20px)] items-start gap-[var(--padding-S,8px)] self-stretch rounded-fai-s border border-[var(--border-tertiary,#E4E6E7)]">
+                          <div className="flex-1 flex flex-col text-quaternary text-body-s font-normal leading-[var(--m-text-m-line-height,21px)]">
+                            <div className="flex gap-[var(--spacing-XS,6px)]">
+                              <span className="shrink-0">{t("form.privacyInfo.purposeLabel")}</span>
+                              <span>{t("form.privacyInfo.purpose")}</span>
+                            </div>
+                            <div className="flex gap-[var(--spacing-XS,6px)]">
+                              <span className="shrink-0">{t("form.privacyInfo.itemsLabel")}</span>
+                              <div className="flex flex-col">
+                                <span>{t("form.privacyInfo.itemsRequired")}</span>
+                                <span>{t("form.privacyInfo.itemsOptional")}</span>
+                              </div>
+                            </div>
+                            <div className="flex gap-[var(--spacing-XS,6px)]">
+                              <span className="shrink-0">{t("form.privacyInfo.retentionLabel")}</span>
+                              <span>{t("form.privacyInfo.retention")}</span>
+                            </div>
+                            {/* 거부권·불이익 고지 — 법 제15조 제2항 제4호. 목적·항목·보유기간만으로는
+                                요건이 충족되지 않는다(2026-08-06 검토 지적). 문구는 번역 시트 확정본. */}
+                            <p className="mt-[var(--spacing-XS,6px)]">{t("form.privacyInfo.refusal")}</p>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>

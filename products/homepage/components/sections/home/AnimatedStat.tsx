@@ -43,6 +43,10 @@ export function AnimatedStat({
 
     const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     if (prefersReduced) {
+      // 외부 시스템(matchMedia)에서 읽은 값을 상태에 반영하는 마운트 1회 처리다.
+      // 정적 export라 SSR 시점에 matchMedia가 없어 useState 초기값으로는 알 수 없고,
+      // 초기값에 넣으면 하이드레이션 불일치가 난다. 연쇄 렌더가 아니므로 규칙을 끈다.
+      // eslint-disable-next-line react-hooks/set-state-in-effect
       setDisplay(format(target));
       return () => { mounted = false; };
     }

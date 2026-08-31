@@ -2,6 +2,346 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-31 (2)
+
+### 🛠 Fixed
+
+#### 번역 시트 전수 대조 — 34건 반영 (HOM-75, products/homepage)
+
+일본 BD가 "product/unmannedStore 페이지는 수정 내용이 전부 반영되어 있지 않다"고 지적했는데, 대조 도구는 **CONTENT 0 / AMBIGUOUS 0**을 보고하고 있었다.
+
+**도구가 못 본 이유 — ko 조인 맹점**
+- 도구는 ko 원문을 조인 키로 쓴다 → **ko가 수정된 행은 영원히 대조되지 않고, 그 행의 en·ja 이격까지 함께 사라진다**
+- "ko 미매칭 80건"으로 뭉뚱그려 보고될 뿐이었고 그 안에 실이격이 묻혀 있었다 (product-store 한 탭에서만 23행)
+- `sheetDiff.mjs`에 **ja·en 역매칭** 추가 — ko 조인 실패 시 ja·en 값으로 키를 역추적(ja·en은 ko보다 덜 바뀌므로 앵커가 된다)
+- 결과: 미매칭 80 → 68, 숨어 있던 CONTENT 2 · AMBIGUOUS 4 · WHITESPACE 2가 즉시 드러남
+
+**리뷰 인용문이 en·ja에서 두 번 렌더되고 있었다** (가장 심각)
+- 인용문은 강조를 위해 `quote.0/1/2` 조각으로 나뉘어 이어붙는 구조인데, 8/25 반영 때 시트의 **완결된 한 문장**을 조각 구조를 무시하고 `quote.2`에 통째로 넣었다
+- 앞 조각(구버전 번역)이 남아 화면에 문장이 두 번 나갔다. ko만 정상, **en·ja 6개 리뷰 전부** 이 상태
+- 시트 전문을 조각으로 다시 나누고 **이어붙인 결과가 시트 전문과 정확히 같은지 검증**한 뒤 반영
+
+**케이스 스터디 날짜가 번역되지 않고 있었다**
+- `date`가 `site.ts` 값 그대로 흘러 전 로케일에 한국식 `'23.10` 노출. 시트 en은 `Oct '23`
+- messages로 이관 + `page.tsx`에 `t()` 배선 (6건 × 3로케일)
+
+**그 외 반영**
+- product-store 22건 — ko 오타(`결제까기`→`결제까지`) / en 문구 6건 / ja 줄바꿈·문구 11건 / storeTypes subtitle·description en·ja 재정렬
+- vco ko 2건 / main efficiency 라벨 ko·ja 괄호 부연 누락 / `about.people.title` ko(People→Team) / `contact.meta.description` ja / whyFai en / benefits ja 줄바꿈 / industries en(`Bakery&Cafe`→`Bakery & Cafe`)
+
+### ➕ Added
+
+- `i18n/reviewQuotes.test.ts` 🆕 — 인용문 조각을 이어붙였을 때 문장이 두 번 들어가지 않는지, 인용부호가 열고 닫히는지 검사
+  - **개수 기반 판정**이라 `"` 처럼 여닫이가 같은 문자도 오탐 없이 잡는다(정상 2개 / 중복 4개)
+  - 키 단위 대조로는 각 조각이 "시트 어딘가와 비슷"해 절대 드러나지 않는 종류다
+
+### 🧪 Tests
+- `sheetDiff.test.mjs` — "ko 매칭 실패 시 diff 없음"을 기대하던 테스트를 **역매칭으로 이격을 찾아낸다**로 갱신. 예전 동작이 곧 이번 사고의 원인이었다
+- `sheet-decisions.json` — Case Studies eyebrow(영문 고정) 오탐 2건 선언
+
+**검증:** vitest **233 PASS** / lint 0 problems / 게이트 4종 통과 / 재대조 CONTENT·AMBIGUOUS·WHITESPACE **전부 0**
+실브라우저 전수 확인(탭·캐러셀 순차 클릭으로 숨은 콘텐츠까지) — 신규 문구 31건 + 케이스 스터디 21건 노출, **구값 잔존 0건**. dev `f1305d3` 실배포본에서도 재확인
+
+---
+
+## [Unreleased] - 2026-08-31
+
+### 🛠 Fixed
+
+#### JP-BD 요청 반영 (HOM-101, Critical — packages/ui + products/homepage)
+
+**❶ 개인정보 처리방침 노출 — 로케일별 분기** (2026-08-28 김진영 확정)
+- ko는 개정 안내 모달 유지 / en·ja는 모달 없이 **로케일 문서로 직행**
+  - 이전 규칙(8/25)은 "개정 안내는 한국어로만"이라 en·ja에도 **읽을 수 없는 한국어 모달**이 떴다
+  - 개정 고지는 한국 개인정보보호법상 의무이고 en·ja는 대상이 아니다. 번역본을 만들지 않는 원칙은 유지
+- `@fai/ui`의 `POLICY_HREFS.privacy` 하드코딩 폴백 **제거** — 구버전 **한국어** PDF였다. 모달만 끄면 여기로 떨어져 일본·영어 사용자에게 한국어 문서가 열린다(Hyeyoung Shin 지적 사항이 정확히 이것). 미주입이면 링크를 아예 렌더하지 않는다
+- `#page=N` 미지정 — 처리방침은 1페이지부터. 조항 점프는 '맞춤형 광고 설정' 전용
+- ⚠️ **`encodeURI` 필수** — en 파일명에 공백이 있다. 로컬 정적 서버는 raw 공백도 200을 주지만 CloudFront는 거부한다(실측: 공백 HTTP 000 / `%20` HTTP 200). **로컬·테스트만 보면 통과하고 배포에서만 깨지는 종류**
+
+**❷ footer 일본법인 정보** (2026-08-28 Hyeyoung Shin 요청)
+- `日本法人` 라벨 제거 / 법인명 볼드 / 소재지 추가 / ja 메일 행 미노출
+- '법인'을 1급 개념(`FooterEntity`)으로 승격 — 본사와 **동일한 블록 구조**(볼드 법인명 헤더 + 하위 행)로 렌더. 기존 `extraInfo`는 평평한 한 행이라 위계가 달랐다
+- 법인명 헤더 클래스를 상수로 공유 — 문자열 복사로 맞추면 한쪽만 바뀌어 어긋난다
+
+**❷-후속 ja 메시지 번들에서 메일 주소 제거**
+- dev 배포본 `/ja/` **소스**에 `contact_jp@fainders.ai`가 남아 있었다. 렌더된 footer에는 없지만 next-intl이 메시지 번들을 HTML script 페이로드로 직렬화한다
+- 스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다 — 번들에서 제거
+- `FooterBridge`는 `showEmail`일 때만 `t()` 호출. 미노출 로케일에서 호출하면 MISSING_MESSAGE가 나는데 **그게 의도** — 결정이 깨지면 드러난다
+
+### ✅ Verified
+
+- **HOM-88** StoreEffects 3열 카드 정렬 — 1920/1440에서 h3 높이 78px 균일, 하단 편차 **0**. 1280 이하도 균일
+  - 8/28 시점에는 **실제로 작동하지 않고 있었다** — `desktop:h-[4.875rem]`이 클래스 뒤 공백 없는 `${...}` 보간에 걸려 유실. HOM-100과 동일 원인이며 `1b3feb2`에서 함께 정정됐다
+
+### 🧪 Tests
+- 기존 테스트 3건은 **삭제가 아니라 갱신** — 요구사항이 바뀐 것이지 회귀 방어가 불필요해진 게 아니다. 이전 규칙·변경 근거·이유를 각 주석에 남겼다
+  - `ja 이메일은 일본팀 주소를 쓴다` → `이메일은 ko·en만 노출하고 ja에서는 감춘다`
+  - `en·ja로 전환해도 개정 안내는 한국어로만` → `en·ja에는 개정 안내를 아예 띄우지 않는다`
+  - `locale-policy.test.ts`의 `ja.showEmail` 기대값
+- `messageConsistency.test.ts` — 키 집합 정합성 가드를 무력화하지 않고 ja 의도적 제거 키를 근거와 함께 명시 선언. 선언이 썩는 것(ko에서 키가 사라졌는데 예외만 남는 것)도 함께 막는다
+- 신규: 처리방침 링크 URL 인코딩 / `#page` 미지정 / 법인 블록 렌더 / 메시지 번들 누출
+
+**검증:** vitest **225 PASS** / lint 0 problems / 배포 게이트 4종 통과 / dev `88c08e0` 실측 확인
+
+---
+
+## [Unreleased] - 2026-08-28 (3)
+
+### 🛠 Fixed
+
+#### footer 배경색 유실 (HOM-100, Critical — packages/ui + products/homepage)
+- 원인은 CSS도 토큰도 아니라 **Tailwind 클래스 추출 실패**였다. 클래스 문자 바로 뒤에 공백 없이 `${...}` 보간이 붙으면 추출기가 보는 토큰이 잘려 **유틸리티가 생성되지 않는다** — 클래스는 HTML에 붙어 있고 CSS 규칙만 없으므로 스타일이 조용히 사라진다
+- 같은 패턴 6곳을 전수 정정. 그중 **2곳이 실제 유실 상태**였다
+  - `packages/ui .../Footer.tsx:274` — footer 배경 (HOM-100)
+  - `.../StoreEffects.tsx:107` — desktop 높이(1440px↑). PR #11의 3열 카드 제목 높이 통일이 **1440px 이상에서 작동하지 않고 있었다**
+  - 나머지 4곳(Footer:171 / CtaBanner:61 / StoreTypes:77 / ProductFeatures:152)은 같은 클래스를 다른 파일에서도 써서 우연히 살아 있었다 — 그 사용처가 사라지면 똑같이 터진다
+- 검증: footer computed background `rgb(245,245,245)` (= `#F5F5F5`, 카드 기대값) / dev 실배포 CSS에 `.bg-bg-200{background-color:var(--color-bg-200)}` 존재 확인
+
+#### Tailwind 스캔 범위 — 주석 속 클래스가 프로덕션 CSS로 새던 문제
+- **게이트가 자기 주석 때문에 스스로 무력화됐다.** 배경색 게이트를 넣고 사고 형태로 되돌려 테스트했는데 통과했다 — 그 게이트 스크립트 주석에 적은 클래스명이 CSS로 유입돼 "유실이 없는 것처럼" 만들었다
+- v4의 자동 소스 감지는 `.gitignore` 밖 모든 파일을 훑는다. `tailwind.config.ts`의 negation 패턴은 **v4에서 적용되지 않으며**, 그 사실이 주석과 어긋난 채 방치돼 있었다 (테스트 파일 카나리 클래스로 실증)
+- `globals.css`에서 `@import "tailwindcss" source(none)` + `@source` 화이트리스트로 범위 고정
+  - `@source not "..."`은 postcss 8.4.31이 prelude를 파싱하지 못해 빌드가 깨진다(`CssSyntaxError: Unknown word`)
+  - CSS 주석 안에 glob(별표 두 개 + 슬래시 + 별표)을 쓰면 `*/`가 포함돼 주석이 조기 종료된다 — 한 번 밟았다
+- 과다 배제 검증: 소스의 단순 클래스 **275개 전수 대조 → 누락 0건** (오탐 4건은 템플릿 변수명 파편 3 + Tailwind marker `peer` 1)
+
+### ➕ Added
+
+#### 재발 방지 가드 (products/homepage)
+- `app/tailwindExtraction.test.ts` 🆕 — 클래스 뒤 공백 없는 `${...}` 보간 금지. 유실 여부와 무관하게 **패턴 자체**를 막는다(산출 CSS 사후 대조는 variant 이스케이프로 오탐이 많다)
+  - ⚠️ 이 파일에는 실제 클래스명을 쓰지 않았다 — 테스트 파일도 스캔 대상이라 여기 적은 클래스가 지키려는 회귀를 되살린다(실제로 한 번 밟았다)
+- `check-footer-layout.mjs` 불변식 ④ — footer **computed** backgroundColor가 투명이면 배포 중단
+- 두 가드 모두 사고 형태로 되돌려 실제 실패 확인 (정적 가드는 `Footer.tsx:274`를 정확히 지목 / 게이트는 9개 조합 전부 `rgba(0,0,0,0)`로 exit=1)
+
+### ✅ Verified (QA 카드 실측 검증)
+- **HOM-102** 개처방 모달 반응형 — 768/430/390/360px 전부 여백 24px · 버튼 화면 내
+- **HOM-103** ShowcaseSection 썸네일 — 1920→1000px에서 비율 **1.292 일정** 유지 (768px 이하 모바일 레이아웃 전환)
+- **HOM-99** about 라벨 정렬 — 7폭 × 3로케일 우측 여백 편차 **0px**
+
+---
+
+## [Unreleased] - 2026-08-28 (2)
+
+### 🛠 Fixed
+
+#### 루트 산출물 유실 — Meta 도메인 인증·언어 감지 (products/homepage)
+- `app/page.tsx`(useEffect → /ko 리다이렉트) 제거. 정적 export에서 **Next 라우트가 `public/index.html`을 덮어쓴다** (주석의 서술과 반대)
+- 실측: `out/index.html` 5,456 bytes(Next 빈 페이지) → `facebook-domain-verification`·`navigator.language` 둘 다 소실. 제거 후 1,905 bytes로 복구
+- 영향: iOS 전환 광고 성과 누락(2026-08-05 김진영 요청 항목) / en·ja 방문자 전원 `/ko` 강제 / 크롤러가 루트에서 읽을 내용 없음
+
+#### AboutPeople 라벨 위치 편차 (HOM-99 재발, products/homepage)
+- PR #11이 라벨을 `<p>` 인라인으로 합치며 우측 정렬이 빠져 ja@1440 편차 **227px**로 회귀 (379/408/534/307)
+- `justify-between` + `shrink-0`으로 우측 정렬 복구 → 7폭 × 3로케일 편차 **0px**
+- `ㅣ` 간격 통일(PR #11 의도)과 위치 고정은 한 줄에서 양립 불가 — 라벨을 다음 줄로 내리는 대안을 코드 주석에 남김(디자인 판단 대기)
+
+#### ESLint가 실행조차 되지 않던 상태 (products/homepage)
+- `pnpm lint`가 `TypeError: Converting circular structure to JSON`으로 실패 → **"커밋 전 lint 통과" 규칙이 조용히 무력화**돼 있었다
+- 원인: eslint-config-next 16은 flat config를 직접 export하는데 구식 `FlatCompat`으로 extends 해 configs가 자기참조
+- 복구 후 드러난 9 errors / 4 warnings 전부 정리 → **0 problems**
+  - `ShowcaseSection`: `YoutubeThumb` 리셋 effect 제거 → `key={videoId}` 재마운트 리셋 / `startSlide` 선언 순서 정정
+  - `StoreCaseStudies`: `useEffect(() => setActive(0), [cases])` → 렌더 중 클램프. `cases`는 참조 비교라 부모가 매 렌더 새 배열을 주면 **매 렌더 선택 초기화**되는 잠재 버그였다
+  - `StoreEffects`: 삼항 문장 → if/else / `AnimatedStat`·`RetailTechLetterSection`: 근거 주석 + 국소 disable
+  - `scripts/**/*.js`(Node CJS)·테스트 파일(next/image mock) config 예외
+
+#### 번역 시트 정합 2건 (HOM-75, products/homepage)
+- `effectCards.0.title` en 줄바꿈: 레이아웃 목적이므로 `i18n/sheet-decisions.json`에 선언(시트 수정 아님)
+- `about.people.cards.1.title` ko: `…사람들과 함께` → `…사람들과 함께해요` (시트 기준)
+- 대조 도구가 **ko를 조인 키로 쓰므로** ko가 어긋난 행은 en/ja 불일치도 함께 못 본다 — PR #11이 en을 고치며 드러났다
+
+### ➕ Added
+
+#### 배포 게이트 2종 신설 (products/homepage) — 총 4종
+- `scripts/check-root-html.mjs` — **산출물** `out/index.html`의 Meta 인증·언어 감지 존재 + 루트 점유 라우트 부재
+  - 기존 `tests/landingTags.test.ts`는 `public/index.html`(소스)만 읽어 vitest 212개가 통과한 채 회귀했다. 검사 대상이 한 단계 앞이었다
+  - 정적 테스트("루트 라우트 점유 금지")도 함께 추가해 빌드 전 조기 실패
+- `scripts/check-about-layout.mjs` — 라벨 우측 정렬 편차 ≤1px / 카드 화면 이탈 금지(HOM-98) / 이미지 비율 9:5
+  - 좌측 x가 아니라 **우측 여백**으로 측정 — 라벨 텍스트 길이가 사람마다 달라 우측 정렬이 맞아도 좌측 x는 다르다
+  - 7폭 × 3로케일 21개 조합. PR #11 상태로 되돌리면 21개 전부 실패함을 확인
+- 두 게이트 모두 주입 손상으로 실제 실패하는지 검증 후 `deploy.sh` 배선
+
+### 🔄 Changed
+
+#### 배포 게이트 공용 인프라 추출 (products/homepage)
+- `scripts/lib/staticPreview.mjs` 신설 — `withPreview()` / `measurePage()`
+- 기존 두 게이트에 MIME 표·`resolveFile`·`startServer`·`findChrome`이 글자 단위로 중복돼 있었다. 세 번째 추가 시점에 3중복이 되므로 추출
+- 서빙 규칙(trailingSlash 해석 등)이 게이트마다 갈라지면 "게이트는 통과하는데 배포물은 다르다"가 발생한다 — 한 곳에만 둔다
+- 이관 전후 출력 동일 확인: 오버플로우 3×7 / footer 3×3
+
+---
+
+## [Unreleased] - 2026-08-28
+
+### 🔄 Changed
+
+#### AboutPeople 라벨 인라인 정렬 (products/homepage)
+- 이름·직책·라벨을 별도 flex row 대신 `<p>` 인라인으로 통합 — `ㅣ` 구분선 간격 완전 일치
+- 라벨 `<span>`: `inline-flex items-center bg-mint-400 px-s text-body-xs font-medium`
+
+#### ShowcaseSection 데스크탑 썸네일 반응형 대응 (products/homepage)
+- 고정값 `w-[672px] h-[520px] aspect-auto` → `w-[min(672px,58.95%)] aspect-[672/520]` 비율 유지 반응형으로 교체
+- 모바일 고정 높이(`max-[768px]:h-[335px] aspect-auto`) 제거 → `aspect-[960/472]`로 통일
+
+#### StoreEffects 첫 번째 카드 타이틀 2줄 처리 및 전체 높이 정렬 (products/homepage)
+- 첫 번째 카드 h3에 음수 마진(`-mx-xl desktop-s:-mx-4xl`) 적용 — 카드 패딩 영역까지 타이틀 너비 확장
+- `\n` + `style={{ whiteSpace: 'pre-wrap' }}`으로 "Save on / Operating Costs" 줄바꿈 위치 고정
+- 전체 h3 고정 높이를 3×line-height → **2×line-height** 기준으로 하향 조정
+  - base `4.5rem` → `3rem` / tablet `5.625rem` → `3.75rem` / desktop-s `6.75rem` → `4.5rem` / desktop `7.3125rem` → `4.875rem`
+- 2·3번 카드 h3: `items-center` → `items-start` 상단 정렬 변경
+
+#### en.json 문구 수정 (products/homepage)
+- StoreEffects 첫 번째 카드 타이틀: `"Save on Operating Costs"` → `"Save on\nOperating Costs"`
+- AboutPeople 두 번째 카드 타이틀: `"We work with people who run toward hard problems, not away from them"` → `"We focus on hiring people who do not shy away from hard problems"`
+
+---
+
+## [Unreleased] - 2026-08-27
+
+### 🔄 Changed
+
+#### Footer 반응형 브레이크포인트 개선 — EN·JA wideCompact 지원 (packages/ui + products/homepage)
+
+**Footer.tsx (packages/ui)**
+- `wideCompact?: boolean` prop 추가 → `fai-footer--wide` CSS 클래스 조건부 적용
+- 로고 영역: `gap-6` → `gap-xl`, `fai-footer__logo-area` BEM 클래스 + `paddingRight: var(--spacing-5XL, 80px)` style 적용
+- 컨텐츠 영역: `fai-footer__contents` / `fai-footer__contents-inner` BEM 클래스로 gap(48px, named token 없음) CSS 파일 관리
+- Compact 로고: `fai-footer__logo shrink-0` 추가 — SNS 버튼에 밀려 축소되지 않도록 고정
+- Compact 간격: `pt-[var(--padding-ml,18px)] gap-[var(--spacing-3XL,40px)]` → `pt-ml gap-3xl` named token 적용
+- Compact info/policies gap: `gap-[var(--spacing-MS,12px)]` → `gap-ms` named token 적용
+- 스크롤 버튼 위치: `bottom-[var(--size-56)] right-[var(--size-56)]` → `bottom-4xl right-4xl` named token 적용
+- 전화번호 `noWrapValue: true` 추가 (HOM-94) — ja에서 `+82-2-6191-` / `0049` 로 끊기는 현상 방지
+
+**footer.css (packages/ui)**
+- KO 브레이크포인트: `960px` → `1280px` 상향 (아코디언 포함 콘텐츠 기준)
+- EN·JA 브레이크포인트: `≤1100px` compact 전환 / `≥1101px` desktop 복원 미디어쿼리 추가 (`.fai-footer--wide` 조건)
+- BEM 규칙 추가: `.fai-footer__logo-area` (padding-right 80px + flex-shrink:0) · `.fai-footer__contents` (gap 48px) · `.fai-footer__contents-inner` (gap 48px) · `.fai-footer__logo` (flex-shrink:0)
+
+**FooterBridge.tsx (products/homepage)**
+- `wideCompact={locale !== 'ko'}` prop 연결 — KO만 1280px, EN·JA는 1100px에서 compact 전환
+
+**globals.css (products/homepage)**
+- Turbopack 심링크 핫리로드 미감지 회피 목적으로 Footer 반응형 CSS 섹션 추가
+- BEM 규칙 포함: `fai-footer__logo-area` · `fai-footer__contents` · `fai-footer__contents-inner` · `fai-footer__logo`
+
+#### CtaBanner JA 420px 이하 폰트 보정 (products/homepage)
+- `useLocale()` 추가, `locale === 'ja'` 조건으로 h2에 `max-[419px]:text-body-xl` 적용
+- JA 타이틀이 420px 이하에서 `text-title-s`를 유지할 경우 버튼과 겹치는 문제 해소
+
+---
+
+## [Unreleased] - 2026-08-25 (PR#10 develop 머지 + 후속 정정)
+
+develop `0b62b9a` / dev 프리뷰 배포 완료 / `pnpm test` 209 PASS.
+PR#10(`feat/v3-sync-0820-0825`)을 develop에 머지하고, 리뷰에서 나온 결함을 정정했다.
+
+### 🐛 Fixed
+
+#### 개정 안내 모달 시행일 오류 (HOM-66) — `440b2c8`
+모달 문구가 8/6 초안값을 담고 있어 **법정 고지 오류** 상태였다. 공식 PDF 실물과 대조해 정정.
+- 시행일자 `2026년 8월 12일` → **`2026년 8월 28일`**
+- PDF 링크 라벨 `(2026. 8. 13. 시행)` → `(2026. 8. 28. 시행)`
+  ※ 같은 본문 안에서 "12일 시행"과 "8.13. 시행"이 어긋나 있었다(시트 원문의 모순 — 시트도 정정 필요)
+- 공고일 `2026년 8월 6일` → **`2026년 8월 21일`** (사전고지 7일 요건에 맞춘 간격)
+- 문의 메일 `sbhong@fainders.ai` → `contact@fainders.ai` (PDF에는 이미 반영됐던 값)
+- 회귀 가드 4종 추가(`FooterBridge.test.tsx`) — 날짜·연락처·ko-only 노출 고정
+
+#### ja 개인정보처리방침 PDF가 수정 전 버전 (HOM-91) — `02a617d`
+- 연락처 `+82-2-6191-0049` → `03-6821-7191` (사업자정보는 일본법인인데 연락처만 한국 번호였다)
+- 이메일 `contact@fainders.ai` → `contact_jp@fainders.ai`
+- 일본어 한자 깨짐 → Noto Sans JP 계열
+- 변환: docx → pandoc HTML → headless Chrome print-to-PDF.
+  xelatex 경로는 폐기 — `contact_jp`의 `_`가 결합문자 U+0332로 깨지고 표 행 구조가 붕괴했다.
+
+#### 동의 문구 법 요건 미충족 (HOM-78) — `a0509a5`
+- **거부권·불이익 고지 신설**(`contact.form.privacyInfo.refusal`, ko/en/ja).
+  법 제15조 제2항 제4호 — 목적·항목·보유기간 3요소만으로는 요건 미충족(2026-08-06 검토 지적)
+- 문구를 번역 시트 확정본(`contactUs` CU01 27·28행, 8/25 14:29 확정)으로 교체
+- 회귀 테스트 3종 — 동의 미체크 시 전송 차단 / 4요소 화면 표시 / fillRequired 동의 포함
+  ※ PR#10이 필수 체크박스를 추가하면서 기존 제출 테스트를 갱신하지 않아 깨져 있었다
+
+#### footer cctv 키 잠복 회귀 (HOM-61) — `a0509a5`
+`POLICY_HREFS.cctv = '/document/cctv-policy.pdf'` 폴백이 남아 있어, `cookieHref` 미주입 시
+**HOM-61에서 제거한 영상정보처리기기 방침 링크가 되살아났다**(파일이 아직 존재해 404도 아니다).
+- `footer.policies.cctv` → `footer.policies.adSettings` (ko/en/ja + `FooterLabels` + `FooterBridge`)
+- `POLICY_HREFS.cctv` 상수 삭제. `cookieHref`가 없으면 폴백이 아니라 **행 자체를 렌더하지 않는다**
+
+### 🔄 Changed
+
+#### 시트 정합 en 2건 (HOM-75) — `a0509a5`
+- `footer.policies.adSettings` `Personalized Ad Settings` → `Ad Preferences`
+- `products.unmannedStore.effectCards.1.title` `AI Auto Checkout` → `AI Checkout`
+- 시트 대조 CONTENT 26 → 24건
+
+#### 개정 안내 en/ja 본문 제거 (HOM-66) — `440b2c8`
+`modalConfig = MODAL_CONFIG.ko`로 이미 항상 한국어만 노출해 en/ja 76행은 도달 불가능한 죽은 코드였다.
+근거: 2026-08-25 김진영(개인정보 담당) "개정 안내는 한국어로만 진행해주시면 됩니다".
+처리방침 PDF 자체는 ko/en/ja 3종 유지 — 고지문만 한국어다.
+
+#### 머지 충돌 해소 2건 — `cc90e79`
+PR#10 base(`79b544f`)가 HOM-75 번역 반영분보다 앞서 갈라져 같은 키를 양쪽에서 건드렸다.
+- en `effectCards.1.title`: 8/24 시트 기준인 PR#10 채택
+- ja `effectCards.1`: title은 PR#10, description은 develop(HOM-75 승인 줄바꿈)을 결합
+
+---
+
+## [Unreleased] - 2026-08-25 (v3 sync: 8/20~8/24)
+
+### 🔄 Changed
+
+#### HOM-73 ImageSection 스크롤 안 넘어감 버그 수정 (products/homepage)
+- `page.tsx` `ImageSection`에 `pinDuration="70vh"` 추가
+- `HeroSection.tsx` lenis snap `distanceThreshold: "30%" → "10%"` + 섹션 높이 `h-[180vh] → h-[125vh]`
+
+#### HOM-71 EfficiencySection JA 언어 전환 시 정렬 수정 (products/homepage)
+- stat 너비 고정(`laptop:w-[326px]`, `desktop:w-[361px]`) + `justify-between`
+- `desktop-s`(961px~1279px) 세로 배치 + `laptop`(1280px+) 가로 배치, bar `flex-1`
+
+#### HOM-85 RetailTechLetterSection ISSUE NO 라벨 제거 (products/homepage)
+- 항목별 ISSUE NO. 라벨·번호 제거, `Label` import 정리
+
+#### ProductIndustries 768px 이하 카드 간격 수정 (products/homepage)
+- `gap-m` → `gap-5xl`(80px)
+
+#### HeroSection 반응형 비디오 박스·타이틀 개선 (products/homepage)
+- 1440px+ `min(480px)`, 1600px+ `min(568px)·466px·font-display-l`
+
+#### WhyFaiSection 1600px+ 카드 높이 조정 (products/homepage)
+- `min-[1600px]:h-[480px]` 추가
+
+#### ContactUsSection 개인정보 동의 폼 개선 (products/homepage)
+- `Checkbox` 컴포넌트로 교체 + `privacyInfo` 목적·항목·보유기간 테이블 추가
+
+#### StoreEffects 그래픽·텍스트 수정 (packages/ui + products/homepage)
+- `EffectGraphic.tsx`: `payment-2.svg` → `payment-3.svg`, `remote.svg` → `remote-2.svg`
+- SVG 자산 추가: `root/assets/graphics/payment-3.svg`, `remote-2.svg`
+- 결제 카드 타이틀: `'결제 무인화'` → `'AI 자동 결제'`
+
+#### Footer 전면 개선 (packages/ui + products/homepage)
+- `footer.css` 데스크톱 `padding-inline: var(--padding-8XL)` CSS 이관 (Tailwind arbitrary 불안정 해소)
+- `InfoRow` whitespace-nowrap 조건부, contentsArea `min-w-0`, row2Info `w-max`, gap 토큰 정비
+- 1440px+ 폰트 위계 상향, InfoRow gap 120px, SNS 아이콘 1600px+ M 사이즈
+- `cookieHref` prop 추가, flatMap key index 기반으로 JA 중복 key 해소
+- `PrivacyRevisionModal` 컴포넌트 추가 (packages/ui), index.ts export 등록
+- `FooterBridge.tsx`: MODAL_CONFIG KO·EN·JA 개정 안내 모달, `policies.cctv` 연결, privacy-cookie URL 주입
+
+#### privacy-cookie 중간 HTML + 개인정보 PDF 추가 (products/homepage)
+- `public/privacy-cookie/ko·en·ja.html`: embed #page 방식으로 Chrome PDF 버그 우회
+- `public/contact-us/` KO·EN·JA 2026-1·2023 버전 PDF 추가
+
+#### i18n ko·en·ja.json 갱신 (products/homepage)
+- `footer.policies.cctv` 번역 키 추가 (ko: "맞춤형 광고 설정" / en: "Personalized Ad Settings" / ja: "パーソナライズ広告の設定")
+- `effectCards[1].title` 갱신 (ko: "AI 자동 결제" / en: "AI Auto Checkout" / ja: "AI自動決済")
+- `contactUs.privacyNotice` 텍스트 개편 + `privacyInfo` 목적·항목·보유기간 키 추가
+- `en.json` AboutManagement CEO·CTO·CSO 학력·경력 줄바꿈 처리
+
+#### ShowcaseSection 유튜브 썸네일 UI 개선 + Shorts 영상 제거 (products/homepage)
+- 썸네일 영역 데스크톱 고정 `w-[672px] h-[520px] flex-none` 적용
+- 썸네일 표시 방식 `object-cover` → `object-contain` + `bg-black` 레터박스
+- 썸네일 wrapper 좌우 2px 클리핑: `inset-0` → `inset-y-0 -left-[2px] -right-[2px]`
+- `youtube-curation.json` exclude에 Shorts 영상 7개 추가
+- `youtube-showcase.json` Shorts 7개 제거 (21개 → 14개)
+
+---
+
 ## [Unreleased] - 2026-07-15
 
 ### 🔄 Changed

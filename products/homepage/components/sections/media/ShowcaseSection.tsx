@@ -35,9 +35,10 @@ function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
     `https://i.ytimg.com/vi/${videoId}/maxresdefault.jpg`,
     `https://i.ytimg.com/vi/${videoId}/hqdefault.jpg`,
   ];
+  // 영상이 바뀌면 다시 maxres부터 시도해야 한다. effect로 setLevel(0)을 하면 렌더가 한 번
+  // 낭비되고(cascading render) 이전 videoId의 fallback 단계가 한 프레임 노출된다.
+  // 호출부에서 key={videoId}를 주어 **재마운트로 리셋**한다 — React 권장 방식.
   const [level, setLevel] = useState(0);
-  // 영상이 바뀌면 다시 maxres부터 시도
-  useEffect(() => setLevel(0), [videoId]);
 
   // 썸네일 모두 실패 시: 깨진 X박스 대신 브랜드 디폴트 이미지(Figma 코멘트 반영)
   if (!videoId || level >= sources.length) {
@@ -59,8 +60,8 @@ function YoutubeThumb({ videoId, alt }: { videoId: string; alt: string }) {
       src={sources[level]}
       alt={alt}
       fill
-      className="object-cover"
-      sizes="(max-width: 1280px) 100vw, 580px"
+      className="object-contain"
+      sizes="(max-width: 1280px) 100vw, 672px"
       onError={() => setLevel((l) => l + 1)}
       onLoad={(e) => {
         // maxresdefault가 없는 영상은 YouTube가 120x90 회색 플레이스홀더를 HTTP 200으로 반환해
@@ -90,6 +91,14 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
   const animatingRef = useRef(false);
   const touchStartX = useRef<number | null>(null);
 
+  const startSlide = (newIdx: number, direction: 1 | -1 = 1) => {
+    if (animatingRef.current) return;
+    animatingRef.current = true;
+    setDir(direction);
+    setNextIdx(newIdx);
+    setAnimating(true);
+  };
+
   // 자동 전환 타이머
   useEffect(() => {
     if (videos.length <= 1) return;
@@ -113,14 +122,6 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
       animatingRef.current = false;
     };
   }, [animating, nextIdx]);
-
-  const startSlide = (newIdx: number, direction: 1 | -1 = 1) => {
-    if (animatingRef.current) return;
-    animatingRef.current = true;
-    setDir(direction);
-    setNextIdx(newIdx);
-    setAnimating(true);
-  };
 
   const move = (d: -1 | 1) =>
     startSlide((index + d + videos.length) % videos.length, d);
@@ -236,7 +237,7 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
       {/* 우: 영상 썸네일 + progressBar — 960px 이하에서 order-1 (상단). 스와이프는 카드 전체에서 처리. */}
       <div
-        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-1 min-[961px]:min-w-0 min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[768px]:h-[335px] max-[768px]:aspect-auto max-[421px]:p-[var(--padding-XL)]">
+        className="relative w-full aspect-square overflow-hidden rounded-b-fai-m p-[var(--padding-2-xl,32px)] min-[961px]:flex-none min-[961px]:w-[min(672px,58.95%)] min-[961px]:aspect-[672/520] min-[961px]:rounded-l-none min-[961px]:rounded-r-fai-m max-[961px]:order-1 max-[961px]:aspect-[960/472] max-[961px]:rounded-t-fai-m max-[961px]:rounded-b-none max-[421px]:p-[var(--padding-XL)]">
 
         {/* 슬라이드 키프레임 */}
         <style>{`
@@ -248,19 +249,19 @@ function YoutubeCard({ channelLabel, ctaLabel, videos, a11y }: YoutubeCardProps)
 
         {/* 현재 이미지 — 애니메이션 시 이동 방향으로 이탈 */}
         <div
-          className="absolute inset-0"
+          className="absolute inset-y-0 -left-[2px] -right-[2px] bg-black"
           style={animating ? { animation: `${outAnim} ${ANIM_MS}ms ease-in-out forwards` } : undefined}
         >
-          <YoutubeThumb videoId={current.videoId} alt={current.thumbnailAlt} />
+          <YoutubeThumb key={current.videoId} videoId={current.videoId} alt={current.thumbnailAlt} />
         </div>
 
         {/* 다음 이미지 — 애니메이션 시 우측 진입 */}
         {animating && nextIdx !== null && (
           <div
-            className="absolute inset-0"
+            className="absolute inset-y-0 -left-[2px] -right-[2px] bg-black"
             style={{ animation: `${inAnim} ${ANIM_MS}ms ease-in-out forwards` }}
           >
-            <YoutubeThumb videoId={videos[nextIdx].videoId} alt={videos[nextIdx].thumbnailAlt} />
+            <YoutubeThumb key={videos[nextIdx].videoId} videoId={videos[nextIdx].videoId} alt={videos[nextIdx].thumbnailAlt} />
           </div>
         )}
 

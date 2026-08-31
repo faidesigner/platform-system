@@ -57,13 +57,18 @@ cd products/homepage
 | **prd** | `s3://www.fainders.ai` (루트) | `E3GUSL3ADNKGFD` | https://www.fainders.ai | 실서비스 컷오버 — 아래 주의 |
 
 공통: region `ap-northeast-2`, 계정 `406460793488`. `out/`의 `*_original.*`(미디어 원본 백업)은 sync에서 항상 제외된다.
+추가 제외 경로는 `deploy/<target>.env` 의 `SYNC_EXCLUDES`(공백 구분)로 지정한다.
 
 #### ⚠️ PRD 배포 전 반드시
 - **CloudFront 함수 비호환**: 라이브 dist의 `rewriteForHomepageSSG` 함수는 `/foo/ → /foo.html` 로 재작성한다.
   새 홈페이지는 `dir/index.html` 구조라, `prd.env` 의 `FLAT_HTML=true` 가 flat `<dir>.html` 을 생성해 호환시킨다.
   (정석은 함수를 `/foo/ → /foo/index.html` 로 바꾸는 것.)
-- **`DELETE=false`(기본)**: 루트에서 `--delete` 는 구 사이트 파일(`company.html`, `assets/`, `career/` 등)을 지운다.
-  완전 컷오버를 원할 때만 `prd.env` 에서 `true` 로. 켜기 전 `aws s3 ls s3://www.fainders.ai/` 로 무엇이 지워질지 확인.
+- **`DELETE=true`(현재 설정)**: 2026-07-20 컷오버 이후 켜져 있다. 루트에서 `--delete` 는 산출물에 없는
+  객체를 지우므로, `prd.env` 를 건드릴 때는 `aws s3 ls s3://www.fainders.ai/` 로 무엇이 지워질지 먼저 확인할 것.
+- **`SYNC_EXCLUDES="homepage_v2/*"` 를 지우지 말 것**: dev 프리뷰가 **같은 버킷의 `homepage_v2/` prefix**에 산다.
+  제외하지 않으면 PRD 배포마다 프리뷰 500여 개 객체가 통째로 삭제되고 dev 재배포로 수동 복구해야 한다.
+  (실제로 2026-08-05 배포 때 그렇게 됐다 — PRD 06:31 → dev 06:34 재배포.)
+  `contact-us/`·`document/` 등은 `public/` 에 있어 산출물에 포함되므로 `--delete` 대상이 아니다.
 - 미디어 영상 최신화가 필요하면 배포 전에 `node scripts/sync-youtube.mjs` 실행(별도 가이드: `docs/youtube-showcase-sync.md`).
 
 ---
@@ -102,6 +107,26 @@ node scripts/optimize-videos.mjs   # public/videos: ≤1080p, H.264 CRF28, 무�
 - 루트(`/`)는 `public/index.html`이 `navigator.languages` 우선순위로 `/ko`·`/en`·`/ja` 리다이렉트(매칭 실패 시 ko).
 - ⚠️ `config/site.ts` `seo` 맵의 `// TODO(marketing)`(en/ja 검색제목·키워드, ja OG제목)은 마케팅 확정 카피로 교체 필요.
 
+### 번역 시트 대조 (`scripts/sync-messages.mjs`)
+
+마케팅 번역 시트 `Homepage text source`와 `messages/{ko,en,ja}.json`의 이격을 검출한다.
+
+```bash
+node scripts/sync-messages.mjs                       # 시트에서 CSV로 받아 대조 (인증 불필요)
+node scripts/sync-messages.mjs --fixture <dir>       # 로컬 CSV로 대조 (오프라인)
+node scripts/sync-messages.mjs --save-fixture <dir>  # 받은 CSV를 보관
+```
+
+리포트는 `docs/HOM75_diff_<YYYYMMDD>.md`로 저장된다. **messages를 자동 수정하지 않는다** — 시트가 항상 정답이 아니기 때문이다:
+
+- **코드가 확정안**인 항목은 `i18n/sheet-decisions.json`에 근거와 함께 선언되어 `C. 코드 확정안`으로 분류된다. 선언값이 실제 messages와 어긋나면 `i18n/sheetDecisions.test.ts`가 실패한다.
+  `loadDecisionSet()`은 `(key, locale)`만 조회 키로 쓰고 `codeValue`는 버린다. 그래서 코드 값이 나중에 바뀌어도 선언은 계속 `DECIDED`를 반환하고, **그때부터 도구가 실제 이격을 조용히 숨긴다.** 그 상태를 막는 게 위 테스트다 — 선언을 추가·수정할 때 `codeValue`를 실제 값과 맞춰라.
+- 시트에는 `언어 전환시 미노출` 같은 **지시문 셀**이 섞여 있어 `D. 지시문 셀`로 걸러진다. 그대로 반영하면 화면에 한국어 지시문이 노출된다.
+- **ja는 ko의 번역이 아니다.** 일본 시장용 콘텐츠 변형이 포함된다(예: 카메라 대수, 관리시스템 소구).
+- ko 원문을 조인 키로 쓰므로, 같은 ko가 여러 키에 걸리면 `B. 중복매칭`으로 표시된다. 확인 없이 반영하면 다른 키의 번역이 잘못 복사된다.
+
+반영 후 `pnpm test`(특히 `i18n/messageConsistency.test.ts`, `i18n/sheetDecisions.test.ts`)를 반드시 통과시킬 것.
+
 ## 문의 폼 (Zapier)
 
 - `ContactUsSection` 제출 시 라이브 `contact-us`와 동일한 Zapier 웹훅으로 전송.
@@ -112,6 +137,7 @@ node scripts/optimize-videos.mjs   # public/videos: ≤1080p, H.264 CRF28, 무�
 
 - **vitest** (`pnpm test`) — jsdom + @testing-library/react.
 - 커버리지: 순수 로직(`buildEvent`/`trackEvent`/`buildContactPayload`/`parseUtm`) 단위 + 문의 폼 제출 대표 흐름.
+- i18n 가드: `i18n/messageConsistency.test.ts`(ko/en/ja 키 동기 + 오배치 번역 검출), `i18n/sheetDecisions.test.ts`(시트 확정안 선언이 실제 messages와 일치하는지).
 - jsdom 공용 폴리필(`scrollIntoView`/`scrollTo`)은 `vitest.setup.ts`.
 - ⚠️ `pnpm lint`는 현재 `eslint-config-next` ↔ `@eslint/eslintrc` 순환참조로 깨져 있음(사전 이슈). 커밋 게이트는 `pnpm build && pnpm test`.
 

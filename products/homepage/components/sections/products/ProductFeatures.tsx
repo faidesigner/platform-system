@@ -149,7 +149,7 @@ export default function ProductFeatures({ title, features }: ProductFeaturesProp
             return (
               <article
                 key={i}
-                className={`fai-card-01${i === 0 ? " fai-card-0" : " fai-card-1"} relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary`}
+                className={`fai-card-01 ${i === 0 ? "fai-card-0" : "fai-card-1"} relative flex flex-col items-start gap-[10px] h-[640px] p-[var(--size-48)] rounded-fai-m flex-1 bg-sand-filled-tertiary`}
                 style={{
                   '--fai-card-img': `url(${feature.image})`,
                   backgroundImage: `url(${feature.image})`,

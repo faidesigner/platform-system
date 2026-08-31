@@ -8,6 +8,7 @@
  *   ≤ 960px → .fai-footer__compact
  */
 
+import { useState, useEffect } from 'react';
 import Image from 'next/image';
 import { ScrollTopButton } from '../ScrollTopButton';
 import './footer.css';
@@ -51,11 +52,15 @@ const VALUES = {
   email:   'contact@fainders.ai',
 };
 
-// 정책 문서(PDF) — 저장소에 자체 호스팅(public/document/). 상대경로라 환경 독립(프리뷰·PRD 모두 동작).
-// 기존 /privacy·/cctv-policy 는 존재하지 않는 경로라 404였음.
-const POLICY_HREFS = {
-  privacy: '/document/privacy-policy.pdf',
-};
+// 정책 문서 경로는 **소비자가 주입한다**(privacyHref / cookieHref) — @fai/ui는 로케일을 모른다.
+//
+// 하드코딩 폴백을 두지 않는 이유(HOM-101): 과거 `privacy: '/document/privacy-policy.pdf'` 상수가
+// 있었고, 이는 **구버전 한국어 PDF**였다. en·ja에서 개정 안내 모달을 끄자 이 폴백으로 떨어져
+// 일본·영어 사용자에게 한국어 문서가 열렸다 (2026-08-28 Hyeyoung Shin 지적).
+// 폴백은 "조용히 틀린 문서"를 만든다 — 미주입이면 아예 링크를 렌더하지 않는 편이 안전하다.
+//
+// cctv(영상정보처리기기 운영·관리 방침)도 같은 이유로 상수를 제거했다 — HOM-61에서 푸터에서
+// 제거됐는데 폴백이 남아 있으면 되살아난다(2026-07-28 김성태).
 
 /**
  * Footer 라벨 세트 — i18n 비결합(@fai/ui는 next-intl을 import하지 않음).
@@ -71,6 +76,8 @@ export interface FooterLabels {
   bizNo?:        string;
   email?:        string;
   privacy?:      string;
+  /** '맞춤형 광고 설정' 라벨. HOM-61에서 제거된 cctv 슬롯을 재활용한 것이 아니라 별개 항목이다. */
+  adSettings?:   string;
   /** 대표이사 값(로케일별, 인명이라 로케일에 따라 표기가 달라짐). 미지정 시 한국어 기본값 사용. */
   ceoValue?:     string;
   /**
@@ -91,6 +98,7 @@ const DEFAULT_LABELS: Required<FooterLabels> = {
   bizNo:        '사업자등록번호',
   email:        '이메일 문의',
   privacy:      '개인정보 처리방침',
+  adSettings:   '맞춤형 광고 설정',
   ceoValue:     VALUES.ceo,
   telValue:     VALUES.tel,
   emailValue:   VALUES.email,
@@ -110,8 +118,8 @@ function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void
           onClick={() => onSocialClick?.(sns.label)}
           className="flex flex-col items-center justify-center rounded-full p-[var(--padding-XS)] bg-filled-optional-brand-secondaryBtn"
         >
-          <span className="flex items-center justify-center w-4 h-4">
-            <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden className="text-secondary">
+          <span className="flex items-center justify-center w-4 h-4 min-[1600px]:w-5 min-[1600px]:h-5">
+            <svg width="100%" height="100%" viewBox="0 0 16 16" fill="none" aria-hidden className="text-secondary">
               {sns.path}
             </svg>
           </span>
@@ -121,18 +129,25 @@ function SnsButtons({ onSocialClick }: { onSocialClick?: (label: string) => void
   );
 }
 
-type PolicyItem = { label: string; href: string };
+type PolicyItem = { label: string; href?: string; onClick?: () => void };
 
 /* ── 정책 링크 공용 ── */
 function PolicyLinks({ policies, className }: { policies: PolicyItem[]; className?: string }) {
+  const linkCls = 'text-body-s min-[1440px]:text-body font-normal text-text-basic-secondary leading-[150%]';
   return (
     <div className={`flex items-center gap-m ${className ?? ''}`}>
       {policies.map((p, i) => (
-        <span key={p.href} className="flex items-center gap-m">
+        <span key={p.label} className="flex items-center gap-m">
           {i > 0 && <span className="text-border-secondary">|</span>}
-          <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
-            {p.label}
-          </a>
+          {p.onClick ? (
+            <button type="button" onClick={p.onClick} className={`${linkCls} cursor-pointer`}>
+              {p.label}
+            </button>
+          ) : (
+            <a href={p.href} target="_blank" rel="noopener noreferrer" className={linkCls}>
+              {p.label}
+            </a>
+          )}
         </span>
       ))}
     </div>
@@ -141,17 +156,19 @@ function PolicyLinks({ policies, className }: { policies: PolicyItem[]; classNam
 
 /* ── 회사 정보 행 공용 (desktop row1·row2 동일 구조) ── */
 // grid-cols-[max-content_1fr]: 타이틀 컬럼이 해당 그룹 내 가장 긴 라벨에 맞게 자동 조정.
-// 고정 px 폭 없이 KO·EN·JA 모든 언어에서 줄바꿈 없이 1행 보장.
+// 값(value) 컬럼의 whitespace-nowrap은 noWrapValue=true인 항목(사업자번호·이메일·전화 등
+// 코드성 문자열)에만 적용한다. 주소처럼 길어질 수 있는 값은 줄바꿈을 허용해야
+// KO·EN·JA 모든 언어에서 패딩 영역 밖으로 텍스트가 넘치지 않는다.
 function InfoRow({ items, className }: { items: { title: string; text: string; noWrapValue?: boolean }[]; className?: string }) {
   return (
     <div className={`grid grid-cols-[max-content_1fr] gap-y-s gap-x-2xl ${className ?? ''}`}>
-      {items.flatMap((item) => [
-        <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+      {items.flatMap((item, i) => [
+        <span key={`${i}-t`} className="text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
           {item.title}
         </span>,
         <span
-          key={`${item.title}-v`}
-          className={`text-[13px] font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
+          key={`${i}-v`}
+          className={`text-body-s min-[1440px]:text-body font-normal text-text-basic-primary leading-[20px] ${item.noWrapValue ? 'whitespace-nowrap' : ''}`}
         >
           {item.text}
         </span>,
@@ -160,6 +177,31 @@ function InfoRow({ items, className }: { items: { title: string; text: string; n
   );
 }
 
+/** compact 레이아웃의 정보 그리드. 본사와 추가 법인이 공유한다(HOM-101). */
+function CompactInfoGrid({ items }: { items: { title: string; text: string }[] }) {
+  return (
+    <div className="grid grid-cols-[max-content_1fr] gap-y-ms gap-x-2xl w-full">
+      {items.flatMap((item, i) => [
+        <span key={`${i}-t`} className="text-body-s font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
+          {item.title}
+        </span>,
+        <span key={`${i}-v`} className="text-body-s font-normal text-text-basic-primary leading-[20px]">
+          {item.text}
+        </span>,
+      ])}
+    </div>
+  );
+}
+
+/**
+ * 법인명 헤더 클래스. 본사와 추가 법인(extraEntity)이 **같은 상수를 공유**해야 한다 —
+ * JP-BD 요청("한국 법인과 동일하게 볼드처리")을 문자열 복사로 맞추면 한쪽만 바뀌어 어긋난다.
+ * desktop은 1440px 이상에서 한 단계 크고, compact는 고정이라 둘을 분리한다.
+ */
+const ENTITY_NAME_CLS_DESKTOP =
+  'text-body min-[1440px]:text-body-l font-bold text-text-basic-primary leading-[150%]';
+const ENTITY_NAME_CLS_COMPACT = 'text-body font-bold text-text-basic-primary leading-[150%]';
+
 /* ── Component ── */
 
 /** 추가 정보 행(로케일 전용). 소비자가 무엇을 덧붙일지 결정한다 — @fai/ui는 로케일을 모른다. */
@@ -167,6 +209,20 @@ export interface FooterInfoRow {
   title: string;
   text: string;
   noWrapValue?: boolean;
+}
+
+/**
+ * 별도 법인 블록(HOM-101). 본사 블록과 **동일한 구조**로 렌더된다 — 볼드 법인명 헤더 + 하위 정보 행.
+ *
+ * 왜 `extraInfo`(평평한 행)로 부족한가: 일본 법인을 `日本法人 | 株式会社…` 처럼 라벨-값 한 행으로
+ * 넣으면 본사 정보와 위계가 달라 보인다. JP-BD 요청이 정확히 그 지점이었다 —
+ * "법인명(日本法人도 삭제)을 한국 법인과 동일하게 볼드처리하고 같은 위치에 정렬"
+ * (2026-08-28 Hyeyoung Shin). 그래서 '법인'을 1급 개념으로 올렸다.
+ */
+export interface FooterEntity {
+  /** 볼드 헤더로 렌더될 법인명. 라벨을 붙이지 않는다. */
+  name: string;
+  rows: readonly FooterInfoRow[];
 }
 
 interface FooterProps {
@@ -182,6 +238,34 @@ interface FooterProps {
    * 로케일 판단은 소비자(FooterBridge)가 하고 여기서는 받은 행을 그대로 렌더한다.
    */
   extraInfo?: readonly FooterInfoRow[];
+  /**
+   * 본사와 별개인 법인 블록(HOM-101). ja의 일본 법인에 쓰인다.
+   * 본사 블록과 같은 구조(볼드 법인명 + 정보 행)로 렌더되어 위계가 맞는다.
+   */
+  extraEntity?: FooterEntity;
+  /**
+   * 개인정보 처리방침 문서 경로(로케일별). `privacyModalContent`가 없을 때 이 링크로 이동한다.
+   * **미지정 시 링크 자체를 렌더하지 않는다** — 틀린 문서로 보내느니 없는 편이 낫다(HOM-101).
+   */
+  privacyHref?: string;
+  /**
+   * 개인정보 처리방침 클릭 시 표시할 모달 콘텐츠 팩토리(로케일별).
+   * 소비자(FooterBridge)가 `(onClose) => ReactNode` 형태로 주입한다.
+   * onClose는 Footer의 setModalOpen(false)를 래핑하므로, 내부 확인 버튼에 연결하면 된다.
+   * 미지정 시 기존 PDF 링크(POLICY_HREFS.privacy)로 폴백.
+   */
+  privacyModalContent?: (onClose: () => void) => React.ReactNode;
+  /**
+   * '맞춤형 광고 설정' 클릭 시 이동할 URL(로케일별).
+   * 소비자(FooterBridge)가 locale별 개인정보 처리방침 2조 5항 페이지를 주입한다.
+   * **미지정 시 해당 행을 렌더하지 않는다** — 폴백 링크를 두면 갈 곳 없는 항목이 노출된다.
+   */
+  cookieHref?: string;
+  /**
+   * EN·JA처럼 콘텐츠 영역이 넓은 로케일에서 로고↔콘텐츠 최소 여백 80px 보장 +
+   * 여백을 유지할 수 없는 시점(≤1100px)부터 compact 레이아웃으로 전환.
+   */
+  wideCompact?: boolean;
 }
 
 export default function Footer({
@@ -190,13 +274,37 @@ export default function Footer({
   showEmail = true,
   showBizNo = true,
   extraInfo = [],
+  extraEntity,
+  privacyHref,
+  privacyModalContent,
+  cookieHref,
+  wideCompact = false,
 }: FooterProps = {}) {
+  const [modalOpen, setModalOpen] = useState(false);
+
+  // 모달 열릴 때 body 스크롤 잠금 (position:fixed 방식 — Safari 포함 전 브라우저 호환)
+  useEffect(() => {
+    if (!modalOpen) return;
+    const scrollY = window.scrollY;
+    document.body.style.position = 'fixed';
+    document.body.style.top = `-${scrollY}px`;
+    document.body.style.width = '100%';
+    return () => {
+      document.body.style.position = '';
+      document.body.style.top = '';
+      document.body.style.width = '';
+      window.scrollTo(0, scrollY);
+    };
+  }, [modalOpen]);
+
   const l = { ...DEFAULT_LABELS, ...labels };
 
   const companyName = l.company;
   const row1Info = [
     { title: l.ceo,     text: l.ceoValue },
-    { title: l.tel,     text: l.telValue },
+    // 전화번호도 코드성 문자열이라 중간 줄바꿈 금지(HOM-94). logoArea에 shrink-0를 넣어
+    // 축소 압력이 콘텐츠로 오게 되자 ja에서 `+82-2-6191-` / `0049` 로 끊겼다.
+    { title: l.tel,     text: l.telValue, noWrapValue: true },
     { title: l.address, text: l.addressValue },
   ];
   // 사업자번호·이메일은 값 자체가 코드성 문자열이라, 라벨이 길어져도(예: ja "事業者登録番号（韓国）")
@@ -206,61 +314,75 @@ export default function Footer({
     ...(showEmail ? [{ title: l.email, text: l.emailValue, noWrapValue: true }] : []),
     ...extraInfo,
   ];
+  // 개정 안내 모달이 주입된 로케일(ko)은 모달, 그 외(en·ja)는 로케일 문서로 직행한다(HOM-101).
+  // 둘 다 없으면 링크를 만들지 않는다 — 폴백으로 한국어 문서를 열던 회귀를 구조적으로 막는다.
+  const privacyPolicy: PolicyItem | null = privacyModalContent
+    ? { label: l.privacy, onClick: () => setModalOpen(true) }
+    : privacyHref
+      ? { label: l.privacy, href: privacyHref }
+      : null;
   const policies: PolicyItem[] = [
-    { label: l.privacy, href: POLICY_HREFS.privacy },
+    ...(privacyPolicy ? [privacyPolicy] : []),
+    ...(cookieHref ? [{ label: l.adSettings, href: cookieHref }] : []),
   ];
 
   return (
-    <footer className="relative w-full bg-bg-200">
+    <footer className={`relative w-full bg-bg-200 ${wideCompact ? 'fai-footer--wide' : ''}`}>
 
-      {/* 스크롤 버튼 — 절대 위치, > 960px 에서만 표시 */}
-      <div className="fai-footer__scroll-top absolute bottom-[var(--size-56)] right-[var(--size-56)] z-10">
+      {/* 스크롤 버튼 — 절대 위치, desktop compact 미만에서 숨김(footer.css) */}
+      <div className="fai-footer__scroll-top absolute bottom-4xl right-4xl z-10">
         <ScrollTopButton />
       </div>
 
       <div className="w-full">
 
         {/* =====================================================
-            1. 데스크톱 섹션 (> 960px)
+            1. 데스크톱 섹션 (> 1280px KO / > 1100px EN·JA)
             ===================================================== */}
-        <div className="fai-footer__desktop flex w-full flex-row items-start justify-between py-4xl px-[var(--padding-8XL)]">
+        <div className="fai-footer__desktop flex w-full flex-row justify-between items-start py-4xl">
 
           {/* logoArea */}
-          <div className="flex flex-col items-start justify-between self-stretch gap-6">
+          <div className="fai-footer__logo-area flex flex-col items-start justify-between self-stretch gap-xl shrink-0" style={{ paddingRight: 'var(--spacing-5XL, 80px)' }}>
             <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             <SnsButtons onSocialClick={onSocialClick} />
           </div>
 
-          {/* contentsArea */}
-          <div className="flex flex-col items-start pt-[var(--spacing-MS)] px-[var(--spacing-MS)] pb-0 gap-[var(--size-48)]">
-            <div className="flex flex-col items-start w-[718px] max-w-full gap-[var(--size-48)]">
-              <div className="flex flex-col gap-[var(--spacing-MS)]">
-                <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                  {companyName}
-                </p>
-                <div className="flex flex-row justify-between items-start gap-[var(--size-80)] self-stretch">
-                  <InfoRow items={row1Info} />
-                  <InfoRow items={row2Info} className="w-[256px]" />
+          {/* contentsArea — gap·min-w-0 (footer.css) */}
+          <div className="fai-footer__contents flex flex-col items-start pt-ms min-w-0">
+            <div className="fai-footer__contents-inner flex flex-col items-start">
+              <div className="flex flex-col gap-xl">
+                <div className="flex flex-col gap-ms">
+                  <p className={ENTITY_NAME_CLS_DESKTOP}>{companyName}</p>
+                  <div className="flex flex-row justify-between items-start gap-5xl min-[1440px]:gap-7xl self-stretch">
+                    <InfoRow items={row1Info} className="min-w-0 shrink" />
+                    <InfoRow items={row2Info} className="w-max shrink-0" />
+                  </div>
                 </div>
+
+                {/* 추가 법인(HOM-101) — 본사와 동일한 구조·클래스로 위계를 맞춘다 */}
+                {extraEntity && (
+                  <div className="flex flex-col gap-ms">
+                    <p className={ENTITY_NAME_CLS_DESKTOP}>{extraEntity.name}</p>
+                    <InfoRow items={[...extraEntity.rows]} className="min-w-0 shrink" />
+                  </div>
+                )}
+                {/* 정책 링크 — contentsArea 내부 (fai-footer__desktop 섹션이 ≤960px에서 숨겨짐) */}
+                <PolicyLinks policies={policies} />
               </div>
             </div>
           </div>
 
         </div>
 
-        {/* 데스크톱 정책 링크 */}
-        <div className="fai-footer__desktop-policies px-[var(--padding-8XL)] pb-4xl">
-          <PolicyLinks policies={policies} />
-        </div>
 
         {/* =====================================================
-            2. Compact 섹션 (≤ 960px)
+            2. Compact 섹션 (≤ 1280px KO / ≤ 1100px EN·JA)
             ===================================================== */}
         <div className="fai-footer__compact">
 
           {/* logoArea */}
           <div className="fai-footer__compact-top flex justify-between items-center self-stretch w-full">
-            <div className="fai-footer__logo">
+            <div className="fai-footer__logo shrink-0">
               <Image src="/logos/logoFaindersai-b.svg" alt="Fainders.AI" width={203} height={38} />
             </div>
             <div className="fai-footer__socials">
@@ -269,35 +391,37 @@ export default function Footer({
           </div>
 
           {/* contentsArea */}
-          <div className="flex flex-col items-start self-stretch w-full pt-[var(--padding-ml,18px)] pr-[var(--padding-ms,12px)] pb-[var(--padding-none,0px)] pl-[var(--padding-ms,12px)] gap-[var(--spacing-3XL,40px)]">
+          <div className="flex flex-col items-start self-stretch w-full pt-ml gap-3xl">
 
             {/* companyInfo */}
-            <div className="fai-footer__info flex flex-col items-start gap-[var(--spacing-MS,12px)]">
-              <p className="text-body font-bold text-text-basic-primary leading-[150%]">
-                {companyName}
-              </p>
-              <div className="grid grid-cols-[max-content_1fr] gap-y-[var(--spacing-MS,12px)] gap-x-2xl w-full">
-                {[...row1Info, ...row2Info].flatMap((item) => [
-                  <span key={`${item.title}-t`} className="text-[13px] font-normal text-text-basic-primary leading-[20px] whitespace-nowrap">
-                    {item.title}
-                  </span>,
-                  <span key={`${item.title}-v`} className="text-[13px] font-normal text-text-basic-primary leading-[20px]">
-                    {item.text}
-                  </span>,
-                ])}
-              </div>
+            <div className="fai-footer__info flex flex-col items-start gap-ms">
+              <p className={ENTITY_NAME_CLS_COMPACT}>{companyName}</p>
+              <CompactInfoGrid items={[...row1Info, ...row2Info]} />
             </div>
 
+            {/* 추가 법인(HOM-101) — 본사와 동일한 구조 */}
+            {extraEntity && (
+              <div className="fai-footer__info flex flex-col items-start gap-ms">
+                <p className={ENTITY_NAME_CLS_COMPACT}>{extraEntity.name}</p>
+                <CompactInfoGrid items={[...extraEntity.rows]} />
+              </div>
+            )}
+
             {/* policies */}
-            <div className="fai-footer__policies flex justify-end items-center gap-[var(--spacing-MS,12px)]">
-              {policies.map((p, i) => (
-                <span key={p.href} className="flex items-center gap-m">
-                  {i > 0 && <span className="text-border-secondary">|</span>}
-                  <a href={p.href} target="_blank" rel="noopener noreferrer" className="text-body-s font-normal text-text-basic-secondary leading-[150%]">
-                    {p.label}
-                  </a>
-                </span>
-              ))}
+            <div className="fai-footer__policies flex justify-end items-center gap-ms">
+              {policies.map((p, i) => {
+                const cls = 'text-body-s font-normal text-text-basic-secondary leading-[150%]';
+                return (
+                  <span key={p.label} className="flex items-center gap-m">
+                    {i > 0 && <span className="text-border-secondary">|</span>}
+                    {p.onClick ? (
+                      <button type="button" onClick={p.onClick} className={`${cls} cursor-pointer`}>{p.label}</button>
+                    ) : (
+                      <a href={p.href} target="_blank" rel="noopener noreferrer" className={cls}>{p.label}</a>
+                    )}
+                  </span>
+                );
+              })}
             </div>
 
           </div>
@@ -305,6 +429,29 @@ export default function Footer({
         </div>
 
       </div>
+
+      {/* ── 개인정보 처리방침 개정 안내 모달 ──
+          스크림: Tailwind 클래스 미의존 — overflow:hidden으로 스크롤 컨테이너가 되지 않게 해야
+          InfoItem의 wheel 이벤트가 가로채이지 않고 InfoItem 자체가 스크롤됨.
+          딤 클릭 닫힘 없음(onClick 미부여).
+      */}
+      {modalOpen && privacyModalContent && (
+        <div
+          style={{
+            position: 'fixed',
+            top: 0, right: 0, bottom: 0, left: 0,
+            zIndex: 50,
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            overflow: 'hidden',
+            background: 'var(--color-bg-scrim, rgba(0, 0, 0, 0.52))',
+          }}
+        >
+          {privacyModalContent(() => setModalOpen(false))}
+        </div>
+      )}
+
     </footer>
   );
 }

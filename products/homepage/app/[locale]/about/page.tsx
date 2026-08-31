@@ -38,11 +38,31 @@ export default async function AboutPage({
   const t = await getTranslations("about");
   const tA11y = await getTranslations("common.a11y");
 
-  const heroTitle = aboutConfig.hero.title.map((_, i) => t(`hero.title.${i}`));
+  /**
+   * 줄 배열은 **메시지 쪽 길이**를 따라야 한다 (HOM-75).
+   *
+   * 예전에는 `aboutConfig.<...>.map((_, i) => t(\`...\${i}\`))` 처럼 **ko 기준 config 길이**로
+   * 반복했다. 로케일별로 줄 수가 다르면 없는 인덱스를 조회하게 되고, next-intl은 그때
+   * **키 이름을 그대로 렌더**한다 — 화면에 `about.partners.description.1` 이 노출됐다
+   * (2026-08-31, en 카피가 시트에서 두 줄 → 한 줄로 바뀐 직후 발생).
+   *
+   * 언어마다 줄 수가 다른 건 자연스럽다. 길이의 근거를 config가 아니라 메시지로 옮긴다.
+   */
+  const lines = (key: string): string[] => {
+    const raw = t.raw(key);
+    if (Array.isArray(raw)) return raw.map(String);
+    // messages JSON이 배열을 객체({"0":…})로 담고 있는 경우도 있다 — 키 순서대로 펼친다.
+    if (raw && typeof raw === "object") {
+      return Object.keys(raw)
+        .sort((a, b) => Number(a) - Number(b))
+        .map((k) => String((raw as Record<string, unknown>)[k]));
+    }
+    return [String(raw)];
+  };
 
-  const partnersDescription = aboutConfig.partners.description.map((_, i) =>
-    t(`partners.description.${i}`),
-  );
+  const heroTitle = lines("hero.title");
+
+  const partnersDescription = lines("partners.description");
 
   const investorGroups = aboutConfig.investors.groups.map((group, i) => ({
     ...group,
@@ -56,8 +76,8 @@ export default async function AboutPage({
       name,
       // photo.alt는 config에 "<한글 이름> <role>"로 고정돼 있어 name만 치환하면 인명 로케일이 깨짐 → 번역된 이름으로 재조합.
       photo: { ...member.photo, alt: `${name} ${member.role}` },
-      education: member.education.map((_, j) => t(`management.members.${i}.education.${j}`)),
-      career: member.career.map((_, j) => t(`management.members.${i}.career.${j}`)),
+      education: lines(`management.members.${i}.education`),
+      career: lines(`management.members.${i}.career`),
     };
   });
 

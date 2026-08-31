@@ -66,8 +66,10 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
         ([entry]) => {
           if (entry.isIntersecting) {
             if (!pendingQueue.includes(i)) {
-              const at = pendingQueue.findIndex(q => q > i);
-              at === -1 ? pendingQueue.push(i) : pendingQueue.splice(at, 0, i);
+              // 큐를 인덱스 오름차순으로 유지한다 — 스크롤 방향과 무관하게 위→아래 순서로 등장시키기 위함
+              const at = pendingQueue.findIndex((q) => q > i);
+              if (at === -1) pendingQueue.push(i);
+              else pendingQueue.splice(at, 0, i);
             }
             if (!timer) processNext();
             observer.disconnect();
@@ -101,7 +103,10 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
               className="flex flex-col items-start w-full tablet:flex-1 p-xl desktop-s:p-4xl gap-[10px] rounded-fai-s bg-fill-faint"
             >
               <div className="flex flex-col items-center self-stretch gap-[var(--size-48)]">
-                <h3 className="text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary">
+                <h3
+                className={`flex justify-center text-body tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-center text-primary h-[3rem] tablet:h-[3.75rem] desktop-s:h-[4.5rem] desktop:h-[4.875rem] ${i === 0 ? 'items-center -mx-xl desktop-s:-mx-4xl' : 'items-start'}`}
+                style={i === 0 ? { whiteSpace: 'pre-wrap' } : undefined}
+              >
                   {card.title}
                 </h3>
                 <div
@@ -112,7 +117,10 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 >
                   <EffectGraphic name={card.icon as import('@fai/ui/components/common/Icon/EffectGraphic').EffectIconKey} />
                 </div>
-                <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary">
+                {/* whitespace-pre-line: 번역문의 개행을 **지정한 위치에서** 끊는다.
+                    없으면 CJK는 컨테이너 폭에 따라 임의 위치에서 자동 줄바꿈된다 — 2줄로는 보이지만
+                    시트가 의도한 줄 나눔이 아니다(2026-08-31 일본팀 지적). */}
+                <p className="text-body-xs tablet:text-body-ms desktop-s:text-body font-normal text-center text-tertiary whitespace-pre-line">
                   {card.description}
                 </p>
               </div>
@@ -139,7 +147,7 @@ export default function StoreEffects({ title, cards, list }: StoreEffectsProps) 
                 }`}
               >
                 <div className="overflow-hidden flex flex-col items-start self-stretch">
-                  <p className="text-body-ms tablet:text-body desktop-s:text-body-l desktop:text-body-xl font-medium whitespace-pre-wrap text-secondary">
+                  <p className="text-body-ms tablet:text-body desktop-s:text-body-l desktop:text-body-xl font-medium whitespace-pre-line text-secondary">
                     {item.description}
                   </p>
                 </div>

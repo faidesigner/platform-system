@@ -67,7 +67,10 @@ export function AboutPeople({
           >
             <article className="flex flex-col gap-3xl">
               {/* img 720×400, radius16 + 상단 스크림(고정 승인) */}
-              <div className="relative h-[400px] w-[720px] max-[961px]:h-[378px] max-[961px]:w-[680px] max-[421px]:h-[190px] max-[421px]:w-[342px] overflow-hidden rounded-fai-m">
+              {/* 비율 9/5(=1.8) 고정 — 720×400 / 680×378 / 342×190 이 모두 1.8:1이라 기존 디자인 비율 그대로다.
+                  높이를 폭에서 파생시켜야 폭이 줄 때 사진이 찌그러지지 않는다.
+                  min()으로 뷰포트 상한을 걸어 422~703px 구간에서 카드가 화면을 벗어나는 것을 막는다(캐러셀 좌우 패딩 24px×2). */}
+              <div className="relative aspect-[9/5] w-[720px] max-[961px]:w-[min(680px,calc(100vw_-_2_*_var(--padding-XL)))] max-[421px]:w-[min(342px,calc(100vw_-_2_*_var(--padding-XL)))] overflow-hidden rounded-fai-m">
                 <Image
                   src={card.image.src}
                   alt={card.image.alt}
@@ -82,20 +85,23 @@ export function AboutPeople({
               </div>
 
               {/* textBox: 세로 gap-ms */}
-              <div className="flex w-[720px] max-[961px]:w-[680px] max-[421px]:w-[342px] flex-col gap-ms">
+              <div className="flex w-[720px] max-[961px]:w-[min(680px,calc(100vw_-_2_*_var(--padding-XL)))] max-[421px]:w-[min(342px,calc(100vw_-_2_*_var(--padding-XL)))] flex-col gap-ms">
                 <h3 className="text-title-s max-[961px]:text-body-xl max-[421px]:text-body-l desktop:text-title-m font-bold text-primary">
                   {card.title}
                 </h3>
-                {/* description: 이름ㅣ직책 + 라벨, gap-ms */}
-                <div className="flex items-center gap-ms">
-                  <p className="text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
-                    {card.name} ㅣ {card.role}
-                  </p>
-                  {/* 라벨: mint-400 배경 고정 승인, px-s */}
-                  <span className="flex items-center justify-center bg-mint-400 px-s text-body-xs font-medium text-primary">
-                    {card.label}
-                  </span>
-                </div>
+                {/* description: `이름 ㅣ 직책` + 라벨.
+                    라벨은 카드 우측에 고정한다(justify-between). 라벨을 인라인 흐름에 두면
+                    앞 텍스트 길이만큼 밀려 사람마다 위치가 달라진다 — ja 1440px 실측 편차 227px
+                    (홍석범 379 / 왕민권 408 / 박성빈 534 / 이지민 307). HOM-99가 그 건이다.
+
+                    ⚠️ PR #11의 "ㅣ 구분선 간격 통일"(직책↔라벨 사이에도 ㅣ를 넣어 간격을 맞추는 것)과는
+                    한 줄에서 양립하지 않는다. 라벨이 인라인에 있어야 간격이 고정되고,
+                    우측 정렬이어야 위치가 고정된다. 둘 다 만족하려면 라벨을 다음 줄로 내려야 한다
+                    (그러면 ㅣ가 하나만 남아 간격 문제가 사라지고 라벨 x도 0으로 일정) — 디자인 판단 대기. */}
+                <p className="flex items-center justify-between gap-ms text-body max-[421px]:text-body-s desktop:text-body-l text-primary">
+                  <span>{card.name} ㅣ {card.role}</span>
+                  <span className="inline-flex shrink-0 items-center bg-mint-400 px-s text-body-xs font-medium text-primary">{card.label}</span>
+                </p>
               </div>
             </article>
           </a>

@@ -33,7 +33,8 @@
       "email": "이메일 문의"
     },
     "policies": {
-      "privacy": "개인정보 처리방침"
+      "privacy": "개인정보 처리방침",
+      "adSettings": "맞춤형 광고 설정"
     },
     "telValue": "02-6191-0049",
     "emailValue": "contact@fainders.ai"
@@ -41,10 +42,11 @@
   "products": {
     "visionCheckout": {
       "heroSubtitle": "차세대 AI 무인 결제 솔루션",
+      "heroTitle": "VISION CHECK-OUT",
       "featuresTitle": "VCO는 무엇이 다를까요?",
       "features": {
         "0": {
-          "title": "빈틈없이 스캔하는\n14대의 AI 카메라",
+          "title": "빈틈없이 스캔하는\n7대의 AI 카메라",
           "description": "국내 유일 멀티뷰 3D 인식 기술을 적용했어요"
         },
         "1": {
@@ -53,7 +55,7 @@
         },
         "2": {
           "title": "오차없이 정확한\n99.9% 인식률",
-          "description": "타사 대비 월등한 성능으로\n1초면 스캔 완료되는 압도적인 속도로 처리해요"
+          "description": "경쟁사 대비 압도적인 속도로, 스캔 완료까지 1초면 충분해요"
         }
       },
       "benefitsTitle": "어떻게 달라질까요?",
@@ -96,7 +98,7 @@
             },
             "1": {
               "subtitle": "디지털 소외 없는 언택트 환경",
-              "description": "키오스크 사용을 어려워하는 고객부터 셀프 결제를 원하는 고객까지\n누구에게나 쉽고, 모두에게 빠른 결제"
+              "description": "키오스크 사용을 어려워하는 고객부터 셀프 결제를 원하는 고객까지 누구에게나 쉽고, 모두에게 빠른 결제"
             }
           }
         }
@@ -168,6 +170,7 @@
     },
     "unmannedStore": {
       "heroSubtitle": "세상에서 가장 경제적인 무인 매장 솔루션",
+      "heroTitle": "What is WALK-THROUGH?",
       "effectsTitle": "WALK-THROUGH의 효과를 경험해 보세요",
       "effectCards": {
         "0": {
@@ -175,7 +178,7 @@
           "description": "최소 인력으로 운영해요"
         },
         "1": {
-          "title": "결제 무인화",
+          "title": "AI 자동 결제",
           "description": "바코드를 찍을 필요 없어요"
         },
         "2": {
@@ -194,7 +197,7 @@
         },
         "2": {
           "title": "오프라인 고객 데이터 분석",
-          "description": "고객이 선택한 상품을 카메라로 추적하고 자동으로 결제까기 이루어지는\n완전한 결제 무인화 시스템을 적용했어요"
+          "description": "고객이 선택한 상품을 카메라로 추적하고 자동으로 결제까지 이루어지는\n완전한 결제 무인화 시스템을 적용했어요"
         }
       },
       "storeTypes": {
@@ -205,7 +208,7 @@
           "cards": {
             "0": {
               "title": "간편한 고객 경험",
-              "description": "결제줄 없이, 바코드 인식도 없이, 가장 간편한 고객 경험을 제공합니다."
+              "description": "결제줄 없이, 바코드 인식도 없이, 가장 간편한 고객 경험을 제공합니다"
             },
             "1": {
               "title": "검증된 정확도",
@@ -242,34 +245,40 @@
           "0": {
             "brand": "GS25 DX LAB",
             "store": "가산스마트점",
-            "description": "국내 최초 로드샵형 완전 무인화 편의점\n아시아 최초 통합로드셀 기술 도입"
+            "description": "국내 최초 로드샵형 완전 무인화 편의점\n아시아 최초 통합로드셀 기술 도입",
+            "date": "‘23.10"
           },
           "1": {
             "brand": "Super Swift",
             "store": "자체 운영 매장",
-            "description": "자체 운영 매장\n국내 최초 후결제 CX도입"
+            "description": "자체 운영 매장\n국내 최초 후결제 CX 도입",
+            "date": "‘23.06"
           },
           "2": {
             "brand": "나주 테크프렌들리",
             "store": "CU 안심스마트점포",
-            "description": "KISA 본원 테스트 점포"
+            "description": "KISA 본원 테스트 점포",
+            "date": "‘23.06"
           },
           "3": {
             "brand": "판교 Alphadom",
             "store": "\"Worker Shop\"",
-            "description": "\"Shadow\" 편집샵"
+            "description": "\"Shadow\" 편집샵",
+            "date": "22.10"
           }
         },
         "micro": {
           "0": {
             "brand": "PX24",
             "store": "을지로점",
-            "description": "피트니스 센터 내 위치한\n24/7운영의 5평 규모 무인매장"
+            "description": "피트니스 센터 내 위치한\n24/7운영의 5평 규모 무인매장",
+            "date": "‘24.08"
           },
           "1": {
             "brand": "PX24",
             "store": "화곡점",
-            "description": "피트니스 센터 내 위치한\n3.5평 규모 초소형 무인매장"
+            "description": "피트니스 센터 내 위치한\n3.5평 규모 초소형 무인매장",
+            "date": "‘25.02"
           }
         }
       }
@@ -312,7 +321,7 @@
       "title": "Customers"
     },
     "efficiency": {
-      "title": "Efficiency",
+      "title": "Key Numbers",
       "subtitle": "숫자로 증명된 압도적 퍼포먼스, 매장의 기준을 바꿉니다",
       "stats": {
         "0": {
@@ -413,7 +422,7 @@
       }
     },
     "people": {
-      "title": "People",
+      "title": "Team",
       "subtitle": "파인더스에이아이의 멤버들을 만나보세요",
       "cards": {
         "0": {
@@ -422,7 +431,7 @@
           "role": "CTO"
         },
         "1": {
-          "title": "문제를 피하지 않고 끝까지 해결하는 사람들과 함께",
+          "title": "문제를 피하지 않고 끝까지 해결하는 사람들과 함께해요",
           "name": "왕민권",
           "role": "CEO"
         },
@@ -679,9 +688,20 @@
       "selectTitle": "문의하고 싶은 정보를 선택해 주세요",
       "submitLabel": "문의하기",
       "privacyNotice": {
-        "before": "귀하의 문의에 답변하기 위해 수집된 데이터의 ",
+        "before": "[필수] 개인정보 수집・",
         "link": "개인정보 처리방침",
-        "after": "에 동의합니다"
+        "after": "에 동의합니다",
+        "errorMessage": "개인정보 처리방침에 동의해 주세요."
+      },
+      "privacyInfo": {
+        "purposeLabel": "- 목적 :",
+        "purpose": "문의 접수 및 회신, 도입 상담 진행",
+        "itemsLabel": "- 항목 :",
+        "itemsRequired": "(필수) 회사명, 성함, 이메일",
+        "itemsOptional": "(선택) 전화번호, 관심 제품 및 업종",
+        "retentionLabel": "- 보유기간 :",
+        "retention": "문의 처리 완료 후 1년",
+        "refusal": "동의를 거부하실 수 있으나, 거부 시 문의·상담 서비스 이용이 제한됩니다."
       }
     },
     "fields": {

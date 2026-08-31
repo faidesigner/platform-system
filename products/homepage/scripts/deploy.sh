@@ -48,6 +48,22 @@ echo "▶ 빌드..."
 echo "▶ 모바일 가로 오버플로우 검사..."
 ( cd "$HERE" && node scripts/check-mobile-overflow.mjs )
 
+# 데스크톱 footer 레이아웃 게이트 — 로고 축소·회사명 접촉·전화번호 줄바꿈 시 배포 중단(HOM-94).
+echo "▶ 데스크톱 footer 레이아웃 검사..."
+( cd "$HERE" && node scripts/check-footer-layout.mjs )
+
+# About 인물 카드 레이아웃 게이트 — 라벨 우측 정렬 편차·카드 화면 이탈·이미지 비율(HOM-98/99).
+echo "▶ About 인물 카드 레이아웃 검사..."
+( cd "$HERE" && node scripts/check-about-layout.mjs )
+
+# 번역 키 노출 게이트 — next-intl이 메시지를 못 찾으면 키 이름을 화면에 렌더한다(HOM-75).
+echo "▶ 번역 키 노출 검사..."
+( cd "$HERE" && node scripts/check-i18n-keys.mjs )
+
+# 루트 산출물 게이트 — Meta 도메인 인증·언어 감지 리다이렉트 유실 시 배포 중단(PR #11 사고).
+echo "▶ 루트 산출물(out/index.html) 무결성 검사..."
+( cd "$HERE" && node scripts/check-root-html.mjs )
+
 # noindex 주입(프리뷰 색인 방지)
 if [ "$NOINDEX" = "true" ]; then
   echo "▶ noindex 메타 주입..."
