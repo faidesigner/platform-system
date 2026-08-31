@@ -42,6 +42,7 @@
   "products": {
     "visionCheckout": {
       "heroSubtitle": "차세대 AI 무인 결제 솔루션",
+      "heroTitle": "VISION CHECK-OUT",
       "featuresTitle": "VCO는 무엇이 다를까요?",
       "features": {
         "0": {
@@ -169,6 +170,7 @@
     },
     "unmannedStore": {
       "heroSubtitle": "세상에서 가장 경제적인 무인 매장 솔루션",
+      "heroTitle": "What is WALK-THROUGH?",
       "effectsTitle": "WALK-THROUGH의 효과를 경험해 보세요",
       "effectCards": {
         "0": {

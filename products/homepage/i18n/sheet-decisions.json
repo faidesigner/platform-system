@@ -79,20 +79,6 @@
       "decidedAt": "2026-08-21"
     },
     {
-      "key": "products.visionCheckout.features.0.description",
-      "locale": "en",
-      "codeValue": "Nothing gets past 7 AI cameras",
-      "reason": "시트의 en 카드 재구성은 채택했으나(마케팅 확정, 2026-08-26) 카메라 대수는 3개 로케일 모두 7대로 통일한 결정을 따른다(2026-08-21 결정, 2026-08-26 재확인). 시트는 14로 남아 있어 수정 요청 대상.",
-      "decidedAt": "2026-08-26"
-    },
-    {
-      "key": "products.visionCheckout.heroSubtitle",
-      "locale": "en",
-      "codeValue": "Powerful AI Self-Checkout with 7 Cameras",
-      "reason": "카메라 대수 7대 통일(2026-08-21 결정, 2026-08-26 재확인). 시트는 14 Cameras로 남아 있어 수정 요청 대상. 이 값이 14로 되돌아가면 같은 화면의 features.0.description(7대)과 모순된다.",
-      "decidedAt": "2026-08-26"
-    },
-    {
       "key": "contact.interests.vco.options.bakery",
       "locale": "ja",
       "codeValue": "ベーカリー・カフェ",
@@ -119,13 +105,6 @@
       "codeValue": "人件費の削減",
       "reason": "시트 product-store 10행 ja = 人件費の削減. ko 원문 \"인건비 절감\"이 product-vco 26행(benefits.1.items.0.subtitle, ja=人件費を削減)과 중복돼 교차 비교된다. 이 키는 product-store 탭 값이 정답이다.",
       "decidedAt": "2026-08-26"
-    },
-    {
-      "key": "products.unmannedStore.effectCards.0.title",
-      "locale": "en",
-      "codeValue": "Save on\nOperating Costs",
-      "reason": "StoreEffects 3열 카드에서 타이틀 높이를 2×line-height로 통일하기 위한 레이아웃 목적 줄바꿈(PR #11, 2026-08-28). 문구 자체는 시트와 동일하며 시트 en에는 줄바꿈이 없다(\"Save on Operating Costs\"). 내용 변경이 아니므로 시트를 고치지 않고 코드 확정안으로 선언한다.",
-      "decidedAt": "2026-08-28"
     },
     {
       "key": "common.cta.reviewsMore",
@@ -160,6 +139,27 @@
       "locale": "ja",
       "codeValue": "給食",
       "reason": "ko 원문이 `급식`으로 두 곳(product-vco 43행 / contactUs 14행)에 중복돼 조인이 양쪽에 걸린다. 리뷰 카테고리는 **product-vco 43행 기준 `給食`**이고, contactUs 14행의 `社員食堂・学生食堂`은 문의 관심분야 선택 옵션(contact.interests.vco.options.catering)용이다. 2026-07-16에 두 자리를 `社員食堂・学生食堂`으로 통일하는 선언이 있었으나, 시트가 자리마다 다른 표기를 의도한 것으로 확인돼(2026-08-31 일본팀 지적) 리뷰는 시트대로 되돌렸다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.benefits.1.items.0.subtitle",
+      "locale": "en",
+      "codeValue": "Save on Operating Costs",
+      "reason": "ko 원문 `인건비 절감`이 product-vco 26행과 product-store 10행에 중복돼 조인이 양쪽에 걸린다. VCO benefits는 **product-vco 26행 기준 `Save on Operating Costs`**이고, product-store 10행의 `Save on Costs`는 무인매장 effectCards용이다 (2026-08-31 시트 갱신에서 무인매장 쪽만 짧아졌다).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.unmannedStore.effectCards.0.title",
+      "locale": "en",
+      "codeValue": "Save on Costs",
+      "reason": "ko 원문 `인건비 절감` 중복의 반대편이다. 무인매장 effectCards는 **product-store 10행 기준 `Save on Costs`**(2026-08-31 시트 갱신에서 짧아졌다)이고, product-vco 26행의 `Save on Operating Costs`는 VCO benefits용이다. 두 키는 같은 ko를 공유하지만 값이 다르다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.heroTitle",
+      "locale": "en",
+      "codeValue": "VISION CHECK-OUT (VCO)",
+      "reason": "ko 원문 `VISION CHECK-OUT`이 nav 28행(내비 메뉴 항목)과 product-vco 8행(제품 히어로 타이틀)에 중복돼 조인이 양쪽에 걸린다. 히어로 타이틀은 **product-vco 8행 기준 `VISION CHECK-OUT (VCO)`**이고, nav 메뉴는 약어 없이 짧게 쓴다.",
       "decidedAt": "2026-08-31"
     }
   ]

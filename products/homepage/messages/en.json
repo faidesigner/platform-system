@@ -42,6 +42,7 @@
   "products": {
     "visionCheckout": {
       "heroSubtitle": "Powerful AI Self-Checkout with 7 Cameras",
+      "heroTitle": "VISION CHECK-OUT (VCO)",
       "featuresTitle": "What Makes VCO Different?",
       "features": {
         "0": {
@@ -54,7 +55,7 @@
         },
         "2": {
           "title": "Sell Any Items",
-          "description": "From packaged goods to cafeteria food to pastries"
+          "description": "From packaged snacks to cafeteria food to fresh pastries"
         }
       },
       "benefitsTitle": "What Can You Expect?",
@@ -83,7 +84,7 @@
             },
             "1": {
               "subtitle": "Up to Speed From Day One",
-              "description": "Whoever comes and goes,\n Your store keeps running reliably"
+              "description": "Your store keeps running reliably"
             }
           }
         },
@@ -93,10 +94,10 @@
           "items": {
             "0": {
               "subtitle": "Higher Throughput",
-              "description": "Faster checkout, shorter lines, more sales in the peak-hour rush"
+              "description": "Faster checkout, shorter lines, more sales at peak hours"
             },
             "1": {
-              "subtitle": "Longer Working Hours",
+              "subtitle": "Longer Opening Hour",
               "description": "Keep your store open longer"
             }
           }
@@ -169,10 +170,11 @@
     },
     "unmannedStore": {
       "heroSubtitle": "The World's Most Economical Unmanned Store",
+      "heroTitle": "WALK-THROUGH",
       "effectsTitle": "What Can You Expect?",
       "effectCards": {
         "0": {
-          "title": "Save on\nOperating Costs",
+          "title": "Save on Costs",
           "description": "Staff smarter"
         },
         "1": {
@@ -201,7 +203,7 @@
       "storeTypes": {
         "0": {
           "subtitle": "Unmanned stores under 1,100 sq ft",
-          "description": "Tailor to your layout",
+          "description": "Tailored to your layout",
           "sectionTitle": "What Makes WALK-THROUGH Different?",
           "cards": {
             "0": {
@@ -286,7 +288,7 @@
         "description": "AI Self-Checkout"
       },
       "1": {
-        "description": "Unmanned store powered by Vision AI"
+        "description": "Walk In, Walk Out"
       }
     }
   },
@@ -391,7 +393,7 @@
             "1": "M.S. in ITM, KAIST"
           },
           "career": {
-            "0": "Founded & exited a \nVC-backed startup (CEO)",
+            "0": "Founded & exited a startup (CEO)",
             "1": "Wemakeprice, NBE TF"
           }
         },
@@ -651,7 +653,7 @@
         "19": "VCO's First PoC Records 99.1% Accuracy in Live Operation",
         "20": "Why Chinese Companies Are Eyeing AI Self-Checkout",
         "21": "Fainders.AI Opens Its First AI Unmanned Store in Singapore",
-        "22": "The Second unmanned store in Singpaore opens with 7-Eleven",
+        "22": "The Second unmanned store in Singapore opens with 7-Eleven",
         "23": "VCO Goes Beyond Bakeries and Cafeterias, All the Way to Japan",
         "24": "As the Workforce Shrinks: The Story Behind VCO",
         "25": "One Step Closer to Unmanned Bakeries: What We Saw at Seoul Cafe Show",
