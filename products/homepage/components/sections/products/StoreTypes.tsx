@@ -53,7 +53,7 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
 
         {/* ── 중앙 설명 ── */}
         <div className="flex flex-col items-center gap-2xs self-stretch text-center w-full">
-          <p className="max-[421px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-text-basic-secondary tracking-[0.3px] self-stretch">{current.subtitle}</p>
+          <p className="max-[421px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-text-basic-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.subtitle}</p>
           <p className="max-[421px]:text-body-s text-body-ms tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-normal text-text-basic-secondary tracking-[0.3px] self-stretch whitespace-pre-line">{current.description}</p>
         </div>
       </div>
@@ -88,7 +88,8 @@ export default function StoreTypes({ tabs, activeKey, onTabChange }: StoreTypesP
                 {/* 텍스트 — 좌상단 */}
                 <div className="relative z-20 flex flex-col items-start gap-m self-stretch">
                   <h3 className="max-[421px]:text-body text-body-l tablet:text-body-xl desktop-s:text-title-s desktop:text-title-m font-semibold text-inverse tracking-[0.3px] text-left">{card.title}</h3>
-                  <p className="max-[421px]:text-body-xs text-body-s tablet:text-body-ms desktop-s:text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch">{card.description}</p>
+                  {/* whitespace-pre-line — 개행을 지정 위치에서 끊는다(위 subtitle/description과 동일 정책) */}
+                  <p className="max-[421px]:text-body-xs text-body-s tablet:text-body-ms desktop-s:text-body desktop:text-body-l font-normal text-text-basic-inverse-secondary text-left self-stretch whitespace-pre-line">{card.description}</p>
                 </div>
               </div>
             ))}
