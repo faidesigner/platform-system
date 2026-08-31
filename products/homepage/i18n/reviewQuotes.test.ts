@@ -85,6 +85,23 @@ describe("리뷰 인용문 조각 무결성", () => {
       expect(broken).toEqual([]);
     });
 
+    it(`${loc}: 모든 인용문이 인용부호로 감싸여 있다`, () => {
+      // 어제(2026-08-31) 이 검사를 "인용부호를 **쓴** 문장은 열고 닫힌다"로 좁게 만들었고,
+      // 인용부호가 아예 없는 ja reviews.3을 오탐이라 판단해 통과시켰다. 실제로는 결함이었다 —
+      // 시트에는 「」가 있는데 코드에서 빠져 있었고, 일본팀이 화면에서 발견했다.
+      // 리뷰는 사람의 말을 옮긴 것이라 **예외 없이** 인용부호로 감싼다.
+      const bare: string[] = [];
+      reviewsOf(msg).forEach((r, i) => {
+        const text = joined(r).trim();
+        if (!text) return;
+        const wrapped =
+          SYMMETRIC.some((ch) => text.startsWith(ch) && text.endsWith(ch)) ||
+          OPEN_CLOSE.some(([open, close]) => text.startsWith(open) && text.endsWith(close));
+        if (!wrapped) bare.push(`reviews.${i}: ${text.slice(0, 60)}… (끝: ${text.slice(-16)})`);
+      });
+      expect(bare).toEqual([]);
+    });
+
     it(`${loc}: 인용부호를 쓴 문장은 열고 닫힌다`, () => {
       const bad: string[] = [];
       reviewsOf(msg).forEach((r, i) => {

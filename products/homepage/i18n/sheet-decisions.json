@@ -2,13 +2,6 @@
   "$comment": "코드 값이 정답이고 번역 시트가 옛 값인 항목의 선언. scripts/sync-messages.mjs가 이 목록을 DECIDED로 분류해 재제안을 막는다. 항목 추가 시 반드시 reason과 decidedAt을 남길 것. i18n/sheetDecisions.test.ts가 codeValue와 실제 messages 값의 일치를 강제한다. (HOM-75)",
   "decisions": [
     {
-      "key": "products.visionCheckout.reviews.1.category",
-      "locale": "ja",
-      "codeValue": "社員食堂・学生食堂",
-      "reason": "일본어권에서는 사내·학생 식당으로 풀어 쓰는 것이 마케팅 확정안. i18n/messageConsistency.test.ts의 의도된 중복 그룹에 근거가 있다. 시트는 옛 값 '給食'.",
-      "decidedAt": "2026-07-16"
-    },
-    {
       "key": "contact.interests.vco.options.catering",
       "locale": "ja",
       "codeValue": "社員食堂・学生食堂",
@@ -146,6 +139,27 @@
       "locale": "ja",
       "codeValue": "導入事例・お客様の声",
       "reason": "시트 product-store 32/54행은 케이스 스터디 섹션의 eyebrow(영문 고정 \"Case Studies\")를 가리킨다. ko 원문이 영문이라 조인 키가 되지 못하고 \"실제 도입 후기 더보기\"·\"고객사 도입 후기\" 같은 다른 CTA/타이틀 키에 잘못 매칭된다. eyebrow는 site.ts의 caseStudiesEyebrow가 3개 로케일 모두 영문으로 고정 렌더하므로 이 두 키는 시트 대상이 아니다 (2026-08-31 확인).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "about.partners.description.0",
+      "locale": "ja",
+      "codeValue": "グローバル市場をリードするパートナーとともに",
+      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 2요소(줄당 1요소)로 나눠 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "home.efficiency.stats.1.label",
+      "locale": "ja",
+      "codeValue": "待ち時間短縮",
+      "reason": "시트 main 26행의 한 셀(`待ち時間短縮 (VCO導入前後の比較)`)이 label + labelCaption 두 키로 나뉜다. label에 괄호까지 넣으면 화면에 괄호가 두 번 나온다(2026-08-31 실제 발생, 즉시 정정). 괄호는 labelCaption이 전담한다.",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.reviews.1.category",
+      "locale": "ja",
+      "codeValue": "給食",
+      "reason": "ko 원문이 `급식`으로 두 곳(product-vco 43행 / contactUs 14행)에 중복돼 조인이 양쪽에 걸린다. 리뷰 카테고리는 **product-vco 43행 기준 `給食`**이고, contactUs 14행의 `社員食堂・学生食堂`은 문의 관심분야 선택 옵션(contact.interests.vco.options.catering)용이다. 2026-07-16에 두 자리를 `社員食堂・学生食堂`으로 통일하는 선언이 있었으나, 시트가 자리마다 다른 표기를 의도한 것으로 확인돼(2026-08-31 일본팀 지적) 리뷰는 시트대로 되돌렸다.",
       "decidedAt": "2026-08-31"
     }
   ]
