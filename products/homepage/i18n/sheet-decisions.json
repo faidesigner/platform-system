@@ -161,6 +161,13 @@
       "codeValue": "VISION CHECK-OUT (VCO)",
       "reason": "ko 원문 `VISION CHECK-OUT`이 nav 28행(내비 메뉴 항목)과 product-vco 8행(제품 히어로 타이틀)에 중복돼 조인이 양쪽에 걸린다. 히어로 타이틀은 **product-vco 8행 기준 `VISION CHECK-OUT (VCO)`**이고, nav 메뉴는 약어 없이 짧게 쓴다.",
       "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "contact.title.0",
+      "locale": "en",
+      "codeValue": "Questions about getting started?",
+      "reason": "시트 contactUs 1행은 한 셀에 세 줄이 들어 있고, 코드는 contact.title 배열 3요소로 나눠 갖는다(ContactUsSection이 요소마다 한 줄을 렌더한다). 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다. about.partners.description.0과 같은 구조.",
+      "decidedAt": "2026-08-31"
     }
   ]
 }

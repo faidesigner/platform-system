@@ -84,6 +84,10 @@ const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
   //   시트 MA01/7은 "Retail AI  At Your Store" 한 행이고 코드가 title1/title2로 쪼개 쓴다.
   //   ja는 リテールの未来を / リテールイノベーション 로 구분됨
   ["home.hero.title1", "about.hero.eyebrow"],
+  // 시트 contactUs 1행 ja(`導入のご相談から最適なご提案まで専門スタッフが丁寧にサポートいたします`)가
+  // 화면 타이틀과 SEO 설명 두 자리에 같은 문구로 지정돼 있다. ko·en은 서로 다르다
+  // (ko 타이틀은 3줄, meta.description은 한 줄 요약). ja만 시트가 같은 문장을 쓴다 (2026-08-31).
+  ["contact.title.0", "contact.meta.description"],
 ];
 
 function allowedDuplicate(keys: string[]): boolean {
@@ -114,7 +118,13 @@ describe("messages 로케일 정합성", () => {
     // (2026-08-31 시트 aboutUs 4행). 억지로 두 줄로 쪼개면 어색한 줄바꿈이 생긴다.
     // ⚠️ 예외는 **키를 명시**한다 — "배열이면 길이 달라도 됨"으로 일반화하면 한 줄이 통째로
     //    누락된 진짜 사고를 못 잡는다.
-    const lineCountMayDiffer = new Set(["about.partners.description.1"]);
+    const lineCountMayDiffer = new Set([
+      "about.partners.description.1",
+      // 시트 contactUs 1행: ko·en은 3줄, ja는 **한 문장**이다. ContactUsSection이 배열 요소마다
+      // 한 줄을 렌더하므로 ja를 억지로 3줄로 쪼개면 어색한 줄바꿈이 생긴다 (2026-08-31).
+      "contact.title.1",
+      "contact.title.2",
+    ]);
 
     expect(Object.keys(EN).filter((k) => !(k in KO))).toEqual([]);
     expect(koKeys.filter((k) => !(k in EN) && !lineCountMayDiffer.has(k))).toEqual([]);
