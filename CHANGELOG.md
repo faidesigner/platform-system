@@ -2,6 +2,48 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-08-31 (2)
+
+### 🛠 Fixed
+
+#### 번역 시트 전수 대조 — 34건 반영 (HOM-75, products/homepage)
+
+일본 BD가 "product/unmannedStore 페이지는 수정 내용이 전부 반영되어 있지 않다"고 지적했는데, 대조 도구는 **CONTENT 0 / AMBIGUOUS 0**을 보고하고 있었다.
+
+**도구가 못 본 이유 — ko 조인 맹점**
+- 도구는 ko 원문을 조인 키로 쓴다 → **ko가 수정된 행은 영원히 대조되지 않고, 그 행의 en·ja 이격까지 함께 사라진다**
+- "ko 미매칭 80건"으로 뭉뚱그려 보고될 뿐이었고 그 안에 실이격이 묻혀 있었다 (product-store 한 탭에서만 23행)
+- `sheetDiff.mjs`에 **ja·en 역매칭** 추가 — ko 조인 실패 시 ja·en 값으로 키를 역추적(ja·en은 ko보다 덜 바뀌므로 앵커가 된다)
+- 결과: 미매칭 80 → 68, 숨어 있던 CONTENT 2 · AMBIGUOUS 4 · WHITESPACE 2가 즉시 드러남
+
+**리뷰 인용문이 en·ja에서 두 번 렌더되고 있었다** (가장 심각)
+- 인용문은 강조를 위해 `quote.0/1/2` 조각으로 나뉘어 이어붙는 구조인데, 8/25 반영 때 시트의 **완결된 한 문장**을 조각 구조를 무시하고 `quote.2`에 통째로 넣었다
+- 앞 조각(구버전 번역)이 남아 화면에 문장이 두 번 나갔다. ko만 정상, **en·ja 6개 리뷰 전부** 이 상태
+- 시트 전문을 조각으로 다시 나누고 **이어붙인 결과가 시트 전문과 정확히 같은지 검증**한 뒤 반영
+
+**케이스 스터디 날짜가 번역되지 않고 있었다**
+- `date`가 `site.ts` 값 그대로 흘러 전 로케일에 한국식 `'23.10` 노출. 시트 en은 `Oct '23`
+- messages로 이관 + `page.tsx`에 `t()` 배선 (6건 × 3로케일)
+
+**그 외 반영**
+- product-store 22건 — ko 오타(`결제까기`→`결제까지`) / en 문구 6건 / ja 줄바꿈·문구 11건 / storeTypes subtitle·description en·ja 재정렬
+- vco ko 2건 / main efficiency 라벨 ko·ja 괄호 부연 누락 / `about.people.title` ko(People→Team) / `contact.meta.description` ja / whyFai en / benefits ja 줄바꿈 / industries en(`Bakery&Cafe`→`Bakery & Cafe`)
+
+### ➕ Added
+
+- `i18n/reviewQuotes.test.ts` 🆕 — 인용문 조각을 이어붙였을 때 문장이 두 번 들어가지 않는지, 인용부호가 열고 닫히는지 검사
+  - **개수 기반 판정**이라 `"` 처럼 여닫이가 같은 문자도 오탐 없이 잡는다(정상 2개 / 중복 4개)
+  - 키 단위 대조로는 각 조각이 "시트 어딘가와 비슷"해 절대 드러나지 않는 종류다
+
+### 🧪 Tests
+- `sheetDiff.test.mjs` — "ko 매칭 실패 시 diff 없음"을 기대하던 테스트를 **역매칭으로 이격을 찾아낸다**로 갱신. 예전 동작이 곧 이번 사고의 원인이었다
+- `sheet-decisions.json` — Case Studies eyebrow(영문 고정) 오탐 2건 선언
+
+**검증:** vitest **233 PASS** / lint 0 problems / 게이트 4종 통과 / 재대조 CONTENT·AMBIGUOUS·WHITESPACE **전부 0**
+실브라우저 전수 확인(탭·캐러셀 순차 클릭으로 숨은 콘텐츠까지) — 신규 문구 31건 + 케이스 스터디 21건 노출, **구값 잔존 0건**. dev `f1305d3` 실배포본에서도 재확인
+
+---
+
 ## [Unreleased] - 2026-08-31
 
 ### 🛠 Fixed
