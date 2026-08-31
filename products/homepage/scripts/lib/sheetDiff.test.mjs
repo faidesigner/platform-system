@@ -275,14 +275,29 @@ describe("diffIaRows", () => {
     ).toEqual([]);
   });
 
-  it("셀 안 줄바꿈만 다른 ko도 같은 키로 매칭한다", () => {
+  it("ko 매칭에 실패해도 ja·en 값으로 역추적해 이격을 찾는다", () => {
     const diffs = diffIaRows({
       rows: [iaRow({ ko: "리테일의 미래를/\n한발 먼저", en: "Retail AI At Your Store", ja: "リテールの未来を" })],
       messages: IA_MESSAGES,
       decisions: new Set(),
     });
-    // '/' 가 붙은 시트 표기는 ko 매칭에 실패하는 것이 정상 — 별도 미매칭 리포트로 넘어간다.
-    expect(diffs).toEqual([]);
+    // '/' 표기 때문에 ko 조인은 실패한다. 예전에는 여기서 끝나 **그 행의 en·ja 이격까지 함께
+    // 사라졌다** — 도구는 "이격 0"이라 보고하는데 실제 화면은 시트와 달랐다.
+    // 이제 ja 값(リテールの未来を)으로 키를 역추적해 en 이격을 잡아낸다.
+    expect(diffs.map((d) => `${d.locale}:${d.key}`)).toEqual(["en:e.title"]);
+    expect(diffs[0].viaBackMatch).toBe(true);
+    expect(diffs[0].sheetValue).toBe("Retail AI At Your Store");
+  });
+
+  it("역추적으로도 찾지 못하는 행은 diff를 만들지 않는다", () => {
+    // 3개 로케일 모두 코드에 없는 행 — 시트에만 있는 신규 문구다. 미매칭 리포트로 넘어간다.
+    expect(
+      diffIaRows({
+        rows: [iaRow({ ko: "코드에 없는 문구", en: "Nowhere in code", ja: "コードにない文言" })],
+        messages: IA_MESSAGES,
+        decisions: new Set(),
+      }),
+    ).toEqual([]);
   });
 
   it("ko가 코드에 없는 행은 diff 없이 건너뛴다", () => {

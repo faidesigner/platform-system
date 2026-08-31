@@ -106,7 +106,7 @@
       "industriesDescription": "Where Crowds Surge and Self-Checkout Kiosks Fall Short",
       "industries": {
         "0": {
-          "label": "Bakery&Cafe"
+          "label": "Bakery & Cafe"
         },
         "1": {
           "label": "Cafeteria"
@@ -123,13 +123,13 @@
           "role": "Juhee Song, General Manager",
           "quote": {
             "0": {
-              "text": "\"Hiring extra staff was a burden, so we adopted VCO. "
+              "text": "\"Additional staffing just wasn't viable for us, so we brought in VCO instead. "
             },
             "1": {
-              "text": "It does the work of one employee"
+              "text": "It does the work of one person"
             },
             "2": {
-              "text": "\"Additional staffing just wasn't viable for us, so we brought in VCO instead. It does the work of one person, and our work got much lighter right away. It can even tell apart pastries that look the same. I'd tell any bakery to get one.\""
+              "text": ", and our work got much lighter right away. It can even tell apart pastries that look the same. I'd tell any bakery to get one.\""
             }
           }
         },
@@ -139,13 +139,13 @@
           "role": "",
           "quote": {
             "0": {
-              "text": "\"At lunch peak time, we can now process "
+              "text": "\"At lunch we're getting "
             },
             "1": {
-              "text": "360 people per hour"
+              "text": "360 people through every hour"
             },
             "2": {
-              "text": "\"At lunch we're getting 360 people through every hour now, so the lines are nothing like they used to be. And checkout is more accurate than when the staff were ringing everything up.\""
+              "text": " now, so the lines are nothing like they used to be. And checkout is more accurate than when the staff were ringing everything up.\""
             }
           }
         },
@@ -155,13 +155,13 @@
           "role": "",
           "quote": {
             "0": {
-              "text": "\"Since the AI came in, our staff don't have to look at every item and key in the price, and you can tell it's taken a lot of pressure off them. Checkout is about two to three times faster, which makes a real difference for us on the floor.\""
+              "text": "\"Since we started using the AI solution, our staff don't have to look at every item and key in the price, and you can tell it's taken a lot of pressure off them. Checkout is "
             },
             "1": {
-              "text": "approximately 2–3 times"
+              "text": "about two to three times faster"
             },
             "2": {
-              "text": ", making a big difference on the floor.\""
+              "text": ", which makes a real difference for us on the floor.\""
             }
           }
         }
@@ -187,21 +187,21 @@
       "effectList": {
         "0": {
           "title": "Fits Any Venue",
-          "description": "Multiple cameras powered by AI\nbringing unmanned operation to brick and mortal stores"
+          "description": "From sports venues to convenience stores\nwe go where others can't"
         },
         "1": {
           "title": "Real-Time Shelf Monitoring",
-          "description": "Detect out-of-stocks live\nand restock before they cost you a sale"
+          "description": "Detect out-of-stocks live\nRestock before they cost you a sale"
         },
         "2": {
           "title": "In-Store Customer Analytics",
-          "description": "Cameras track what customers pick up,\nand payment completes on its own with no checkout at all"
+          "description": "Cameras track customers\nPayment completes with no checkout at all"
         }
       },
       "storeTypes": {
         "0": {
-          "subtitle": "Automating small stores under 100 sqm",
-          "description": "Unmanned operation for stores under 1,100 sq ft\nFits any layout\nConvenience stores, small supermarkets, select shops",
+          "subtitle": "Unmanned stores under 1,100 sq ft",
+          "description": "Tailor to your layout",
           "sectionTitle": "What Makes WALK-THROUGH Different?",
           "cards": {
             "0": {
@@ -229,11 +229,11 @@
             },
             "1": {
               "title": "Fast Installation",
-              "description": "Pick a format, and it's installed in a day\nGo live the next morning"
+              "description": "Install in a day\nGo live the next morning"
             },
             "2": {
               "title": "Flexible Layout",
-              "description": "Make every last square foot count\nConcessions across hotels, malls, and stadiums: an unmanned shop fits anywhere"
+              "description": "Select a layout that fits your space\nConcessions across hotels, malls, and stadiums"
             }
           }
         }
@@ -243,34 +243,40 @@
           "0": {
             "brand": "GS25 DX LAB\nGasan Smart Store",
             "store": "Gasan Smart Store",
-            "description": "Korea's first fully unmanned convenience store"
+            "description": "Korea's first fully unmanned convenience store",
+            "date": "Oct '23"
           },
           "1": {
             "brand": "Super Swift",
             "store": "Self-operated store",
-            "description": "Flagship store\nA customer journey designed to make AI checkout feel natural"
+            "description": "Flagship store with patented CX",
+            "date": "Jun '23"
           },
           "2": {
             "brand": "Naju Tech-Friendly",
             "store": "CU Secure Smart Store",
-            "description": "Pilot store at KISA headquarters"
+            "description": "Pilot store at KISA headquarters",
+            "date": "Jun '23"
           },
           "3": {
             "brand": "Pangyo Alphadom",
             "store": "\"Worker Shop\"",
-            "description": "\"Shadow\" Store"
+            "description": "\"Shadow\" Store",
+            "date": "Oct '22"
           }
         },
         "micro": {
           "0": {
             "brand": "PX24",
             "store": "Euljiro",
-            "description": "A 180 sq ft unmanned store inside a gym,\nopen 24/7"
+            "description": "A 180 sq ft unmanned store inside a gym,\nopen 24/7",
+            "date": "Aug '24"
           },
           "1": {
             "brand": "PX24",
             "store": "Hwagok",
-            "description": "A compact 125 sq ft unmanned store\ninside a gym"
+            "description": "A compact 125 sq ft unmanned store\ninside a gym",
+            "date": "Feb '25"
           }
         }
       }
@@ -297,7 +303,7 @@
       "items": {
         "0": {
           "title": "Keep Lines Moving",
-          "description": "Customers place their items, pay, and go\nShorter lines sell more"
+          "description": "Place items, pay, and go\nShorter lines sell more"
         },
         "1": {
           "title": "Smarter Staffing",

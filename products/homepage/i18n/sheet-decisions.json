@@ -133,6 +133,20 @@
       "codeValue": "Save on\nOperating Costs",
       "reason": "StoreEffects 3열 카드에서 타이틀 높이를 2×line-height로 통일하기 위한 레이아웃 목적 줄바꿈(PR #11, 2026-08-28). 문구 자체는 시트와 동일하며 시트 en에는 줄바꿈이 없다(\"Save on Operating Costs\"). 내용 변경이 아니므로 시트를 고치지 않고 코드 확정안으로 선언한다.",
       "decidedAt": "2026-08-28"
+    },
+    {
+      "key": "common.cta.reviewsMore",
+      "locale": "ja",
+      "codeValue": "導入事例を見る",
+      "reason": "시트 product-store 32/54행은 케이스 스터디 섹션의 eyebrow(영문 고정 \"Case Studies\")를 가리킨다. ko 원문이 영문이라 조인 키가 되지 못하고 \"실제 도입 후기 더보기\"·\"고객사 도입 후기\" 같은 다른 CTA/타이틀 키에 잘못 매칭된다. eyebrow는 site.ts의 caseStudiesEyebrow가 3개 로케일 모두 영문으로 고정 렌더하므로 이 두 키는 시트 대상이 아니다 (2026-08-31 확인).",
+      "decidedAt": "2026-08-31"
+    },
+    {
+      "key": "products.visionCheckout.reviewsTitle",
+      "locale": "ja",
+      "codeValue": "導入事例・お客様の声",
+      "reason": "시트 product-store 32/54행은 케이스 스터디 섹션의 eyebrow(영문 고정 \"Case Studies\")를 가리킨다. ko 원문이 영문이라 조인 키가 되지 못하고 \"실제 도입 후기 더보기\"·\"고객사 도입 후기\" 같은 다른 CTA/타이틀 키에 잘못 매칭된다. eyebrow는 site.ts의 caseStudiesEyebrow가 3개 로케일 모두 영문으로 고정 렌더하므로 이 두 키는 시트 대상이 아니다 (2026-08-31 확인).",
+      "decidedAt": "2026-08-31"
     }
   ]
 }
