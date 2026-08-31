@@ -26,12 +26,14 @@ export default function FooterBridge() {
     address:      t("labels.address"),
     addressValue: t("addressValue"),
     bizNo:        t("labels.bizNo"),
-    email:        t("labels.email"),
+    // 이메일은 노출 로케일에서만 조회한다(HOM-101). 미노출 로케일(ja)의 메시지 번들에서 키를
+    // 아예 뺐기 때문에 무조건 t()를 부르면 MISSING_MESSAGE가 난다. 그리고 그게 목적이다 —
+    // 번들에 남겨두면 next-intl이 HTML script 페이로드로 직렬화해 **소스에 주소가 실린다**.
+    ...(footerPolicy.showEmail ? { email: t("labels.email"), emailValue: t("emailValue") } : {}),
     privacy:      t("policies.privacy"),
     adSettings:   t("policies.adSettings"),
     ceoValue:     t("ceoValue"),
     telValue:     t("telValue"),
-    emailValue:   t("emailValue"),
   };
 
   // 개인정보 처리방침 개정 안내 모달 콘텐츠 — 로케일별 분기.

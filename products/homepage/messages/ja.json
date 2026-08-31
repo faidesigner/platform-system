@@ -29,15 +29,13 @@
       "ceo": "代表取締役",
       "tel": "電話",
       "address": "所在地",
-      "bizNo": "事業者登録番号（韓国）",
-      "email": "メールでのお問い合わせ"
+      "bizNo": "事業者登録番号（韓国）"
     },
     "policies": {
       "privacy": "プライバシーポリシー",
       "adSettings": "パーソナライズ広告の設定"
     },
     "telValue": "+82-2-6191-0049",
-    "emailValue": "contact_jp@fainders.ai",
     "japanEntity": {
       "companyValue": "株式会社ファインダーズＡＩジャパン",
       "ceoLabel": "代表取締役",

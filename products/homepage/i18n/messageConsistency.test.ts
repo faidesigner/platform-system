@@ -97,10 +97,24 @@ describe("messages 로케일 정합성", () => {
     // - products.visionCheckout.reviews.3.*: 일본 시장용 추가 도입사례 (page.tsx가 locale === 'ja'로 가드)
     // - footer.japanEntity.*: 일본 법인 정보(법인명·대표·전화) (HOM-67, locale-policy의 showJapanEntity로 가드)
     const jaOnlyAllowed = /^(products\.visionCheckout\.reviews\.3\.|footer\.japanEntity\.)/;
+
+    // ja에서 **의도적으로 제거한** 키. 값을 비우거나 남겨두면 안 되는 것만 여기 넣는다.
+    // - footer.emailValue / footer.labels.email (HOM-101, 2026-08-28 JP-BD 요청):
+    //   ja는 메일 행을 노출하지 않는다. 화면에서 감추는 것만으로는 부족한데, next-intl이
+    //   메시지 번들을 HTML script 페이로드로 직렬화하므로 키가 남으면 **주소 문자열이
+    //   페이지 소스에 그대로 실린다**(실측: dev 배포본 /ja/ 소스에 남아 있었다).
+    //   스팸 크롤러는 렌더 결과가 아니라 소스를 긁으므로 번들에서 빼야 한다.
+    //   FooterBridge가 showEmail일 때만 t()를 호출한다 — 미노출 로케일에서 t()를 부르면
+    //   MISSING_MESSAGE가 나고, 그게 이 결정이 깨졌다는 신호다.
+    const jaIntentionallyOmitted = new Set(["footer.emailValue", "footer.labels.email"]);
+
     expect(Object.keys(EN).filter((k) => !(k in KO))).toEqual([]);
     expect(koKeys.filter((k) => !(k in EN))).toEqual([]);
     expect(Object.keys(JA).filter((k) => !(k in KO) && !jaOnlyAllowed.test(k))).toEqual([]);
-    expect(koKeys.filter((k) => !(k in JA))).toEqual([]);
+    expect(koKeys.filter((k) => !(k in JA) && !jaIntentionallyOmitted.has(k))).toEqual([]);
+
+    // 예외 목록이 썩는 것을 막는다 — 키가 ko에서 사라졌는데 예외만 남으면 의미가 없다.
+    expect([...jaIntentionallyOmitted].filter((k) => !(k in KO))).toEqual([]);
   });
 
   // 스프레드시트 일괄 번역 반영 시 다른 키의 번역문이 잘못 복사돼 들어오는 사고를 구조적으로 차단한다.

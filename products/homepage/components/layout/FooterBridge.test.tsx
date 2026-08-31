@@ -270,6 +270,16 @@ describe("FooterBridge — JP-BD 요청 (HOM-101)", () => {
       expect(text).toContain("〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階");
     });
 
+    it("ja 메시지 번들에 메일 주소가 남아 있지 않다", () => {
+      // 화면에서 감추는 것만으로는 부족하다 — next-intl은 메시지 번들을 HTML script 페이로드로
+      // 직렬화하므로, 키가 남아 있으면 주소 문자열이 **페이지 소스에 그대로 실린다**.
+      // 스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다. "메일주소를 삭제"라는 요청을 충족하려면
+      // 번들에서 빼야 한다. (실측: dev 배포본 /ja/ 소스에 contact_jp@ 가 남아 있었다.)
+      const footer = jaMessages.footer as Record<string, unknown>;
+      expect(footer.emailValue, "ja footer.emailValue").toBeUndefined();
+      expect(JSON.stringify(jaMessages)).not.toContain("contact_jp@");
+    });
+
     it("ja에서는 메일 주소를 노출하지 않는다", () => {
       const text = renderAt("ja").container.textContent ?? "";
       expect(text).not.toContain("contact_jp@fainders.ai");
