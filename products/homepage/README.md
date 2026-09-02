@@ -59,6 +59,25 @@ cd products/homepage
 공통: region `ap-northeast-2`, 계정 `406460793488`. `out/`의 `*_original.*`(미디어 원본 백업)은 sync에서 항상 제외된다.
 추가 제외 경로는 `deploy/<target>.env` 의 `SYNC_EXCLUDES`(공백 구분)로 지정한다.
 
+#### 배포 게이트 6종 (업로드 **전에** 자동 실행)
+
+`deploy.sh`는 빌드 직후 아래를 순서대로 돌리고, 하나라도 실패하면 **업로드 전에 중단**한다.
+
+| 게이트 | 무엇을 막는가 | 전제조건 |
+|---|---|---|
+| `check-mobile-overflow.mjs` | 모바일 가로 오버플로우 | Chrome + `puppeteer-core` |
+| `check-footer-layout.mjs` | 로고 축소·회사명 접촉·전화번호 줄바꿈(HOM-94) | 〃 |
+| `check-about-layout.mjs` | About 인물/임원 카드 기하 어긋남(HOM-98/99) | 〃 |
+| `check-i18n-keys.mjs` | 번역 키가 화면에 그대로 렌더(HOM-75) | 없음 |
+| `check-root-html.mjs` | Meta 도메인 인증·언어 감지 리다이렉트 유실 | 없음 |
+| `check-privacy-cookie.mjs` | 광고설정 링크가 엉뚱한 조항에 착지 / 모바일 백지 | **`pdftotext`(poppler)** |
+
+- **`pdftotext` 없으면 배포가 실패한다.** `brew install poppler`. 정말 건너뛰어야 하면
+  `SKIP_PDF_TEXT_CHECK=1 ./scripts/deploy.sh <target>` — 단 그 배포는 PDF 조항 착지를 검사하지 않은 배포다.
+- **브라우저 게이트 3종은 Chrome이나 `puppeteer-core`가 없으면 경고만 하고 건너뛴다**(`scripts/lib/staticPreview.mjs`,
+  의도된 정책). 즉 그런 환경에서는 **무검사로 배포가 통과**한다 — 로그에 `⚠ … 건너뜁니다`가 찍히는지 확인할 것.
+  Chrome 경로는 `PUPPETEER_EXECUTABLE_PATH` 로 지정할 수 있다.
+
 #### ⚠️ PRD 배포 전 반드시
 - **CloudFront 함수 비호환**: 라이브 dist의 `rewriteForHomepageSSG` 함수는 `/foo/ → /foo.html` 로 재작성한다.
   새 홈페이지는 `dir/index.html` 구조라, `prd.env` 의 `FLAT_HTML=true` 가 flat `<dir>.html` 을 생성해 호환시킨다.
