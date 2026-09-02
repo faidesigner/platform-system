@@ -11,7 +11,12 @@ const NAME_GRADIENT =
 function ManagementCard({ member }: { member: ManagementMember }) {
   return (
     <div className="flex flex-col tablet:flex-row items-start tablet:items-end">
-      {/* [thumbnail]: 최신 규격 343×280 */}
+      {/* [thumbnail]: 최신 규격 343×280
+          w-full 은 **부모(카드) 폭의 100%**다. 카드가 grid item이면서 폭이 정해져 있지 않으면
+          카드 폭 = 자식들의 max-content = **라벨 텍스트 길이**가 되고, 그러면 이 컨테이너 폭이
+          사람마다 달라진다. 아래 name(left-0)·img(right-0)는 절대배치라 컨테이너 폭에 직접
+          매달려 있어서 초록 네임박스와 인물 사진의 간격이 인물마다 벌어졌다(2026-09-02 QA).
+          그래서 폭은 grid item(motion.div)에서 확정하고 여기서는 그 폭을 따른다. */}
       <div className="relative flex h-[280px] w-full tablet:w-[312px] shrink-0 items-center">
 
         {/* [img]: 우측 절대 배치 207×282, z-30으로 name박스 위 유지 */}
@@ -84,11 +89,17 @@ export function AboutManagement({ title, members }: AboutManagementProps) {
         {/* title */}
         <h2 className="text-title-l max-[421px]:text-title-m desktop:text-title-xl font-bold text-primary">{title}</h2>
 
-        {/* cardGrid: 2×2, 행/열 gap 56 = 4xl */}
-        <div className="mt-5xl grid grid-cols-1 laptop:grid-cols-2 gap-7xl justify-items-center laptop:justify-items-stretch">
+        {/* cardGrid: 2×2, 행/열 gap 56 = 4xl
+            justify-items: <tablet 은 center(카드가 312px 고정폭이라 중앙정렬이 안전),
+            tablet+ 는 stretch — 가로형 카드의 폭은 라벨 길이만큼 달라지므로 중앙정렬하면
+            카드마다 좌측 시작점이 어긋난다(측정: 900px에서 left 161~187px). */}
+        <div className="mt-5xl grid grid-cols-1 laptop:grid-cols-2 gap-7xl justify-items-center tablet:justify-items-stretch">
           {members.map((member, index) => (
             <motion.div
               key={member.id}
+              // 세로 1열 구간에서 카드 폭을 **텍스트와 무관하게** 확정한다 — 이게 이 버그의 수정점이다.
+              // w-full + max-w 조합이라 312px보다 좁은 뷰포트에서는 자연히 줄어들어 오버플로우가 없다.
+              className="w-full max-w-[312px] tablet:max-w-none"
               initial={{ opacity: 0, y: 40 }}
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true, margin: "-100px" }}

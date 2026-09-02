@@ -28,6 +28,32 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### about Management 카드 — 좁은 폭에서 인물마다 초록 배경·사진 위치가 어긋남
+
+QA: "width가 좁을 때 세로 4칸으로 나올 때 초록색 배경 위치, 몸의 위치가 사람마다 달라진다"(`/en/about/`).
+
+**원인** — 카드 폭이 **텍스트 길이로 결정**되고 있었다.
+- 썸네일 컨테이너가 `w-full`인데, `w-full`은 부모(카드) 폭의 100%다. 카드는 grid item이면서 `justify-items-center`(=`justify-self: center`)라 **폭이 지정돼 있지 않았고**, 그러면 카드 폭 = 자식들의 max-content = **라벨(학력·경력) 텍스트 길이**가 된다
+- 그 안의 네임박스(`left-0`, 220px 고정)와 인물 사진(`right-0`, 207px 고정)은 **절대배치**라 컨테이너 폭에 직접 매달려 있다. 컨테이너 폭이 사람마다 다르면 둘 사이 간격이 그대로 달라진다
+- 실측(PRD, en, 500px 뷰포트):
+  | 인물 | 카드 폭 | 사진 좌측 오프셋 |
+  |---|---|---|
+  | Myungwon Ham | 258px | +51px |
+  | Minkwon Wang | 265px | +59px |
+  | **Sukbum Hong** | **215px** | **+7px** ← 네임박스(220px)가 카드보다 넓어 사진이 초록 배경을 거의 덮었다 |
+  | Hyunkyu Lee | 256px | +49px |
+- 카드마다 개별 중앙정렬이라 좌측 시작점도 달랐다(66/62/88/67px) — 네 행이 세로로 정렬되지 않았다
+- tablet~laptop 구간(1열 + 가로형 카드)도 같은 이유로 좌측 시작점이 어긋났다(900px에서 161~187px)
+
+**수정**
+- grid item에 `w-full max-w-[312px] tablet:max-w-none` — 세로 1열 구간에서 카드 폭을 **텍스트와 무관하게 확정**한다. `w-full + max-w` 조합이라 312px보다 좁은 뷰포트(360px 등)에서는 자연히 줄어들어 가로 오버플로우가 없다
+- `justify-items-center laptop:justify-items-stretch` → `justify-items-center tablet:justify-items-stretch` — 가로형 카드는 폭이 라벨 길이만큼 달라지므로 중앙정렬하면 좌측이 어긋난다. tablet부터 stretch로 좌측 정렬을 고정
+- 검증(ko·en·ja × 360/390/500/700/900/1100/1440px = 21조합): `thumbW` **312 단일값**, 네임박스 오프셋 **0**, 사진 오프셋 **105** — 네 인물 전부 동일. 가로 오버플로우 0
+
+**이게 왜 여태 안 잡혔나 — 게이트가 다른 컴포넌트를 보고 있었다**
+- `check-about-layout.mjs`는 `span.bg-mint-400` + `article` 셀렉터로 **People(メンバー) 카드**만 재고 있었다(HOM-98/99 대응). Management 카드는 **무검사 구간**이었다
+- Management 기하 검사 추가: 네 카드의 `thumbW`·네임박스 오프셋·사진 오프셋이 **모두 같아야** 통과. 수정을 되돌려 재현 확인 — `임원카드 편차 19~69px`로 exit 1, 수정 후 0px
+
 #### about ja Management 이름 — 카타카나 병기 제거 (사진에 가려 잘림)
 
 - ja Management 카드의 이름 칸은 **180px 고정폭**이다. `Myungwon Ham（ハム・ミョンウォン）`처럼 카타카나를 병기하면 두 줄로 밀리고, **둘째 줄이 인물 사진에 가려**진다(`overflow: visible`이라 잘린 채 그대로 노출)
