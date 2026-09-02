@@ -178,7 +178,7 @@ QA 재지적("광고설정 링크 모바일일 때랑 데스크톱일 때랑 다
 - `i18n/caseStudyLabels.test.ts` 🆕 — 3개 로케일 전 사례 카드에 대해 `brand`의 어느 줄도 `store`와 같지 않음을 강제(18케이스). 옛 값(`GS25 DX LAB\nGasan Smart Store`)을 되돌리면 즉시 실패하는 것을 확인했다
 - `i18n/messageConsistency.test.ts` — `lineCountMayDiffer` 양방향화 + 예외 썩음 가드를 "어느 로케일에도 없는 키"로 완화
 
-**검증:** vitest **279 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / 시트 대조 AMBIGUOUS 0건 · 버킷 A 1건 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
+**검증:** vitest **281 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / 시트 대조 AMBIGUOUS 0건 · 버킷 A 1건 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
 
 ---
 
