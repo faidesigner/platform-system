@@ -603,6 +603,12 @@ export const aboutConfig = {
             { id: "mss",       name: "중소벤처기업부", src: "/logos/logo-mss.png" },
             { id: "tips",      name: "TIPS",           src: "/logos/logo-tips.png" },
           ],
+          // 2026-09-01 김성태 요청 — 정부기관 2개 누락분 추가(과기정통부·KISA).
+          // 부처(과기정통부) → 산하기관(KISA) 순. 로고는 각 기관 공식 CI에서 받았다.
+          [
+            { id: "msit",      name: "과학기술정보통신부", src: "/logos/logo-msit.png" },
+            { id: "kisa",      name: "한국인터넷진흥원(KISA)", src: "/logos/logo-kisa.png" },
+          ],
         ],
       },
     ],

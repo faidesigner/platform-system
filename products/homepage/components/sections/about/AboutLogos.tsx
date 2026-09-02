@@ -16,7 +16,7 @@ export function AboutLogos({ groups }: AboutLogosProps) {
               {group.caption}
             </p>
 
-            <div className="flex flex-col items-start gap-s">
+            <div className="flex flex-col items-center gap-s">
               {group.logoRows.map((row, rowIdx) => (
                 <div key={rowIdx} className="flex flex-wrap justify-center items-start gap-l laptop:gap-5xl">
                   {row.map((logo) => (

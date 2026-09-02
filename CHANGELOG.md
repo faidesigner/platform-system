@@ -2,6 +2,46 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-09-02
+
+### 🛠 Fixed
+
+#### QA 재신고 6건 — 5건 수정, 1건은 "의도된 설계"로 판정 (2026-09-01 김성태 피드백)
+
+**❶ `/about` ja 파트너 문구 줄바꿈 3줄로 재편**
+- `グローバル市場をリードするパートナーとともに / 技術を超えた…` 2줄 → `グローバル市場をリードする / パートナーとともに / 技術を超えた…` 3줄
+- ja만 ko·en보다 한 줄 많아진다. `messageConsistency.test.ts`의 `lineCountMayDiffer`를 **양방향 예외**로 고쳤다 — 기존 코드는 "ko에 있는데 en/ja에 없는" 방향만 봐서, ja가 더 긴 경우를 키 desync로 오탐했다
+- `sheet-decisions.json`도 3줄 기준으로 갱신(시트 셀은 여전히 2줄)
+
+**❷ 무인매장 사례 카드 매장명 2회 중복 — en·ja 동시 발생**
+- 카드 제목은 `StoreCaseStudies.tsx`에서 **`brand / store`로 이어 붙여** 렌더된다. 그런데 en·ja의 `brand`가 `"GS25 DX LAB\nGasan Smart Store"`처럼 매장명을 통째로 품고 있어 화면에 `GS25 DX LAB Gasan Smart Store / Gasan Smart Store`가 나왔다 (ko는 처음부터 정상)
+- `brand`를 `"GS25 DX LAB"`으로 정리. 번역 시트 일괄 반영 때 brand 칸에 "브랜드+매장명"을 통째로 적어 넣으면 조용히 재발하는 종류라 규칙 자체를 테스트로 고정했다
+
+**❸ `/about` 정부기관 로고 2종 누락분 추가 (과기정통부·KISA)**
+- `investors.groups.government`에 2행 신설 — 부처(과학기술정보통신부) → 산하기관(KISA) 순
+- 로고는 각 기관 **공식 CI**에서 취득: 과기정통부는 `msit.go.kr` 배포 SVG를 2x PNG로 렌더, KISA는 `kisa.or.kr/604`(상징 CI) 가로 시그니처
+- 두 로고 모두 가로:세로 ≈ 5:1로 맞춰 기존 중소벤처기업부 로고와 시각적 크기를 맞췄다. 세로형 KISA 시그니처(2.7:1)를 쓰면 혼자 두 배로 커진다
+- `AboutLogos`의 로고행 래퍼를 `items-start` → `items-center`로 변경 — 행마다 개수가 다를 수 있게 됐고(3+2), 기존 3+3 그룹의 렌더는 바뀌지 않는다
+
+**❹ 무인매장 ja 브랜드명 띄어쓰기** — `羅州Tech Friendly` → `羅州 Tech Friendly` (ko `나주 테크프렌들리`에 있던 공백이 번역에서 탈락)
+
+**❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
+- ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
+
+#### 판정: 코드 결함 아님 — Privacy Policy ↔ Ad Preferences 동일 문서
+
+- QA 신고 "두 링크의 문서가 같다"는 **의도된 설계**다. 2026-08-20 김진영(개인정보 담당)이 제시한 옵션2 중 **'개인정보 처리방침 2조 5항으로 이동'**을 채택한 결과이고, 나머지 갈래였던 'META 광고 환경설정 직링크'는 선택되지 않았다
+- 앵커 동작은 dev 실배포본에서 실측 확인: ko `#page=3` / en `#page=4` / ja `#page=4` 모두 쿠키·맞춤형 광고 조항에 정확히 착지한다. 즉 링크가 깨진 것이 아니라 **같은 PDF의 다른 페이지**다
+- 코드 변경 없음
+
+### 🧪 Tests
+- `i18n/caseStudyLabels.test.ts` 🆕 — 3개 로케일 전 사례 카드에 대해 `brand`의 어느 줄도 `store`와 같지 않음을 강제(18케이스). 옛 값(`GS25 DX LAB\nGasan Smart Store`)을 되돌리면 즉시 실패하는 것을 확인했다
+- `i18n/messageConsistency.test.ts` — `lineCountMayDiffer` 양방향화 + 예외 썩음 가드를 "어느 로케일에도 없는 키"로 완화
+
+**검증:** vitest **265 PASS** / eslint 0 problems / `next build` 성공 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종)
+
+---
+
 ## [Unreleased] - 2026-08-31 (3)
 
 ### 🛠 Fixed

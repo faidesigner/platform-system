@@ -123,9 +123,23 @@
     {
       "key": "about.partners.description.0",
       "locale": "ja",
-      "codeValue": "グローバル市場をリードするパートナーとともに",
-      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 2요소(줄당 1요소)로 나눠 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
-      "decidedAt": "2026-08-31"
+      "codeValue": "グローバル市場をリードする",
+      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 요소당 한 줄을 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. ja는 2026-09-01 김성태 요청으로 세 줄로 끊었다(시트 셀은 두 줄) — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
+      "decidedAt": "2026-09-01"
+    },
+    {
+      "key": "about.partners.description.1",
+      "locale": "ja",
+      "codeValue": "パートナーとともに",
+      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 요소당 한 줄을 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. ja는 2026-09-01 김성태 요청으로 세 줄로 끊었다(시트 셀은 두 줄) — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
+      "decidedAt": "2026-09-01"
+    },
+    {
+      "key": "about.partners.description.2",
+      "locale": "ja",
+      "codeValue": "技術を超えた価値を創造しています",
+      "reason": "시트 aboutUs 4행은 한 셀에 두 줄이 들어 있고, 코드는 description 배열 요소당 한 줄을 갖는다. AboutPartners가 요소마다 <span class=\"block\"> 한 줄을 만들기 때문이다. ja는 2026-09-01 김성태 요청으로 세 줄로 끊었다(시트 셀은 두 줄) — 셀 전체와 비교하면 항상 불일치로 잡힌다.",
+      "decidedAt": "2026-09-01"
     },
     {
       "key": "home.efficiency.stats.1.label",
