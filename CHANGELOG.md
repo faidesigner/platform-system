@@ -28,17 +28,37 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
-#### 판정: 코드 결함 아님 — Privacy Policy ↔ Ad Preferences 동일 문서
+#### 맞춤형 광고 설정 링크 — 모바일에서 빈 화면 (데스크톱만 동작)
+
+QA 재지적("광고설정 링크 모바일일 때랑 데스크톱일 때랑 다르다")을 파고든 결과, 앞선 "코드 결함 아님" 판정은 **데스크톱 한정**이었다. 링크 자체는 두 환경이 동일한 마크업이고(footer desktop·compact 섹션 모두 `/privacy-cookie/{locale}.html`, `target=_blank`), 갈라지는 지점은 **도착지 페이지**였다.
+
+**원인** — 중간 페이지가 `<embed type="application/pdf">` 하나에만 의존했다.
+- HTML 표준상 embed/object의 PDF 표시 가능 여부는 UA 능력이고 `navigator.pdfViewerEnabled`가 그대로 드러낸다. **iOS의 모든 브라우저와 Chrome for Android는 이 값이 false**이고, 그때 embed는 아무것도 그리지 않는다
+- 즉 데스크톱은 조항 페이지가 열리고 모바일은 **백지**였다. 데스크톱 크로미움만 보면 영원히 통과한다 (실제로 그렇게 통과해 왔다)
+
+**수정** — 인라인 PDF에 대한 의존을 끊었다.
+- 인라인 PDF 가능: 기존대로 `<embed ...#page=N>`로 조항 페이지 렌더 (데스크톱 동작 불변)
+- 불가능: `location.replace`로 **PDF 원문 직행** — 백지 대신 문서를 준다. `replace`라 뒤로 가기에 중간 페이지가 끼지 않는다
+- 판별이 틀렸거나 JS가 꺼진 경우: 상단 바의 '원문 PDF 열기' 링크가 **항상** 살아 있다. 탐지 실패가 막다른 길이 되지 않게 하는 것이 이 바의 존재 이유다
+- 검증: 데스크톱 = en PDF 4쪽(⑤ opt out of personalized advertising) 착지 / `pdfViewerEnabled=false` 주입 = `…Privacy%20Policy_2026-1.pdf#page=4`로 리다이렉트 확인
+
+**구조 정리** — 세 파일 손관리를 그만뒀다.
+- `scripts/lib/privacyCookiePages.mjs` 🆕 — 로케일별 spec(PDF·페이지·제목·검증용 조항 문자열) **단일 출처** + 렌더러
+- `scripts/gen-privacy-cookie.mjs` 🆕 — `public/privacy-cookie/{ko,en,ja}.html` 생성기. 기존 3파일은 "복붙하지 말 것" 주석에만 의존했고 실제로 ja 페이지 번호가 틀어진 적이 있다
+- `scripts/check-privacy-cookie.mjs` 🆕 — **배포 게이트**(deploy.sh 편입). 산출물 `out/`에서 ① embed·폴백 링크·리다이렉트가 같은 PDF를 가리키는지 ② PDF 실물이 있는지 ③ **`pdftotext`로 해당 페이지에 조항 문자열이 실제로 있는지** 검사. ja `page`를 5로 바꿔 게이트가 2026-08-25 사고(第10条 오착지)를 그대로 잡는 것을 확인했다
+
+#### 판정 정정: Privacy Policy ↔ Ad Preferences "동일 문서"는 의도된 설계가 맞다
 
 - QA 신고 "두 링크의 문서가 같다"는 **의도된 설계**다. 2026-08-20 김진영(개인정보 담당)이 제시한 옵션2 중 **'개인정보 처리방침 2조 5항으로 이동'**을 채택한 결과이고, 나머지 갈래였던 'META 광고 환경설정 직링크'는 선택되지 않았다
 - 앵커 동작은 dev 실배포본에서 실측 확인: ko `#page=3` / en `#page=4` / ja `#page=4` 모두 쿠키·맞춤형 광고 조항에 정확히 착지한다. 즉 링크가 깨진 것이 아니라 **같은 PDF의 다른 페이지**다
 - 코드 변경 없음
 
 ### 🧪 Tests
+- `i18n/privacyCookiePages.test.ts` 🆕 — 체크인된 3개 HTML이 생성기 출력과 일치하는지(드리프트 차단), 인라인 PDF 없이도 원문에 닿는 경로가 있는지, embed·폴백·리다이렉트가 같은 PDF를 가리키는지, PDF 경로가 URL 인코딩됐는지(CloudFront는 raw 공백 거부)
 - `i18n/caseStudyLabels.test.ts` 🆕 — 3개 로케일 전 사례 카드에 대해 `brand`의 어느 줄도 `store`와 같지 않음을 강제(18케이스). 옛 값(`GS25 DX LAB\nGasan Smart Store`)을 되돌리면 즉시 실패하는 것을 확인했다
 - `i18n/messageConsistency.test.ts` — `lineCountMayDiffer` 양방향화 + 예외 썩음 가드를 "어느 로케일에도 없는 키"로 완화
 
-**검증:** vitest **265 PASS** / eslint 0 problems / `next build` 성공 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종)
+**검증:** vitest **276 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
 
 ---
 

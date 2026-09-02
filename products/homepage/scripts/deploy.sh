@@ -64,6 +64,11 @@ echo "▶ 번역 키 노출 검사..."
 echo "▶ 루트 산출물(out/index.html) 무결성 검사..."
 ( cd "$HERE" && node scripts/check-root-html.mjs )
 
+# 맞춤형 광고 설정 링크 게이트 — PDF 재생성으로 #page=N이 다른 조항에 착지하거나,
+# 인라인 PDF 없는 UA(모바일)에서 빈 화면이 되는 것을 배포 전에 잡는다(2026-09-02).
+echo "▶ 맞춤형 광고 설정 링크 검사..."
+( cd "$HERE" && node scripts/check-privacy-cookie.mjs )
+
 # noindex 주입(프리뷰 색인 방지)
 if [ "$NOINDEX" = "true" ]; then
   echo "▶ noindex 메타 주입..."

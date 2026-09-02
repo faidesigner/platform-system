@@ -1,34 +1,47 @@
 <!DOCTYPE html>
 <!--
-  ⚠️ 이 페이지의 #page=4 는 PDF 페이지네이션에 직접 결합돼 있다.
-     대상 조항: 第8条 個人関連情報（Cookie等）の取扱い
-     대상 PDF : FaindersAI_プライバシーポリシー_個人情報保護方針_2026-1.pdf
-
-     PDF를 재생성·교체하면 페이지 수가 바뀌어 이 앵커가 엉뚱한 조항으로 착지한다.
-     실제 사고: 2026-08-25 ja PDF를 7페이지 → 5페이지로 재생성했더니 #page=5 가
-     Cookie 조항이 아니라 第10条 お問い合わせ窓口 로 착지했다.
-
-     PDF 교체 시 반드시 확인:
-       pdftotext -enc UTF-8 -f <N> -l <N> "public/contact-us/<PDF>" - | head -20
-     → 조항 제목이 그 페이지에 있는지 눈으로 확인하고 #page=N 을 맞춰라.
-
-     ※ 조항 번호는 로케일별로 다르다 — ko/en 은 2조, ja 는 8조다. 복붙하지 말 것.
+  ⚠️ 이 파일은 생성물이다. 직접 고치지 말 것.
+     출처: scripts/lib/privacyCookiePages.mjs
+     재생성: node scripts/gen-privacy-cookie.mjs
+     체크인된 파일과 생성 결과가 다르면 privacyCookiePages.test.ts가 실패한다.
 -->
 <html lang="ja">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow">
   <title>プライバシーポリシー — 個人関連情報（Cookie等）の取扱い（第8条）</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
     html, body { width: 100%; height: 100%; overflow: hidden; }
-    embed { display: block; width: 100%; height: 100%; }
+    body { display: flex; flex-direction: column; background: #fff;
+           font: 400 13px/1.5 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+                 "Helvetica Neue", "Apple SD Gothic Neo", "Noto Sans KR", sans-serif; }
+    /* 상단 바는 조건 없이 항상 렌더한다 — 인라인 PDF 판별이 틀려도 원문으로 갈 길을 남긴다. */
+    .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
+           flex: 0 0 auto; padding: 12px 16px; background: #f4f4f2;
+           border-bottom: 1px solid #e2e2de; color: #55554f; }
+    .bar strong { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar a { flex: 0 0 auto; color: #1b1b19; text-decoration: underline; }
+    embed { display: block; flex: 1 1 auto; width: 100%; }
   </style>
 </head>
 <body>
-  <embed
-    src="/contact-us/FaindersAI_%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC_%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf#page=4"
-    type="application/pdf"
-  >
+  <div class="bar">
+    <strong>プライバシーポリシー — 個人関連情報（Cookie等）の取扱い（第8条）</strong>
+    <a href="/contact-us/FaindersAI_%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC_%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf#page=4" target="_blank" rel="noopener noreferrer">PDF 全文を開く</a>
+  </div>
+  <embed src="/contact-us/FaindersAI_%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC_%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf#page=4" type="application/pdf">
+  <script>
+    /* 인라인 PDF 뷰어가 없으면 embed는 빈 화면이 된다(iOS 전 브라우저·Chrome for Android).
+       그런 UA는 조항 페이지를 포기하고 원문으로 직행시킨다 — 빈 화면보다 낫다.
+       replace()라서 뒤로 가기 시 이 중간 페이지가 끼지 않는다. */
+    (function () {
+      var canInline = typeof navigator.pdfViewerEnabled === "boolean"
+        ? navigator.pdfViewerEnabled
+        : !!(navigator.mimeTypes && navigator.mimeTypes["application/pdf"]);
+      if (!canInline) location.replace("/contact-us/FaindersAI_%E3%83%97%E3%83%A9%E3%82%A4%E3%83%90%E3%82%B7%E3%83%BC%E3%83%9D%E3%83%AA%E3%82%B7%E3%83%BC_%E5%80%8B%E4%BA%BA%E6%83%85%E5%A0%B1%E4%BF%9D%E8%AD%B7%E6%96%B9%E9%87%9D_2026-1.pdf#page=4");
+    })();
+  </script>
 </body>
 </html>
