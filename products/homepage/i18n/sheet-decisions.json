@@ -30,32 +30,11 @@
       "decidedAt": "2026-08-12"
     },
     {
-      "key": "about.management.members.0.name",
-      "locale": "ja",
-      "codeValue": "Myungwon Ham（ハム・ミョンウォン）",
-      "reason": "일본어권 가독성을 위한 카타카나 병기. 시트는 로마자만.",
-      "decidedAt": "2026-08-12"
-    },
-    {
-      "key": "about.management.members.1.name",
-      "locale": "ja",
-      "codeValue": "Minkwon Wang（ワン・ミングォン）",
-      "reason": "위와 동일.",
-      "decidedAt": "2026-08-12"
-    },
-    {
       "key": "about.management.members.2.name",
       "locale": "ja",
-      "codeValue": "Sukbum Hong（ホン・ソクボム）",
-      "reason": "위와 동일. 로마자 표기는 Sukbum으로 통일(시트는 Sukbom).",
-      "decidedAt": "2026-08-12"
-    },
-    {
-      "key": "about.management.members.3.name",
-      "locale": "ja",
-      "codeValue": "Hyunkyu Lee（イ・ヒョンギュ）",
-      "reason": "위와 동일.",
-      "decidedAt": "2026-08-12"
+      "codeValue": "Sukbum Hong",
+      "reason": "ja Management는 카타카나 병기를 제거하고 영문명만 쓴다(2026-09-02 — 180px 카드에서 두 줄로 밀려 인물 사진에 가려졌다). 시트 ja는 `Sokbom Hong` 오표기라 남는 이격은 로마자 표기 통일분이다 — 전사 표기는 `Sukbum Hong`.",
+      "decidedAt": "2026-09-02"
     },
     {
       "key": "about.people.cards.0.name",
@@ -63,6 +42,13 @@
       "codeValue": "Sukbum Hong（ホン・ソクボム）",
       "reason": "management.members와 동일 인물이 people 섹션에도 노출된다. 표기 통일.",
       "decidedAt": "2026-08-12"
+    },
+    {
+      "key": "about.management.members.1.name",
+      "locale": "ja",
+      "codeValue": "Minkwon Wang",
+      "reason": "시트는 자리마다 다르게 지정한다(실측 2026-09-02): **Management(aboutUs 16행)는 영문명만**, **メンバー 카드(41행)는 카타카나 병기**다. 코드는 16행과 일치하는데, ko 원문 `왕민권`이 두 행에 중복돼 대조 도구의 ko 조인이 41행에 붙어 가짜 이격으로 잡힌다. 시트가 옛 값이어서가 아니다.",
+      "decidedAt": "2026-09-02"
     },
     {
       "key": "about.people.cards.1.name",

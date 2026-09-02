@@ -394,7 +394,7 @@
       "title": "役員紹介",
       "members": {
         "0": {
-          "name": "Myungwon Ham（ハム・ミョンウォン）",
+          "name": "Myungwon Ham",
           "education": {
             "0": "ソウル科学高校",
             "1": "KAIST コンピュータサイエンス 学士",
@@ -406,7 +406,7 @@
           }
         },
         "1": {
-          "name": "Minkwon Wang（ワン・ミングォン）",
+          "name": "Minkwon Wang",
           "education": {
             "0": "Boston College 数学・経済学学士",
             "1": "KAIST ITM 修士"
@@ -417,7 +417,7 @@
           }
         },
         "2": {
-          "name": "Sukbum Hong（ホン・ソクボム）",
+          "name": "Sukbum Hong",
           "education": {
             "0": "ソウル科学高校",
             "1": "ソウル大学 電気・コンピュータ工学\n学士/博士（Ph.D）"
@@ -428,7 +428,7 @@
           }
         },
         "3": {
-          "name": "Hyunkyu Lee（イ・ヒョンギュ）",
+          "name": "Hyunkyu Lee",
           "education": {
             "0": "延世大学 建築工学 学士"
           },
