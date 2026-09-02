@@ -28,6 +28,25 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### ja unmannedStore MICRO STORE 설명 오타 — `プレファブ` → `プレハブ`
+
+- prefab의 표준 일본어 표기는 `プレハブ`다. `storeTypes.1.description`에 `プレファブ工法`이 들어가 있었다
+- **같은 화면 5줄 아래 `cards.0.description`은 `プレハブ工法`으로 맞게 적혀 있었다** — 한 페이지에 같은 단어가 두 표기로 공존한 셈. 시트(product-store 46행)도 `プレハブ`가 정답이었으니, 시트 셀을 코드로 옮기는 과정의 전사 오류다
+- 수정 후 시트 46행 3줄과 **완전 일치** 확인:
+  ```
+  5坪前後の空きスペースを有効活用        ← subtitle (font-weight 600, 볼드)
+  1日で設置可能なプレハブ工法により        ← description 1줄
+  手軽に無人店舗を導入できます            ← description 2줄
+  ```
+- 렌더 실측: subtitle `font-weight: 600` / description `400`, 둘 다 `white-space: pre-line`으로 지정 줄바꿈 유지
+
+**대조 도구 사각지대를 확인했다**
+- `scripts/sync-messages.mjs`는 ko 원문으로 조인하는데, 이 행은 **시트 한 셀(3줄)을 코드가 subtitle·description 두 키로 쪼개** 갖는다. 어느 키도 셀 전체와 같지 않아 조인이 실패하고 "ko 미매칭 65행"에 묻힌다 — 실측으로 리포트에 이 키가 **0건** 등장하는 것을 확인했다
+- 즉 split-cell 행은 도구가 구조적으로 못 본다. 도구를 고치는 건 65행의 분류를 통째로 바꾸는 작업이라 이번 범위 밖으로 두고, 대신 표기 규칙을 테스트로 못박았다
+
+### 🧪 Tests
+- `i18n/jaLoanwordSpelling.test.ts` 🆕 — ja 외래어 **오기 blocklist**. 카피 취향이 아니라 표준 표기 문제만 담아 문구가 정당하게 바뀌어도 오탐하지 않는다. blocklist 자체가 썩는 것(정답 표기가 코드에서 사라짐)도 함께 검사. 오타를 되돌려 재현 확인(`storeTypes.1.description` 지목, 1 failed)
+
 #### about Management 카드 — 좁은 폭에서 인물마다 초록 배경·사진 위치가 어긋남
 
 QA: "width가 좁을 때 세로 4칸으로 나올 때 초록색 배경 위치, 몸의 위치가 사람마다 달라진다"(`/en/about/`).
