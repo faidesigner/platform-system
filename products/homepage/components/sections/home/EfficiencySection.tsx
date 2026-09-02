@@ -11,22 +11,9 @@
 
 import { getTranslations } from 'next-intl/server';
 import { AnimatedStat } from './AnimatedStat';
-
-/* ──────────────────────────────────────────
-   Types & Data — 숫자(target/decimals/suffix)만 여기 유지, 라벨·설명은 messages(home.efficiency.stats.N)
-────────────────────────────────────────── */
-
-interface StatConfig {
-  target: number;
-  decimals?: number;
-  suffix?: string;
-}
-
-const STAT_CONFIGS: StatConfig[] = [
-  { target: 99.7, decimals: 2, suffix: '%' },  // 시트 표기가 99.70% (소수점 2자리) — main 22행
-  { target: 75, suffix: '%' },
-  { target: 15, suffix: '%' },
-];
+// 숫자는 efficiencyStats.ts가 소유한다 — 표시 문자열을 테스트로 고정하기 위해 분리했다.
+// 라벨·설명은 messages(home.efficiency.stats.N).
+import { STAT_CONFIGS } from './efficiencyStats';
 
 /* ──────────────────────────────────────────
    Inline styles — Tailwind로 표현 불가한 것만

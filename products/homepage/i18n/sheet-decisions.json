@@ -5,8 +5,15 @@
       "key": "contact.interests.vco.options.catering",
       "locale": "ja",
       "codeValue": "社員食堂・学生食堂",
-      "reason": "reviews.1.category와 동일 표기로 통일. 시트는 옛 값 '給食'.",
-      "decidedAt": "2026-07-16"
+      "reason": "시트 contactUs 14행 ja와 **동일한 값**이다(실측 2026-09-02). ko 원문 `급식`이 시트 두 행에 중복돼(product-vco 43행 / contactUs 14행) 대조 도구의 ko 조인이 **서로 엇갈린다** — 이 키는 product-vco 43행이 근거인데 contactUs 14행에 붙고, contact.interests.vco.options.catering은 그 반대로 붙는다. 시트가 옛 값이어서가 아니라 조인이 엇갈려서 생기는 가짜 이격이다. 자리마다 다른 표기를 쓰는 것이 시트의 의도다(2026-08-31 일본팀 확인): 리뷰 카테고리는 짧게 `社員食堂`, 문의 관심분야는 `社員食堂・学生食堂`.",
+      "decidedAt": "2026-09-02"
+    },
+    {
+      "key": "products.visionCheckout.reviews.1.category",
+      "locale": "ja",
+      "codeValue": "社員食堂",
+      "reason": "시트 product-vco 43행 ja가 `給食` → `社員食堂`으로 갱신됨(2026-09-02 확인). 코드도 그에 맞췄다. ko 원문 `급식`이 시트 두 행에 중복돼(product-vco 43행 / contactUs 14행) 대조 도구의 ko 조인이 **서로 엇갈린다** — 이 키는 product-vco 43행이 근거인데 contactUs 14행에 붙고, contact.interests.vco.options.catering은 그 반대로 붙는다. 시트가 옛 값이어서가 아니라 조인이 엇갈려서 생기는 가짜 이격이다. 자리마다 다른 표기를 쓰는 것이 시트의 의도다(2026-08-31 일본팀 확인): 리뷰 카테고리는 짧게 `社員食堂`, 문의 관심분야는 `社員食堂・学生食堂`.",
+      "decidedAt": "2026-09-02"
     },
     {
       "key": "footer.addressValue",
@@ -149,13 +156,6 @@
       "decidedAt": "2026-08-31"
     },
     {
-      "key": "products.visionCheckout.reviews.1.category",
-      "locale": "ja",
-      "codeValue": "給食",
-      "reason": "ko 원문이 `급식`으로 두 곳(product-vco 43행 / contactUs 14행)에 중복돼 조인이 양쪽에 걸린다. 리뷰 카테고리는 **product-vco 43행 기준 `給食`**이고, contactUs 14행의 `社員食堂・学生食堂`은 문의 관심분야 선택 옵션(contact.interests.vco.options.catering)용이다. 2026-07-16에 두 자리를 `社員食堂・学生食堂`으로 통일하는 선언이 있었으나, 시트가 자리마다 다른 표기를 의도한 것으로 확인돼(2026-08-31 일본팀 지적) 리뷰는 시트대로 되돌렸다.",
-      "decidedAt": "2026-08-31"
-    },
-    {
       "key": "products.visionCheckout.benefits.1.items.0.subtitle",
       "locale": "en",
       "codeValue": "Save on Operating Costs",
@@ -202,13 +202,6 @@
       "locale": "ko",
       "codeValue": "- 보유기간 :",
       "reason": "시트 contactUs 28행은 스프레드시트 안에서 공백으로 라벨을 정렬해 적었다(`목적    :`). 화면에서는 공백 정렬이 유지되지 않으므로 코드가 `- ` 목록 접두어로 항목을 구분한다. 접두어는 디자인 요소이고 문구 자체는 시트와 같다 — 시트를 고칠 필요도 없다 (2026-08-31).",
-      "decidedAt": "2026-08-31"
-    },
-    {
-      "key": "about.management.members.1.career.0",
-      "locale": "en",
-      "codeValue": "Founded & exited a VC-backed startup (CEO)",
-      "reason": "QA 2026-08-31 지시 — 2줄(`Founded & exited a` / `VC-backed startup (CEO)`)을 한 줄로 압축하되 `VC-backed`는 유지한다. 2026-08-31 시트 갱신분(5301cd9)이 압축과 함께 `VC-backed`까지 떨어뜨려 ko 원문 `전 Funded 창업(CEO)&매각`의 'Funded'가 소실됐다. 시트가 옛 값(또는 과압축 값)이다.",
       "decidedAt": "2026-08-31"
     }
   ]

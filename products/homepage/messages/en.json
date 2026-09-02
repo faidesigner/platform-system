@@ -393,7 +393,7 @@
             "1": "M.S. in ITM, KAIST"
           },
           "career": {
-            "0": "Founded & exited a VC-backed startup (CEO)",
+            "0": "Founded & exited a startup (CEO)",
             "1": "Wemakeprice, NBE TF"
           }
         },
@@ -414,8 +414,8 @@
             "0": "B.S. in Architectural Engineering,\nYonsei University"
           },
           "career": {
-            "0": "Business Planning Group,\nNICE Information Service",
-            "1": "Consultant, Deloitte"
+            "0": "Consultant, Deloitte",
+            "1": "Consultant, BCG"
           }
         }
       }
@@ -430,7 +430,7 @@
           "role": "CTO"
         },
         "1": {
-          "title": "We hire people who don't shy away from hard problems",
+          "title": "We hire people who tackle hard problems",
           "name": "Minkwon Wang",
           "role": "CEO"
         },
