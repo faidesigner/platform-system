@@ -53,7 +53,29 @@ function measure() {
       aspect: ib && ib.height ? +(ib.width / ib.height).toFixed(3) : null,
     });
   }
-  return { cards, viewportW: window.innerWidth, docW: document.documentElement.scrollWidth };
+  // ── Management(임원) 카드 — People 카드와 **별개 컴포넌트**다.
+  // 위 셀렉터(span.bg-mint-400/article)는 People만 잡아서 Management는 그동안 무검사였고,
+  // 실제로 2026-09-02에 "인물마다 초록 배경·사진 위치가 다르다"가 이 구간에서 터졌다.
+  // 원인은 썸네일 컨테이너 폭이 라벨 텍스트 길이로 결정된 것 — 절대배치된 네임박스(left-0)와
+  // 사진(right-0)이 그 폭에 매달려 있어 인물마다 간격이 달라졌다.
+  const mgmt = [];
+  for (const nameBox of document.querySelectorAll('div[style*="linear-gradient(91deg"]')) {
+    const thumb = nameBox.parentElement;
+    const card = thumb && thumb.parentElement;
+    const imgBox = thumb && thumb.querySelector("div.absolute.right-0");
+    if (!thumb || !card || !imgBox) continue;
+    const t = thumb.getBoundingClientRect();
+    mgmt.push({
+      who: (nameBox.textContent || "").replace(/\s+/g, " ").trim().slice(0, 20),
+      cardLeft: Math.round(card.getBoundingClientRect().left),
+      thumbW: Math.round(t.width),
+      // 썸네일 좌변 기준 오프셋 — 네 카드 모두 같아야 한다.
+      nameOff: Math.round(nameBox.getBoundingClientRect().left - t.left),
+      imgOff: Math.round(imgBox.getBoundingClientRect().left - t.left),
+    });
+  }
+
+  return { cards, mgmt, viewportW: window.innerWidth, docW: document.documentElement.scrollWidth };
 }
 
 await withPreview({ port: PORT, what: "About 레이아웃 검사" }, async ({ browser, origin }) => {
@@ -96,9 +118,30 @@ await withPreview({ port: PORT, what: "About 레이아웃 검사" }, async ({ br
         }
       }
 
-      const ok = dev <= TOLERANCE && cards.every((c) => c.cardW <= m.viewportW && c.aspect != null && Math.abs(c.aspect - ASPECT) <= ASPECT_TOLERANCE);
+      // ④ Management 카드 — 네 장의 기하가 **완전히 동일**해야 한다(2026-09-02 회귀).
+      //    카드 폭이 라벨 텍스트 길이로 결정되면 여기서 값이 갈린다.
+      const mgmt = m.mgmt || [];
+      let mgmtDev = 0;
+      if (mgmt.length < 4) {
+        failures.push({ width, loc, msg: `Management 카드를 ${mgmt.length}장만 찾았다 — 셀렉터(네임박스 gradient / div.absolute.right-0)가 깨졌는지 확인할 것` });
+      } else {
+        // 2열로 갈리는 구간에서는 cardLeft가 열마다 다른 것이 정상이므로 폭·오프셋만 본다.
+        for (const key of ["thumbW", "nameOff", "imgOff"]) {
+          const vals = mgmt.map((c) => c[key]);
+          const d = Math.max(...vals) - Math.min(...vals);
+          mgmtDev = Math.max(mgmtDev, d);
+          if (d > TOLERANCE) {
+            failures.push({
+              width, loc,
+              msg: `Management ${key} 편차 ${d}px > ${TOLERANCE}px — 인물마다 초록 배경·사진 위치가 달라진다: ${mgmt.map((c) => `${c.who}:${c[key]}`).join(" / ")}`,
+            });
+          }
+        }
+      }
+
+      const ok = dev <= TOLERANCE && mgmtDev <= TOLERANCE && cards.every((c) => c.cardW <= m.viewportW && c.aspect != null && Math.abs(c.aspect - ASPECT) <= ASPECT_TOLERANCE);
       console.log(
-        `${ok ? "✓" : "✗"} ${String(width).padStart(4)}px /${loc}/  카드 ${String(cards[0].cardW).padStart(4)}px · 라벨 우측여백 편차 ${String(dev).padStart(3)}px · 비율 ${cards[0].aspect}`,
+        `${ok ? "✓" : "✗"} ${String(width).padStart(4)}px /${loc}/  카드 ${String(cards[0].cardW).padStart(4)}px · 라벨 우측여백 편차 ${String(dev).padStart(3)}px · 비율 ${cards[0].aspect} · 임원카드 편차 ${String(mgmtDev).padStart(3)}px`,
       );
     }
   }
@@ -108,5 +151,5 @@ await withPreview({ port: PORT, what: "About 레이아웃 검사" }, async ({ br
     failures.forEach((f) => console.error(`  ${f.width}px /${f.loc}/ — ${f.msg}`));
     process.exit(1);
   }
-  console.log(`\n✓ About 인물 카드 레이아웃 정상 — ${checked}개 조합 통과 (라벨 우측 정렬 · 화면 이탈 · 이미지 비율).`);
+  console.log(`\n✓ About 레이아웃 정상 — ${checked}개 조합 통과 (인물 카드: 라벨 우측 정렬 · 화면 이탈 · 이미지 비율 / 임원 카드: 네 장 기하 일치).`);
 });
