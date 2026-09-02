@@ -5,8 +5,15 @@
       "key": "contact.interests.vco.options.catering",
       "locale": "ja",
       "codeValue": "社員食堂・学生食堂",
-      "reason": "reviews.1.category와 동일 표기로 통일. 시트는 옛 값 '給食'.",
-      "decidedAt": "2026-07-16"
+      "reason": "시트 contactUs 14행 ja와 **동일한 값**이다(실측 2026-09-02). ko 원문 `급식`이 시트 두 행에 중복돼(product-vco 43행 / contactUs 14행) 대조 도구의 ko 조인이 **서로 엇갈린다** — 이 키는 product-vco 43행이 근거인데 contactUs 14행에 붙고, contact.interests.vco.options.catering은 그 반대로 붙는다. 시트가 옛 값이어서가 아니라 조인이 엇갈려서 생기는 가짜 이격이다. 자리마다 다른 표기를 쓰는 것이 시트의 의도다(2026-08-31 일본팀 확인): 리뷰 카테고리는 짧게 `社員食堂`, 문의 관심분야는 `社員食堂・学生食堂`.",
+      "decidedAt": "2026-09-02"
+    },
+    {
+      "key": "products.visionCheckout.reviews.1.category",
+      "locale": "ja",
+      "codeValue": "社員食堂",
+      "reason": "시트 product-vco 43행 ja가 `給食` → `社員食堂`으로 갱신됨(2026-09-02 확인). 코드도 그에 맞췄다. ko 원문 `급식`이 시트 두 행에 중복돼(product-vco 43행 / contactUs 14행) 대조 도구의 ko 조인이 **서로 엇갈린다** — 이 키는 product-vco 43행이 근거인데 contactUs 14행에 붙고, contact.interests.vco.options.catering은 그 반대로 붙는다. 시트가 옛 값이어서가 아니라 조인이 엇갈려서 생기는 가짜 이격이다. 자리마다 다른 표기를 쓰는 것이 시트의 의도다(2026-08-31 일본팀 확인): 리뷰 카테고리는 짧게 `社員食堂`, 문의 관심분야는 `社員食堂・学生食堂`.",
+      "decidedAt": "2026-09-02"
     },
     {
       "key": "footer.addressValue",
@@ -146,13 +153,6 @@
       "locale": "ja",
       "codeValue": "待ち時間短縮",
       "reason": "시트 main 26행의 한 셀(`待ち時間短縮 (VCO導入前後の比較)`)이 label + labelCaption 두 키로 나뉜다. label에 괄호까지 넣으면 화면에 괄호가 두 번 나온다(2026-08-31 실제 발생, 즉시 정정). 괄호는 labelCaption이 전담한다.",
-      "decidedAt": "2026-08-31"
-    },
-    {
-      "key": "products.visionCheckout.reviews.1.category",
-      "locale": "ja",
-      "codeValue": "給食",
-      "reason": "ko 원문이 `급식`으로 두 곳(product-vco 43행 / contactUs 14행)에 중복돼 조인이 양쪽에 걸린다. 리뷰 카테고리는 **product-vco 43행 기준 `給食`**이고, contactUs 14행의 `社員食堂・学生食堂`은 문의 관심분야 선택 옵션(contact.interests.vco.options.catering)용이다. 2026-07-16에 두 자리를 `社員食堂・学生食堂`으로 통일하는 선언이 있었으나, 시트가 자리마다 다른 표기를 의도한 것으로 확인돼(2026-08-31 일본팀 지적) 리뷰는 시트대로 되돌렸다.",
       "decidedAt": "2026-08-31"
     },
     {

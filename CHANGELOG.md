@@ -28,6 +28,25 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### product/vco ja 리뷰 카테고리 `給食` → `社員食堂` (시트 갱신 반영)
+
+- 시트 실측으로 확인하고 반영했다: **product-vco 43행 ja가 `給食` → `社員食堂`으로 갱신**돼 있다. `products.visionCheckout.reviews.1.category`만 바뀐다
+- 자리마다 다른 표기를 쓰는 것이 시트의 의도다(2026-08-31 일본팀 확인). 실측값:
+  | 자리 | 시트 행 | ja |
+  |---|---|---|
+  | 리뷰 카테고리 `reviews.1.category` | product-vco 43 | `社員食堂` ← 이번 변경 |
+  | 업종 라벨 `industries.1.label` | product-vco 39 | `社員食堂・学生食堂` |
+  | 문의 관심분야 `contact…catering` | contactUs 14 | `社員食堂・学生食堂` |
+
+**`sheet-decisions.json` 정리 — 선언 하나가 사실과 달랐다**
+- `reviews.1.category`(ja) 선언의 `codeValue`가 `給食`이라 그대로 두면 대조 도구가 실제 이격을 숨긴다. `社員食堂` 기준으로 갱신
+- `contact.interests.vco.options.catering`(ja) 선언의 사유가 **틀려 있었다** — "시트는 옛 값 `給食`"이라고 적혀 있었지만 실측하면 시트도 `社員食堂・学生食堂`으로 코드와 같다. 선언이 필요한 진짜 이유는 다른 것이었다: **ko 원문 `급식`이 시트 두 행에 중복돼 대조 도구의 ko 조인이 서로 엇갈린다**(이 키는 product-vco 43행에 붙고, 리뷰 카테고리는 contactUs 14행에 붙는다). 사유를 실측 기준으로 다시 씀
+- 결과: 대조 도구의 `AMBIGUOUS`(ko 원문 중복매칭) 버킷이 **1건 → 0건**. DECIDED 30 → 31
+
+**남긴 것** — 요청 범위 밖이라 손대지 않은 `給食` 2곳
+- `reviews.1.store` = `大手給食会社 W社 ご担当者` — 시트 product-vco 46행과 **일치**한다
+- `media.retailTechLetter.letterTitles.23` — 뉴스레터 발행 제목(Stibee 외부 콘텐츠)
+
 #### 맞춤형 광고 설정 링크 — 모바일에서 빈 화면 (데스크톱만 동작)
 
 QA 재지적("광고설정 링크 모바일일 때랑 데스크톱일 때랑 다르다")을 파고든 결과, 앞선 "코드 결함 아님" 판정은 **데스크톱 한정**이었다. 링크 자체는 두 환경이 동일한 마크업이고(footer desktop·compact 섹션 모두 `/privacy-cookie/{locale}.html`, `target=_blank`), 갈라지는 지점은 **도착지 페이지**였다.
@@ -58,7 +77,7 @@ QA 재지적("광고설정 링크 모바일일 때랑 데스크톱일 때랑 다
 - `i18n/caseStudyLabels.test.ts` 🆕 — 3개 로케일 전 사례 카드에 대해 `brand`의 어느 줄도 `store`와 같지 않음을 강제(18케이스). 옛 값(`GS25 DX LAB\nGasan Smart Store`)을 되돌리면 즉시 실패하는 것을 확인했다
 - `i18n/messageConsistency.test.ts` — `lineCountMayDiffer` 양방향화 + 예외 썩음 가드를 "어느 로케일에도 없는 키"로 완화
 
-**검증:** vitest **276 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
+**검증:** vitest **276 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / 시트 대조 AMBIGUOUS 0건 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
 
 ---
 
