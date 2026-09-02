@@ -112,10 +112,14 @@ export default function FooterBridge() {
     : undefined;
 
   // 일본 법인 정보는 ja 메시지에만 존재한다 — 정책이 켜진 로케일에서만 조회해야 한다.
-  // '쿠키 및 광고 설정' — locale별 개인정보 처리방침 PDF 2조 5항 페이지로 이동
-  // '쿠키 및 광고 설정' — <embed> 방식 중간 HTML 페이지로 이동.
-  // <a target="_blank"> 직접 링크는 Chrome built-in PDF viewer가 #page=N fragment를
-  // 무시하는 버그가 있어, <embed> 렌더링 경로를 사용하는 locale별 HTML로 우회.
+  //
+  // '맞춤형 광고 설정' — locale별 개인정보 처리방침의 쿠키·맞춤형 광고 조항으로 이동한다
+  // (ko/en 2조, ja 8조). PDF로 바로 링크하지 않고 중간 HTML을 거치는데, 이유가 두 겹이다.
+  //   ① <a target="_blank"> 직접 링크는 Chrome 내장 PDF 뷰어가 #page=N을 무시해 1쪽에서 열린다.
+  //   ② 그렇다고 <embed>만 두면 인라인 PDF 뷰어가 없는 UA(iOS 전 브라우저·Chrome for
+  //      Android)에서 **빈 화면**이 된다 — 2026-09-02 "모바일과 데스크톱이 다르다"의 정체.
+  // 중간 페이지가 두 경우를 모두 처리한다. 페이지 자체는 손으로 고치지 말 것 —
+  // scripts/lib/privacyCookiePages.mjs 가 단일 출처이고 gen-privacy-cookie.mjs가 찍어낸다.
   const COOKIE_HREF: Record<string, string> = {
     ko: '/privacy-cookie/ko.html',
     en: '/privacy-cookie/en.html',

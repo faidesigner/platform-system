@@ -260,7 +260,7 @@
       "caseStudies": {
         "standard": {
           "0": {
-            "brand": "GS25 DX LAB\n加山スマート店",
+            "brand": "GS25 DX LAB",
             "store": "加山スマート店",
             "description": "韓国初のロードショップ型完全無人コンビニ\nアジア初の統合ロードセル技術を導入",
             "date": "‘23.10"
@@ -272,7 +272,7 @@
             "date": "‘23.06"
           },
           "2": {
-            "brand": "羅州Tech Friendly",
+            "brand": "羅州 Tech Friendly",
             "store": "CU 安心スマート店",
             "description": "KISA本院テスト店",
             "date": "‘23.06"
@@ -375,7 +375,8 @@
     "partners": {
       "title": "パートナー",
       "description": [
-        "グローバル市場をリードするパートナーとともに",
+        "グローバル市場をリードする",
+        "パートナーとともに",
         "技術を超えた価値を創造しています"
       ]
     },

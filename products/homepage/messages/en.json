@@ -243,7 +243,7 @@
       "caseStudies": {
         "standard": {
           "0": {
-            "brand": "GS25 DX LAB\nGasan Smart Store",
+            "brand": "GS25 DX LAB",
             "store": "Gasan Smart Store",
             "description": "Korea's first fully unmanned convenience store",
             "date": "Oct '23"
@@ -415,7 +415,7 @@
           },
           "career": {
             "0": "Business Planning Group,\nNICE Information Service",
-            "1": "Consultant, BCG"
+            "1": "Consultant, Deloitte"
           }
         }
       }
