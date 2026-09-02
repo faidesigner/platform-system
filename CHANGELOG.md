@@ -28,6 +28,36 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### main Key Numbers `99.70%` → `99.7%` (3개 로케일 동시)
+
+- 원인은 번역이 아니라 **컴포넌트의 숫자 서식**이었다. `EfficiencySection`의 `{ target: 99.7, decimals: 2 }`가 `toFixed(2)`로 `99.70%`를 찍었다
+- 그 `decimals: 2`에 달려 있던 주석이 `// 시트 표기가 99.70% (소수점 2자리) — main 22행`이었다. 즉 **스프레드시트가 소수점 자리를 자동으로 늘린 서식 artifact를 근거로 삼은 것**이다. 시트 실측: main 22행 ko·ja `99.70%` / en `99.7%` — 시트 안에서도 로케일마다 다르다
+- `decimals: 1`로 정정. 숫자는 messages가 아니라 코드에 있어 **로케일 무관**이므로 한 곳 수정으로 ko·en·ja가 함께 고쳐진다
+
+**구조** — 이 숫자는 대조 도구의 사정권 밖이었다
+- `scripts/sync-messages.mjs`는 messages 키만 본다. Key Numbers 숫자는 코드에 있어 시트가 틀려도 코드가 틀려도 **아무것도 잡지 않는다**
+- `components/sections/home/efficiencyStats.ts` 🆕 로 숫자를 떼어냈다(`EfficiencySection`은 async 서버 컴포넌트라 vitest에서 그대로 import하기 어렵다). 화면 표시 문자열을 테스트로 고정
+
+#### aboutUs en 3건 — 시트 확정본 반영
+
+| 키 | before | after | 근거 |
+|---|---|---|---|
+| `about.people.cards.1.title` | We hire people who don't shy away from hard problems | **We hire people who tackle hard problems** | 시트 aboutUs 35행 |
+| `about.management.members.3.career.0` | Business Planning Group, ⏎ NICE Information Service | **Consultant, Deloitte** | 시트 aboutUs 30행 |
+| `about.management.members.3.career.1` | Consultant, Deloitte | **Consultant, BCG** | 시트 aboutUs 31행 |
+| `about.management.members.1.career.0` | Founded & exited a VC-backed startup (CEO) | **Founded & exited a startup (CEO)** | 시트 aboutUs 19행 |
+
+**Deloitte 자리 정정** — 2026-09-01에 내가 잘못 넣었다.
+- 지시는 "en `Consultant, BCG` → `Consultant, Deloitte`"였고 문자 그대로 **BCG 줄**에 넣었다. 그러나 시트는 **NICE평가정보 줄(30행)**을 Deloitte로 바꾸고 BCG 줄(31행)은 그대로 둔다
+- 의도 확인(2026-09-02 사용자): "영어권 사용자들이 더 익숙할 만한 전 회사로 바꾼 것". BCG는 영어권에서 이미 유명해 바꿀 이유가 없고, NICE평가정보가 생소한 쪽이다 — 시트 배치가 맞다
+- 결과: en은 `Consultant, Deloitte` + `Consultant, BCG` 2줄. **ko·ja는 그대로**(`전 나이스평가정보 사업기획단`·`전 BCG 컨설턴트`) — en만 영어권 인지도 기준으로 다르게 쓰는 **의도된 로케일 분기**다
+
+**`VC-backed` 선언 철회** — 2026-08-31 결정을 뒤집는다.
+- 그때는 시트가 `VC-backed`를 떨어뜨린 것을 과압축으로 보고 코드를 정답으로 선언했다(`sheet-decisions.json`). 이번 지시로 시트가 맞는 것이 확정돼 **선언을 삭제**했다 — 코드가 시트와 같아졌으므로 선언할 것이 없고, 남겨두면 `codeValue`가 어긋나 대조 도구가 실제 이격을 숨긴다
+- 참고로 당시 근거였던 "ko 원문 `전 Funded 창업(CEO)&매각`의 'Funded'가 소실됐다"는 해석은 재검토가 필요해 보인다. ja가 `元Funded CEO（創業・Exit）`로 **Funded를 회사명(고유명사)으로** 다루고 있어, en의 `VC-backed`는 회사명을 형용사로 오역한 것일 가능성이 크다. 지금 en은 회사명을 아예 안 쓰는 시트 확정본이다
+
+**결과:** 대조 리포트 버킷 A(문구 반영 검토 대상) **4건 → 1건**(남은 1건은 ja storeTypes 줄바꿈 ↔ `、` 차이)
+
 #### product/vco ja 리뷰 카테고리 `給食` → `社員食堂` (시트 갱신 반영)
 
 - 시트 실측으로 확인하고 반영했다: **product-vco 43행 ja가 `給食` → `社員食堂`으로 갱신**돼 있다. `products.visionCheckout.reviews.1.category`만 바뀐다
@@ -77,7 +107,7 @@ QA 재지적("광고설정 링크 모바일일 때랑 데스크톱일 때랑 다
 - `i18n/caseStudyLabels.test.ts` 🆕 — 3개 로케일 전 사례 카드에 대해 `brand`의 어느 줄도 `store`와 같지 않음을 강제(18케이스). 옛 값(`GS25 DX LAB\nGasan Smart Store`)을 되돌리면 즉시 실패하는 것을 확인했다
 - `i18n/messageConsistency.test.ts` — `lineCountMayDiffer` 양방향화 + 예외 썩음 가드를 "어느 로케일에도 없는 키"로 완화
 
-**검증:** vitest **276 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / 시트 대조 AMBIGUOUS 0건 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
+**검증:** vitest **279 PASS** / eslint 0 problems / `next build` 성공 / 배포 게이트 6종 통과 / 시트 대조 AMBIGUOUS 0건 · 버킷 A 1건 / dev 서버 렌더 실측(ja 3줄 span, `GS25 DX LAB / Gasan Smart Store`, `羅州 Tech Friendly / CU 安心スマート店`, `Consultant, Deloitte`, 정부 로고 5종, 광고설정 링크 데스크톱·모바일 양쪽)
 
 ---
 
