@@ -28,6 +28,32 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### about ja Management 이름 — 카타카나 병기 제거 (사진에 가려 잘림)
+
+- ja Management 카드의 이름 칸은 **180px 고정폭**이다. `Myungwon Ham（ハム・ミョンウォン）`처럼 카타카나를 병기하면 두 줄로 밀리고, **둘째 줄이 인물 사진에 가려**진다(`overflow: visible`이라 잘린 채 그대로 노출)
+- 4명 모두 영문명만으로 정리 — ko 페이지와 같은 한 줄 표기가 된다
+- **メンバー 카드는 카타카나를 유지한다.** 이건 취향이 아니라 시트 지정값이다(실측 2026-09-02):
+  | 자리 | 시트 행 | ja |
+  |---|---|---|
+  | Management | aboutUs 9·16·22·28 | `Myungwon Ham` / `Minkwon Wang` / `Sukbom Hong` / `Hyunkyu Lee` — **영문명만** |
+  | メンバー 카드 | aboutUs 38·41 | `Sukbum Hong（ホン・ソクボム）` / `Minkwon Wang（ワン・ミングォン）` — **카타카나 병기** |
+- `sheet-decisions.json`: Management 이름 선언 4건 중 **3건 삭제**(코드가 시트와 같아져 선언할 것이 없다). `members.2.name`(홍석범)만 유지 — 시트 ja가 `Sokbom Hong` 오표기라 남는 이격은 로마자 통일분이다
+- `members.1.name`(ja) 선언 신설 — ko 원문 `왕민권`이 시트 두 행(16·41)에 중복돼 조인이 41행(카타카나 병기)에 엇갈려 붙는다. 급식 건과 같은 가짜 이격이다. 버킷 B 1건 → 0건
+
+#### 조사: 석범님 영문 표기 — 코드는 이미 통일돼 있고, 남은 건 ja PDF 1곳
+
+`Sukbum Hong`으로 통일 요청을 받고 전수 조사했다.
+- **코드/messages는 전부 `Sukbum Hong`**이다(en·ja Management·メンバー 4자리). 시트 ja `Sokbom Hong`·en `Sokbom Hong` 오표기에 대해 `sheet-decisions.json`이 이미 코드를 정답으로 고정하고 있다
+- `Seokbeom Hong`은 **PDF 안에만** 있다. `pdftotext` 전수 검색 결과:
+  | 파일 | 표기 | 서빙 여부 |
+  |---|---|---|
+  | `FaindersAI_プライバシーポリシー_個人情報保護方針_2026-1.pdf` | `Seokbeom Hong（ホン・ソクボム、CTO）` — 個人情報保護管理者 칸 | **현재 서빙 중** |
+  | `FaindersAI_プライバシーポリシー(個人情報保護方針).pdf` | 동일 | 코드에서 참조 안 됨(사문서) |
+  | ko `_2026-1.pdf` | `홍석범`(한글) | 서빙 중 — 로마자 아님 |
+  | en `_2026-1.pdf` | 이름 없음 | 서빙 중 |
+- **코드로 고칠 수 없는 건이다.** 법무 문서이고 원본이 `.docx`(개인정보 담당 보유)다. PDF 텍스트를 직접 손대면 서식·페이지네이션이 깨지고, ja는 `#page=4` 앵커가 第8条에 결합돼 있어 재생성 시 앵커도 다시 맞춰야 한다(그 앵커는 이제 `check-privacy-cookie.mjs`가 지킨다)
+- **조치: 김진영님께 ja 처리방침 `Seokbeom Hong` → `Sukbum Hong` 정정 요청 필요.** 교체본 받으면 PDF 교체 + 앵커 재확인까지 이쪽에서 처리한다
+
 #### main Key Numbers `99.70%` → `99.7%` (3개 로케일 동시)
 
 - 원인은 번역이 아니라 **컴포넌트의 숫자 서식**이었다. `EfficiencySection`의 `{ target: 99.7, decimals: 2 }`가 `toFixed(2)`로 `99.70%`를 찍었다
