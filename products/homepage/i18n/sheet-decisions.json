@@ -166,8 +166,8 @@
       "key": "contact.title.0",
       "locale": "en",
       "codeValue": "Questions about getting started?",
-      "reason": "시트 contactUs 1행은 한 셀에 세 줄이 들어 있고, 코드는 contact.title 배열 3요소로 나눠 갖는다(ContactUsSection이 요소마다 한 줄을 렌더한다). 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다. about.partners.description.0과 같은 구조.",
-      "decidedAt": "2026-08-31"
+      "reason": "시트 contactUs 1행은 한 셀에 세 줄이 들어 있고, 코드는 contact.title 배열로 나눠 갖는다(ContactUsSection이 요소마다 한 줄을 렌더한다). 0번은 첫 줄만 담는 것이 정상 — 셀 전체와 비교하면 항상 불일치로 잡힌다. 2026-09-03부터 en은 **두 줄**이다(가운데 `Need a custom solution?`를 빼 길이를 줄였다) — ko·ja는 세 줄 유지. about.partners.description.0과 같은 split-cell 구조다.",
+      "decidedAt": "2026-09-03"
     },
     {
       "key": "contact.form.privacyInfo.purposeLabel",

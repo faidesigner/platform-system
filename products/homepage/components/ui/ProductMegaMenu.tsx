@@ -20,5 +20,7 @@ export default function ProductMegaMenu() {
     description: t(`${i}.description`),
   }));
 
-  return <MegaMenuPanel title="Product" items={items} />;
+  // 시트 nav 10행 지정값은 세 로케일 모두 "Products"(복수)다 — nav 2행의 "Products"와 맞춘다.
+  // 하드코딩인 이유: ko·ja·en 값이 동일해 messages로 옮길 이유가 없다(2026-09-03 번역 리뷰).
+  return <MegaMenuPanel title="Products" items={items} />;
 }

@@ -28,6 +28,34 @@
 **❺ `/about` en 이현규 CSO 경력** — `Consultant, BCG` → `Consultant, Deloitte`
 - ⚠️ **ko(`전 BCG 컨설턴트`)·ja(`元BCGコンサルタント`)는 요청 범위 밖이라 그대로 뒀다.** 번역 오류가 아니라 사실 정보 불일치이므로 3개 로케일 정합이 필요하면 별도 확인이 필요하다
 
+#### en 카피 수정 7건 (2026-09-03 번역 리뷰)
+
+| # | 위치 | before → after |
+|---|---|---|
+| 1 | `contact.form.privacyInfo` | 목적 문구 교체 + **콜론 앞 공백 제거** (아래 상세) |
+| 2 | `contact.form.submitLabel` | `Contact` → **`Send`** |
+| 3 | `contact.interests.vco.options.special-venue` | `Special venues (stadiums, concert halls, resorts)` → **`Special venues (stadiums, resorts)`** |
+| 4 | `contact.subCopy` | `Tell us a bit about your business,` / `and we'll revert ASAP` → **`Tell us about your business`** / **`We'll get back to you ASAP`** |
+| 5 | `contact.title` | **3줄 → 2줄** (`Need a custom solution?` 제거) |
+| 6 | `products.visionCheckout.benefits.2.items.1.subtitle` | `Longer Opening Hour` → **`Longer Opening Hours`** |
+| 7 | `ProductMegaMenu` 패널 제목 | `Product` → **`Products`** |
+
+**①의 실제 변경점** — 요청 문구와 대조해 두 가지가 달랐다.
+- `purpose`: `To respond to your inquiry and provide a consultation on adopting our products` → `To respond to your inquiry and provide product guidance`
+- **라벨 3개의 콜론 앞 공백 제거**: `- Purpose :` → `- Purpose:` (같이 `- Information collected:`, `- Retention period:`). ko는 `- 목적 :`처럼 공백을 유지한다(한글 관례 + `sheet-decisions` 선언). 영문만 관례에 맞춘다
+- `itemsRequired`·`itemsOptional`·`retention`·`refusal`은 요청 문구와 **이미 동일**해 변경 없음
+
+**③은 조건부 요청이었다 — 조건을 실측하고 반영했다.** 라벨 컨테이너는 `w-[300px] h-[24px]` 고정인데 원문은 **2줄**(라인박스 286px + 56px)이라 둘째 줄 `resorts)`가 24px 박스 밖으로 넘쳤다. `concert halls, ` 제거 후 **1줄** 확인. ⚠️ ko `특수 입지(경기장/공연장/리조트)`·ja는 공연장을 유지하므로 **en만 항목이 하나 적다** — 레이아웃을 위해 완전성을 양보한 결정이다
+
+**⑤ 부수 정리**: `contact.title.0`(en) 선언 사유를 갱신했다. 코드가 3요소였다는 전제로 적혀 있었는데 이제 en은 2요소다(ko·ja는 3줄 유지). split-cell이라 대조 도구가 못 보는 자리다
+
+**⑦ 배경**: 시트 nav 10행 지정값이 세 로케일 모두 `Products`인데 코드는 `ProductMegaMenu.tsx`에 **단수 하드코딩**돼 있었다. ko·ja·en 값이 동일해 messages로 옮길 이유는 없어 하드코딩은 유지하고 복수로만 고쳤다
+
+**남긴 것**: `contact.meta.description`(en)은 여전히 3줄 카피(`Need a custom solution?` 포함)다. SEO 설명은 화면 타이틀과 다른 surface이고 요청 범위 밖이라 손대지 않았다
+
+### 🧪 Tests
+- 중복 번역 화이트리스트 주석 갱신 — `contact.form.submitLabel`은 en에서 `Send`로 갈라져 더 이상 충돌하지 않지만 **ja는 네 자리 모두 `お問い合わせ`로 여전히 충돌**하므로 목록에서 빼면 안 된다는 것을 명시
+
 #### footer ja — 일본 법인 블록에 문의 메일 추가 (HOM-101 결정 부분 반전)
 
 2026-09-03 Hyeyoung Shin 요청: "footer 일본법인 정보 소재지 하단에 여유공간이 있다면 이메일 정보 추가 표기 부탁드립니다 — `メールでのお問い合わせ  contact_jp@fainders.ai`".

@@ -97,7 +97,7 @@
               "description": "Faster checkout, shorter lines, more sales at peak hours"
             },
             "1": {
-              "subtitle": "Longer Opening Hour",
+              "subtitle": "Longer Opening Hours",
               "description": "Keep your store open longer"
             }
           }
@@ -673,19 +673,18 @@
     },
     "title": [
       "Questions about getting started?",
-      "Need a custom solution?",
       "Talk to our experts directly"
     ],
     "subCopy": {
-      "highlight": "Tell us a bit about your business",
-      "rest": ",",
-      "line2": "and we'll revert ASAP"
+      "highlight": "Tell us about your business",
+      "rest": "",
+      "line2": "We'll get back to you ASAP"
     },
     "form": {
       "connectTitle": "How can we reach you?",
       "requiredLabel": "Required",
       "selectTitle": "What are you interested in?",
-      "submitLabel": "Contact",
+      "submitLabel": "Send",
       "privacyNotice": {
         "before": "[Required] I agree to the collection of my personal information and to the ",
         "link": "Privacy Policy",
@@ -693,12 +692,12 @@
         "errorMessage": "Please agree to the Privacy Policy."
       },
       "privacyInfo": {
-        "purposeLabel": "- Purpose :",
-        "purpose": "To respond to your inquiry and provide a consultation on adopting our products",
-        "itemsLabel": "- Information collected :",
+        "purposeLabel": "- Purpose:",
+        "purpose": "To respond to your inquiry and provide product guidance",
+        "itemsLabel": "- Information collected:",
         "itemsRequired": "(Required) Company name, Name, Email",
         "itemsOptional": "(Optional) Phone number, Product of interest, Industry",
-        "retentionLabel": "- Retention period :",
+        "retentionLabel": "- Retention period:",
         "retention": "1 year after your inquiry is closed",
         "refusal": "Consent is optional, but we can't respond to your inquiry without it."
       }
@@ -732,7 +731,7 @@
         "options": {
           "bakery": "Bakery",
           "catering": "Cafeteria",
-          "special-venue": "Special venues (stadiums, concert halls, resorts)",
+          "special-venue": "Special venues (stadiums, resorts)",
           "etc": "Other"
         }
       },
