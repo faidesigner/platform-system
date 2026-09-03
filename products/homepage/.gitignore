@@ -39,3 +39,13 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# VCO 히어로 로케일 영상 **원본** (2026-09-03, HOM-70)
+# 다른 영상은 `*_original.mp4`를 커밋하는 게 이 저장소 관례지만 이 둘은 예외다:
+#   - en 원본이 117.6MB로 **GitHub 파일당 100MB 하드 리밋을 넘어 push가 거부된다**
+#     (현재 추적 중 최대 파일은 30.4MB — 이 둘을 넣으면 저장소 성격이 바뀐다)
+#   - 이 둘은 원본의 출처가 저장소 밖에 명확히 있다. Notion HOM-70 카드의 Google Drive 링크
+#     (`일-1. VCO_일어 오프닝+자막.mp4` / `영-1. VCO_영어 오프닝+자막X.mp4`)가 단일 출처다.
+# 재인코딩이 필요하면 Drive에서 받아 이 경로에 두고 `node scripts/optimize-videos.mjs` 실행.
+public/videos/product/vco-hero-bg-ja_original.mp4
+public/videos/product/vco-hero-bg-en_original.mp4
