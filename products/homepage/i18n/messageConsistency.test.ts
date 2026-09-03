@@ -28,7 +28,9 @@ const JA = flatten(ja as Tree);
 const INTENTIONAL_DUPLICATE_GROUPS: string[][] = [
   // "자세히 알아보기" / "더 알아보기" — 링크 CTA는 en/ja에서 한 표현으로 통일
   ["common.cta.learnMore", "common.cta.mediaMore", "media.showcase.youtube.ctaLabel"],
-  // "문의하기" / "도입 문의하기" — nav·CTA·폼 제출 버튼 모두 Contact 하나로 통일
+  // "문의하기" / "도입 문의하기" — nav·CTA는 Contact 하나로 통일.
+  // ⚠️ en의 `contact.form.submitLabel`만 2026-09-03에 "Send"로 갈라져 더 이상 충돌하지 않는다.
+  //    그래도 목록에서 빼지 마라 — **ja는 네 자리 모두 お問い合わせ로 여전히 충돌**한다.
   [
     "common.cta.contact",
     "common.cta.requestDemo",
