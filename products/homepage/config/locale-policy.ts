@@ -73,7 +73,14 @@ export interface LocalePolicy {
 
 const KAKAO_CHANNEL_URL = "http://pf.kakao.com/_cZLcn";
 const LINE_CHANNEL_URL = "https://lin.ee/7sWaw8t";
-const VCO_HERO_VIDEO_KO = "/videos/product/vco-hero-bg.mp4";
+// VCO 히어로 배경 영상 — 로케일별(HOM-70).
+// 원본은 Notion HOM-70 카드의 Google Drive 링크가 단일 출처다. 저장소에는 웹 최적화본만 둔다
+// (`scripts/optimize-videos.mjs`: 1080p / H.264 CRF 28 / preset slow / -an / +faststart).
+// 원본을 커밋하지 않는 이유: 히어로 배경에 원본 화질이 필요 없고, en 원본은 117.6MB로
+// GitHub 파일당 100MB 제한을 넘는다.
+const VCO_HERO_VIDEO_KO = "/videos/product/vco-hero-bg.mp4";   // 66.6s · 6.2MB · 한국어 자막
+const VCO_HERO_VIDEO_EN = "/videos/product/vco-hero-bg-en.mp4"; // 66.6s · 5.7MB · 영어 오프닝 · 자막 없음
+const VCO_HERO_VIDEO_JA = "/videos/product/vco-hero-bg-ja.mp4"; // 26.6s · 2.8MB · 일본어 오프닝+자막
 
 export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   ko: {
@@ -91,7 +98,10 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     contactChat: { show: false, url: null, channel: null },
     showLetterSubscribeCta: true,
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
-    vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 영어 자막 버전 압축본으로 교체
+    // en 전용본은 ko와 **같은 편집본**이다(길이 66.5665s로 밀리초까지 일치) — 오프닝만 영어고
+    // 자막이 없다. 즉 영어 사용자에게 한국어 자막이 노출되던 것만 사라진다(2026-09-02 Hyeyoung Shin
+    // 요청의 "자막이 없는 버전"에 해당). 영어 자막본은 번역 후 다음 차시 반영 예정.
+    vcoHeroVideo: VCO_HERO_VIDEO_EN,
     reviewOrder: null,
     homeHeroImage: "/images/main/imageSection-hero-en.webp",
   },
@@ -103,7 +113,9 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     // 본사 이메일이 그 위에 놓여 위계가 어색해졌다(2026-08-28 Hyeyoung Shin).
     // 일본 문의 경로는 일본 법인 전화번호로 안내한다.
     footer: { showEmail: false, showBizNo: false, showJapanEntity: true },
-    vcoHeroVideo: VCO_HERO_VIDEO_KO, // TODO(HOM-70): 일본어 자막 버전 압축본으로 교체
+    // ja 전용본은 ko·en과 **다른 편집본**이다(26.6s vs 66.6s) — 루프 주기가 2.5배 짧다.
+    // 디자인 의도인지 확인 필요하지만, 한국어 자막 노출을 없애는 것이 우선이라 먼저 연결한다.
+    vcoHeroVideo: VCO_HERO_VIDEO_JA,
     reviewOrder: ["resort", "retail", "bakery", "cafeteria"],
     homeHeroImage: "/images/main/imageSection-hero-ja.webp",
   },
