@@ -145,6 +145,17 @@ export default function FooterBridge() {
 
   // 일본 법인은 본사와 **동일한 블록 구조**로 렌더한다(HOM-101) — 볼드 법인명 + 하위 정보 행.
   // 라벨(日本法人)을 붙이지 않는 것이 요청사항이며, 그래야 본사 블록과 위계가 맞는다.
+  // 메일 행은 **일본 법인 블록 안**, 소재지 아래에 둔다(2026-09-03 Hyeyoung Shin 요청).
+  //
+  // HOM-101(2026-08-28, 같은 요청자)에서 ja 메일을 뺀 이유는 두 가지였다.
+  //   ① 본사 이메일이 일본 법인 정보 **위**에 놓여 위계가 어색했다 → 이번 배치로 해소된다.
+  //      노출되는 주소도 본사(contact@)가 아니라 **일본 법인 전용(contact_jp@)**이다.
+  //   ② next-intl이 메시지 번들을 HTML script 페이로드로 직렬화하므로 키가 남으면 주소가
+  //      **페이지 소스에 그대로 실린다**(스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다).
+  //      → 이 효과는 되돌릴 방법이 없다. **소스 노출을 감수하는 결정**이다(2026-09-03 사용자 확인).
+  //
+  // 본사 이메일(footer.emailValue / footer.labels.email)은 여전히 ja 번들에서 제외 상태다 —
+  // HOM-101의 ①은 유효하므로 되돌리지 말 것.
   const extraEntity = footerPolicy.showJapanEntity
     ? {
         name: t("japanEntity.companyValue"),
@@ -152,6 +163,7 @@ export default function FooterBridge() {
           { title: t("japanEntity.ceoLabel"),     text: t("japanEntity.ceoValue") },
           { title: t("japanEntity.telLabel"),     text: t("japanEntity.telValue"), noWrapValue: true },
           { title: t("japanEntity.addressLabel"), text: t("japanEntity.addressValue") },
+          { title: t("japanEntity.emailLabel"),   text: t("japanEntity.emailValue"), noWrapValue: true },
         ],
       }
     : undefined;

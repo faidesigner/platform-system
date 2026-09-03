@@ -43,7 +43,9 @@
       "telLabel": "電話",
       "telValue": "03-6821-7191",
       "addressLabel": "所在地",
-      "addressValue": "〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階"
+      "addressValue": "〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階",
+      "emailLabel": "メールでのお問い合わせ",
+      "emailValue": "contact_jp@fainders.ai"
     }
   },
   "products": {

@@ -11,7 +11,7 @@ import jaMessages from "@/messages/ja.json";
  * 번역 시트("Homepage text source") 기준:
  * - 사업자등록번호: 한국 사업자번호라 ja 미노출
  * - 전화: ko는 국내 표기(02-…), en·ja는 국가코드 포함(+82-2-…)
- * - 이메일: ja는 일본팀 주소(contact_jp@)
+ * - 이메일: ko·en은 본사(contact@), ja는 **일본 법인 블록 안**에 일본팀 주소(contact_jp@)
  * - 일본 법인 정보(법인명·대표·전화): ja 전용 추가 노출
  *
  * 전화·이메일은 과거 로케일 무관 하드코딩이라 en·ja에도 한국 국내 표기가 나갔다 — 그 회귀를 막는다.
@@ -46,16 +46,19 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
     }
   });
 
-  // 2026-08-28 HOM-101로 **ja는 이메일 행 자체를 노출하지 않게** 바뀌었다(JP-BD 요청).
-  // 원래 이 테스트는 "ja 이메일은 일본팀 주소(contact_jp@)를 쓴다"였고, 로케일 무관 하드코딩
-  // 회귀를 막던 것이다. 규칙이 바뀌었을 뿐 그 회귀 방어는 여전히 필요하므로,
-  // ko·en의 주소 구분은 남기고 ja는 '미노출'로 조건을 갱신한다.
-  it("이메일은 ko·en만 노출하고 ja에서는 감춘다 (HOM-101)", () => {
+  // 규칙 이력 — 세 번 바뀌었다. 방어 대상(로케일 무관 하드코딩 회귀)은 계속 같다.
+  //   ① 최초: ja 이메일 = 일본팀 주소(contact_jp@)
+  //   ② 2026-08-28 HOM-101(JP-BD, Hyeyoung Shin): **ja는 이메일 행 자체를 미노출**
+  //      — 본사 주소가 일본 법인 정보 위에 놓여 위계가 어색했다.
+  //   ③ 2026-09-03(같은 요청자): **일본 법인 블록 안**에 일본 법인 전용 주소를 다시 노출.
+  //      ②의 위계 문제는 배치로 해소되고, 노출되는 주소도 본사가 아닌 contact_jp@다.
+  // 지금 지켜야 하는 것: **본사 주소(contact@)는 ja에 나오면 안 된다** — ②가 아직 유효한 부분.
+  it("이메일은 ko·en이 본사 주소, ja는 일본 법인 주소만 노출한다", () => {
     expect(renderAt("ko").container.textContent).toContain("contact@fainders.ai");
     expect(renderAt("en").container.textContent).toContain("contact@fainders.ai");
     const ja = renderAt("ja").container.textContent ?? "";
-    expect(ja).not.toContain("contact_jp@fainders.ai");
-    expect(ja).not.toContain("@fainders.ai");
+    expect(ja, "ja에 일본 법인 주소가 보여야 한다").toContain("contact_jp@fainders.ai");
+    expect(ja, "ja에 본사 주소가 새어나오면 안 된다").not.toContain("contact@fainders.ai");
   });
 
   it("일본 법인 정보는 ja에서만 노출한다", () => {
@@ -270,19 +273,29 @@ describe("FooterBridge — JP-BD 요청 (HOM-101)", () => {
       expect(text).toContain("〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階");
     });
 
-    it("ja 메시지 번들에 메일 주소가 남아 있지 않다", () => {
-      // 화면에서 감추는 것만으로는 부족하다 — next-intl은 메시지 번들을 HTML script 페이로드로
-      // 직렬화하므로, 키가 남아 있으면 주소 문자열이 **페이지 소스에 그대로 실린다**.
-      // 스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다. "메일주소를 삭제"라는 요청을 충족하려면
-      // 번들에서 빼야 한다. (실측: dev 배포본 /ja/ 소스에 contact_jp@ 가 남아 있었다.)
+    it("ja 번들에 본사 주소는 없고 일본 법인 주소만 있다", () => {
+      // next-intl은 메시지 번들을 HTML script 페이로드로 직렬화하므로, 번들에 남은 키는
+      // **페이지 소스에 그대로 실린다**(스팸 크롤러는 렌더 결과가 아니라 소스를 긁는다).
+      // 2026-08-28에는 그래서 ja에서 메일을 통째로 뺐다.
+      // 2026-09-03 요청으로 **일본 법인 전용 주소만** 되살렸다 — 소스 노출은 그 결정의
+      // 알려진 대가이고, 사용자가 감수하기로 확인했다. 되돌릴 때는 이 맥락을 함께 볼 것.
+      // 본사 주소(footer.emailValue)는 계속 빠져 있어야 한다.
       const footer = jaMessages.footer as Record<string, unknown>;
-      expect(footer.emailValue, "ja footer.emailValue").toBeUndefined();
-      expect(JSON.stringify(jaMessages)).not.toContain("contact_jp@");
+      expect(footer.emailValue, "ja footer.emailValue(본사)는 계속 미노출").toBeUndefined();
+      expect(JSON.stringify(jaMessages), "본사 주소 유입").not.toContain("contact@fainders.ai");
+      expect(JSON.stringify(jaMessages), "일본 법인 주소 누락").toContain("contact_jp@fainders.ai");
     });
 
-    it("ja에서는 메일 주소를 노출하지 않는다", () => {
+    it("일본 법인 메일은 소재지 **아래**, 같은 블록 안에 온다", () => {
+      // 배치가 규칙의 핵심이다 — 본사 정보 위/아래가 아니라 일본 법인 블록 안이어야
+      // 2026-08-28에 지적된 위계 문제가 재발하지 않는다.
       const text = renderAt("ja").container.textContent ?? "";
-      expect(text).not.toContain("contact_jp@fainders.ai");
+      expect(text).toContain("メールでのお問い合わせ");
+      expect(text).toContain("contact_jp@fainders.ai");
+      const addrAt = text.indexOf("〒135-0061");
+      const mailAt = text.indexOf("contact_jp@fainders.ai");
+      expect(addrAt, "일본 법인 소재지를 찾지 못했다").toBeGreaterThan(-1);
+      expect(mailAt, "메일이 소재지보다 앞에 온다").toBeGreaterThan(addrAt);
       // ko·en은 그대로 유지된다
       expect(renderAt("ko").container.textContent).toContain("@fainders.ai");
       expect(renderAt("en").container.textContent).toContain("@fainders.ai");
