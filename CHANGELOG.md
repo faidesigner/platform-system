@@ -11,6 +11,7 @@
 - 본문은 이름 외 동일(word-level diff로 대조), 공고일 2026-08-21 / 시행일 2026-08-28 유지. 단 생성기가 Pages → Word로 바뀌며 **10쪽 → 9쪽**으로 재페이지네이션됐다
 - 그 결과 `/privacy-cookie/en.html`의 `#page=4`가 제2조(쿠키)가 아니라 제3조(파기)에 착지하게 됐다 → `scripts/lib/privacyCookiePages.mjs` en `page: 4 → 3`으로 고치고 `gen-privacy-cookie.mjs`로 재생성. `check-privacy-cookie.mjs`가 이 어긋남을 기계로 잡았다(ko:p3 / en:p3 / ja:p4 통과) — 2026-08-25 ja 사고 뒤에 세운 가드가 처음으로 실제 회귀를 막았다
 - 코드 미참조 중복본 `FaindersAI_Privacy Policy.pdf`도 같은 내용으로 동기화(외부 링크가 남아 있을 수 있어 삭제하지 않음)
+- ⚠️ **ja PDF는 여전히 `Seokbeom Hong`** — 09-02에 이미 요청 항목으로 적었던 건. 2026-09-15 사용자 결정으로 ja 미수정 상태로 PRD 배포(main `c8d2c68`). 정정 파일 수령 후 절차는 `products/homepage/docs/OPEN_ja-privacy-pdf-cpo-name_20260915.md`
 
 #### HOM-105 무인매장 "간편한 고객 경험" 카드 — 폰 화면 `Hellow` → `Hello`
 - 배포본·Figma 마스터 컴포넌트(`6654:30281`)의 이미지는 픽셀 단위로 동일하게 `Hellow`였다. 수정본은 QA가 링크한 **인스턴스(`6655:45548`)의 override**에만 있어서, 마스터에서 에셋을 받으면 그대로 재발한다. `download_assets`는 인스턴스 자식 ID(`I…;…`)를 받지 않아 `get_design_context`로 raw 이미지를 추출했다
