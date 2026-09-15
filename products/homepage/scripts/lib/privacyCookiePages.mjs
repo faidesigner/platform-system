@@ -45,7 +45,7 @@ export const PRIVACY_COOKIE_SPECS = {
   en: {
     lang: "en",
     pdf: "/contact-us/FaindersAI_Privacy Policy_2026-1.pdf",
-    page: 4,
+    page: 3,
     title: "Privacy Policy — Cookies & Behavioral Information (Article 2)",
     openLabel: "Open the full PDF",
     clauseNeedle: "opt out of personalized advertising",
