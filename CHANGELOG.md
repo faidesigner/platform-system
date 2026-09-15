@@ -2,6 +2,21 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-09-15
+
+### 🛠 Fixed
+
+#### HOM-104 영문 개인정보 처리방침 PDF 교체 — CPO 영문 표기 정정
+- `Hong Seok-beom` → `Sukbum Hong` (2026-09-04 #prj_homepage에서 왕민권이 확정한 표기). 파일은 이선연이 같은 날 12:23에 전달한 `[영어]개인정보처리방침 260821.pdf` — Notion 카드 첨부(`[영어]개인정보처리방침.pdf`)와 동일 명칭. 11:54 전달본(`Seokbeom Hong`)은 폐기본이라 쓰지 않았다
+- 본문은 이름 외 동일(word-level diff로 대조), 공고일 2026-08-21 / 시행일 2026-08-28 유지. 단 생성기가 Pages → Word로 바뀌며 **10쪽 → 9쪽**으로 재페이지네이션됐다
+- 그 결과 `/privacy-cookie/en.html`의 `#page=4`가 제2조(쿠키)가 아니라 제3조(파기)에 착지하게 됐다 → `scripts/lib/privacyCookiePages.mjs` en `page: 4 → 3`으로 고치고 `gen-privacy-cookie.mjs`로 재생성. `check-privacy-cookie.mjs`가 이 어긋남을 기계로 잡았다(ko:p3 / en:p3 / ja:p4 통과) — 2026-08-25 ja 사고 뒤에 세운 가드가 처음으로 실제 회귀를 막았다
+- 코드 미참조 중복본 `FaindersAI_Privacy Policy.pdf`도 같은 내용으로 동기화(외부 링크가 남아 있을 수 있어 삭제하지 않음)
+
+#### HOM-105 무인매장 "간편한 고객 경험" 카드 — 폰 화면 `Hellow` → `Hello`
+- 배포본·Figma 마스터 컴포넌트(`6654:30281`)의 이미지는 픽셀 단위로 동일하게 `Hellow`였다. 수정본은 QA가 링크한 **인스턴스(`6655:45548`)의 override**에만 있어서, 마스터에서 에셋을 받으면 그대로 재발한다. `download_assets`는 인스턴스 자식 ID(`I…;…`)를 받지 않아 `get_design_context`로 raw 이미지를 추출했다
+- 기존 파이프라인 유지: `us-standard-experience_original.png` 교체 + sharp webp q82/effort 6 (1006×1564, 39KB). 코드 참조 변경 없음
+- 티켓 제목의 `[vco]`는 오기 — 실제 위치는 `/products/unmanned-store` STANDARD STORE 탭
+
 ## [Unreleased] - 2026-09-02
 
 ### 🛠 Fixed
