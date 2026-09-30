@@ -21,17 +21,23 @@
     .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
            flex: 0 0 auto; padding: 12px 16px; background: #f4f4f2;
            border-bottom: 1px solid #e2e2de; color: #55554f; }
+    .bar-text { display: flex; flex-direction: column; min-width: 0; }
     .bar strong { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar .hint { color: #1b1b19; }
     .bar a { flex: 0 0 auto; color: #1b1b19; text-decoration: underline; }
     embed { display: block; flex: 1 1 auto; width: 100%; }
   </style>
 </head>
 <body>
   <div class="bar">
-    <strong>Privacy Policy — Cookies &amp; Behavioral Information (Article 2)</strong>
-    <a href="/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3" target="_blank" rel="noopener noreferrer">Open the full PDF</a>
+    <div class="bar-text">
+      <strong>Privacy Policy — Cookies &amp; Behavioral Information (Article 2)</strong>
+      <!-- zoom 세로 위치를 무시하는 브라우저용 fallback: 어디를 보면 되는지 글로 알린다. -->
+      <span class="hint">See item ⑤ (opting out of personalized advertising) in the middle of page 3.</span>
+    </div>
+    <a href="/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3&zoom=100,0,370" target="_blank" rel="noopener noreferrer">Open the full PDF</a>
   </div>
-  <embed src="/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3" type="application/pdf">
+  <embed src="/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3&zoom=100,0,370" type="application/pdf">
   <script>
     /* 인라인 PDF 뷰어가 없으면 embed는 빈 화면이 된다(iOS 전 브라우저·Chrome for Android).
        그런 UA는 조항 페이지를 포기하고 원문으로 직행시킨다 — 빈 화면보다 낫다.
@@ -40,7 +46,7 @@
       var canInline = typeof navigator.pdfViewerEnabled === "boolean"
         ? navigator.pdfViewerEnabled
         : !!(navigator.mimeTypes && navigator.mimeTypes["application/pdf"]);
-      if (!canInline) location.replace("/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3");
+      if (!canInline) location.replace("/contact-us/FaindersAI_Privacy%20Policy_2026-1.pdf#page=3&zoom=100,0,370");
     })();
   </script>
 </body>

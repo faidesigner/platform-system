@@ -21,17 +21,23 @@
     .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
            flex: 0 0 auto; padding: 12px 16px; background: #f4f4f2;
            border-bottom: 1px solid #e2e2de; color: #55554f; }
+    .bar-text { display: flex; flex-direction: column; min-width: 0; }
     .bar strong { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar .hint { color: #1b1b19; }
     .bar a { flex: 0 0 auto; color: #1b1b19; text-decoration: underline; }
     embed { display: block; flex: 1 1 auto; width: 100%; }
   </style>
 </head>
 <body>
   <div class="bar">
-    <strong>개인정보 처리방침 — 쿠키 및 행태정보 (제2조)</strong>
-    <a href="/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3" target="_blank" rel="noopener noreferrer">원문 PDF 열기</a>
+    <div class="bar-text">
+      <strong>개인정보 처리방침 — 쿠키 및 행태정보 (제2조)</strong>
+      <!-- zoom 세로 위치를 무시하는 브라우저용 fallback: 어디를 보면 되는지 글로 알린다. -->
+      <span class="hint">해당 내용은 3쪽 중간 ⑤ 항목(맞춤형 광고 수신 거부)입니다.</span>
+    </div>
+    <a href="/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3&zoom=100,0,414" target="_blank" rel="noopener noreferrer">원문 PDF 열기</a>
   </div>
-  <embed src="/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3" type="application/pdf">
+  <embed src="/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3&zoom=100,0,414" type="application/pdf">
   <script>
     /* 인라인 PDF 뷰어가 없으면 embed는 빈 화면이 된다(iOS 전 브라우저·Chrome for Android).
        그런 UA는 조항 페이지를 포기하고 원문으로 직행시킨다 — 빈 화면보다 낫다.
@@ -40,7 +46,7 @@
       var canInline = typeof navigator.pdfViewerEnabled === "boolean"
         ? navigator.pdfViewerEnabled
         : !!(navigator.mimeTypes && navigator.mimeTypes["application/pdf"]);
-      if (!canInline) location.replace("/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3");
+      if (!canInline) location.replace("/contact-us/FaindersAI_%EA%B0%9C%EC%9D%B8%EC%A0%95%EB%B3%B4%EC%B2%98%EB%A6%AC%EB%B0%A9%EC%B9%A8_2026-1.pdf#page=3&zoom=100,0,414");
     })();
   </script>
 </body>

@@ -7,8 +7,10 @@ import { describe, expect, it } from "vitest";
 import {
   PRIVACY_COOKIE_LOCALES,
   PRIVACY_COOKIE_SPECS,
+  checkLanding,
   pdfPageHasClause,
   pdfUrl,
+  POSITION_WORDS,
   renderPrivacyCookiePage,
   // @ts-expect-error — 생성기와 **같은 모듈**을 쓴다. 여기서 TS 사본을 만들면 드리프트를 못 잡는다.
 } from "@/scripts/lib/privacyCookiePages.mjs";
@@ -57,7 +59,7 @@ describe("privacy-cookie 중간 페이지", () => {
 
       it("embed·폴백 링크·리다이렉트가 모두 같은 PDF를 가리킨다", () => {
         const href = pdfUrl(spec, { withPage: true });
-        const targets = [...html().matchAll(/\/contact-us\/[^"#]*#page=\d+/g)].map((m) => m[0]);
+        const targets = [...html().matchAll(/\/contact-us\/[^"#]*#page=\d+(?:&zoom=[\d,]+)?/g)].map((m) => m[0]);
         expect(targets.length).toBeGreaterThanOrEqual(3);
         expect(new Set(targets)).toEqual(new Set([href]));
       });
@@ -78,6 +80,48 @@ describe("privacy-cookie 중간 페이지", () => {
     expect(new Set(PRIVACY_COOKIE_LOCALES.map((l: string) => PRIVACY_COOKIE_SPECS[l].pdf)).size).toBe(
       PRIVACY_COOKIE_LOCALES.length,
     );
+  });
+
+  describe("쪽 안 착지 위치 (zoom 세로 위치 + 안내문 fallback)", () => {
+    for (const locale of PRIVACY_COOKIE_LOCALES) {
+      const spec = PRIVACY_COOKIE_SPECS[locale];
+      it(`${locale}: 링크가 page와 세로 위치를 함께 싣는다`, () => {
+        // Adobe PDF Open Parameters `zoom=scale,left,top` — Chrome·Firefox(pdf.js)가 모두 해석한다.
+        expect(pdfUrl(spec, { withPage: true })).toMatch(new RegExp(`#page=${spec.page}&zoom=100,0,${spec.viewTop}$`));
+      });
+
+      it(`${locale}: 세로 위치를 무시하는 브라우저용 안내문이 쪽 번호와 위치어를 담는다`, () => {
+        // Safari 등은 zoom을 무시하고 해당 쪽 맨 위에 머문다 — 그때 어디를 보면 되는지 글로 알려 준다.
+        expect(spec.hint).toContain(String(spec.page));
+        expect(spec.hint).toContain(POSITION_WORDS[locale][spec.position]);
+        expect(read(locale)).toContain(spec.hint);
+      });
+    }
+
+    const bbox = (h: number, lines: [number, string][]) =>
+      `<page width="595" height="${h}">` +
+      lines.map(([y, t]) => `<line xMin="72" yMin="${y}" xMax="500" yMax="${y + 12}"><word>${t}</word></line>`).join("") +
+      `</page>`;
+    const spec = { page: 5, viewTop: 324, position: "bottom", clauseNeedle: "第8条 個人関連情報" };
+
+    it("조항이 세로 위치 바로 아래에 있고 위치어가 맞으면 통과한다", () => {
+      expect(checkLanding(bbox(842, [[180, "物理的"], [542, "第 8 条 個人関連情報（Cookie 等）"]]), spec)).toEqual([]);
+    });
+
+    it("PDF 교체로 조항이 올라가면 세로 위치 어긋남을 잡는다", () => {
+      // 조항이 300pt로 올라가면 viewTop 324(= 위에서 518pt)가 조항 아래를 가리켜 제목이 화면 밖으로 밀린다.
+      const errs = checkLanding(bbox(842, [[300, "第8条 個人関連情報"]]), { ...spec, position: "middle" });
+      expect(errs.join()).toMatch(/viewTop/);
+    });
+
+    it("위치어가 실측과 다르면 잡는다 — 안내문이 거짓말을 하게 두지 않는다", () => {
+      const errs = checkLanding(bbox(842, [[542, "第8条 個人関連情報"]]), { ...spec, position: "middle" });
+      expect(errs.join()).toMatch(/position/);
+    });
+
+    it("조항 문자열이 없으면 잡는다", () => {
+      expect(checkLanding(bbox(842, [[100, "第3条"]]), spec).join()).toMatch(/없습니다/);
+    });
   });
 
   describe("pdfPageHasClause", () => {
@@ -109,6 +153,16 @@ describe("privacy-cookie 중간 페이지", () => {
           { encoding: "utf8" },
         );
         expect(pdfPageHasClause(text, spec.clauseNeedle), "scripts/lib/privacyCookiePages.mjs 의 page를 맞추세요").toBe(true);
+      });
+
+      it(`${locale}: 세로 위치(viewTop ${spec.viewTop})·위치어(${spec.position})가 실측과 맞다`, () => {
+        const pdfPath = path.join(PUBLIC_ROOT, decodeURIComponent(pdfUrl(spec)));
+        const html = execFileSync(
+          "pdftotext",
+          ["-bbox-layout", "-f", String(spec.page), "-l", String(spec.page), pdfPath, "-"],
+          { encoding: "utf8" },
+        );
+        expect(checkLanding(html, spec)).toEqual([]);
       });
     }
   });

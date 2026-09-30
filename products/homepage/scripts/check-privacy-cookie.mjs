@@ -8,6 +8,8 @@
  *   ① PDF 재생성으로 페이지 수가 바뀜 → `#page=N`이 엉뚱한 조항에 착지
  *      (실제 사고: 2026-08-25 ja PDF를 7→5페이지로 재생성했더니 #page=5가 第10条로 갔다)
  *   ② PDF 파일명 변경·유실 → 링크가 404. 산출물에서만 드러난다
+ *   ①' 쪽은 맞는데 조항이 쪽 아래로 밀림 → `zoom` 세로 위치·안내문 위치어가 거짓이 됨
+ *      (2026-09-30 ja A4본: 第8条가 5쪽 64% 지점. checkLanding이 실측과 대조한다)
  *   ③ 인라인 PDF 뷰어 없는 UA에서 `<embed>`가 빈 화면
  *      (2026-09-02: 데스크톱은 열리고 모바일은 백지)
  *
@@ -24,6 +26,7 @@ import path from "node:path";
 
 import {
   PRIVACY_COOKIE_SPECS,
+  checkLanding,
   pdfPageHasClause,
   pdfUrl,
   renderPrivacyCookiePage,
@@ -108,6 +111,18 @@ for (const [locale, spec] of Object.entries(PRIVACY_COOKIE_SPECS)) {
         `PDF가 교체돼 #page=${spec.page} 가 다른 조항에 착지합니다. ` +
         `scripts/lib/privacyCookiePages.mjs 의 page를 맞추세요.`,
     );
+  }
+
+  // 쪽 안 위치 — zoom 세로 위치와 안내문 위치어가 실제 PDF와 맞는지.
+  try {
+    const bbox = execFileSync(
+      "pdftotext",
+      ["-bbox-layout", "-f", String(spec.page), "-l", String(spec.page), pdfPath, "-"],
+      { encoding: "utf8" },
+    );
+    for (const e of checkLanding(bbox, spec)) errors.push(`${label}: ${e}`);
+  } catch (e) {
+    errors.push(`${label}: pdftotext -bbox-layout 실패 — ${e.message}`);
   }
 }
 
