@@ -30,7 +30,19 @@
  * ⚠️ 조항 번호는 로케일별로 다르다 — ko/en은 2조, ja는 8조다. 복붙하지 말 것.
  */
 
-/** @typedef {{ lang: string, pdf: string, page: number, title: string, openLabel: string, clauseNeedle: string }} PrivacyCookieSpec */
+/**
+ * @typedef {{
+ *   lang: string, pdf: string, page: number, title: string, openLabel: string, clauseNeedle: string,
+ *   viewTop: number, position: "top" | "middle" | "bottom", hint: string,
+ * }} PrivacyCookieSpec
+ *
+ * - `viewTop`: 착지 세로 위치. **PDF 좌표(쪽 아래 기준, pt)** — Adobe PDF Open Parameters
+ *   `#zoom=scale,left,top`의 top. 조항 문자열 바로 위(여백 `LANDING_MARGIN_PT`)에 맞춘다.
+ *   Firefox(pdf.js)는 규격대로 조항을 화면 맨 위에 놓고, Chrome은 해석이 달라 화면 중간쯤에 놓는다 —
+ *   둘 다 스크롤 없이 조항이 보이는 것이 목표다(2026-09-30 실측).
+ * - `position`/`hint`: zoom을 무시하는 브라우저(Safari 등)는 해당 쪽 맨 위에 머문다. 그때 어디를
+ *   보면 되는지 상단 바에 글로 알린다(fallback). `position`은 `checkLanding`이 실측과 대조한다.
+ */
 
 /** @type {Record<string, PrivacyCookieSpec>} */
 export const PRIVACY_COOKIE_SPECS = {
@@ -41,6 +53,9 @@ export const PRIVACY_COOKIE_SPECS = {
     title: "개인정보 처리방침 — 쿠키 및 행태정보 (제2조)",
     openLabel: "원문 PDF 열기",
     clauseNeedle: "맞춤형 광고 수신 거부",
+    viewTop: 414, // ⑤ 문단 y=402/792 (위에서 51%)
+    position: "middle",
+    hint: "해당 내용은 3쪽 중간 ⑤ 항목(맞춤형 광고 수신 거부)입니다.",
   },
   en: {
     lang: "en",
@@ -49,6 +64,9 @@ export const PRIVACY_COOKIE_SPECS = {
     title: "Privacy Policy — Cookies & Behavioral Information (Article 2)",
     openLabel: "Open the full PDF",
     clauseNeedle: "opt out of personalized advertising",
+    viewTop: 370, // ⑤ 문단 y=446/792 (위에서 56%)
+    position: "middle",
+    hint: "See item ⑤ (opting out of personalized advertising) in the middle of page 3.",
   },
   ja: {
     lang: "ja",
@@ -58,6 +76,9 @@ export const PRIVACY_COOKIE_SPECS = {
     title: "プライバシーポリシー — 個人関連情報（Cookie等）の取扱い（第8条）",
     openLabel: "PDF 全文を開く",
     clauseNeedle: "第8条 個人関連情報",
+    viewTop: 324, // 第8条 제목 y=542/842 (위에서 64%)
+    position: "bottom",
+    hint: "該当箇所は5ページ下部の「第8条」です。",
   },
 };
 
@@ -71,7 +92,59 @@ export const PRIVACY_COOKIE_LOCALES = Object.freeze(Object.keys(PRIVACY_COOKIE_S
  *    즉 로컬·테스트만 보면 통과하고 배포에서만 깨지는 종류다.
  */
 export function pdfUrl(spec, { withPage = false } = {}) {
-  return encodeURI(spec.pdf) + (withPage ? `#page=${spec.page}` : "");
+  // `&`는 HTML 속성에 그대로 둔다 — `&zoom`은 명명 문자 참조가 아니라 HTML5에서 안전하고,
+  // 게이트가 산출물에서 이 문자열을 그대로 찾는다.
+  return encodeURI(spec.pdf) + (withPage ? `#page=${spec.page}&zoom=100,0,${spec.viewTop}` : "");
+}
+
+/** 안내문에 들어가야 하는 위치어. `position`과 hint가 서로 어긋나지 않게 테스트가 대조한다. */
+export const POSITION_WORDS = Object.freeze({
+  ko: { top: "상단", middle: "중간", bottom: "하단" },
+  en: { top: "top", middle: "middle", bottom: "bottom" },
+  ja: { top: "上部", middle: "中ほど", bottom: "下部" },
+});
+
+/** 조항 문자열 위로 둘 여백(pt). 제목이 화면 가장자리에 붙지 않게 한다. */
+export const LANDING_MARGIN_PT = 24;
+/** 세로 위치와 조항 사이 허용 오차(pt) — 이보다 멀면 조항이 화면 아래로 밀릴 수 있다. */
+const LANDING_TOLERANCE_PT = 60;
+
+/** 쪽 높이 대비 비율 → 위치어 키. */
+export function positionOf(ratio) {
+  if (ratio < 0.34) return "top";
+  if (ratio <= 0.6) return "middle";
+  return "bottom";
+}
+
+/**
+ * `pdftotext -bbox-layout` 한 쪽 출력에서 조항 문자열의 위치를 재고, spec의 `viewTop`·`position`과
+ * 대조한다. 어긋난 항목을 문자열 배열로 돌려준다(빈 배열 = 통과). 게이트와 테스트가 같은 함수를 쓴다.
+ */
+export function checkLanding(bboxHtml, spec) {
+  const pageHeight = Number(/<page [^>]*height="([\d.]+)"/.exec(bboxHtml)?.[1]);
+  const squash = (s) => s.replace(/\s+/g, "");
+  const needle = squash(spec.clauseNeedle);
+  let yMin = null;
+  for (const m of bboxHtml.matchAll(/<line [^>]*yMin="([\d.]+)"[^>]*>([\s\S]*?)<\/line>/g)) {
+    const text = [...m[2].matchAll(/>([^<]*)<\/word>/g)].map((w) => w[1]).join("");
+    if (squash(text).includes(needle)) {
+      yMin = Number(m[1]);
+      break;
+    }
+  }
+  if (yMin === null || !pageHeight) return [`${spec.page}쪽에 "${spec.clauseNeedle}" 가 없습니다`];
+
+  const errors = [];
+  const viewFromTop = pageHeight - spec.viewTop; // PDF 좌표(아래 기준) → 위에서 잰 거리
+  if (yMin < viewFromTop || yMin - viewFromTop > LANDING_TOLERANCE_PT) {
+    const suggested = Math.round(pageHeight - yMin + LANDING_MARGIN_PT);
+    errors.push(`viewTop ${spec.viewTop} 이 조항(위에서 ${Math.round(yMin)}pt)과 맞지 않습니다 — viewTop: ${suggested} 권장`);
+  }
+  const actual = positionOf(yMin / pageHeight);
+  if (actual !== spec.position) {
+    errors.push(`position "${spec.position}" 이 실측 "${actual}"(위에서 ${Math.round((yMin / pageHeight) * 100)}%)과 다릅니다 — hint 문구도 함께 고칠 것`);
+  }
+  return errors;
 }
 
 /**
@@ -95,6 +168,7 @@ export function renderPrivacyCookiePage(spec) {
   const href = pdfUrl(spec, { withPage: true });
   const title = escapeHtml(spec.title);
   const openLabel = escapeHtml(spec.openLabel);
+  const hint = escapeHtml(spec.hint);
 
   return `<!DOCTYPE html>
 <!--
@@ -119,14 +193,20 @@ export function renderPrivacyCookiePage(spec) {
     .bar { display: flex; align-items: center; justify-content: space-between; gap: 16px;
            flex: 0 0 auto; padding: 12px 16px; background: #f4f4f2;
            border-bottom: 1px solid #e2e2de; color: #55554f; }
+    .bar-text { display: flex; flex-direction: column; min-width: 0; }
     .bar strong { font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .bar .hint { color: #1b1b19; }
     .bar a { flex: 0 0 auto; color: #1b1b19; text-decoration: underline; }
     embed { display: block; flex: 1 1 auto; width: 100%; }
   </style>
 </head>
 <body>
   <div class="bar">
-    <strong>${title}</strong>
+    <div class="bar-text">
+      <strong>${title}</strong>
+      <!-- zoom 세로 위치를 무시하는 브라우저용 fallback: 어디를 보면 되는지 글로 알린다. -->
+      <span class="hint">${hint}</span>
+    </div>
     <a href="${href}" target="_blank" rel="noopener noreferrer">${openLabel}</a>
   </div>
   <embed src="${href}" type="application/pdf">

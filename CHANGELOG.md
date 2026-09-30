@@ -14,6 +14,13 @@
 - 같은 검사를 `pnpm test`로 당겼다(`i18n/privacyCookiePages.test.ts` "PDF 실물의 조항 착지") — 쪽수 어긋남이 배포 직전이 아니라 커밋 전에 걸린다. 이번 교체에서 실제로 `ja: 4쪽` Red를 먼저 확인했다
 - `products/homepage/docs/OPEN_ja-privacy-pdf-cpo-name_20260915.md` 종결
 
+#### '맞춤형 광고 설정' 도착 위치를 쪽 안의 조항 위치까지 좁힘 + 안내문 fallback
+- A4본에서 ja 第8条는 5쪽 **위에서 64%** 지점이라, `#page=5`만으로는 5쪽 맨 위(第7条)가 먼저 보였다. ko·en 목표 문단(⑤)도 3쪽 51%·56% 지점
+- 링크를 `#page=N&zoom=100,0,<top>`(Adobe PDF Open Parameters)로 확장. Firefox는 Firefox에 들어 있는 pdf.js 소스(`viewer.mjs` setHash)로 규격대로 해석함을 확인(조항이 화면 맨 위), Chrome은 해석이 달라 화면 중간쯤 — **둘 다 스크롤 없이 조항이 보인다**(로컬 산출물 3개 로케일 Chrome 실측)
+- **fallback**: zoom을 무시하는 브라우저(Safari 등)를 위해 상단 바에 위치 안내문 추가 — ja `該当箇所は5ページ下部の「第8条」です。` / ko `해당 내용은 3쪽 중간 ⑤ 항목…` / en `See item ⑤ … in the middle of page 3.`
+- 모바일(인라인 PDF 뷰어 없음)은 기존대로 원문 PDF로 바로 이동 — 2026-09-30 결정(A안). 그래서 모바일에서는 안내문이 보이지 않는다
+- `checkLanding()`이 `pdftotext -bbox-layout` 실측으로 **세로 위치(viewTop)와 안내문 위치어(position)가 실제 PDF와 맞는지** 검사 — 테스트·배포 게이트 공용. PDF를 다시 바꾸면 쪽수뿐 아니라 쪽 안 위치 어긋남도 커밋 전에 걸린다(불일치 시 권장 viewTop을 출력)
+
 #### HOM-107 후속 — ja 처리방침 PDF를 Word **A4** 재출력본으로 교체
 - 09-17 전달본은 Word 기본 용지(Letter)로 출력돼 8쪽, 마지막 쪽에 제정·시행일 두 줄만 남았다. 2026-09-30 왕민권 재출력본(`…석범님 수정_a4.pdf`, Word 2021, A4 **7쪽**)으로 교체
 - docx 원문·Letter본과 문자 단위 대조로 **본문 동일**(차이는 쪽 넘김 때 반복된 표 머리글뿐), `Sukbum Hong` 유지
