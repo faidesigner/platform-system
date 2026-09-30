@@ -24,6 +24,7 @@ import path from "node:path";
 
 import {
   PRIVACY_COOKIE_SPECS,
+  pdfPageHasClause,
   pdfUrl,
   renderPrivacyCookiePage,
 } from "./lib/privacyCookiePages.mjs";
@@ -100,9 +101,8 @@ for (const [locale, spec] of Object.entries(PRIVACY_COOKIE_SPECS)) {
     continue;
   }
 
-  // 공백/줄바꿈은 추출기마다 달라지므로 정규화 후 비교한다.
-  const flat = text.replace(/\s+/g, " ");
-  if (!flat.includes(spec.clauseNeedle.replace(/\s+/g, " "))) {
+  // 공백/줄바꿈은 추출기마다 달라지므로 pdfPageHasClause가 전부 걷어 내고 비교한다.
+  if (!pdfPageHasClause(text, spec.clauseNeedle)) {
     errors.push(
       `${label}: PDF ${spec.page}쪽에 "${spec.clauseNeedle}" 가 없습니다 — ` +
         `PDF가 교체돼 #page=${spec.page} 가 다른 조항에 착지합니다. ` +
