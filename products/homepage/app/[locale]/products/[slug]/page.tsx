@@ -3,7 +3,7 @@ import { notFound } from 'next/navigation'
 import { setRequestLocale, getTranslations } from 'next-intl/server'
 import { routing } from '@/i18n/routing'
 import { siteConfig, type ProductSlug } from '@/config/site'
-import { localePolicy, orderReviews } from '@/config/locale-policy'
+import { localePolicy, orderReviews, VCO_HERO_VIDEO_MOBILE } from '@/config/locale-policy'
 import { pageMetadata } from '@/lib/seo'
 import { getPageDescription, type SeoPageKey } from '@/config/seo'
 import ProductHero from '@/components/sections/products/ProductHero'
@@ -121,6 +121,8 @@ export default async function ProductDetailPage({
 
   const heroVideoSrc =
     slug === 'vision-check-out' ? localePolicy(locale).vcoHeroVideo : product.heroVideo
+  // 모바일(≤420px)은 로케일 무관 한 영상(HOM-109).
+  const heroMobileVideoSrc = slug === 'vision-check-out' ? VCO_HERO_VIDEO_MOBILE : undefined
 
   const effectCards = product.effectCards.map((c, i) => ({
     ...c,
@@ -173,6 +175,7 @@ export default async function ProductDetailPage({
           title={t('heroTitle')}
           ctaLabel={ctaLabel}
           videoSrc={heroVideoSrc}
+          mobileVideoSrc={heroMobileVideoSrc}
         />
       ) : (
         <StoreHero

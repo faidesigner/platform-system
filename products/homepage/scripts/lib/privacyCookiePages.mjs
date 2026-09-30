@@ -53,7 +53,8 @@ export const PRIVACY_COOKIE_SPECS = {
   ja: {
     lang: "ja",
     pdf: "/contact-us/FaindersAI_プライバシーポリシー_個人情報保護方針_2026-1.pdf",
-    page: 4,
+    // 2026-09-30 HOM-107: Word 재출력본(5→8쪽)으로 교체되며 第8条가 4쪽 → 6쪽으로 이동.
+    page: 6,
     title: "プライバシーポリシー — 個人関連情報（Cookie等）の取扱い（第8条）",
     openLabel: "PDF 全文を開く",
     clauseNeedle: "第8条 個人関連情報",
@@ -71,6 +72,19 @@ export const PRIVACY_COOKIE_LOCALES = Object.freeze(Object.keys(PRIVACY_COOKIE_S
  */
 export function pdfUrl(spec, { withPage = false } = {}) {
   return encodeURI(spec.pdf) + (withPage ? `#page=${spec.page}` : "");
+}
+
+/**
+ * `pageText`(pdftotext 추출 결과)에 조항 표지 `needle`이 있는지 본다.
+ *
+ * 공백은 **전부 제거**하고 비교한다. 추출기·PDF 생성기마다 공백이 달라서다 —
+ * Word 출력본은 `第 8 条`처럼 CJK와 숫자 사이에 공백이 끼고, Chrome 출력본은 `第8条`로 나온다
+ * (2026-09-30 HOM-107: 공백을 한 칸으로 줄이기만 하던 비교가 정상 PDF를 막았다).
+ * 게이트(check-privacy-cookie.mjs)와 테스트가 같은 함수를 쓴다.
+ */
+export function pdfPageHasClause(pageText, needle) {
+  const squash = (s) => s.replace(/\s+/g, "");
+  return squash(pageText).includes(squash(needle));
 }
 
 const escapeHtml = (s) =>

@@ -10,13 +10,19 @@ interface ProductHeroProps {
   title: string;
   ctaLabel: string;
   videoSrc?: string;
+  /** 가로 420px 이하에서 쓸 배경 영상(HOM-109). 없으면 videoSrc 하나로 모든 폭을 덮는다. */
+  mobileVideoSrc?: string;
 }
+
+/** 모바일 영상 분기점. 타이틀 축소 분기(max-[421px])와 같은 경계 — 요구사항은 "420px 이하". */
+const MOBILE_VIDEO_MEDIA = "(max-width: 420px)";
 
 export default function ProductHero({
   subtitle,
   title,
   ctaLabel,
   videoSrc,
+  mobileVideoSrc,
 }: ProductHeroProps) {
   // 과거 폴백은 외부 사이트(w3schools)의 데모 mp4였다 — 운영 히어로가 제3자 호스팅에 의존하면
   // 그쪽이 링크를 내리는 순간 배경이 깨진다. 자체 호스팅 경로가 없으면 아예 렌더하지 않는다.
@@ -38,14 +44,21 @@ export default function ProductHero({
     <section className="relative w-full h-screen overflow-hidden">
       {/* z-0: 배경 비디오 — 자체 호스팅 경로가 있을 때만 렌더 */}
       {src && (
+        // `<source>`는 최초 로드 때만 선택된다 — 경로가 바뀌면(로케일 전환) key로 다시 마운트해 재선택시킨다.
+        // 브라우저는 첫 번째로 일치하는 source를 쓰므로 모바일 source가 반드시 먼저 와야 한다.
         <video
+          key={`${mobileVideoSrc ?? ""}|${src}`}
           className="absolute inset-0 w-full h-full z-0 object-cover"
           autoPlay
           loop
           muted
           playsInline
-          src={src}
-        />
+        >
+          {mobileVideoSrc && (
+            <source src={mobileVideoSrc} media={MOBILE_VIDEO_MEDIA} type="video/mp4" />
+          )}
+          <source src={src} type="video/mp4" />
+        </video>
       )}
 
       {/* z-10: Dim Overlay */}

@@ -1,5 +1,13 @@
+import { existsSync } from "node:fs";
+import path from "node:path";
 import { describe, it, expect } from "vitest";
-import { localePolicy, LOCALE_POLICY, orderReviews, type ReviewKey } from "./locale-policy";
+import {
+  localePolicy,
+  LOCALE_POLICY,
+  orderReviews,
+  VCO_HERO_VIDEO_MOBILE,
+  type ReviewKey,
+} from "./locale-policy";
 
 /**
  * 로케일별 노출·링크 정책 회귀 테스트.
@@ -111,6 +119,26 @@ describe("HOM-70 — VCO 히어로 영상 로케일 분기", () => {
     // 운영 히어로가 외부 사이트(w3schools 데모 mp4)에 의존하던 회귀를 막는다.
     for (const l of ALL_LOCALES) {
       expect(localePolicy(l).vcoHeroVideo).not.toMatch(/^https?:\/\//);
+    }
+  });
+});
+
+describe("HOM-109 — VCO 히어로 모바일 영상", () => {
+  const publicFile = (src: string) => path.resolve(__dirname, "..", "public", src.replace(/^\//, ""));
+
+  it("모바일(≤420px) 영상은 로케일 무관 한 파일이다", () => {
+    // 2026-09-30 결정: 모바일이면 ko/en/ja 모두 같은 영상. 로케일 정책 표에 넣지 않고 상수 하나로 둔다
+    // — 표에 넣으면 다음 요청 때 로케일별로 갈라질 여지가 생긴다.
+    expect(VCO_HERO_VIDEO_MOBILE).toMatch(/^\/videos\/.+\.mp4$/);
+    for (const l of ALL_LOCALES) {
+      expect(localePolicy(l).vcoHeroVideo).not.toBe(VCO_HERO_VIDEO_MOBILE);
+    }
+  });
+
+  it("히어로가 참조하는 영상 파일이 실제로 있다", () => {
+    // 경로만 바꾸고 파일을 안 넣으면 정적 export는 조용히 404를 낸다(배경만 비고 에러는 없다).
+    for (const src of [VCO_HERO_VIDEO_MOBILE, ...ALL_LOCALES.map((l) => localePolicy(l).vcoHeroVideo)]) {
+      expect(existsSync(publicFile(src)), src).toBe(true);
     }
   });
 });

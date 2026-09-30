@@ -49,9 +49,7 @@ export interface LocalePolicy {
    * VCO 제품 히어로 배경 영상(HOM-70).
    * 반드시 자체 호스팅 경로여야 한다 — 과거 외부 데모 mp4(w3schools)를 폴백으로 쓰던 회귀가 있었다.
    *
-   * TODO(HOM-70): ja/en 자막 버전 영상 대기 중. 원본이 각각 46MB·123MB로 히어로 루프에 그대로 쓸 수 없어
-   * 기존 vco-hero-bg.mp4와 동일한 압축 단계(원본 24MB → 6.2MB)를 거쳐야 한다.
-   * 압축본이 public/videos/product/에 들어오면 아래 경로만 교체하면 된다.
+   * 원본은 그대로 쓰지 않는다 — `*_original.mp4`로 두고 웹 최적화본만 서빙한다(deploy.sh가 `_original`을 제외).
    */
   vcoHeroVideo: string;
 
@@ -76,11 +74,22 @@ const LINE_CHANNEL_URL = "https://lin.ee/7sWaw8t";
 // VCO 히어로 배경 영상 — 로케일별(HOM-70).
 // 원본은 Notion HOM-70 카드의 Google Drive 링크가 단일 출처다. 저장소에는 웹 최적화본만 둔다
 // (`scripts/optimize-videos.mjs`: 1080p / H.264 CRF 28 / preset slow / -an / +faststart).
-// 원본을 커밋하지 않는 이유: 히어로 배경에 원본 화질이 필요 없고, en 원본은 117.6MB로
-// GitHub 파일당 100MB 제한을 넘는다.
+// en/ja 원본은 2026-09-03엔 117.6MB라 커밋하지 못했지만, HOM-109(2026-09-30) 교체본은 11.3MB라
+// 저장소 관례대로 `*_original.mp4`를 함께 커밋한다.
+// ⚠️ 스크립트를 인자 없이 돌리면 `_original` 형제 없는 기존 최적화본까지 재압축한다 — `--dry` 먼저.
 const VCO_HERO_VIDEO_KO = "/videos/product/vco-hero-bg.mp4";   // 66.6s · 6.2MB · 한국어 자막
-const VCO_HERO_VIDEO_EN = "/videos/product/vco-hero-bg-en.mp4"; // 66.6s · 5.7MB · 영어 오프닝 · 자막 없음
-const VCO_HERO_VIDEO_JA = "/videos/product/vco-hero-bg-ja.mp4"; // 26.6s · 2.8MB · 일본어 오프닝+자막
+const VCO_HERO_VIDEO_EN = "/videos/product/vco-hero-bg-en.mp4"; // 66.6s · 6.7MB · 영어 자막(HOM-109)
+const VCO_HERO_VIDEO_JA = "/videos/product/vco-hero-bg-ja.mp4"; // 66.6s · 6.7MB · 일본어 자막(HOM-109)
+
+/**
+ * VCO 히어로 모바일(≤420px) 배경 영상 — **로케일 무관 단일 파일**(HOM-109, 2026-09-30).
+ * 584×1040 세로 컷이라 세로 화면의 `object-cover`에서 가로 컷보다 잘림이 적다.
+ * 로케일 정책 표(`vcoHeroVideo`)에 넣지 않은 이유: "모바일은 모든 언어 동일"이 요구사항이고,
+ * 표에 두면 로케일별로 갈라질 여지가 생긴다.
+ * 영상 속 키오스크 화면은 한국어 UI다 — en/ja 모바일에도 그대로 나가는 것을 알고 내린 결정이다.
+ * 원본 `vco-hero-bg-mobile_original.mp4`(6.1MB, Drive `260916 홈페이지 VCO 파트_MOBILE.mp4`)를 함께 둔다.
+ */
+export const VCO_HERO_VIDEO_MOBILE = "/videos/product/vco-hero-bg-mobile.mp4"; // 55.7s · 2.4MB
 
 export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   ko: {
@@ -98,9 +107,8 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     contactChat: { show: false, url: null, channel: null },
     showLetterSubscribeCta: true,
     footer: { showEmail: true, showBizNo: true, showJapanEntity: false },
-    // en 전용본은 ko와 **같은 편집본**이다(길이 66.5665s로 밀리초까지 일치) — 오프닝만 영어고
-    // 자막이 없다. 즉 영어 사용자에게 한국어 자막이 노출되던 것만 사라진다(2026-09-02 Hyeyoung Shin
-    // 요청의 "자막이 없는 버전"에 해당). 영어 자막본은 번역 후 다음 차시 반영 예정.
+    // en 전용본(HOM-109, Drive `260916 홈페이지 VCO 파트_EN_무음`) — ko와 같은 편집본(66.5665s),
+    // 영어 자막 번인. HOM-70 때의 "자막 없는 임시본"을 대체한다.
     vcoHeroVideo: VCO_HERO_VIDEO_EN,
     reviewOrder: null,
     homeHeroImage: "/images/main/imageSection-hero-en.webp",
@@ -113,8 +121,8 @@ export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
     // 본사 이메일이 그 위에 놓여 위계가 어색해졌다(2026-08-28 Hyeyoung Shin).
     // 일본 문의 경로는 일본 법인 전화번호로 안내한다.
     footer: { showEmail: false, showBizNo: false, showJapanEntity: true },
-    // ja 전용본은 ko·en과 **다른 편집본**이다(26.6s vs 66.6s) — 루프 주기가 2.5배 짧다.
-    // 디자인 의도인지 확인 필요하지만, 한국어 자막 노출을 없애는 것이 우선이라 먼저 연결한다.
+    // ja 전용본(HOM-109, Drive `260916 홈페이지 VCO 파트_JP_무음`) — 이제 ko·en과 같은 편집본(66.6s),
+    // 일본어 자막 번인. HOM-70 때 26.6s 별도 편집본이던 문제도 함께 해소됐다.
     vcoHeroVideo: VCO_HERO_VIDEO_JA,
     reviewOrder: ["resort", "retail", "bakery", "cafeteria"],
     homeHeroImage: "/images/main/imageSection-hero-ja.webp",

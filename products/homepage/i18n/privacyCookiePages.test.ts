@@ -1,3 +1,4 @@
+import { execFileSync } from "node:child_process";
 import { readFileSync } from "node:fs";
 import path from "node:path";
 
@@ -6,12 +7,23 @@ import { describe, expect, it } from "vitest";
 import {
   PRIVACY_COOKIE_LOCALES,
   PRIVACY_COOKIE_SPECS,
+  pdfPageHasClause,
   pdfUrl,
   renderPrivacyCookiePage,
   // @ts-expect-error — 생성기와 **같은 모듈**을 쓴다. 여기서 TS 사본을 만들면 드리프트를 못 잡는다.
 } from "@/scripts/lib/privacyCookiePages.mjs";
 
 const PUBLIC_DIR = path.resolve(__dirname, "..", "public", "privacy-cookie");
+const PUBLIC_ROOT = path.resolve(__dirname, "..", "public");
+
+const hasPdfToText = (() => {
+  try {
+    execFileSync("pdftotext", ["-v"], { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+})();
 const read = (locale: string) =>
   readFileSync(path.join(PUBLIC_DIR, `${locale}.html`), "utf8");
 
@@ -66,5 +78,38 @@ describe("privacy-cookie 중간 페이지", () => {
     expect(new Set(PRIVACY_COOKIE_LOCALES.map((l: string) => PRIVACY_COOKIE_SPECS[l].pdf)).size).toBe(
       PRIVACY_COOKIE_LOCALES.length,
     );
+  });
+
+  describe("pdfPageHasClause", () => {
+    it("추출기가 CJK와 숫자 사이에 넣는 공백을 무시한다", () => {
+      // Word 출력 PDF는 pdftotext가 `第 8 条`로 뽑는다(HOM-107, 2026-09-30).
+      // 공백을 한 칸으로 줄이기만 하던 비교는 정상 PDF를 "조항 없음"으로 막았다.
+      expect(pdfPageHasClause("第 8 条 個人関連情報（Cookie 等）の取扱い", "第8条 個人関連情報")).toBe(true);
+      expect(pdfPageHasClause("第8条\n個人関連情報", "第8条 個人関連情報")).toBe(true);
+    });
+
+    it("다른 조항 페이지는 통과시키지 않는다", () => {
+      expect(pdfPageHasClause("第 3 条 個人情報の取得", "第8条 個人関連情報")).toBe(false);
+    });
+  });
+
+  /**
+   * 체크인된 PDF 실물의 `page`쪽에 조항이 있는지 본다. deploy.sh의 게이트와 같은 검사를
+   * `pnpm test`로 당겨 온 것 — PDF 교체로 쪽수가 바뀌면(2026-08-25 ja 7→5, 09-15 en 10→9,
+   * 09-30 ja 5→8) 배포 직전이 아니라 커밋 전에 걸린다.
+   */
+  describe.skipIf(!hasPdfToText)("PDF 실물의 조항 착지", () => {
+    for (const locale of PRIVACY_COOKIE_LOCALES) {
+      const spec = PRIVACY_COOKIE_SPECS[locale];
+      it(`${locale}: ${spec.page}쪽에 "${spec.clauseNeedle}"가 있다`, () => {
+        const pdfPath = path.join(PUBLIC_ROOT, decodeURIComponent(pdfUrl(spec)));
+        const text = execFileSync(
+          "pdftotext",
+          ["-enc", "UTF-8", "-f", String(spec.page), "-l", String(spec.page), pdfPath, "-"],
+          { encoding: "utf8" },
+        );
+        expect(pdfPageHasClause(text, spec.clauseNeedle), "scripts/lib/privacyCookiePages.mjs 의 page를 맞추세요").toBe(true);
+      });
+    }
   });
 });
