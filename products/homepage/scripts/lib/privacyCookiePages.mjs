@@ -53,8 +53,8 @@ export const PRIVACY_COOKIE_SPECS = {
   ja: {
     lang: "ja",
     pdf: "/contact-us/FaindersAI_プライバシーポリシー_個人情報保護方針_2026-1.pdf",
-    // 2026-09-30 HOM-107: Word 재출력본(5→8쪽)으로 교체되며 第8条가 4쪽 → 6쪽으로 이동.
-    page: 6,
+    // HOM-107: Word Letter본(8쪽, 第8条 6쪽) → 2026-09-30 Word A4 재출력본(7쪽, 第8条 5쪽).
+    page: 5,
     title: "プライバシーポリシー — 個人関連情報（Cookie等）の取扱い（第8条）",
     openLabel: "PDF 全文を開く",
     clauseNeedle: "第8条 個人関連情報",
