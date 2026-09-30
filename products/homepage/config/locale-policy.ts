@@ -82,6 +82,16 @@ const VCO_HERO_VIDEO_KO = "/videos/product/vco-hero-bg.mp4";   // 66.6s · 6.2MB
 const VCO_HERO_VIDEO_EN = "/videos/product/vco-hero-bg-en.mp4"; // 66.6s · 5.7MB · 영어 오프닝 · 자막 없음
 const VCO_HERO_VIDEO_JA = "/videos/product/vco-hero-bg-ja.mp4"; // 26.6s · 2.8MB · 일본어 오프닝+자막
 
+/**
+ * VCO 히어로 모바일(≤420px) 배경 영상 — **로케일 무관 단일 파일**(HOM-109, 2026-09-30).
+ * 584×1040 세로 컷이라 세로 화면의 `object-cover`에서 가로 컷보다 잘림이 적다.
+ * 로케일 정책 표(`vcoHeroVideo`)에 넣지 않은 이유: "모바일은 모든 언어 동일"이 요구사항이고,
+ * 표에 두면 로케일별로 갈라질 여지가 생긴다.
+ * 영상 속 키오스크 화면은 한국어 UI다 — en/ja 모바일에도 그대로 나가는 것을 알고 내린 결정이다.
+ * 원본 `vco-hero-bg-mobile_original.mp4`(6.1MB, Drive `260916 홈페이지 VCO 파트_MOBILE.mp4`)를 함께 둔다.
+ */
+export const VCO_HERO_VIDEO_MOBILE = "/videos/product/vco-hero-bg-mobile.mp4"; // 55.7s · 2.4MB
+
 export const LOCALE_POLICY: Record<PolicyLocale, LocalePolicy> = {
   ko: {
     showCareers: true,
