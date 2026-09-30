@@ -2,6 +2,26 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-09-30
+
+### 🛠 Fixed
+
+#### HOM-107 일본어 개인정보 처리방침 PDF 교체 — CPO 영문 표기 `Seokbeom Hong` → `Sukbum Hong`
+- 파일은 2026-09-17 #prj_homepage 왕민권 전달본 `[일본어]개인정보처리방침 260821(수정본)_석범님 수정.pdf`. Notion 카드 첨부는 MCP로 못 받아 직접 대조하지 못했다 — 카드 댓글(17:20 KST)이 Slack 업로드(17:17 KST) 직후라 같은 파일로 판단
+- 본문은 공백·글머리표를 걷어 낸 문자 단위 대조로 **이름 외 동일**. 남는 차이는 Word가 쪽 넘김 때 반복한 표 헤더뿐
+- 생성기가 Chrome → Word로 바뀌며 **5쪽 → 8쪽**. 第8条(쿠키)가 4쪽 → 6쪽으로 옮겨 `privacyCookiePages.mjs` ja `page: 4 → 6` + `gen-privacy-cookie.mjs` 재생성. 중복본 `(個人情報保護方針).pdf`도 동기화
+- **가드 오탐 수정**: Word 출력본은 pdftotext가 `第 8 条`로 뽑는데, `check-privacy-cookie.mjs`는 공백을 한 칸으로 줄이기만 해서 정상 PDF를 "조항 없음"으로 막았을 것이다. 비교를 `pdfPageHasClause()`(공백 전부 제거)로 빼서 게이트와 테스트가 공유
+- 같은 검사를 `pnpm test`로 당겼다(`i18n/privacyCookiePages.test.ts` "PDF 실물의 조항 착지") — 쪽수 어긋남이 배포 직전이 아니라 커밋 전에 걸린다. 이번 교체에서 실제로 `ja: 4쪽` Red를 먼저 확인했다
+- `products/homepage/docs/OPEN_ja-privacy-pdf-cpo-name_20260915.md` 종결
+
+#### HOM-109 VCO 히어로 영상 — 모바일(≤420px) 전용 영상 추가 (en/ja 데스크톱 교체는 파일 대기)
+- 가로 420px 이하에서는 로케일 무관 `vco-hero-bg-mobile.mp4`(584×1040 세로, 55.7s, 6.1MB → 2.4MB)를 쓴다. 2026-09-30 결정: 모바일은 모든 언어 동일, ko 데스크톱은 현행 유지
+- `<video>` 안에 `<source media="(max-width: 420px)">`를 먼저 두는 방식 — JS 없이 브라우저가 하나만 받는다. 로컬 정적 산출물에서 ko/en/ja × 390/420/421/1440px 12조합 모두 올바른 파일 1개만 요청됨을 Playwright로 확인
+- 상수 `VCO_HERO_VIDEO_MOBILE`은 로케일 정책 표 밖에 둔다(표에 두면 로케일별로 갈라질 여지가 생긴다). `locale-policy.test.ts`에 **참조 영상 파일 실재 검사**를 추가 — 경로만 바꾸고 파일을 빠뜨리면 정적 export는 에러 없이 배경만 빈다
+- ⚠️ 모바일 영상 속 키오스크 화면은 한국어 UI다. en/ja 모바일에도 그대로 나가는 것을 알고 내린 결정
+- ⏳ en/ja 데스크톱 영상(`260916 홈페이지 VCO 파트_EN_무음` / `_JP_무음`, 각 11.8MB)은 MCP 다운로드 한도 초과로 사용자 전달 대기
+- ⚠️ `scripts/optimize-videos.mjs`를 인자 없이 돌리면 `_original` 형제가 없는 **기존 최적화본(en/ja 히어로, home timelapse 2개)까지 재압축**한다. 이번에는 같은 파라미터로 모바일 파일만 직접 인코딩했다
+
 ## [Unreleased] - 2026-09-15
 
 ### 🛠 Fixed
