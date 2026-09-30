@@ -14,6 +14,12 @@
 - 같은 검사를 `pnpm test`로 당겼다(`i18n/privacyCookiePages.test.ts` "PDF 실물의 조항 착지") — 쪽수 어긋남이 배포 직전이 아니라 커밋 전에 걸린다. 이번 교체에서 실제로 `ja: 4쪽` Red를 먼저 확인했다
 - `products/homepage/docs/OPEN_ja-privacy-pdf-cpo-name_20260915.md` 종결
 
+#### HOM-107 후속 — ja 처리방침 PDF를 Word **A4** 재출력본으로 교체
+- 09-17 전달본은 Word 기본 용지(Letter)로 출력돼 8쪽, 마지막 쪽에 제정·시행일 두 줄만 남았다. 2026-09-30 왕민권 재출력본(`…석범님 수정_a4.pdf`, Word 2021, A4 **7쪽**)으로 교체
+- docx 원문·Letter본과 문자 단위 대조로 **본문 동일**(차이는 쪽 넘김 때 반복된 표 머리글뿐), `Sukbum Hong` 유지
+- 第8条가 6쪽 → **5쪽** — `privacyCookiePages.mjs` ja `page: 5`. "PDF 실물의 조항 착지" 테스트가 교체 직후 `6쪽` Red를 먼저 냈다
+- 참고: LibreOffice로 docx→A4 변환도 시험했지만 빈 공간·표 잘림으로 Word본보다 품질이 떨어져 채택하지 않았다(headless LO는 macOS 시스템 글꼴을 못 봐서 `FONTCONFIG_FILE` 없이는 일본어가 □로 나온다)
+
 #### HOM-109 VCO 히어로 영상 교체 — en/ja 자막본 + 모바일(≤420px) 전용 영상
 - 가로 420px 이하에서는 로케일 무관 `vco-hero-bg-mobile.mp4`(584×1040 세로, 55.7s, 6.1MB → 2.4MB)를 쓴다. 2026-09-30 결정: 모바일은 모든 언어 동일, ko 데스크톱은 현행 유지
 - `<video>` 안에 `<source media="(max-width: 420px)">`를 먼저 두는 방식 — JS 없이 브라우저가 하나만 받는다. 로컬 정적 산출물에서 ko/en/ja × 390/420/421/1440px 12조합 모두 올바른 파일 1개만 요청됨을 Playwright로 확인
