@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 import { useParams, useRouter } from "next/navigation";
 import { IcoTxtButton } from "@fai/ui";
 import { trackEvent } from "@/lib/analytics/track";
@@ -10,12 +10,39 @@ interface ProductHeroProps {
   title: string;
   ctaLabel: string;
   videoSrc?: string;
-  /** 가로 420px 이하에서 쓸 배경 영상(HOM-109). 없으면 videoSrc 하나로 모든 폭을 덮는다. */
+  /** 모바일 폭(MOBILE_VIDEO_MEDIA)에서 쓸 배경 영상(HOM-109). 없으면 videoSrc 하나로 모든 폭을 덮는다. */
   mobileVideoSrc?: string;
 }
 
-/** 모바일 영상 분기점. 타이틀 축소 분기(max-[421px])와 같은 경계 — 요구사항은 "420px 이하". */
-const MOBILE_VIDEO_MEDIA = "(max-width: 420px)";
+/**
+ * 모바일 영상 분기점 — **폰 세로 화면**(2026-10-01 결정).
+ * 카드 요구사항은 "420px 이하"였지만 iPhone Plus·Pro Max(430~440px)가 빠져 QA에서 재신고됐다.
+ * - 폭 767px: 폰은 Pro Max·폴더블까지 들어가고 태블릿(768~)은 빠진다. 세로 영상(584×1040)을
+ *   iPad 폭으로 늘리면 흐려지므로 태블릿은 가로 영상을 쓴다.
+ * - portrait: 폰을 가로로 눕히면(예: 844×390) 세로 영상은 가운데 일부만 보이므로 가로 영상을 쓴다.
+ */
+export const MOBILE_VIDEO_MEDIA = "(max-width: 767px) and (orientation: portrait)";
+
+/**
+ * 미디어 쿼리 일치 여부. 첫 렌더(정적 HTML·hydration)에는 판단할 수 없어 null을 돌려준다.
+ * `enabled`가 false면 matchMedia를 부르지 않는다 — 분기할 영상이 없는 제품은 정적 HTML에 바로 src를 싣는다.
+ */
+function useMediaQuery(query: string, enabled: boolean): boolean | null {
+  const subscribe = useCallback(
+    (onChange: () => void) => {
+      if (!enabled) return () => {};
+      const mql = window.matchMedia(query);
+      mql.addEventListener("change", onChange);
+      return () => mql.removeEventListener("change", onChange);
+    },
+    [query, enabled],
+  );
+  return useSyncExternalStore(
+    subscribe,
+    () => (enabled ? window.matchMedia(query).matches : null),
+    () => null, // 정적 HTML·hydration: 폭을 모르므로 판단 보류
+  );
+}
 
 export default function ProductHero({
   subtitle,
@@ -27,6 +54,12 @@ export default function ProductHero({
   // 과거 폴백은 외부 사이트(w3schools)의 데모 mp4였다 — 운영 히어로가 제3자 호스팅에 의존하면
   // 그쪽이 링크를 내리는 순간 배경이 깨진다. 자체 호스팅 경로가 없으면 아예 렌더하지 않는다.
   const src = !videoSrc || videoSrc === "MISSING_FROM_DESIGN" ? null : videoSrc;
+
+  // ⚠️ `<source media>`로 분기하지 않는다 — iOS Safari(WebKit)는 video의 source media를 무시해
+  // iPhone에서도 데스크톱 영상을 틀었다(2026-10-01 QA 신고, Playwright WebKit 실측).
+  // matchMedia로 고른 경로를 src에 직접 건다. 판단 전(null)에는 video를 렌더하지 않아 두 파일을 다 받지 않는다.
+  const isMobile = useMediaQuery(MOBILE_VIDEO_MEDIA, !!(src && mobileVideoSrc));
+  const activeSrc = !src ? null : !mobileVideoSrc ? src : isMobile === null ? null : isMobile ? mobileVideoSrc : src;
 
   const params = useParams();
   const locale = typeof params?.locale === "string" ? params.locale : "";
@@ -43,22 +76,17 @@ export default function ProductHero({
   return (
     <section className="relative w-full h-screen overflow-hidden">
       {/* z-0: 배경 비디오 — 자체 호스팅 경로가 있을 때만 렌더 */}
-      {src && (
-        // `<source>`는 최초 로드 때만 선택된다 — 경로가 바뀌면(로케일 전환) key로 다시 마운트해 재선택시킨다.
-        // 브라우저는 첫 번째로 일치하는 source를 쓰므로 모바일 source가 반드시 먼저 와야 한다.
+      {activeSrc && (
+        // 경로가 바뀌면(회전으로 경계를 넘거나 로케일 전환) key로 다시 마운트해 새 영상을 처음부터 재생한다.
         <video
-          key={`${mobileVideoSrc ?? ""}|${src}`}
+          key={activeSrc}
           className="absolute inset-0 w-full h-full z-0 object-cover"
           autoPlay
           loop
           muted
           playsInline
-        >
-          {mobileVideoSrc && (
-            <source src={mobileVideoSrc} media={MOBILE_VIDEO_MEDIA} type="video/mp4" />
-          )}
-          <source src={src} type="video/mp4" />
-        </video>
+          src={activeSrc}
+        />
       )}
 
       {/* z-10: Dim Overlay */}

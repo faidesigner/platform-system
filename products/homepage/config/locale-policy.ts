@@ -82,7 +82,7 @@ const VCO_HERO_VIDEO_EN = "/videos/product/vco-hero-bg-en.mp4"; // 66.6s · 6.7M
 const VCO_HERO_VIDEO_JA = "/videos/product/vco-hero-bg-ja.mp4"; // 66.6s · 6.7MB · 일본어 자막(HOM-109)
 
 /**
- * VCO 히어로 모바일(≤420px) 배경 영상 — **로케일 무관 단일 파일**(HOM-109, 2026-09-30).
+ * VCO 히어로 모바일(폰 세로 — ProductHero `MOBILE_VIDEO_MEDIA`) 배경 영상 — **로케일 무관 단일 파일**(HOM-109, 2026-09-30).
  * 584×1040 세로 컷이라 세로 화면의 `object-cover`에서 가로 컷보다 잘림이 적다.
  * 로케일 정책 표(`vcoHeroVideo`)에 넣지 않은 이유: "모바일은 모든 언어 동일"이 요구사항이고,
  * 표에 두면 로케일별로 갈라질 여지가 생긴다.

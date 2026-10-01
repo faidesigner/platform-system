@@ -1,5 +1,5 @@
-import { describe, it, expect, vi } from "vitest";
-import { render } from "@testing-library/react";
+import { describe, it, expect, vi, afterEach } from "vitest";
+import { act, render } from "@testing-library/react";
 
 import ProductHero from "./ProductHero";
 
@@ -12,32 +12,69 @@ vi.mock("@/lib/analytics/track", () => ({ trackEvent: vi.fn() }));
 /**
  * HOM-109 — 히어로 배경 영상의 뷰포트 분기.
  *
- * `<source media>`로 브라우저가 **하나만** 골라 받게 한다. JS(matchMedia)로 src를 바꾸면
- * 정적 HTML에 영상이 없다가 hydration 뒤에 붙고, 잘못 짜면 두 파일을 모두 받는다.
- * 브라우저는 첫 번째로 일치하는 `<source>`를 쓰므로 **모바일 source가 먼저**여야 한다 —
- * 순서가 뒤집히면 media 없는 기본 source가 항상 이겨서 모바일 분기가 조용히 죽는다.
+ * ⚠️ `<source media>`에 기대면 안 된다. **iOS Safari(WebKit)는 video의 `<source media>`를 무시**하고
+ * 첫 source를 고르지 않는다 — 2026-09-30 배포본이 iPhone 393px에서도 데스크톱 영상을 틀었다
+ * (Playwright WebKit 실측, QA 신고 "iOS는 모바일 영상이 안 나오고 갤럭시만 나온다").
+ * 그래서 matchMedia로 고른 경로를 video의 `src`에 직접 넣는다. 이 테스트는 그 방식을 고정한다.
  */
+type Listener = (e: { matches: boolean }) => void;
+function mockMatchMedia(initial: boolean) {
+  const listeners: Listener[] = [];
+  const mql = {
+    matches: initial,
+    media: "(max-width: 767px) and (orientation: portrait)",
+    addEventListener: (_: string, l: Listener) => listeners.push(l),
+    removeEventListener: (_: string, l: Listener) => listeners.splice(listeners.indexOf(l), 1),
+  };
+  const spy = vi.fn().mockReturnValue(mql);
+  vi.stubGlobal("matchMedia", spy);
+  return {
+    spy,
+    change(matches: boolean) {
+      mql.matches = matches;
+      listeners.forEach((l) => l({ matches }));
+    },
+  };
+}
+
 const props = { subtitle: "s", title: "t", ctaLabel: "" };
-const sources = (c: HTMLElement) =>
-  [...c.querySelectorAll("video source")].map((s) => ({
-    src: s.getAttribute("src"),
-    media: s.getAttribute("media"),
-  }));
+const videoSrc = (c: HTMLElement) => c.querySelector("video")?.getAttribute("src") ?? null;
+
+afterEach(() => vi.unstubAllGlobals());
 
 describe("ProductHero 배경 영상", () => {
-  it("모바일 영상이 있으면 ≤420px source를 기본 source보다 먼저 둔다", () => {
+  it("폰 세로(≤767px·portrait)면 모바일 영상을 video src로 직접 건다 (source media 미사용)", () => {
+    const mm = mockMatchMedia(true);
     const { container } = render(
       <ProductHero {...props} videoSrc="/videos/d.mp4" mobileVideoSrc="/videos/m.mp4" />,
     );
-    expect(sources(container)).toEqual([
-      { src: "/videos/m.mp4", media: "(max-width: 420px)" },
-      { src: "/videos/d.mp4", media: null },
-    ]);
+    expect(mm.spy).toHaveBeenCalledWith("(max-width: 767px) and (orientation: portrait)");
+    expect(videoSrc(container)).toBe("/videos/m.mp4");
+    expect(container.querySelector("video source")).toBeNull();
   });
 
-  it("모바일 영상이 없으면 기본 source 하나만 둔다", () => {
+  it("그 밖(태블릿·폰 가로·데스크톱)이면 기본 영상을 건다", () => {
+    mockMatchMedia(false);
+    const { container } = render(
+      <ProductHero {...props} videoSrc="/videos/d.mp4" mobileVideoSrc="/videos/m.mp4" />,
+    );
+    expect(videoSrc(container)).toBe("/videos/d.mp4");
+  });
+
+  it("회전 등으로 조건이 바뀌면 영상을 바꾼다", () => {
+    const mm = mockMatchMedia(false);
+    const { container } = render(
+      <ProductHero {...props} videoSrc="/videos/d.mp4" mobileVideoSrc="/videos/m.mp4" />,
+    );
+    act(() => mm.change(true));
+    expect(videoSrc(container)).toBe("/videos/m.mp4");
+  });
+
+  it("모바일 영상이 없으면 matchMedia 없이 기본 영상을 바로 건다", () => {
+    const mm = mockMatchMedia(true);
     const { container } = render(<ProductHero {...props} videoSrc="/videos/d.mp4" />);
-    expect(sources(container)).toEqual([{ src: "/videos/d.mp4", media: null }]);
+    expect(videoSrc(container)).toBe("/videos/d.mp4");
+    expect(mm.spy).not.toHaveBeenCalled();
   });
 
   it("자체 호스팅 경로가 없으면 video를 렌더하지 않는다", () => {
