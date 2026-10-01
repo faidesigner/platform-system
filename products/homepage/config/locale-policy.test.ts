@@ -126,7 +126,7 @@ describe("HOM-70 — VCO 히어로 영상 로케일 분기", () => {
 describe("HOM-109 — VCO 히어로 모바일 영상", () => {
   const publicFile = (src: string) => path.resolve(__dirname, "..", "public", src.replace(/^\//, ""));
 
-  it("모바일(≤420px) 영상은 로케일 무관 한 파일이다", () => {
+  it("모바일(폰 세로) 영상은 로케일 무관 한 파일이다", () => {
     // 2026-09-30 결정: 모바일이면 ko/en/ja 모두 같은 영상. 로케일 정책 표에 넣지 않고 상수 하나로 둔다
     // — 표에 넣으면 다음 요청 때 로케일별로 갈라질 여지가 생긴다.
     expect(VCO_HERO_VIDEO_MOBILE).toMatch(/^\/videos\/.+\.mp4$/);

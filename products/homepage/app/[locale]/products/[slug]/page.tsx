@@ -121,7 +121,7 @@ export default async function ProductDetailPage({
 
   const heroVideoSrc =
     slug === 'vision-check-out' ? localePolicy(locale).vcoHeroVideo : product.heroVideo
-  // 모바일(≤420px)은 로케일 무관 한 영상(HOM-109).
+  // 모바일(폰 세로 — ProductHero MOBILE_VIDEO_MEDIA)은 로케일 무관 한 영상(HOM-109).
   const heroMobileVideoSrc = slug === 'vision-check-out' ? VCO_HERO_VIDEO_MOBILE : undefined
 
   const effectCards = product.effectCards.map((c, i) => ({

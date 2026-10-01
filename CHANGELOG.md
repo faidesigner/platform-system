@@ -2,6 +2,18 @@
 
 모든 시스템의 변경 사항은 역순(최신순)으로 기록합니다.
 
+## [Unreleased] - 2026-10-01
+
+### 🛠 Fixed
+
+#### HOM-109 재신고 — iOS에서 모바일 히어로 영상이 나오지 않음 + 분기점 재정의
+- QA: "iOS는 모바일 영상이 안 나오고 갤럭시에서만 나온다"(처음 진입한 폰 기준이라 캐시 아님)
+- 원인: **iOS Safari(WebKit)는 `<video>` 안 `<source media>`를 무시**한다. Playwright WebKit 실측에서 iPhone 15(393px, 미디어 쿼리 true)도 데스크톱 영상을 골랐다. 갤럭시 실기기는 Chrome 엔진이라 지원해서 정상이었다. 09-30 검증을 Chromium으로만 해서 놓쳤다
+- 조치: `ProductHero`가 `matchMedia`(`useSyncExternalStore`)로 영상을 골라 `video src`에 직접 건다. 판단 전(정적 HTML·hydration)에는 video를 렌더하지 않아 두 파일을 다 받지 않는다. 회전으로 조건이 바뀌면 영상도 바뀐다
+- 분기점: `(max-width: 420px)` → **`(max-width: 767px) and (orientation: portrait)`** (2026-10-01 결정). 420은 iPhone Plus·Pro Max(430~440px)를 놓쳤다. 767이면 폰은 모두 들어가고 태블릿(768~)은 빠진다(세로 영상 584px을 iPad 폭으로 늘리면 흐려진다). portrait는 가로로 눕힌 폰에서 세로 영상이 가운데 일부만 보이는 것을 막는다. ⚠️ 카드 원 요구사항(420px)과 다르다
+- 검증: 로컬 산출물을 **WebKit·Chromium 두 엔진** × iPhone SE/15/15 Plus/15 Pro Max(세로·가로)/Galaxy S24(세로·가로)/iPad mini/iPad Pro 11 × ko·ja로 측정, 전부 기대대로 + 페이지당 영상 1개만 요청
+- 재발 방지: `ProductHero.test.tsx`가 `<source>` 요소가 없고 `video src`에 직접 걸리는지를 고정한다
+
 ## [Unreleased] - 2026-09-30
 
 ### 🛠 Fixed
