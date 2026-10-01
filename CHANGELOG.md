@@ -6,6 +6,16 @@
 
 ### 🛠 Fixed
 
+#### 홈 타임랩스 영상 압축 23.35MB → 5.52MB + 교체된 미사용 영상 정리
+- `home-efficiency-timelapse-3.mp4`가 23.35MB(1080p, 4.9Mbps)로 홈 전체 전송량(약 28.9MB)의 80%였고 모바일도 그대로 받았다
+- 영상 위를 어두운 막(35%)과 `blur(4px)`가 덮어서, 실제 화면 조건으로 비교했을 때 540p로 낮춰도 차이가 보이지 않았다 → **960×540 / CRF32 = 5.52MB(-76%)**. 홈 전체 약 28.9MB → 11.1MB
+- 모바일 전용(세로 크롭 540×960)은 같은 CRF에서 4.83MB라 차이가 0.7MB뿐이어서 만들지 않았다. 파일 하나라 분기 문제도 없다
+- 원본 `home-efficiency-timelapse-3_original.mp4`(30.42MB)는 그대로 둔다
+- 재생 확인: 로컬 산출물 × WebKit·실제 Chrome × iPhone 15·데스크톱 모두 재생. ⚠️ Playwright 기본 Chromium은 H.264를 재생하지 못하는 빌드라(`canPlayType` = "") 재생 검증은 `channel: 'chrome'`으로 할 것
+- **용량 상한 테스트** `config/videoBudget.test.ts`: 코드가 참조하는 `/videos/*.mp4`가 전부 8MB 이하인지 검사한다. 압축을 빠뜨린 새 영상이 들어오면 커밋 전에 걸린다
+- **교체된 미사용 영상 6개 삭제**(합계 약 31.5MB, PRD `--delete` 동기화로 S3에서도 삭제. 버킷 버전 관리가 켜져 있어 복구 가능): `home-efficiency-timelapse.mp4`·`-2.mp4`, `home-hero-bg.mp4`(`-2`와 해시 동일 중복), `home-why-fai-{1,2,3}-loop.mp4`. 2026-06-22 `1a0a48f`·`abe3db4`에서 참조만 새 파일로 바꾸고 옛 파일을 남긴 것이 원인
+- 교체된 영상의 원본 4개(`home-hero-bg_original`, `home-why-fai-{1,2,3}-loop_original`)는 남겼다(배포 제외 대상이라 S3에는 없음)
+
 #### HOM-109 재신고 — iOS에서 모바일 히어로 영상이 나오지 않음 + 분기점 재정의
 - QA: "iOS는 모바일 영상이 안 나오고 갤럭시에서만 나온다"(처음 진입한 폰 기준이라 캐시 아님)
 - 원인: **iOS Safari(WebKit)는 `<video>` 안 `<source media>`를 무시**한다. Playwright WebKit 실측에서 iPhone 15(393px, 미디어 쿼리 true)도 데스크톱 영상을 골랐다. 갤럭시 실기기는 Chrome 엔진이라 지원해서 정상이었다. 09-30 검증을 Chromium으로만 해서 놓쳤다
