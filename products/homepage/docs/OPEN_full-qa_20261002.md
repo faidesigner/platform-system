@@ -24,7 +24,7 @@
 | # | 항목 | 위치 | 확인 |
 |---|---|---|---|
 | H1 | **없는 주소 → S3 `AccessDenied` XML 노출**. `404.html`은 있지만 CloudFront 오류 응답 설정 0건(PRD `E3GUSL3ADNKGFD`, dev `E1N1DKK4N6NNIM`) | CloudFront | curl·AWS CLI로 확인 |
-| H2 | **베이커리 랜딩 "전화 문의" 번호 오류** `tel:+8202-0241-0049` — +82 뒤 0이 남은 잘못된 형식이고 `02-0241` 국번도 없음. 회사 번호(02-6191-0049)와도 다름. **첫 화면에는 없다** — 폼 전송 성공 후 나오는 "접수 완료" 화면(`thankView`, 처음엔 `display:none`)의 버튼이고 번호를 글자로 보여 주지 않음 | `public/contact-bakery-vco.html:177,185` | 원본 코드로 확인(실제 제출은 막고 시험해서 화면으로는 못 봄). **올바른 번호 확인 필요** |
+| ~~H2~~ | ✅ **해결(2026-10-02)** 베이커리 랜딩 "접수 완료" 화면 전화 버튼 `tel:+8202-0241-0049` → `tel:+821085150049`(010-8515-0049, 사용자 지정). `config/telLinks.test.ts`가 `+82` 뒤 0을 막는다 | `public/contact-bakery-vco.html:185` | 배포 후 PRD 확인 |
 | H3 | **en 오역**: 무인매장 "In-Store Customer Analytics" 설명 "Cameras track customers" — ko·ja는 "고객이 고른 **상품**을 추적". 사람 추적으로 읽혀 개인정보 측면에서 오해 소지 | `messages/en.json` `products.unmannedStore.effectList.2.description` | 직접 확인. 번역 시트도 함께 수정해야 함 |
 
 ### 중간
@@ -62,11 +62,10 @@
 - 영상·사진 속 한국어 키오스크 화면(촬영물)
 
 ## 다음 작업 (2026-10-02 사용자: "저장해두고 다음에 작업")
-- 우선: H1(CloudFront 오류 응답) → H3·M4(en 문구) → M1(ko `keep-all`) → H2(번호 확인 후)
+- 우선: H1(CloudFront 오류 응답) → H3·M4(en 문구) → M1(ko `keep-all`). H2는 2026-10-02 해결
 - 나머지는 이 문서 순서대로 범위를 정해서 진행
 
 ## 확인하면 되는 것
-- H2: 베이커리 랜딩에서 실제로 받을 전화번호
 - H3·M4: en 문구 수정안(번역 시트 담당자와 함께)
 - M9: playground를 PRD 빌드에서 뺄지
 - M10: 랜딩 동의 문구를 법무 기준에 맞출지
