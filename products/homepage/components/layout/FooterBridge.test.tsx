@@ -176,6 +176,7 @@ describe("FooterBridge 로케일 대응 (HOM-67)", () => {
  *    요청 원문 형태:
  *      株式会社ファインダーズＡＩジャパン   ← 볼드, 라벨 없음
  *      代表取締役 Jimin Lee（イ・ジミン）
+ *    2026-11-19 일본 법인 대표자 변경: 代表取締役　王旻權（Minkwon Wang）. 표기는 요청 원문 그대로 쓴다.
  *      電話 03-6821-7191
  *      所在地 〒135-0061 東京都江東区豊洲2-1-9 豊洲セイルパークビル2階
  */
@@ -303,7 +304,10 @@ describe("FooterBridge — JP-BD 요청 (HOM-101)", () => {
 
     it("일본 법인 대표·전화는 유지한다", () => {
       const text = renderAt("ja").container.textContent ?? "";
-      expect(text).toContain("Jimin Lee（イ・ジミン）");
+      expect(text).toContain("代表取締役王旻權（Minkwon Wang）");
+      // 이전 대표자 표기가 footer에 남아 있으면 안 된다(법인 정보이므로 둘이 함께 보이면 오기재).
+      expect(text).not.toContain("Jimin Lee");
+      expect(text).not.toContain("イ・ジミン");
       expect(text).toContain("03-6821-7191");
     });
   });
