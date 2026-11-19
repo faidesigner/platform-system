@@ -461,61 +461,76 @@
       "title": "FAI News",
       "items": {
         "0": {
+          "title": "Beyond Barcodes to Vision AI Self-Checkout: Fainders.AI Targets Bakeries",
+          "description": "Fainders.AI, an AI retail solutions company, is bringing AI transformation to everyday retail with its AI self-checkout, VCO (Vision Check-Out).",
+          "thumbnailAlt": "Fainders.AI targets bakeries with vision AI self-checkout"
+        },
+        "1": {
+          "title": "Fainders.AI Selected for Deep Tech TIPS to Advance Its AI Checkout",
+          "description": "Fainders.AI, an AI retail solutions company, has been selected for the Ministry of SMEs and Startups' deep-tech startup program and will advance its AI self-checkout technology.",
+          "thumbnailAlt": "Fainders.AI selected for Deep Tech TIPS"
+        },
+        "2": {
+          "title": "Fainders.AI Installs AI Bread Checkout at Cheonan Bakery Toujours",
+          "description": "Fainders.AI, a retail solutions company, announced on September 9 that it has set up unmanned checkout powered by its AI scanner, VCO (Vision Check-Out), at the Ppangdolgama branch of bakery brand Toujours.",
+          "thumbnailAlt": "Fainders.AI installs AI bread checkout at Cheonan bakery 'Toujours'"
+        },
+        "3": {
           "title": "Fainders.AI Raises ₩5B Pre-Series B to Scale AI Unmanned Stores",
           "description": "Fainders.AI, an AI-powered retail solutions startup, has raised approximately ₩5 billion in its pre-Series B round.",
           "thumbnailAlt": "Fainders.AI raises KRW 5B in Pre-Series B funding, expanding AI unmanned store solutions"
         },
-        "1": {
+        "4": {
           "title": "Fainders.AI Brings AI Self-Checkout to Samsung Welstory's Stores",
           "description": "Fainders.AI has partnered with Samsung Welstory to deploy its AI self-checkout, VCO (Vision Check-Out).",
           "thumbnailAlt": "Fainders.AI partners with Samsung Welstory on 'AI self-checkout'"
         },
-        "2": {
+        "5": {
           "title": "Fainders.AI Powers a Fully Unmanned 7-Eleven in Singapore",
           "description": "Fainders.AI has supplied the AI technology behind a fully unmanned 7-Eleven store in Singapore.",
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store at 7-Eleven Singapore"
         },
-        "3": {
+        "6": {
           "title": "Tokyu Land Begins AI Self-Checkout PoC at Niseko Tokyu Grand Hirafu",
           "description": "Tokyu Land Corporation, Tokyu Resorts & Stays and Fainders.AI Japan are launching a PoC of the VISION CHECK-OUT AI self-checkout at NEST813, a new restaurant opening in December 2025 inside the all-season mountain resort Niseko Tokyu Grand Hirafu.",
           "thumbnailAlt": "Tokyu Land and partners launch AI self-checkout PoC at 'NEST813' restaurant in Niseko"
         },
-        "4": {
+        "7": {
           "title": "Fainders.AI Selected for the HFX Global Acceleration Program",
           "description": "Fainders.AI, an AI store automation company, has been selected for Hokkaido F Village X (HFX), a global acceleration program running in Hokkaido, Japan.",
           "thumbnailAlt": "Fainders.AI selected for global acceleration program 'HFX'"
         },
-        "5": {
+        "8": {
           "title": "Korean Retail AI Startup Opens PoC Store at LIFE STYLE LAB TOYONOMA",
           "description": "Korean startup Fainders.AI opened its first PoC store in Japan on November 6, 2025 at LIFE STYLE LAB TOYONOMA in Toyosu, Tokyo, showcasing its next-generation VISION CHECK-OUT AI self-checkout, and marked the occasion with a launch event.",
           "thumbnailAlt": "Korean retail AI startup opens PoC store at lifestyle lab 'TOYONOMA'"
         },
-        "6": {
+        "9": {
           "title": "\"Pick It Up and Walk Out\": Fainders.AI Opens Its Second Unmanned Store",
           "description": "Fainders.AI has opened its second AI unmanned micro store at Spoany.",
           "thumbnailAlt": "Fainders.AI opens second unmanned store"
         },
-        "7": {
+        "10": {
           "title": "Fainders.AI Opens an AI Unmanned Micro Store",
           "description": "Fainders.AI, a store automation AI startup, has opened Korea's first AI unmanned micro store.",
           "thumbnailAlt": "Fainders.AI opens AI unmanned micro store"
         },
-        "8": {
+        "11": {
           "title": "Fainders.AI Named a Baby Unicorn, Setting Up Global Expansion",
           "description": "Fainders.AI has been named a Baby Unicorn by Korea's Ministry of SMEs and Startups this year, the first company in AI unmanned store solutions to receive the designation.",
           "thumbnailAlt": "Fainders.AI selected as a 'Baby Unicorn' by the Ministry of SMEs"
         },
-        "9": {
+        "12": {
           "title": "Fainders.AI and GS Retail Launch a Fully Unmanned AI Convenience Store",
           "description": "Fainders.AI, a store automation AI company, has supplied unmanned store technology to the second GS25 DX LAB, GS Retail's future-format convenience store.",
           "thumbnailAlt": "Fainders.AI deploys fully unmanned AI convenience store with GS Retail"
         },
-        "10": {
+        "13": {
           "title": "Store Automation AI Startup Fainders.AI Raises ₩7.1B Series A",
           "description": "Fainders.AI, which develops AI unmanned store solutions, has raised ₩7.1 billion in a Series A round.",
           "thumbnailAlt": "Fainders.AI raises KRW 7.1B in Series A funding"
         },
-        "11": {
+        "14": {
           "title": "Store Automation AI Startup Fainders.AI Raises ₩600M Seed",
           "description": "Fainders.AI (CEO Myungwon Ham), which develops AI-based automation for offline retail stores, has raised ₩600 million in seed funding from Klim Ventures.",
           "thumbnailAlt": "Fainders.AI raises KRW 600M in seed funding"
@@ -662,7 +677,11 @@
         "28": "A Bigger FAI Presence in Japan: RetailTech Japan 2026",
         "29": "Pre-Series B Closed: Deeper Ties with Retailers Ahead",
         "30": "Bakeries Using VCO Report 99% Satisfaction: \"There's No Reason Not To\"",
-        "31": "The Answer for Bakeries with Long Lines: Inside Toujours"
+        "31": "The Answer for Bakeries with Long Lines: Inside Toujours",
+        "32": "Same VCO, Different Uses: A New Bakery Rollout and Toujours's Second Expansion",
+        "33": "Why Are Self-Checkouts Being Scaled Back Around the World?",
+        "34": "The Secret of the Bakery That Stays Open After Staff Go Home: AI Self-Checkout",
+        "35": "Our Second Year at Cafe Show: The Visitors Have Changed"
       }
     }
   },

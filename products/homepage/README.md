@@ -88,7 +88,10 @@ cd products/homepage
   제외하지 않으면 PRD 배포마다 프리뷰 500여 개 객체가 통째로 삭제되고 dev 재배포로 수동 복구해야 한다.
   (실제로 2026-08-05 배포 때 그렇게 됐다 — PRD 06:31 → dev 06:34 재배포.)
   `contact-us/`·`document/` 등은 `public/` 에 있어 산출물에 포함되므로 `--delete` 대상이 아니다.
-- 미디어 영상 최신화가 필요하면 배포 전에 `node scripts/sync-youtube.mjs` 실행(별도 가이드: `docs/youtube-showcase-sync.md`).
+- **외부 콘텐츠는 빌드가 자동으로 가져오지 않는다.** 재배포만 하면 이전 내용이 그대로 올라간다. 배포 전에 아래 둘을 돌리고 바뀐 `config/*.json` 을 커밋한다.
+  - `node scripts/sync-youtube.mjs` — 미디어 쇼케이스 영상(가이드: `docs/youtube-showcase-sync.md`). 기존 영상은 이어받고, 빼려면 `youtube-curation.json` 의 `exclude`.
+  - `node scripts/sync-stibee.mjs` — Retail Tech Letter 목록. 새 레터는 `messages/{ko,en,ja}.json` 의 `media.retailTechLetter.letterTitles.<id>` 에 제목 번역을 추가해야 한다(없으면 en·ja 에 한글 제목이 나온다. `config/mediaContent.test.ts` 가 잡는다).
+  - 뉴스 기사는 `config/site.ts` 의 `media.items` 와 `messages/*` 의 `media.news.items` 를 **같은 인덱스**로 함께 고친다.
 
 ---
 

@@ -386,7 +386,36 @@ export const siteConfig = {
   media: {
     title: "FAI News",
     moreLabel: "더보기",
+    // 순서 = messages/{ko,en,ja}.json 의 media.news.items 인덱스. 항목을 넣거나 빼면 3개 로케일도
+    // 같은 위치에서 함께 옮긴다(config/mediaNews.test.ts 가 고정).
     items: [
+      {
+        thumbnail:    "/images/news/bakery-vision-ai-checkout.png",
+        thumbnailAlt: "파인더스에이아이, 비전 AI 무인계산대로 베이커리 매장 공략",
+        tags:         ["VCO", "Store"],
+        date:         "2026-11-05",
+        title:        "\"바코드 넘어 '비전 AI' 무인계산대로\"...파인더스에이아이, 베이커리 매장 공략",
+        description:  "AI 소매 솔루션 전문 파인더스에이아이는 AI 자동 계산대 '비전 체크아웃(VCO)'으로 생활밀착형 AX를 이끌고 있다.",
+        href:         "https://www.aitimes.com/news/articleView.html?idxno=217049",
+      },
+      {
+        thumbnail:    "/images/news/deeptech-tips.jpg",
+        thumbnailAlt: "파인더스에이아이, 딥테크 팁스 선정",
+        tags:         ["Award", "Government"],
+        date:         "2026-10-22",
+        title:        "파인더스에이아이, AI 계산대 고도화 나선다…딥테크 팁스 선정",
+        description:  "인공지능(AI) 리테일 솔루션 기업 파인더스에이아이가 중소벤처기업부의 딥테크 스타트업 육성 프로그램에 선정돼 AI 자동 계산대 기술 고도화에 나선다.",
+        href:         "https://www.mt.co.kr/future/2026/10/22/2026102211353268346",
+      },
+      {
+        thumbnail:    "/images/news/toujours-bakery-vco.jpg",
+        thumbnailAlt: "파인더스에이아이, 천안 '뚜쥬루'에 AI 빵 계산대 구축",
+        tags:         ["VCO", "Store"],
+        date:         "2026-09-09",
+        title:        "파인더스에이아이, 천안 '뚜쥬루'에 AI 빵 계산대 구축",
+        description:  "리테일 솔루션 기업 파인더스에이아이는 베이커리 브랜드 '뚜쥬루' 빵돌가마점에 인공지능(AI) 스캐너 '비전 체크아웃(VCO)'을 활용한 무인 결제 환경을 구축했다고 9일 밝혔다.",
+        href:         "https://www.mt.co.kr/future/2026/09/09/2026090909383516051",
+      },
       {
         thumbnail:    "/images/news/vco-investment.avif",
         thumbnailAlt: "파인더스에이아이, 프리B 50억 투자 유치…AI 무인매장 솔루션 확대",
