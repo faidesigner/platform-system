@@ -13,24 +13,19 @@
 import { readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
+import { buildLetters } from "./lib/stibeeLetters.mjs";
+
 const LIST_ID = "285432"; // 리테일 테크 레터 발행 목록
 const PUBLICATION = "https://faindersai.stibee.com";
 const API = `https://page.stibee.com/api/v1.0/lists/${LIST_ID}/contents`;
 const OUT = path.resolve(process.cwd(), "config/retail-tech-letter.json");
 const LIMIT = null; // 노출 개수 제한(숫자). null이면 전체
 
-// 썸네일은 Stibee API가 제공하지 않아 config JSON에 수동 입력돼 있다.
-// 기존 JSON에서 id→thumbnailUrl 을 읽어, 재동기화 시 덮어쓰기로 사라지지 않도록 보존한다.
-async function readExistingThumbs(file) {
+async function readPreviousLetters(file) {
   try {
-    const prev = JSON.parse(await readFile(file, "utf8"));
-    const map = {};
-    for (const l of prev.letters || []) {
-      if (l.thumbnailUrl) map[String(l.id)] = l.thumbnailUrl;
-    }
-    return map;
+    return JSON.parse(await readFile(file, "utf8")).letters ?? [];
   } catch {
-    return {}; // 파일 없음/파싱 실패 → 보존할 썸네일 없음
+    return []; // 파일 없음/파싱 실패 → 이어받을 썸네일 없음
   }
 }
 
@@ -41,25 +36,13 @@ async function run() {
   const items = Array.isArray(data) ? data : [];
   if (!items.length) throw new Error("콘텐츠가 없음 — API 응답 구조 확인 필요");
 
-  // publishedAt 최신순 정렬
-  let letters = items
-    .filter((it) => it.id && it.title)
-    .map((it) => ({
-      id: String(it.id),
-      title: String(it.title).trim(),
-      previewText: (it.previewText || "").trim(),
-      publishedAt: it.publishedAt || "",
-      url: `${PUBLICATION}/p/${it.id}`,
-    }))
-    .sort((a, b) => (b.publishedAt || "").localeCompare(a.publishedAt || ""));
-
-  if (LIMIT && Number.isFinite(LIMIT)) letters = letters.slice(0, LIMIT);
-
-  // 썸네일 보존 머지 — API가 thumbnailUrl을 주지 않으므로 기존 수동 입력분을 id로 이어붙인다.
-  const prevThumbs = await readExistingThumbs(OUT);
-  letters = letters.map((l) =>
-    prevThumbs[l.id] ? { ...l, thumbnailUrl: prevThumbs[l.id] } : l,
-  );
+  // 정렬·썸네일 보존·새 레터 기본 썸네일 규칙은 lib/stibeeLetters.mjs 에 있다(테스트로 고정).
+  const { letters, defaulted, missingThumb } = buildLetters({
+    items,
+    previous: await readPreviousLetters(OUT),
+    publication: PUBLICATION,
+    limit: LIMIT,
+  });
 
   await writeFile(
     OUT,
@@ -69,6 +52,11 @@ async function run() {
   console.log(`✓ ${letters.length}개 레터 → ${path.relative(process.cwd(), OUT)}`);
   letters.slice(0, 5).forEach((l, i) => console.log(`  ${i + 1}. ${l.title}  (${l.url})`));
   if (letters.length > 5) console.log(`  …외 ${letters.length - 5}개`);
+  if (defaulted.length) {
+    console.log(`ℹ️  새 레터 ${defaulted.length}개(id ${defaulted.join(", ")})는 직전 최신 레터의 썸네일을 물려받았습니다.`);
+    console.log("   → 전용 썸네일이 있으면 config/retail-tech-letter.json 의 thumbnailUrl 을 고치세요(재싱크에도 보존됩니다).");
+  }
+  if (missingThumb.length) console.warn(`⚠️  썸네일 없는 레터: id ${missingThumb.join(", ")}`);
   console.log("\n다음: 변경된 JSON 커밋 후 빌드/배포하면 반영됩니다.");
 }
 

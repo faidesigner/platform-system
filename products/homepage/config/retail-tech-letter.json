@@ -1,7 +1,39 @@
 {
   "listId": "285432",
-  "fetchedAt": "2026-07-10T14:29:34.517Z",
+  "fetchedAt": "2026-11-19T09:23:08.215Z",
   "letters": [
+    {
+      "id": "35",
+      "title": "[리테일 테크 레터] 카페쇼 2년 차, 찾아오는 분들이 달라졌습니다",
+      "previewText": "",
+      "publishedAt": "2026-11-19T14:00:01.084735773+09:00",
+      "url": "https://faindersai.stibee.com/p/35",
+      "thumbnailUrl": "https://img.stibee.com/98052_1714470037.png"
+    },
+    {
+      "id": "34",
+      "title": "[리테일 테크 레터] 직원이 퇴근한 뒤에도 문 여는 빵집의 비밀, AI 자동 계산대",
+      "previewText": "",
+      "publishedAt": "2026-10-20T10:50:00.594241184+09:00",
+      "url": "https://faindersai.stibee.com/p/34",
+      "thumbnailUrl": "https://img.stibee.com/98052_1714470037.png"
+    },
+    {
+      "id": "33",
+      "title": "[리테일 테크 레터]  전 세계 셀프계산대가 축소되고 있는 이유는?",
+      "previewText": "",
+      "publishedAt": "2026-09-17T11:00:01.394416901+09:00",
+      "url": "https://faindersai.stibee.com/p/33",
+      "thumbnailUrl": "https://img.stibee.com/98052_1714470037.png"
+    },
+    {
+      "id": "32",
+      "title": "[리테일 테크 레터] 같은 VCO, 다른 쓰임새 - 베비에르 신규 도입과 뚜쥬루의 두 번째 확장",
+      "previewText": "",
+      "publishedAt": "2026-08-13T11:00:01.306712289+09:00",
+      "url": "https://faindersai.stibee.com/p/32",
+      "thumbnailUrl": "https://img.stibee.com/98052_1714470037.png"
+    },
     {
       "id": "31",
       "title": "[리테일 테크 레터] ‘줄 서는 베이커리의 해답, AI 계산대’ 천안 뚜쥬루 사례",
