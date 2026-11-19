@@ -1,6 +1,6 @@
 import { describe, expect, it } from "vitest";
 
-import { buildShowcase } from "./youtubeShowcase.mjs";
+import { buildShowcase, parseRssEntries } from "./youtubeShowcase.mjs";
 
 const v = (videoId, extra = {}) => ({
   videoId,
@@ -130,5 +130,86 @@ describe("buildShowcase", () => {
       previous: [v("a"), v("b")],
     });
     expect(ids(r)).toEqual(["a", "b"]);
+  });
+});
+
+// 2026-11-19 오너 결정: 미디어 쇼케이스에 Shorts는 싣지 않는다.
+// id를 exclude에 하나씩 적는 방식이면 채널에 Shorts가 올라올 때마다 다시 들어온다.
+describe("buildShowcase — excludeShorts", () => {
+  const short = (id) => v(id, { isShort: true });
+
+  it("excludeShorts가 켜져 있으면 RSS의 Shorts는 들어오지 않는다", () => {
+    const r = buildShowcase({
+      rss: [v("a"), short("s1"), v("b"), short("s2")],
+      curation: curation({ excludeShorts: true }),
+      previous: [],
+    });
+    expect(ids(r)).toEqual(["a", "b"]);
+    expect(r.skippedShorts).toEqual(["s1", "s2"]);
+  });
+
+  it("이미 직전 결과에 들어가 있던 Shorts도 함께 빠진다", () => {
+    const r = buildShowcase({
+      rss: [v("a"), short("s1")],
+      curation: curation({ excludeShorts: true }),
+      previous: [v("s1"), v("old1")],
+    });
+    expect(ids(r)).toEqual(["a", "old1"]);
+    expect(r.carried).toEqual(["old1"]);
+  });
+
+  it("manual에 직접 적은 Shorts는 의도한 것이므로 남긴다", () => {
+    const r = buildShowcase({
+      rss: [v("a"), short("s1")],
+      curation: curation({ excludeShorts: true, manual: [v("s1")] }),
+      previous: [],
+    });
+    expect(ids(r)).toEqual(["a", "s1"]);
+    expect(r.skippedShorts).toEqual([]);
+  });
+
+  it("excludeShorts가 꺼져 있으면 Shorts도 일반 영상처럼 들어온다", () => {
+    const r = buildShowcase({ rss: [v("a"), short("s1")], curation: curation(), previous: [] });
+    expect(ids(r)).toEqual(["a", "s1"]);
+    expect(r.skippedShorts).toEqual([]);
+  });
+
+  it("isShort는 내부 표시일 뿐 결과 JSON에 남지 않는다", () => {
+    const r = buildShowcase({ rss: [v("a"), short("s1")], curation: curation(), previous: [] });
+    expect(r.videos.every((x) => !("isShort" in x))).toBe(true);
+  });
+});
+
+describe("parseRssEntries", () => {
+  const entry = (id, href, title = "제목 &amp; &#39;따옴표&#39;") => `<entry>
+  <yt:videoId>${id}</yt:videoId>
+  <title>${title}</title>
+  <link rel="alternate" href="${href}"/>
+  <media:group><media:description>설명 &lt;b&gt;</media:description></media:group>
+</entry>`;
+  const xml = `<feed><title>채널</title>
+${entry("vid1", "https://www.youtube.com/watch?v=vid1")}
+${entry("sht1", "https://www.youtube.com/shorts/sht1")}
+</feed>`;
+
+  it("영상 필드를 읽고 HTML 엔티티를 푼다", () => {
+    const [a] = parseRssEntries(xml);
+    expect(a).toEqual({
+      videoId: "vid1",
+      title: "제목 & '따옴표'",
+      description: "설명 <b>",
+      thumbnailAlt: "제목 & '따옴표'",
+      href: "https://www.youtube.com/watch?v=vid1",
+      isShort: false,
+    });
+  });
+
+  it("링크가 /shorts/ 인 항목을 Shorts로 표시하되 href는 watch 주소로 통일한다", () => {
+    const [, b] = parseRssEntries(xml);
+    expect(b).toMatchObject({ videoId: "sht1", isShort: true, href: "https://www.youtube.com/watch?v=sht1" });
+  });
+
+  it("videoId가 없는 항목은 버린다", () => {
+    expect(parseRssEntries("<feed><entry><title>x</title></entry></feed>")).toEqual([]);
   });
 });
