@@ -2,7 +2,7 @@
 <html lang="ko">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
   <title>VCO 세일즈 파트너 모집 · Fainders.AI</title>
   <!-- Google Analytics (G-GCQKJ5TF6R) — 기존 homepage·베이커리 랜딩과 동일 측정 ID -->
   <script async src="https://www.googletagmanager.com/gtag/js?id=G-GCQKJ5TF6R"></script>
@@ -36,6 +36,11 @@
       -webkit-font-smoothing: antialiased;
       overflow-x: hidden;
       width: 100%;
+    }
+    /* viewport-fit=cover 를 켰으므로 가로 모드 노치 영역은 여기서 피한다(cover 이전과 같은 모습). */
+    body {
+      padding-left: env(safe-area-inset-left, 0px);
+      padding-right: env(safe-area-inset-right, 0px);
     }
 
     /* 전화 배너 */
@@ -152,7 +157,8 @@
       position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
       background: #fff;
       border-top: 1px solid #e4e2dc;
-      padding: 12px 20px 16px;
+      /* 아래 여백 = 16px + 홈 인디케이터 영역. 고정값만 두면 iPhone 에서 버튼이 인디케이터에 붙는다. */
+      padding: 12px 20px calc(16px + env(safe-area-inset-bottom, 0px));
       display: flex; flex-direction: column; align-items: center; gap: 8px;
       box-shadow: 0 -4px 20px rgba(0,0,0,0.08);
     }
@@ -170,7 +176,7 @@
     .btn-bottom:hover { background: #333; }
 
     /* 하단 바 높이만큼 푸터 여백 */
-    footer { margin-bottom: 90px; }
+    footer { margin-bottom: calc(90px + env(safe-area-inset-bottom, 0px)); }
 
     @media (max-width: 480px) {
       .phone-bar { flex-direction: column; text-align: center; gap: 8px; }
