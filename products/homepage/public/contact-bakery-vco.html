@@ -97,7 +97,7 @@ fbq('track', 'PageView');
   .sub{font-size:13px;color:#86868b;line-height:1.55}
 
   /* Sticky CTA */
-  .sticky-cta{position:fixed;bottom:0;left:0;right:0;padding:12px 20px env(safe-area-inset-bottom,0px);background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(0,0,0,.08);z-index:40;text-align:center;transition:opacity .3s ease}
+  .sticky-cta{position:fixed;bottom:0;left:0;right:0;padding:12px 20px calc(12px + env(safe-area-inset-bottom,0px));background:rgba(255,255,255,.92);backdrop-filter:blur(14px);-webkit-backdrop-filter:blur(14px);border-top:1px solid rgba(0,0,0,.08);z-index:40;text-align:center;transition:opacity .3s ease}
   .sticky-cta.hide{opacity:0;pointer-events:none}
   .sticky-btn{display:block;padding:16px 24px;border-radius:999px;background:#1d1d1f;color:#fff;font-size:15px;font-weight:600;text-align:center;box-shadow:0 4px 18px rgba(0,0,0,.12);max-width:400px;margin:0 auto}
 
