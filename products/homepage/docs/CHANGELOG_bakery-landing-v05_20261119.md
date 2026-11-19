@@ -51,6 +51,22 @@ cwebp -q 86 -m 6 -sharp_yuv s01.png -o public/images/landing/bakery-v05/01.webp
 
 iOS Safari 처럼 safe-area 가 실제로 잡히는 기기에서는 아래 여백이 12px + 홈 인디케이터 높이로 보입니다. 헤드리스 Chrome 에서는 safe-area 가 0 이라 이 경우는 실기로만 확인할 수 있습니다.
 
+### van 랜딩 하단 고정 바 safe-area (같은 날 후속 수정)
+
+`public/contact-van-vco.html` 의 하단 바는 아래 여백이 16px 고정이고 `viewport-fit=cover` 가 없었습니다. iPhone 에서 Safari 툴바가 접히거나 인앱 브라우저로 열리면 홈 인디케이터(바닥에서 8~13px)가 그 16px 안에 들어와 버튼과 거의 붙습니다. 베이커리와 같은 방식으로 맞췄습니다.
+
+- viewport 에 `viewport-fit=cover` 추가
+- `.bottom-bar` 아래 여백을 `calc(16px + env(safe-area-inset-bottom, 0px))` 로 변경
+- 푸터 여백도 같은 만큼 늘림(`calc(90px + env(...))`)
+- cover 를 켜면 가로 모드에서 본문이 노치 밑으로 들어가므로, body 좌우에 `env(safe-area-inset-left/right)` 를 줘서 이전과 같은 모습을 유지
+
+| 조건 (390×844) | 수정 전 버튼 아래 여백 | 수정 후 |
+|---|---|---|
+| 인디케이터 없음 (safe-area 0) | 16px | 16px |
+| 인디케이터 있음 (safe-area 34px, Chrome 에뮬레이션) | 16px | 50px |
+
+같은 34px 조건에서 베이커리 랜딩은 46px 입니다(12 + 34). Chrome 에뮬레이션은 `viewport-fit` 와 무관하게 env 값을 주므로 실제 Safari·인앱 브라우저 동작은 실기로 확인해야 합니다. 규칙은 `tests/landingSafeArea.test.ts` 가 고정합니다.
+
 ## 일본 법인 대표자
 
 ja footer 의 일본 법인 블록(`messages/ja.json` → `footer.japanEntity.ceoValue`)을 `王旻權（Minkwon Wang）` 으로 바꿨습니다. 직함 라벨 `代表取締役` 는 그대로입니다.
