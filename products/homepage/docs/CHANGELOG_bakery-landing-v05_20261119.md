@@ -37,6 +37,20 @@ cwebp -q 86 -m 6 -sharp_yuv s01.png -o public/images/landing/bakery-v05/01.webp
 
 `tests/bakeryLandingSlides.test.ts` 가 장수·치수·실제 파일 크기·lazy 설정·inline 금지·CTA 유지를 고정합니다. 실기 확인은 오너가 직접 합니다.
 
+### 하단 고정 버튼 여백 (같은 날 후속 수정)
+
+「우리 매장도 가능한지 확인하기」 고정 버튼이 화면 바닥에 붙어 있었습니다. `.sticky-cta` 의 padding 이 `12px 20px env(safe-area-inset-bottom,0px)` 라서, 아래 여백이 safe-area 값뿐이었고 홈 인디케이터가 없는 환경에서는 0 이 됐습니다. 본문 교체와 무관하게 이전부터 있던 문제입니다.
+
+`12px 20px calc(12px + env(safe-area-inset-bottom,0px))` 로 고쳤습니다. safe-area 가 0 이면 위·아래가 12px 로 같고, 홈 인디케이터가 있으면 그 높이만큼 더 띄웁니다.
+
+| 항목 (390px · 1440px 동일) | 수정 전 | 수정 후 |
+|---|---|---|
+| 버튼 위 여백 | 12px | 12px |
+| 버튼 아래 여백 | 0px | 12px |
+| 고정 바 높이 | 63px | 75px |
+
+iOS Safari 처럼 safe-area 가 실제로 잡히는 기기에서는 아래 여백이 12px + 홈 인디케이터 높이로 보입니다. 헤드리스 Chrome 에서는 safe-area 가 0 이라 이 경우는 실기로만 확인할 수 있습니다.
+
 ## 일본 법인 대표자
 
 ja footer 의 일본 법인 블록(`messages/ja.json` → `footer.japanEntity.ceoValue`)을 `王旻權（Minkwon Wang）` 으로 바꿨습니다. 직함 라벨 `代表取締役` 는 그대로입니다.

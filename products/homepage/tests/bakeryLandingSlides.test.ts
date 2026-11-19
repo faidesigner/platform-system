@@ -92,3 +92,27 @@ describe("베이커리 랜딩 본문 슬라이드", () => {
     expect(after).toContain('id="stickyCta"');
   });
 });
+
+/**
+ * 하단 고정 버튼("우리 매장도 가능한지 확인하기")의 위·아래 여백.
+ *
+ * 이전 값은 `padding:12px 20px env(safe-area-inset-bottom,0px)` 였다. 아래 여백이 safe-area 값뿐이라
+ * 홈 인디케이터가 없는 기기·일반 브라우저에서는 0 이 되어 버튼이 화면 바닥에 붙었다(2026-11-19 오너 지적).
+ * 아래 여백은 "위 여백 + safe-area" 여야 한다. safe-area 가 0 이면 위·아래가 같고,
+ * 홈 인디케이터가 있으면 그만큼만 더 띄운다.
+ */
+describe("베이커리 랜딩 하단 고정 버튼 여백", () => {
+  const rule = html.match(/\.sticky-cta\{([^}]*)\}/)?.[1] ?? "";
+  const padding = rule.match(/(?:^|;)padding:([^;]+)/)?.[1].trim() ?? "";
+
+  it("아래 여백 = 위 여백 + safe-area-inset-bottom", () => {
+    const m = padding.match(/^(\d+px) (\d+px) calc\((\d+px) \+ env\(safe-area-inset-bottom, ?0px\)\)$/);
+    expect(m, `padding 값이 예상 형태가 아니다: "${padding}"`).not.toBeNull();
+    const [, top, , bottomBase] = m!;
+    expect(bottomBase).toBe(top);
+  });
+
+  it("safe-area 를 쓰려면 viewport-fit=cover 가 있어야 한다", () => {
+    expect(html).toMatch(/<meta name="viewport"[^>]*viewport-fit=cover/);
+  });
+});
