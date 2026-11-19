@@ -17,7 +17,7 @@ node scripts/sync-youtube.mjs      # RSS 최신 영상 → config/youtube-showca
 ```
 
 ## 큐레이션 (노출/제외 선택)
-기본은 **채널 최신 영상 전체**가 최신순으로 노출됩니다.
+기본은 **Shorts 를 뺀 채널 최신 영상 전체**가 최신순으로 노출됩니다.
 바꾸려면 `config/youtube-curation.json` 을 편집한 뒤 스크립트를 다시 실행합니다.
 
 ```json
@@ -27,6 +27,7 @@ node scripts/sync-youtube.mjs      # RSS 최신 영상 → config/youtube-showca
   "manual":  [                      // RSS(최신 ~15개)에 없는 옛 영상을 수동 추가
     { "videoId": "abc123", "title": "제목", "description": "설명" }
   ],
+  "excludeShorts": true,            // Shorts 는 싣지 않는다(2026-11-19 결정). false 면 일반 영상처럼 들어옴
   "limit": null                     // 노출 개수 제한(숫자). null이면 전체
 }
 ```
@@ -42,7 +43,7 @@ node scripts/sync-youtube.mjs      # RSS 최신 영상 → config/youtube-showca
 > - 이어받은 영상은 제목·설명이 직전 값으로 고정됩니다. 유튜브에서 제목을 바꿨다면 `manual` 에 적어 덮어씁니다.
 > - 규칙 본체는 `scripts/lib/youtubeShowcase.mjs`, 테스트는 같은 폴더의 `youtubeShowcase.test.mjs` 입니다.
 > - 그래도 재싱크 후에는 `git diff config/youtube-showcase.json` 으로 추가·삭제를 한 번 확인합니다
->   (채널의 Shorts도 일반 영상과 똑같이 들어옵니다. 빼고 싶으면 `exclude`).
+>   (Shorts 는 `excludeShorts: true` 로 자동 제외됩니다. 특정 Shorts 만 싣고 싶으면 `manual` 에 적습니다).
 
 ## 언어별 노출 제외 (hideInLocales, HOM-25)
 같은 내용의 영상이 언어별로 따로 있을 때(예: VCO 사용법 ko/ja/en 버전), 로케일마다 맞는 언어 영상만

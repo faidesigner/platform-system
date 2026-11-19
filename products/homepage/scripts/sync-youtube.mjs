@@ -17,30 +17,15 @@
 import { writeFile, readFile } from "node:fs/promises";
 import path from "node:path";
 
-import { buildShowcase } from "./lib/youtubeShowcase.mjs";
+import { buildShowcase, parseRssEntries } from "./lib/youtubeShowcase.mjs";
 
 const CHANNEL_ID = "UCZpwr96t6EkDKMurSPL11bQ"; // @faindersAI
 const RSS = `https://www.youtube.com/feeds/videos.xml?channel_id=${CHANNEL_ID}`;
 const OUT = path.resolve(process.cwd(), "config/youtube-showcase.json");
 const CURATION_FILE = path.resolve(process.cwd(), "config/youtube-curation.json");
 
-function decode(s) {
-  return (s ?? "")
-    .replace(/&amp;/g, "&")
-    .replace(/&lt;/g, "<")
-    .replace(/&gt;/g, ">")
-    .replace(/&quot;/g, '"')
-    .replace(/&#39;/g, "'")
-    .replace(/&#(\d+);/g, (_, n) => String.fromCodePoint(+n));
-}
-const pick = (block, re) => {
-  const m = block.match(re);
-  return m ? decode(m[1].trim()) : "";
-};
-const watchHref = (id) => `https://www.youtube.com/watch?v=${id}`;
-
 async function loadCuration() {
-  const base = { exclude: [], pinned: [], hideInLocales: {}, manual: [], limit: null };
+  const base = { exclude: [], pinned: [], hideInLocales: {}, manual: [], limit: null, excludeShorts: false };
   try {
     return { ...base, ...JSON.parse(await readFile(CURATION_FILE, "utf8")) };
   } catch {
@@ -64,22 +49,12 @@ async function run() {
   if (!res.ok) throw new Error(`RSS fetch 실패: ${res.status} ${res.statusText}`);
   const xml = await res.text();
 
-  // RSS 최신순 파싱
-  const rss = xml
-    .split("<entry>")
-    .slice(1)
-    .map((block) => {
-      const videoId = pick(block, /<yt:videoId>([^<]+)<\/yt:videoId>/);
-      const title = pick(block, /<title>([\s\S]*?)<\/title>/);
-      const description = pick(block, /<media:description>([\s\S]*?)<\/media:description>/);
-      return { videoId, title, description, thumbnailAlt: title, href: watchHref(videoId) };
-    })
-    .filter((v) => v.videoId);
+  const rss = parseRssEntries(xml);
 
   if (!rss.length) throw new Error("파싱된 영상이 없음 — RSS 구조 변경 가능성 확인");
 
   // 노출 규칙(순서·제외·고정·유지·언어별 숨김)은 lib/youtubeShowcase.mjs 에 있다(테스트로 고정).
-  const { videos, carried } = buildShowcase({ rss, curation, previous });
+  const { videos, carried, skippedShorts } = buildShowcase({ rss, curation, previous });
 
   await writeFile(
     OUT,
@@ -91,6 +66,10 @@ async function run() {
       `ℹ️  RSS 최신 창 밖으로 밀려 직전 데이터로 유지한 영상 ${carried.length}개: ${carried.join(", ")}`,
     );
     console.log("   → 빼려면 youtube-curation.json 의 exclude 에 적으세요(자동으로 빠지지 않습니다).");
+  }
+
+  if (skippedShorts.length) {
+    console.log(`ℹ️  Shorts ${skippedShorts.length}개 제외(excludeShorts): ${skippedShorts.join(", ")}`);
   }
 
   console.log(`✓ ${videos.length}개 영상 → ${path.relative(process.cwd(), OUT)}`);
