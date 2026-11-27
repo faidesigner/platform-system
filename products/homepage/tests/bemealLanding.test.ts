@@ -64,6 +64,51 @@ describe("bemeal 랜딩 (public/bemeal)", () => {
     expect(meta("og:image:height")).toBe(String(height));
   });
 
+  /**
+   * GA4 — 다른 랜딩(contact-bakery-vco·contact-van-vco)과 같은 측정 ID·이벤트 체계(2026-11-27 요청).
+   * 받은 원본에는 태그가 없었다. 시안을 다시 받아 덮어쓰면 통째로 사라지므로 고정한다.
+   */
+  describe("GA4 측정", () => {
+    const GA_ID = "G-GCQKJ5TF6R";
+    const head = () => html().slice(0, html().indexOf("</head>"));
+    /** 클릭 핸들러 블록: 해당 id 요소를 찾는 줄부터 다음 id 조회 전까지. */
+    const handlerFor = (id: string) => {
+      const h = html();
+      const start = h.indexOf(`getElementById('${id}')`);
+      return start < 0 ? "" : h.slice(start, start + 1200);
+    };
+
+    it("gtag 로더와 config 가 head 안에 한 번만 있다", () => {
+      expect(head()).toContain(`gtag/js?id=${GA_ID}`);
+      expect(head()).toContain(`gtag('config', '${GA_ID}')`);
+      expect(html().split(`gtag('config'`).length - 1).toBe(1);
+    });
+
+    it("첫 진입 UTM 을 sessionStorage 에 보존한다(랜딩 공통 방식)", () => {
+      expect(head()).toContain("sessionStorage.setItem(k, v)");
+      expect(head()).toContain("function getUTM()");
+    });
+
+    it("카톡 상담 버튼: kakao_inquiry_click(form_id bemeal) + kakao_contact_click", () => {
+      expect(html()).toMatch(/id="kakaoInquiryBtn"[^>]*href="https:\/\/pf\.kakao\.com\//);
+      const h = handlerFor("kakaoInquiryBtn");
+      expect(h).toContain("gtag('event', 'kakao_inquiry_click'");
+      expect(h).toContain("form_id:  'bemeal'");
+      expect(h).toContain("gtag('event', 'kakao_contact_click'");
+    });
+
+    it("상담 신청서 버튼: lead_acquisition_click(location landing_bemeal)", () => {
+      expect(html()).toMatch(/id="inquiryFormBtn"[^>]*href="https:\/\/www\.fainders\.ai\/contact-bakery-vco#inquiry"/);
+      const h = handlerFor("inquiryFormBtn");
+      expect(h).toContain("gtag('event', 'lead_acquisition_click'");
+      expect(h).toContain("location: 'landing_bemeal'");
+    });
+
+    it("Meta 픽셀은 넣지 않는다(베이커리 랜딩 한정 결정)", () => {
+      expect(html()).not.toContain("fbq(");
+    });
+  });
+
   it("og:title·og:description 이 비어 있지 않다", () => {
     expect(meta("og:title")?.trim()).toBeTruthy();
     expect(meta("og:description")?.trim()).toBeTruthy();

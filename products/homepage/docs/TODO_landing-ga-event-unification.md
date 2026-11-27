@@ -11,6 +11,7 @@
 | 메인 (`ContactUsSection`, `lib/analytics`) | `interest_click` / `lead_acquisition_click` / `inquiry_complete` | `location`, `label` |
 | `public/contact-bakery-vco.html` | `form_submitted` / `kakao_inquiry_click` | `form_id:'bakery_vco'`, `source`, `medium`, `campaign` |
 | `public/contact-van-vco.html` | `form_submitted` / `kakao_inquiry_click` | `form_id:'van_vco'`, `source`, `medium`, `campaign` |
+| `public/bemeal/index.html` (2026-11-27) | `kakao_inquiry_click` / `lead_acquisition_click`(신청서 버튼, 폼 없음) | `form_id:'bemeal'`, `location:'landing_bemeal'`, `source`, `medium`, `campaign` |
 
 → 현재는 GA 콘솔에서 `inquiry_complete`와 `form_submitted`를 **각각** 주요 이벤트로 등록해야 커버된다(방법 A). 통일하면 콘솔 작업이 단순해진다.
 
@@ -26,6 +27,7 @@
 **대상 파일**
 - `products/homepage/public/contact-bakery-vco.html` (gtag event 2곳)
 - `products/homepage/public/contact-van-vco.html` (gtag event 2곳)
+- `products/homepage/public/bemeal/index.html` (카톡 이벤트 1곳 — 통일 시 함께 바꾼다)
 
 **주의**
 - 정적 HTML이라 빌드 불필요, 단 **재배포**(`./scripts/deploy.sh dev|prd`)해야 반영.
