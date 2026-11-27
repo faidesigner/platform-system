@@ -13,6 +13,30 @@
 <meta name="twitter:card" content="summary_large_image">
 <style>:root{padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}body{margin:0}img{max-width:100%}[hidden]{display:none!important}</style>
 <title>비밀베이커리 AI 키오스크 안내</title>
+<!-- Google Analytics (G-GCQKJ5TF6R) — 기존 homepage·랜딩과 동일 측정 ID -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-GCQKJ5TF6R"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+  gtag('config', 'G-GCQKJ5TF6R');
+</script>
+<!-- UTM 캡처: 첫 진입 시 URL의 utm_* 를 sessionStorage에 보존(스크롤 중 이탈해도 유지) -->
+<script>
+  (function(){
+    var p = new URLSearchParams(location.search);
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+      var v = p.get(k); if (v) sessionStorage.setItem(k, v);
+    });
+  })();
+  function getUTM(){
+    var o = {};
+    ['utm_source','utm_medium','utm_campaign','utm_content','utm_term'].forEach(function(k){
+      o[k] = sessionStorage.getItem(k) || '';
+    });
+    return o;
+  }
+</script>
 <meta name="claude:viewport-fit-sides" content="cover">
 <meta name="description" content="비밀베이커리 점주님을 위한 AI 키오스크 도입 안내">
 <style>
@@ -804,8 +828,8 @@ footer p{font-size:13px;color:var(--sub);line-height:1.6}
 <section class="sec dark" id="contact"><div class="wrap">
   <h2>우리 매장에도<br><span class="g">설치할 수 있을까요?</span></h2>
   <p class="lead">매장 상황에 맞춰 편하게 상담받아 보세요.</p>
-  <a class="btn main" href="https://pf.kakao.com/_cZLcn/chat" target="_blank" rel="noopener">카카오톡으로 상담하기</a>
-  <a class="btn sub" href="https://www.fainders.ai/contact-bakery-vco#inquiry" target="_blank" rel="noopener">상담 신청서 남기기</a>
+  <a class="btn main" id="kakaoInquiryBtn" href="https://pf.kakao.com/_cZLcn/chat" target="_blank" rel="noopener">카카오톡으로 상담하기</a>
+  <a class="btn sub" id="inquiryFormBtn" href="https://www.fainders.ai/contact-bakery-vco#inquiry" target="_blank" rel="noopener">상담 신청서 남기기</a>
   <div class="contact">
     <div class="r"><span>전화</span><b class="num">02-6191-0049</b><button class="copy" type="button" id="copyTel" data-copy="02-6191-0049">복사</button></div>
     <div class="r"><span>이메일</span><b>contact@fainders.ai</b><button class="copy" type="button" id="copyMail" data-copy="contact@fainders.ai">복사</button></div>
@@ -870,5 +894,42 @@ document.querySelectorAll('.copy').forEach(function(b){
 })();
 </script>
 
+<script>
+/* GA4 이벤트 — contact-bakery-vco·contact-van-vco 랜딩과 같은 체계(2026-11-27).
+   카톡: kakao_inquiry_click(form_id 로 페이지 구분) + kakao_contact_click(카톡 상담 독립 전환).
+   신청서: 이 페이지에는 폼이 없고 베이커리 랜딩 폼으로 보낸다 → 메인 사이트의 문의 유도 이벤트
+   lead_acquisition_click 를 그대로 쓴다. 이벤트명을 새로 만들지 않는다. */
+(function(){
+  var kakaoBtn = document.getElementById('kakaoInquiryBtn');
+  if (kakaoBtn) kakaoBtn.addEventListener('click', function() {
+    if (typeof gtag === 'undefined') return;
+    var utm = getUTM();
+    gtag('event', 'kakao_inquiry_click', {
+      form_id:  'bemeal',
+      source:   utm.utm_source || '(direct)',
+      medium:   utm.utm_medium,
+      campaign: utm.utm_campaign
+    });
+    gtag('event', 'kakao_contact_click', {
+      utm_source:   utm.utm_source,
+      utm_medium:   utm.utm_medium,
+      utm_campaign: utm.utm_campaign
+    });
+  });
+  var formBtn = document.getElementById('inquiryFormBtn');
+  if (formBtn) formBtn.addEventListener('click', function() {
+    if (typeof gtag === 'undefined') return;
+    var utm = getUTM();
+    gtag('event', 'lead_acquisition_click', {
+      location: 'landing_bemeal',
+      label:    '상담 신청서 남기기',
+      form_id:  'bemeal',
+      source:   utm.utm_source || '(direct)',
+      medium:   utm.utm_medium,
+      campaign: utm.utm_campaign
+    });
+  });
+})();
+</script>
 </body>
 </html>

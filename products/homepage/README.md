@@ -88,7 +88,7 @@ cd products/homepage
 |---|---|---|---|
 | `/contact-bakery-vco` | `public/contact-bakery-vco.html` | `landingTags`·`bakeryLandingSlides`·`landingSafeArea` | 베이커리 VCO 랜딩(GA·Meta 픽셀) |
 | `/contact-van-vco` | `public/contact-van-vco.html` | `landingTags`·`landingSafeArea` | VAN VCO 랜딩(GA) |
-| `/bemeal` | `public/bemeal/index.html` + `public/bemeal/og.jpg` | `bemealLanding` | 비밀베이커리 점주 전용 AI 키오스크 안내. 이미지·폰트·영상이 base64로 내장된 2MB 단일 파일. sitemap 미등록 |
+| `/bemeal` | `public/bemeal/index.html` + `public/bemeal/og.jpg` | `bemealLanding` | 비밀베이커리 점주 전용 AI 키오스크 안내(GA). 이미지·폰트·영상이 base64로 내장된 2MB 단일 파일. sitemap 미등록 |
 | `/naverc27…cb.html` | `public/naverc27da09292da484463448fab767cc3eb.html` | — | 네이버 사이트 인증 |
 
 - **`/bemeal` 이 `dir/index.html` 구조인 이유**: PRD CF 함수가 `/bemeal`·`/bemeal/` 를 `/bemeal.html` 로 바꾸고
@@ -96,7 +96,7 @@ cd products/homepage
   `index.html` 을 서빙한다. 그래서 한 소스로 양쪽이 같은 주소로 열린다. `public/bemeal.html` 로 두면 DEV에서 `/bemeal` 이 안 열린다.
 - **`/bemeal` 시안을 다시 받아 덮어쓸 때**: 원본은 `bemeal.fainders.ai` 기준 OG 태그로 온다. `og:url` 을
   `https://www.fainders.ai/bemeal`, `og:image` 를 `https://www.fainders.ai/bemeal/og.jpg?v=N` 으로 바꿔야
-  카카오톡 미리보기가 뜬다(`bemealLanding.test.ts` 가 잡는다). 이미지를 바꾸면 `?v=` 숫자를 올린다 — 카카오는
+  카카오톡 미리보기가 뜬다. 원본에는 GA4 태그·버튼 `id`(`kakaoInquiryBtn`·`inquiryFormBtn`)도 없으니 현재 파일에서 옮겨 붙인다(둘 다 `bemealLanding.test.ts` 가 잡는다). 이미지를 바꾸면 `?v=` 숫자를 올린다 — 카카오는
   OG를 URL 단위로 캐시하므로, 이미 공유된 링크는 [카카오 공유 디버거](https://developers.kakao.com/tool/debugger/sharing)에서 캐시를 지워야 새 이미지가 뜬다.
 
 #### ⚠️ PRD 배포 전 반드시

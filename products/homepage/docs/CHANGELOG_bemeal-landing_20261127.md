@@ -22,4 +22,19 @@
 
 ## 의도적으로 안 한 것
 - sitemap 미등록: 특정 고객사 점주 대상 페이지라 검색 노출 여부가 정해지지 않았다. robots `noindex` 도 넣지 않았다(원본 유지). 정해지면 둘 중 하나를 넣는다.
-- GA·Meta 픽셀 없음: 원본에 측정 태그가 없다. 유입 측정이 필요하면 `contact-*` 랜딩과 같은 GA4(`G-GCQKJ5TF6R`)를 붙이고 `landingTags.test.ts` 에 추가한다.
+- Meta 픽셀 없음: 베이커리 랜딩 한정 결정(2026-08-04)을 따른다. 테스트가 `fbq(` 부재를 고정한다.
+
+## 추가: GA4 (같은 날 2차)
+원본에는 측정 태그가 없어 다른 랜딩과 같은 형식으로 붙였다.
+
+| 대상 | 이벤트 | 파라미터 |
+|---|---|---|
+| 페이지 조회 | `gtag('config', 'G-GCQKJ5TF6R')` | — |
+| 카톡 상담 버튼 `#kakaoInquiryBtn` | `kakao_inquiry_click` | `form_id:'bemeal'`, `source`, `medium`, `campaign` |
+| 〃 | `kakao_contact_click` | `utm_source`, `utm_medium`, `utm_campaign` |
+| 상담 신청서 버튼 `#inquiryFormBtn` | `lead_acquisition_click` | `location:'landing_bemeal'`, `label:'상담 신청서 남기기'`, `form_id`, `source`, `medium`, `campaign` |
+
+- 카톡 이벤트 2개는 `contact-bakery-vco`·`contact-van-vco` 와 이름·파라미터가 같다. GA 에서 `form_id` 로 페이지를 나눠 본다.
+- 신청서 버튼은 이 페이지에 폼이 없고 베이커리 랜딩 폼(`/contact-bakery-vco#inquiry`)으로 보낸다. 그래서 `form_submitted` 가 아니라 메인 사이트의 문의 유도 이벤트 `lead_acquisition_click` 을 썼다. 실제 신청 완료는 베이커리 랜딩의 `form_submitted`(`form_id:'bakery_vco'`)로 잡힌다.
+- UTM 은 첫 진입 시 sessionStorage 에 보존하는 랜딩 공통 코드를 그대로 썼다. 공유 링크에 `?utm_source=kakao&utm_campaign=bemeal` 같은 값을 붙이면 유입 경로가 이벤트에 실린다.
+- `tests/bemealLanding.test.ts` 에 5건 추가. 측정 ID·`form_id`·`location`·버튼 id 를 일부러 틀려 각각 실패하는 것을 확인했다.
