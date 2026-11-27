@@ -87,7 +87,11 @@ REQUIRED_FILES=(
   "contact-bakery-vco.html"
   "contact-van-vco.html"
   "naverc27da09292da484463448fab767cc3eb.html"  # 네이버 사이트 인증
+  "bemeal/index.html"   # /bemeal — 비밀베이커리 점주 전용 안내(2026-11-27)
+  "bemeal/og.jpg"       # /bemeal 카카오톡 공유 미리보기 이미지(og:image)
 )
+# PRD는 CF 함수가 /bemeal → /bemeal.html 로 바꾸므로 flat 파일이 실제 서빙 대상이다.
+[ "$FLAT_HTML" = "true" ] && REQUIRED_FILES+=("bemeal.html")
 for rf in "${REQUIRED_FILES[@]}"; do
   [ -f "$OUT/$rf" ] || { echo "❌ 필수 standalone 파일 누락: out/$rf — 배포 중단. products/homepage/public/ 확인."; exit 1; }
 done

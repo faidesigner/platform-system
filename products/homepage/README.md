@@ -78,6 +78,27 @@ cd products/homepage
   의도된 정책). 즉 그런 환경에서는 **무검사로 배포가 통과**한다 — 로그에 `⚠ … 건너뜁니다`가 찍히는지 확인할 것.
   Chrome 경로는 `PUPPETEER_EXECUTABLE_PATH` 로 지정할 수 있다.
 
+#### Next 라우트가 아닌 standalone 페이지 (`public/` 정적 파일)
+
+아래 파일은 Next 빌드가 만들지 않고 `public/` 에서 그대로 복사된다. `deploy.sh` 의 `REQUIRED_FILES` 에
+등록돼 있어 `out/` 에서 빠지면 **업로드 전에 배포가 중단**된다. 새 standalone 페이지를 추가하면
+여기 표, `REQUIRED_FILES`, `tests/` 회귀 테스트 세 곳을 함께 고친다.
+
+| 공개 주소 | 소스 | 회귀 테스트 | 비고 |
+|---|---|---|---|
+| `/contact-bakery-vco` | `public/contact-bakery-vco.html` | `landingTags`·`bakeryLandingSlides`·`landingSafeArea` | 베이커리 VCO 랜딩(GA·Meta 픽셀) |
+| `/contact-van-vco` | `public/contact-van-vco.html` | `landingTags`·`landingSafeArea` | VAN VCO 랜딩(GA) |
+| `/bemeal` | `public/bemeal/index.html` + `public/bemeal/og.jpg` | `bemealLanding` | 비밀베이커리 점주 전용 AI 키오스크 안내. 이미지·폰트·영상이 base64로 내장된 2MB 단일 파일. sitemap 미등록 |
+| `/naverc27…cb.html` | `public/naverc27da09292da484463448fab767cc3eb.html` | — | 네이버 사이트 인증 |
+
+- **`/bemeal` 이 `dir/index.html` 구조인 이유**: PRD CF 함수가 `/bemeal`·`/bemeal/` 를 `/bemeal.html` 로 바꾸고
+  `FLAT_HTML=true` 가 `bemeal/index.html → bemeal.html` 을 만든다. DEV(S3 website 엔드포인트)는 디렉토리
+  `index.html` 을 서빙한다. 그래서 한 소스로 양쪽이 같은 주소로 열린다. `public/bemeal.html` 로 두면 DEV에서 `/bemeal` 이 안 열린다.
+- **`/bemeal` 시안을 다시 받아 덮어쓸 때**: 원본은 `bemeal.fainders.ai` 기준 OG 태그로 온다. `og:url` 을
+  `https://www.fainders.ai/bemeal`, `og:image` 를 `https://www.fainders.ai/bemeal/og.jpg?v=N` 으로 바꿔야
+  카카오톡 미리보기가 뜬다(`bemealLanding.test.ts` 가 잡는다). 이미지를 바꾸면 `?v=` 숫자를 올린다 — 카카오는
+  OG를 URL 단위로 캐시하므로, 이미 공유된 링크는 [카카오 공유 디버거](https://developers.kakao.com/tool/debugger/sharing)에서 캐시를 지워야 새 이미지가 뜬다.
+
 #### ⚠️ PRD 배포 전 반드시
 - **CloudFront 함수 비호환**: 라이브 dist의 `rewriteForHomepageSSG` 함수는 `/foo/ → /foo.html` 로 재작성한다.
   새 홈페이지는 `dir/index.html` 구조라, `prd.env` 의 `FLAT_HTML=true` 가 flat `<dir>.html` 을 생성해 호환시킨다.
